@@ -1,0 +1,11 @@
+<button class="button"
+  [type]="type" 
+  [ngClass]="disabled ? 'secondary' : buttonClass"
+  [class]="buttonClass"
+  [disabled]="disabled"
+  (click)="handleClick($event)"
+>
+  <i *ngIf="icon" [class]="icon"></i>
+  {{text}}
+  <span *ngIf="loading" class="loading-spinner">⌛</span>
+</button>

@@ -1,0 +1,61 @@
+<h2>Solicitudes de Anticipos</h2>
+<div class="buscarAnt">
+    <span>Buscar por Nº de solicitud:  </span>
+    <input type="text" placeholder="Buscar..." [(ngModel)]="numero_anticipo">
+    <div>
+    <app-button type="button" buttonClass="primary" text="Buscar" (onClick)="changeNumeroAnticipo(numero_anticipo)"></app-button>
+    <app-button type="button" buttonClass="secondary"  text="Limpiar" (onClick)="clearNumeroAnticipo()"></app-button>
+    </div>
+</div>
+<div class="tableContainer">
+    <table>
+        <thead class="tableHead">
+            <tr>
+                <th>SELECCIONAR</th>
+                <th>N° SOLICITUD</th>
+                <th>FECHA SOLICITUD</th>
+                <th>SOLICITANTE</th>
+                <th>MONEDA</th>
+                <th>IMPORTE</th>
+                <th>ESTADO</th>
+            </tr>
+        </thead>
+        <tbody class = "tableBody">
+            <tr *ngFor="let item of mostrarDatos">
+                <td><input type="checkbox" /></td>
+                <td class="tdN">{{item.numero_solicitud}}</td>
+                <td class="tdS">{{item.fecha_solicitud}}</td>
+                <td class="tdS">{{item.solicitante}}</td>
+                <td class="tdS">{{item.moneda}}</td>
+                <td class="tdS">{{item.importe}}</td>
+                <td class="tdN">{{item.estado}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <div>
+            <p>
+                Página
+                <span>{{currentPage}}</span>
+                de
+                <span>{{totalPage}}</span>
+                •
+                <span>{{totalItems}}</span>
+            </p>
+        </div>
+        <div class="buttonPagination">
+            <app-button
+                (onClick)="changePage(currentPage - 1)"
+                [buttonClass]="'primary'"
+                [disabled]="currentPage === 1"
+                text="Anterior"
+            ></app-button>
+            <app-button
+                (onClick)="changePage(currentPage + 1)"
+                [buttonClass]="'primary'"
+                [disabled]="currentPage === totalPage"
+                text="Siguiente"
+            ></app-button>
+        </div>
+    </div>
+</div>

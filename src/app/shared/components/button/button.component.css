@@ -1,0 +1,44 @@
+.button{
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    transition: background 0.3s;
+    margin: 5px;
+}
+
+.primary{
+    background-color: #1E68CA;
+    color: white;
+}
+
+.primary:hover {
+    background: #0056b3;
+  }
+
+.secondary{
+    background-color: #e0e5ed;
+    color: black;
+}
+
+.secondary:hover {
+    background: #5a6268;
+  }
+
+.danger{
+    background-color: #db1313;
+    color: white;
+}
+
+.danger:hover {
+    background: #bd2130;
+  }
+
+.loading-spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
