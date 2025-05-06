@@ -1,3 +1,5 @@
+// diccionario de datos
+
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 

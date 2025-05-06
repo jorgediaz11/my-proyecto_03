@@ -1,7 +1,9 @@
+<!--  diccionario de datos -->
+  
 <!-- commercial-management-layout.component.html -->
 <div class="layout-container">
     <header class="layout-header">
-      <span>Sistema de Gestión Comercial</span>
+      <span>Gestión LMS - <b>nombre pendiente</b></span>
   
       <div class="user-info">
         <span class="user-name">{{ name }}</span>
@@ -15,6 +17,15 @@
     <nav class="layout-nav">
       <div class="nav-links">
         <a
+        [routerLink]="['/gestion-comercial/anticipos']"
+        [ngClass]="{
+          'active-link': isActive('/gestion-comercial/anticipos'),
+          'inactive-link': !isActive('/gestion-comercial/anticipos')
+        }"
+      >
+        Usuarios
+      </a>
+        <a
           [routerLink]="['/gestion-comercial']"
           [ngClass] =
             "{'active-link': isActive('/gestion-comercial') &&
@@ -25,7 +36,7 @@
               !isActive('/gestion-comercial/anticipos'))
             }"
         >
-          Dashboard
+        Colegios
         </a>
         <a
           [routerLink]="['/gestion-comercial/avisos-debito']"
@@ -34,21 +45,36 @@
             'inactive-link': !isActive('/gestion-comercial/avisos-debito')
           }"
         >
-          Avisos de Débito
+        Asignaciones
         </a>
+
         <a
-          [routerLink]="['/gestion-comercial/anticipos']"
+          [routerLink]="['/gestion-comercial/avisos-debito']"
           [ngClass]="{
-            'active-link': isActive('/gestion-comercial/anticipos'),
-            'inactive-link': !isActive('/gestion-comercial/anticipos')
+            'active-link': isActive('/gestion-comercial/avisos-debito'),
+            'inactive-link': !isActive('/gestion-comercial/avisos-debito')
           }"
         >
-          Anticipos
-        </a>
+        Activaciones
+        </a>        
+        
+        <a
+        [routerLink]="['/gestion-comercial/avisos-debito']"
+        [ngClass]="{
+          'active-link': isActive('/gestion-comercial/avisos-debito'),
+          'inactive-link': !isActive('/gestion-comercial/avisos-debito')
+        }"
+        >
+        Reportes
+        </a>          
+        
+
       </div>
+
       <div class="layout-content">
         <router-outlet></router-outlet>
       </div>
+
     </nav>
   </div>
   

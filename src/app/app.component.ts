@@ -1,3 +1,5 @@
+// diccionario de datos
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';  //proporciona directivas comunes como ngif y ngfor
 import { RouterOutlet } from '@angular/router';

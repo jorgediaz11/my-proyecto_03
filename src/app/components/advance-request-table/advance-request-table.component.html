@@ -1,7 +1,9 @@
-<h2>Solicitudes de Anticipos</h2>
+<!--  diccionario de datos -->
+  
+<h2>Perfil Administrador</h2>
 <div class="buscarAnt">
-    <span>Buscar por Nº de solicitud:  </span>
-    <input type="text" placeholder="Buscar..." [(ngModel)]="numero_anticipo">
+    <span>Consulta:  </span>
+    <input type="text" placeholder="ingrese usuario..." [(ngModel)]="numero_anticipo">
     <div>
     <app-button type="button" buttonClass="primary" text="Buscar" (onClick)="changeNumeroAnticipo(numero_anticipo)"></app-button>
     <app-button type="button" buttonClass="secondary"  text="Limpiar" (onClick)="clearNumeroAnticipo()"></app-button>
@@ -11,13 +13,15 @@
     <table>
         <thead class="tableHead">
             <tr>
-                <th>SELECCIONAR</th>
-                <th>N° SOLICITUD</th>
-                <th>FECHA SOLICITUD</th>
-                <th>SOLICITANTE</th>
-                <th>MONEDA</th>
-                <th>IMPORTE</th>
-                <th>ESTADO</th>
+                <th>Nro</th>
+                <th>APELLIDOS</th>
+                <th>NOMBRES</th>
+                <th>COLEGIO</th>
+                <th>PERIODO</th>
+                <th>AÑO</th>
+                <th>USUARIO</th>
+                <th>MOD</th>
+                <th>ELI</th>
             </tr>
         </thead>
         <tbody class = "tableBody">
@@ -29,6 +33,8 @@
                 <td class="tdS">{{item.moneda}}</td>
                 <td class="tdS">{{item.importe}}</td>
                 <td class="tdN">{{item.estado}}</td>
+                <td class="tdN"></td>
+                <td class="tdN"></td>
             </tr>
         </tbody>
     </table>

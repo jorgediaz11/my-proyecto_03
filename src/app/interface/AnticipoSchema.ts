@@ -1,3 +1,5 @@
+// diccionario de datos
+
 export type AnticipoSchema = {
     id:string;
     numero_solicitud?:string;

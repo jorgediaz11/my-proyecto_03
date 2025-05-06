@@ -1,3 +1,5 @@
+//  diccionario de datos
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableDebitComponent } from './table-debit.component';

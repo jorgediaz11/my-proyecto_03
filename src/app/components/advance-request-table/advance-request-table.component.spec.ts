@@ -1,3 +1,5 @@
+//  diccionario de datos
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdvanceRequestTableComponent } from './advance-request-table.component';

@@ -10,7 +10,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './comercial-management-layout.component.css'
 })
 export class ComercialManagementLayoutComponent {
-  name = 'Ricardo';
+  name = 'Jorgito';
   constructor(private router: Router){}
   
   isActive(path:string):boolean{

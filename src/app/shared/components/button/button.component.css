@@ -1,3 +1,5 @@
+/* diccionario de datos */
+
 .button{
     border: none;
     border-radius: 5px;
@@ -7,7 +9,7 @@
 }
 
 .primary{
-    background-color: #1E68CA;
+    background-color: #1bb65c;
     color: white;
 }
 

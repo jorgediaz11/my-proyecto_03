@@ -1,3 +1,5 @@
+// diccionario de datos
+
 import { Routes } from '@angular/router';
 import { AdvanceRequestTableComponent } from './components/advance-request-table/advance-request-table.component';
 import { ComercialManagementLayoutComponent } from './pages/comercial-management-layout/comercial-management-layout.component';

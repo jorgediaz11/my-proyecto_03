@@ -1,3 +1,5 @@
+//  diccionario de datos
+
 import { Component, OnInit } from '@angular/core';
 import { AdvanceRequestService } from '../../services/advance-request.service';
 import { CommonModule } from '@angular/common';

@@ -1,3 +1,5 @@
+// diccionario de datos
+
 interface DebitNoticeSchema {
     fecha_emision: string;
     cliente: string;
