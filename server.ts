@@ -32,7 +32,7 @@ export function app(): express.Express {
 
     commonEngine
       .render({
-        bootstrap,
+        //bootstrap,
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,

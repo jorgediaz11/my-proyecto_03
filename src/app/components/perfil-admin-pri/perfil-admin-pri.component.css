@@ -1,0 +1,38 @@
+h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  p {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .link-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .back-to-options {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .back-to-options:hover {
+    text-decoration: underline;
+  }
+
+  .back-to-admin {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .back-to-admin:hover {
+    text-decoration: underline;
+  }

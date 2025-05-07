@@ -1,0 +1,16 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label for="username">Usuario:</label>
+    <input id="username" formControlName="username" type="text" placeholder="Ingresa tu usuario" />
+  
+    <label for="password">Clave:</label>
+    <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
+  
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+  
+  <!-- Enlace a la página de opciones -->
+  <div class="link-container">
+    <a routerLink="/opciones" class="to-options">Ir a Opciones</a>
+  </div>
+</div>

@@ -1,15 +1,11 @@
-// diccionario de datos
-
 import { Routes } from '@angular/router';
-import { AdvanceRequestTableComponent } from './components/advance-request-table/advance-request-table.component';
-import { ComercialManagementLayoutComponent } from './pages/comercial-management-layout/comercial-management-layout.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { OpcionesComponent } from './components/opciones/opciones.component';
+import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 
 export const routes: Routes = [
-    { path:'gestion-comercial', 
-        component:ComercialManagementLayoutComponent,
-        children: [
-            {path:'anticipos', component:AdvanceRequestTableComponent},
-        ]
-    },
-    {path: '', redirectTo:'/gestion-comercial', pathMatch:'full'} //full la ruta tiene que ser igual
+  { path: '', component: LoginFormComponent }, // Ruta para el login
+  { path: 'opciones', component: OpcionesComponent }, // Ruta para la página de opciones
+  { path: 'perfil-admin-pri', component: PerfilAdminPriComponent }, // Ruta para el perfil de admin
+  { path: '**', redirectTo: '' } // Redirección para rutas no válidas
 ];

@@ -1,43 +1,21 @@
-/* diccionario de datos */
-
-.toast-container{
-    display: flex;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    justify-content: center;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
 }
-.ngx-toastr {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    width: auto;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-out;
-    color: white;
-  }
-  
-  /* FadeIn */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Tipo error */
-  .toast-error {
-    background-color: #f44336 !important;
-  }
-  
-  /* Tipo éxito */
-  .toast-success {
-    background-color: #4caf50 !important;
-  }
+
+app-root {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
