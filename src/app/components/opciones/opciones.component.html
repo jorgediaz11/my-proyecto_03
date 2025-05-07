@@ -2,9 +2,9 @@
 
 <h2>Perfiles de la Plataforma:</h2>
 
-<table class="options-table">
+<table class="options-table" border="1" cellspacing="0" cellpadding="5">
   <thead>
-    <tr>
+    <tr [vAlign]="'top'" [align]="'left'">
       <th>Nro</th>
       <th>Perfil</th>
       <th>Ícono</th>
@@ -13,32 +13,32 @@
   <tbody>
     <!-- Perfil Super Adminsitrador-->
     <tr>
-      <td>1</td>
-      <td><a routerLink="/perfil-admin-pri">Super Admin</a></td>
-      <td><i class="fas fa-user-shield"></i></td>
+      <td>01</td>
+      <td><a routerLink="/perfil-admin-pri"><b>Super Admin</b></a></td>
+      <td align="center"><i class="fas fa-user-shield"></i></td>
     </tr>
     <!-- Perfil Adminsitrador - Colegio-->
     <tr>
-      <td>2</td>
+      <td>02</td>
       <td><a routerLink="/opcion1">Administrador</a></td>
-      <td><i class="fas fa-user-cog"></i></td>
+      <td align="center"><i class="fas fa-user-cog"></i></td>
     </tr>
     <!-- Perfil Docente - Colegio-->
     <tr>
-      <td>3</td>
+      <td>03</td>
       <td><a routerLink="/opcion2">Docente</a></td>
-      <td><i class="fas fa-chalkboard-teacher"></i></td>
+      <td align="center"><i class="fas fa-chalkboard-teacher"></i></td>
     </tr>
     <!-- Perfil Estudiante - Colegio-->
     <tr>
-      <td>4</td>
+      <td>04</td>
       <td><a routerLink="/opcion3">Estudiante</a></td>
-      <td><i class="fas fa-user-graduate"></i></td>
+      <td align="center"><i class="fas fa-user-graduate"></i></td>
     </tr>
     <tr>
-      <td>5</td>
+      <td>05</td>
       <td><a routerLink="/opcion3">Familia</a></td>
-      <td><i class="fas fa-users"></i></td>
+      <td align="center"><i class="fas fa-users"></i></td>
     </tr>
   </tbody>
 </table>

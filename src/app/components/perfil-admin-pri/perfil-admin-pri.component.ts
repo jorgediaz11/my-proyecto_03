@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './perfil-admin-pri.component.html',
   styleUrls: ['./perfil-admin-pri.component.css']
 })
-export class PerfilAdminPriComponent {}
+export class PerfilAdminPriComponent {
+  selectedOption: string = 'opcion1'; // Opción seleccionada por defecto
+
+  selectOption(option: string) {
+    this.selectedOption = option;
+  }
+}

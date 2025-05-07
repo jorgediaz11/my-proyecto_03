@@ -48,5 +48,5 @@ h2 {
     width: 250px; /* Ajusta el tamaño según sea necesario */
     height: auto;
     margin-bottom: 10px;
-    border-style:outset;
+    /* border-style:outset; */
   }

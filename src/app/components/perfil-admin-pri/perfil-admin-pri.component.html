@@ -1,5 +1,42 @@
-<h2>Perfil: Super Admin</h2>
-<p>Bienvenido al perfil de Super Admin. Aquí puedes gestionar configuraciones avanzadas de la plataforma.</p>
+<div class="perfil-admin-layout">
+  <!-- Header -->
+  <header class="layout-header">
+    <h2>Perfil: Super Admin</h2>
+  </header>
+
+  <!-- Contenido central -->
+  <div class="layout-main">
+    <!-- Menú vertical -->
+    <nav class="menu-vertical">
+      <ul>
+        <li><a (click)="selectOption('opcion1')">Opción 1</a></li>
+        <li><a (click)="selectOption('opcion2')">Opción 2</a></li>
+        <li><a (click)="selectOption('opcion3')">Opción 3</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contenido dinámico -->
+    <div class="contenido-dinamico">
+      <ng-container *ngIf="selectedOption === 'opcion1'">
+        <h3>Contenido de Opción 1</h3>
+        <p>Este es el contenido correspondiente a la Opción 1.</p>
+      </ng-container>
+      <ng-container *ngIf="selectedOption === 'opcion2'">
+        <h3>Contenido de Opción 2</h3>
+        <p>Este es el contenido correspondiente a la Opción 2.</p>
+      </ng-container>
+      <ng-container *ngIf="selectedOption === 'opcion3'">
+        <h3>Contenido de Opción 3</h3>
+        <p>Este es el contenido correspondiente a la Opción 3.</p>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="layout-footer">
+    <p>© 2025 Plataforma Admin - Todos los derechos reservados</p>
+  </footer>
+</div>
 
 <!-- Enlace para regresar a la página de opciones -->
 <div class="link-container">

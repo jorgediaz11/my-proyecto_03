@@ -36,3 +36,106 @@ h2 {
   .back-to-admin:hover {
     text-decoration: underline;
   }
+
+  .perfil-admin-container {
+    display: flex;
+    height: 50vh; /* Ocupa toda la altura de la ventana */
+  }
+  
+  .menu-vertical {
+    width: 100px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .menu-vertical ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu-vertical li {
+    margin: 10px 0;
+  }
+  
+  .menu-vertical a {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .menu-vertical a:hover {
+    text-decoration: underline;
+  }
+  
+  .contenido-dinamico {
+    flex: 1;
+    padding: 20px;
+  }
+
+  /* Contenedor principal */
+.perfil-admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  width: 200%; /* Ajusta el ancho al 80% del contenedor padre */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  border: 1px solid #ccc; /* Borde para diseño */
+}
+
+/* Header */
+.layout-header {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Contenido central */
+.layout-main {
+  display: flex;
+  flex: 1; /* Ocupa el espacio restante entre header y footer */
+  border-bottom: 1px solid #ddd;
+}
+
+/* Menú vertical */
+.menu-vertical {
+  width: 200px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.menu-vertical ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-vertical li {
+  margin: 10px 0;
+}
+
+.menu-vertical a {
+  text-decoration: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.menu-vertical a:hover {
+  text-decoration: underline;
+}
+
+/* Contenido dinámico */
+.contenido-dinamico {
+  flex: 1; /* Ocupa el espacio restante en el área central */
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+/* Footer */
+.layout-footer {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
