@@ -1,34 +1,45 @@
-
-
-
+<!-- Componente de inicio de sesión -->
 <div class="login-container">
-  
+    <!-- Header -->
+    <header class="login-header">
+      <img src="assets/images/login-logo.png" alt="Logo" class="login-logo" />
+      <h1>Bienvenido</h1>
+    </header>
+
+  <!-- Contenido principal -->
   <div class="login-register-container">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="login-section">
       <h2>Iniciar sesión</h2>
       <div class="form-group">
         <label for="username">Usuario:</label>
-      <input id="username" formControlName="username" type="text" placeholder="Ingresa tu usuario" />
+        <input id="username" formControlName="username" type="text" placeholder="Ingresa tu usuario" />
       </div>
       <div class="form-group">
         <label for="password">Clave:</label>
-      <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
+        <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
       </div>
-      <button type="submit">Iniciar Sesión</button>
+      <button type="submit" class="to-options">Iniciar Sesión</button>
+      <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
       <p class="forgot-password" >Olvidé mi contraseña</p>
     </div>
-  </form>
-
+    </form>
+  
+    <!-- Sección de registro -->
     <div class="register-section">
       <h2>Nuevo usuario</h2>
       <p>Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-      <button >Crear cuenta</button>
+      <!-- Botón para redirigir al registro -->
+      <button routerLink="/registro" class="to-options">Crear cuenta</button>
+      <br>
+      <!-- Enlace a la página de opciones -->
+      <a routerLink="/opciones" class="to-options">Ir a Opciones</a>
     </div>
+
   </div>
 
-  <!-- Enlace a la página de opciones -->
-  <div class="link-container">
-    <a routerLink="/opciones" class="to-options">Ir a Opciones</a>
-  </div>
+  <!-- Footer -->
+  <footer class="login-footer">
+    <p>© 2025 Plataforma Educativa</p>
+  </footer>
 </div>

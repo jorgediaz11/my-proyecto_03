@@ -1,44 +1,47 @@
 <div class="perfil-admin-layout">
   <!-- Header -->
-  <header class="layout-header">
-    <h2>Perfil: Super Admin</h2>
+  <header class="login-header">
+    <img src="assets/images/login-logo.png" alt="Logo" class="login-logo" />
+    <h1>Administrador Principal</h1>
   </header>
 
-  <!-- Contenido central -->
-  <div class="layout-main">
-    <!-- Menú vertical -->
-    <nav class="menu-vertical">
-      <ul>
-        <li><a (click)="selectOption('opcion1')">Opción 1</a></li>
-        <li><a (click)="selectOption('opcion2')">Opción 2</a></li>
-        <li><a (click)="selectOption('opcion3')">Opción 3</a></li>
-      </ul>
-    </nav>
-
-    <!-- Contenido dinámico -->
-    <div class="contenido-dinamico">
-      <ng-container *ngIf="selectedOption === 'opcion1'">
-        <h3>Contenido de Opción 1</h3>
-        <p>Este es el contenido correspondiente a la Opción 1.</p>
-      </ng-container>
-      <ng-container *ngIf="selectedOption === 'opcion2'">
-        <h3>Contenido de Opción 2</h3>
-        <p>Este es el contenido correspondiente a la Opción 2.</p>
-      </ng-container>
-      <ng-container *ngIf="selectedOption === 'opcion3'">
-        <h3>Contenido de Opción 3</h3>
-        <p>Este es el contenido correspondiente a la Opción 3.</p>
-      </ng-container>
+<!-- Contenedor principal -->
+<div class="portal-container" [ngClass]="{'menu-open': isMenuOpen}">
+  <!-- Sidebar -->
+  <aside class="sidebar" [ngClass]="{'menu-open': isMenuOpen}">
+    <div class="logo">
+      <button class="menu-toggle" (click)="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <span>Administrador Principal</span>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="layout-footer">
-    <p>© 2025 Plataforma Admin - Todos los derechos reservados</p>
-  </footer>
+    <ul class="menu">
+      <li *ngFor="let item of menuItems" class="menu-item" [routerLink]="item.route" routerLinkActive="active">
+        <i class="{{'fas fa-' + item.icon}}"></i>
+        <span *ngIf="isMenuOpen">{{item.label}}</span>
+      </li>
+    </ul>
+
+    <!-- Enlace para regresar a la página de opciones -->
+    <div class="link-container">
+      <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <header class="top-bar">
+      <div>Dashboard</div>
+    </header>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>
 
-<!-- Enlace para regresar a la página de opciones -->
-<div class="link-container">
-  <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
+<!-- Footer -->
+<footer class="login-footer">
+  <p>© 2025 Plataforma Educativa</p>
+</footer>
 </div>

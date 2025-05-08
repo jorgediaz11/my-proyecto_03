@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { LoginRegistroComponent } from './components/login-registro/login-registro.component';
 import { OpcionesComponent } from './components/opciones/opciones.component';
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
@@ -17,6 +18,7 @@ import { routes } from './app.routes';
   declarations: [
     AppComponent,
     LoginFormComponent,
+    LoginRegistroComponent,
     OpcionesComponent,
     PerfilAdminPriComponent,
     PerfilAdminSecComponent,

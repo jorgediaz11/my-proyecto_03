@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './opciones.component.html',
   styleUrls: ['./opciones.component.css']
 })
-export class OpcionesComponent {}
+export class OpcionesComponent {
+  // Lógica específica del componente
+}

@@ -47,6 +47,65 @@ h2 {
   .login-logo {
     width: 250px; /* Ajusta el tamaño según sea necesario */
     height: auto;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     /* border-style:outset; */
   }
+  
+  /* Header */
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #28a745; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+.login-logo {
+  width: 150px; /* Incrementa el tamaño en un 50% (antes era 100px) */
+  height: auto; /* Mantiene la proporción del logo */
+  margin-bottom: 20px;
+}
+
+.login-header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+/* Footer */
+.login-footer {
+  background-color: #28a745; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+/* Contenedor principal */
+.opciones-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenido principal */
+.opciones-content {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilo para las celdas de la tabla */
+.options-table td {
+  text-align: left; /* Alinea el texto a la izquierda */
+  padding: 8px; /* Agrega un poco de espacio interno */
+}
+
+.options-table th {
+  text-align: left; /* Alinea los encabezados a la izquierda */
+  padding: 8px; /* Agrega un poco de espacio interno */
+}

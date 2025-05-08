@@ -1,9 +1,47 @@
-<div class="perfil-estudiante-layout">
-    <h2>Perfil: Estudiante</h2>
-    <p>Bienvenido al perfil de Estudiante. Aquí puedes gestionar tus actividades académicas.</p>
-  
-    <!-- Enlace para regresar a la página de opciones -->
-    <div class="link-container">
-      <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
-    </div>
+<div class="perfil-admin-sec-layout">
+  <!-- Header -->
+  <header class="login-header">
+    <img src="assets/images/login-logo.png" alt="Logo" class="login-logo" />
+    <h1>Estudiante</h1>
+  </header>
+
+  <!-- Contenedor principal -->
+  <div class="portal-container" [ngClass]="{'menu-open': isMenuOpen}">
+    <!-- Sidebar -->
+    <aside class="sidebar" [ngClass]="{'menu-open': isMenuOpen}">
+      <div class="logo">
+        <button class="menu-toggle" (click)="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <span>Estudiante</span>
+      </div>
+
+      <ul class="menu">
+        <li *ngFor="let item of menuItems" class="menu-item" [routerLink]="item.route" routerLinkActive="active">
+          <i class="{{'fas fa-' + item.icon}}"></i>
+          <span *ngIf="isMenuOpen">{{item.label}}</span>
+        </li>
+      </ul>
+
+      <!-- Enlace para regresar a la página de opciones -->
+      <div class="link-container">
+        <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <header class="top-bar">
+        <div>Dashboard</div>
+      </header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
   </div>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <p>© 2025 Plataforma Educativa</p>
+  </footer>
+</div>

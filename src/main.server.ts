@@ -7,4 +7,5 @@ if (environment.production) {
 
 export default function bootstrap() {
   // Lógica para inicializar el servidor
+  // Lógica específica del componente
 }

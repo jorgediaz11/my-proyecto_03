@@ -1,49 +1,64 @@
-<img src="assets/images/login-logo.png" alt="Logo" class="login-logo" />
+<div class="opciones-container">
+  <!-- Header -->
+  <header class="login-header">
+    <img src="assets/images/login-logo.png" alt="Logo" class="login-logo" />
+    <h1>Perfiles de la Plataforma</h1>
+  </header>
 
-<h2>Perfiles de la Plataforma:</h2>
+  <!-- Contenido principal -->
+  <main class="opciones-content">
 
-<table class="options-table" border="1" cellspacing="0" cellpadding="5">
-  <thead>
-    <tr [vAlign]="'top'" [align]="'left'">
-      <th>Nro</th>
-      <th>Perfil</th>
-      <th>Ícono</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Perfil Super Adminsitrador-->
-    <tr>
-      <td>01</td>
-      <td><a routerLink="/perfil-admin-pri">Super Admin</a></td>
-      <td align="center"><i class="fas fa-user-shield"></i></td>
-    </tr>
-    <!-- Perfil Adminsitrador - Colegio-->
-    <tr>
-      <td>02</td>
-      <td><a routerLink="/perfil-admin-sec">Administrador</a></td>
-      <td align="center"><i class="fas fa-user-cog"></i></td>
-    </tr>
-    <!-- Perfil Docente - Colegio-->
-    <tr>
-      <td>03</td>
-      <td><a routerLink="/perfil-docente">Docente</a></td>
-      <td align="center"><i class="fas fa-chalkboard-teacher"></i></td>
-    </tr>
-    <!-- Perfil Estudiante - Colegio-->
-    <tr>
-      <td>04</td>
-      <td><a routerLink="/perfil-estudiante">Estudiante</a></td>
-      <td align="center"><i class="fas fa-user-graduate"></i></td>
-    </tr>
-    <tr>
-      <td>05</td>
-      <td><a routerLink="/perfil-familia">Familia</a></td>
-      <td align="center"><i class="fas fa-users"></i></td>
-    </tr>
-  </tbody>
-</table>
+    <table class="options-table" border="1" cellspacing="0" cellpadding="5">
+      <thead>
+        <tr [vAlign]="'top'" [align]="'left'">
+          <th>Nro</th>
+          <th>Perfil</th>
+          <th>Ícono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Perfil Super Administrador -->
+        <tr>
+          <td>01</td>
+          <td><a routerLink="/perfil-admin-pri">Super Admin</a></td>
+          <td><i class="fas fa-user-shield"></i></td>
+        </tr>
+        <!-- Perfil Administrador - Colegio -->
+        <tr>
+          <td>02</td>
+          <td><a routerLink="/perfil-admin-sec">Administrador</a></td>
+          <td><i class="fas fa-user-cog"></i></td>
+        </tr>
+        <!-- Perfil Docente - Colegio -->
+        <tr>
+          <td>03</td>
+          <td><a routerLink="/perfil-docente">Docente</a></td>
+          <td><i class="fas fa-chalkboard-teacher"></i></td>
+        </tr>
+        <!-- Perfil Estudiante - Colegio -->
+        <tr>
+          <td>04</td>
+          <td><a routerLink="/perfil-estudiante">Estudiante</a></td>
+          <td><i class="fas fa-user-graduate"></i></td>
+        </tr>
+        <!-- Perfil Familia -->
+        <tr>
+          <td>05</td>
+          <td><a routerLink="/perfil-familia">Familia</a></td>
+          <td><i class="fas fa-users"></i></td>
+        </tr>
+      </tbody>
+    </table>
 
-<!-- Enlace para regresar al login -->
-<div class="link-container">
-  <a routerLink="/" class="back-to-login">Regresar al Login</a>
+    <!-- Enlace para regresar al login -->
+    <div class="link-container">
+      <a routerLink="/" class="back-to-login">Regresar al Inicio</a>
+    </div>
+    
+  </main>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <p>© 2025 Plataforma Educativa</p>
+  </footer>
 </div>

@@ -1,3 +1,4 @@
+// Configuracion de TypeScript para el servidor
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
