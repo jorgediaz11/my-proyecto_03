@@ -14,9 +14,11 @@ interface MenuItem {
 export class PerfilAdminPriComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/inicio' }, // Ejemplo de ruta
-    { label: 'Docentes', icon: 'list', route: '/productos' },
-    { label: 'Alumnos', icon: 'users', route: '/clientes' },
+    { label: 'Inicio', icon: 'home', route: '/opciones' }, // Ejemplo de ruta
+    { label: 'Colegios', icon: 'school', route: 'colegios' },
+    { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes' },
+    { label: 'Estudiantes', icon: 'user-graduate', route: 'estudiantes' },
+    { label: 'Materias', icon: 'book', route: 'materias' },
     { label: 'Aulas', icon: 'users', route: '/clientes' },
     { label: 'Configuración', icon: 'cogs', route: '/configuracion' },
     { label: 'Reportes', icon: 'chart-bar', route: '/reportes' },

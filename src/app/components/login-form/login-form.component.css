@@ -12,11 +12,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un diseño más limpio */
     text-align: center;
   }
-  
+
   /* ==========================================================================
      Contenedor de Login y Registro
      ========================================================================== */
-  
+
   .login-register-container {
     display: flex; /* Distribuye las secciones horizontalmente */
     justify-content: space-between; /* Espacio entre las secciones */
@@ -24,7 +24,7 @@
     padding: 0 0px; /* Margen izquierdo y derecho de 20px */
     font-family: sans-serif;
   }
-  
+
   /* Secciones individuales de Login y Registro */
   .login-section,
   .register-section {
@@ -34,19 +34,19 @@
     background-color: #fff; /* Fondo blanco */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para diseño */
   }
-  
+
   .login-section {
     flex: 3; /* Ocupa el 60% del espacio disponible */
   }
-  
+
   .register-section {
     flex: 2; /* Ocupa el 40% del espacio disponible */
   }
-  
+
   /* ==========================================================================
      Header de Login
      ========================================================================== */
-  
+
   .login-header {
     display: flex; /* Activa el diseño flexbox */
     align-items: center; /* Centra verticalmente los elementos */
@@ -56,13 +56,13 @@
     padding: 10px;
     border: 1px solid #ccc; /* Borde fino */
   }
-  
+
   .login-header h1 {
     margin: 0; /* Elimina el margen del título */
     font-size: 1.5em; /* Ajusta el tamaño del texto */
     text-align: right; /* Alinea el texto a la derecha */
   }
-  
+
   /* Logo de Login */
   .login-logo {
     width: 250px; /* Ajusta el tamaño según sea necesario */
@@ -70,16 +70,16 @@
     margin-bottom: 20px;
     /* border-style:outset; */
   }
-  
+
   /* ==========================================================================
      Contenido Principal de Login
      ========================================================================== */
-  
+
   .login-content {
     padding: 20px;
     text-align: center;
   }
-  
+
   .login-form-layout {
     border: 1px solid #ddd; /* Borde general para diseño */
     border-radius: 5px;
@@ -87,22 +87,22 @@
     margin: 20px auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* ==========================================================================
      Formulario
      ========================================================================== */
-  
+
   form {
     display: flex;
     flex-direction: column;
     width: 400px;
     margin: 0 auto;
   }
-  
+
   .form-group {
     margin-bottom: 15px;
   }
-  
+
   label {
     display: block;
     margin-bottom: 5px;
@@ -110,20 +110,20 @@
     color: #555;
     text-align: left; /* Alinea el texto a la izquierda */
   }
-  
+
   input {
     margin-bottom: 15px;
     padding: 8px;
     font-size: 14px;
   }
-  
+
   input[type="text"],
   input[type="password"] {
     width: calc(100% - 16px); /* Ajuste para el padding y el borde */
     border: 1px solid #ccc;
     border-radius: 3px;
   }
-  
+
   /* Botón */
   button {
     padding: 10px;
@@ -135,15 +135,15 @@
     font-size: 1em;
     transition: background-color 0.3s ease;
   }
-  
+
   button:hover {
     background-color: #218838; /* Un tono más oscuro para el hover */
   }
-  
+
   /* ==========================================================================
      Footer de Login
      ========================================================================== */
-  
+
   .login-footer {
     background-color: #28a745; /* Fondo verde */
     color: white; /* Texto blanco */
@@ -151,11 +151,11 @@
     text-align: center;
     border: 1px solid #ccc; /* Borde fino */
   }
-  
+
   /* ==========================================================================
      Enlaces
      ========================================================================== */
-  
+
   /* Enlace de Olvidé mi contraseña */
   .forgot-password {
     margin-top: 10px;
@@ -163,27 +163,27 @@
     color: #007bff;
     cursor: pointer;
   }
-  
+
   .forgot-password:hover {
     text-decoration: underline;
   }
-  
+
   /* Contenedor de Enlaces */
   .link-container {
     text-align: center;
     margin-top: 15px;
   }
-  
+
   .options-link {
     color: #007bff;
     text-decoration: none;
     font-size: 14px;
   }
-  
+
   .options-link:hover {
     text-decoration: underline;
   }
-  
+
   /* Enlace "To Options" (puede ser para cambiar entre login/registro) */
   .to-options {
     display: inline-block;
@@ -199,18 +199,44 @@
     text-align: center;
     margin-top: 20px; /* Agregado para consistencia con la ubicación original */
   }
-  
+
   .to-options:hover {
     background-color: #218838; /* Un tono más oscuro para el hover */
     color: #fff;
     text-decoration: none;
   }
-  
+
   /* ==========================================================================
      Encabezados de Sección
      ========================================================================== */
-  
+
   h2 {
     color: #333;
     margin-bottom: 15px;
   }
+
+  .button-container {
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}

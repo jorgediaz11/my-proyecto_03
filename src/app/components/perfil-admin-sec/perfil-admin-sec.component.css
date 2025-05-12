@@ -7,24 +7,24 @@
     height: 70vh;
     overflow: hidden;
   }
-  
+
   .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: auto;
   }
-  
+
   .content {
     padding: 20px;
     flex: 1;
     overflow-y: auto;
   }
-  
+
   /* ==========================================================================
      Barra Superior (Top Bar)
      ========================================================================== */
-  
+
   .top-bar {
     background-color: #f0f0f0;
     padding: 10px;
@@ -33,11 +33,11 @@
     font-size: 1.2em;
     font-weight: bold;
   }
-  
+
   /* ==========================================================================
      Barra Lateral (Sidebar)
      ========================================================================== */
-  
+
   .sidebar {
     background-color: #28a745;
     color: white;
@@ -45,15 +45,15 @@
     transition: width 0.3s ease-in-out;
     overflow-y: auto;
   }
-  
+
   .sidebar.menu-open {
     width: 250px;
   }
-  
+
   .sidebar:not(.menu-open) {
     width: 60px; /* Ancho del menú cerrado */
   }
-  
+
   /* Logo del Sidebar */
   .sidebar .logo {
     display: flex;
@@ -61,17 +61,17 @@
     padding: 10px;
     border-bottom: 1px solid #4a6572;
   }
-  
+
   .sidebar .logo span {
     margin-left: 10px;
     font-size: 1.2em;
     font-weight: bold;
   }
-  
+
   .sidebar:not(.menu-open) .logo span {
     display: none; /* Ocultar el texto del logo */
   }
-  
+
   /* Botón para togglear el menú */
   .sidebar .menu-toggle {
     background-color: transparent;
@@ -82,14 +82,14 @@
     margin-right: 10px;
     padding: 5px;
   }
-  
+
   /* Lista del menú */
   .sidebar .menu {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  
+
   /* Items del menú */
   .sidebar .menu .menu-item {
     padding: 10px;
@@ -98,58 +98,58 @@
     align-items: center;
     transition: background-color 0.2s ease;
   }
-  
+
   .sidebar .menu .menu-item:hover {
     background-color: #218838;
   }
-  
+
   .sidebar .menu .menu-item.active {
     background-color: #4a6572;
     font-weight: bold;
   }
-  
+
   .sidebar:not(.menu-open) .menu-item {
     padding: 10px;
     text-align: center;
   }
-  
+
   /* Iconos de los items del menú */
   .sidebar .menu .menu-item i {
     margin-right: 10px;
     font-size: 1.1em;
   }
-  
+
   /* Texto de los items del menú */
   .sidebar .menu .menu-item span {
     display: inline-block; /* Mostrar el texto */
     opacity: 1;
     transition: opacity 0.3s ease;
   }
-  
+
   .sidebar.menu-open .menu-item span {
     opacity: 1;
   }
-  
+
   .sidebar:not(.menu-open) .menu-item span {
     opacity: 0;      /* Ocultar el texto de los items del menú */
     display: none;
   }
-  
+
   /* ==========================================================================
      Layout de la Sección de Perfil de Administrador
      ========================================================================== */
-  
+
   .perfil-admin-sec-layout {
     padding: 20px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     border-radius: 5px;
   }
-  
+
   /* ==========================================================================
      Enlace para Volver a las Opciones
      ========================================================================== */
-  
+
   .back-to-options {
     display: inline-block;
     margin-top: 20px;
@@ -168,7 +168,7 @@
     font-size: 1em;
     transition: background-color 0.3s ease;*/
   }
-  
+
   .back-to-options:hover {
     background-color: #218838;
     color: #fff;
@@ -205,4 +205,14 @@
   padding: 10px;
   text-align: center;
   border: 1px solid #ccc; /* Borde fino */
+}
+
+.menu-item a {
+  color: white; /* Asegúrate de que los textos sean blancos */
+  text-decoration: none;
+  /*font-weight: bold;*/
+}
+
+.menu-item a:hover {
+  color: #ddd; /* Cambia a un tono más claro al pasar el cursor */
 }

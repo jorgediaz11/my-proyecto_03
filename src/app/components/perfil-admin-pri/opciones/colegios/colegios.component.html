@@ -1,0 +1,83 @@
+<div class="colegios-container">
+  <h2>Lista de Colegios</h2>
+
+  <!-- Filtro y botón para crear -->
+  <div class="filter-container">
+    <!-- Botón para crear un nuevo registro -->
+    <button class="create-button" (click)="createColegio()">Nuevo Colegio</button>
+
+    <!-- Filtro -->
+    <div class="filter-input">
+      <label for="search">Buscar Colegio:</label>
+      <input
+        id="search"
+        type="text"
+
+        (input)="filterColegios()"
+        placeholder="Ingrese el nombre del colegio"
+      />
+    </div>
+  </div>
+
+  <!-- Formulario para nuevo colegio -->
+  <div *ngIf="showForm" class="form-container">
+    <h3>Nuevo Colegio</h3>
+    <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()">
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" formControlName="nombre" type="text" />
+      </div>
+      <div>
+        <label for="direccion">Dirección:</label>
+        <input id="direccion" formControlName="direccion" type="text" />
+      </div>
+      <div>
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" formControlName="telefono" type="text" placeholder="123-456-7890" />
+      </div>
+      <button type="submit" [disabled]="colegioForm.invalid">Guardar</button>
+      <button type="button" (click)="resetForm()">Limpiar</button>
+      <button type="button" (click)="cancelCreate()">Cancelar</button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <table class="colegios-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let colegio of paginatedColegios">
+        <td>{{ colegio.id }}</td>
+        <td>{{ colegio.nombre }}</td>
+        <td>{{ colegio.direccion }}</td>
+        <td>{{ colegio.telefono }}</td>
+        <td>
+          <!-- Ícono para Ver -->
+          <i class="fas fa-eye action-icon" title="Detalles" (click)="viewColegio(colegio.id)"></i>
+          <!-- Ícono para Editar -->
+          <i class="fas fa-edit action-icon" title="Editar" (click)="editColegio(colegio.id)"></i>
+          <!-- Ícono para Eliminar -->
+          <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="pagination">
+    <button
+      *ngFor="let page of getTotalPages(); let i = index"
+      [class.active]="currentPage === i + 1"
+      (click)="changePage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+</div>

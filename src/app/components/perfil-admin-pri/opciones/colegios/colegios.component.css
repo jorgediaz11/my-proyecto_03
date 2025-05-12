@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Contenedor Principal de Colegios
+   ========================================================================== */
+
+.colegios-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Tabla de Colegios
+   ========================================================================== */
+
+.colegios-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.colegios-table th,
+.colegios-table td {
+  font-size: 0.9em; /* Reducir el tamaño del texto */
+  border: 1px solid #ddd;
+  padding: 6px; /* Reducir el espacio interno */
+  text-align: left;
+}
+
+.colegios-table th {
+  background-color: #28a745;
+  color: white;
+  font-size: 0.95em; /* Tamaño ligeramente mayor para los encabezados */
+}
+
+.colegios-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.colegios-table tr:hover {
+  background-color: #ddd;
+}
+
+/* ==========================================================================
+   Paginación
+   ========================================================================== */
+
+.pagination {
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #28a745;
+  background-color: white;
+  color: #28a745;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #28a745;
+  color: white;
+}
+
+.pagination button:hover {
+  background-color: #218838;
+  color: white;
+}
+
+/* ==========================================================================
+   Íconos de Acción
+   ========================================================================== */
+
+.action-icon {
+  margin: 0 5px;
+  font-size: 1.2em;
+  color: #28a745;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.action-icon:hover {
+  color: #218838;
+}
+
+/* Opcional: Estilo para el tooltip (si no usas el atributo `title`) */
+.action-icon[title] {
+  position: relative;
+}
+
+.action-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.6em; /* Igual al tamaño del texto de la tabla */
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.action-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+  z-index: 10;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-container input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.create-button {
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #218838;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+}
+
+.filter-input label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-input input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.form-container {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.form-container h3 {
+  margin-bottom: 10px;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-container button {
+  margin-right: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-container button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+.form-container button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-container button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button-container {
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="button"] {
+  background-color: #ffc107;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #e0a800;
+}
+
+button[type="button"].cancel {
+  background-color: #dc3545;
+}
+
+button:hover {
+  opacity: 0.9;
+}

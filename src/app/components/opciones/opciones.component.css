@@ -2,29 +2,29 @@ h2 {
     text-align: center;
     color: #333;
   }
-  
+
   p {
     text-align: center;
     font-size: 16px;
     margin-bottom: 20px;
   }
-  
+
   ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
   }
-  
+
   li {
     margin: 10px 0;
   }
-  
+
   a {
     color: #007bff;
     text-decoration: none;
     font-size: 16px;
   }
-  
+
   a:hover {
     text-decoration: underline;
   }
@@ -33,13 +33,13 @@ h2 {
     text-align: center;
     margin-top: 20px;
   }
-  
+
   .back-to-login {
     color: #007bff;
     text-decoration: none;
     font-size: 16px;
   }
-  
+
   .back-to-login:hover {
     text-decoration: underline;
   }
@@ -50,7 +50,7 @@ h2 {
     margin-bottom: 20px;
     /* border-style:outset; */
   }
-  
+
   /* Header */
 .login-header {
   display: flex;
@@ -86,7 +86,7 @@ h2 {
 .opciones-container {
   max-width: 800px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
@@ -108,4 +108,79 @@ h2 {
 .options-table th {
   text-align: left; /* Alinea los encabezados a la izquierda */
   padding: 8px; /* Agrega un poco de espacio interno */
+}
+
+.opciones-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.modern-table {
+  width: 60%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modern-table th,
+.modern-table td {
+  padding: 12px 10px;
+  text-align: left;
+}
+
+.modern-table th {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.modern-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.modern-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.action-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #45a049;
+}
+
+.empty-space {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-space img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

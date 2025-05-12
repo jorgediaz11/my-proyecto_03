@@ -7,8 +7,9 @@
 
   <!-- Contenido principal -->
   <main class="opciones-content">
+  <div class="table-container">
 
-    <table class="options-table" border="1" cellspacing="0" cellpadding="5">
+    <table class="modern-table" border="1" cellspacing="0" cellpadding="5">
       <thead>
         <tr [vAlign]="'top'" [align]="'left'">
           <th>Nro</th>
@@ -50,12 +51,18 @@
       </tbody>
     </table>
 
+    <!-- Imagen en el espacio vacío -->
+    <div class="empty-space">
+      <img src="assets/images/lead-perfiles.png" alt="Imagen decorativa" />
+    </div>
+
+    </div>
+  </main>
+
     <!-- Enlace para regresar al login -->
     <div class="link-container">
       <a routerLink="/" class="back-to-login">Regresar al Inicio</a>
     </div>
-    
-  </main>
 
   <!-- Footer -->
   <footer class="login-footer">

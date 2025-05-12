@@ -19,12 +19,17 @@
         <label for="password">Clave:</label>
         <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
       </div>
-      <button type="submit" class="to-options">Iniciar Sesión</button>
-      <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
-      <p class="forgot-password" >Olvidé mi contraseña</p>
-    </div>
+      <div class="button-container"></div>
+        <!-- Mensaje de error al registrar -->
+        <button type="button" (click)="resetForm()">Limpiar</button>
+        <!-- Mensaje de inicio de sesion -->
+        <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+        <!-- Mensaje de error al iniciar sesión -->
+        <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
+        <p class="forgot-password" >Olvidé mi contraseña</p>
+      </div>
     </form>
-  
+
     <!-- Sección de registro -->
     <div class="register-section">
       <h2>Nuevo usuario</h2>
