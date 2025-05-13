@@ -9,7 +9,9 @@ import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-ad
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
 import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
-import { MateriasComponent } from './components/perfil-admin-pri/opciones/materias/materias.component';
+import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
+import { ConfiguracionComponent } from './components/perfil-admin-pri/opciones/configuracion/configuracion.component';
+import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docente.component';
@@ -26,7 +28,9 @@ export const routes: Routes = [
       { path: 'colegios', component: ColegiosComponent },
       { path: 'docentes', component: DocentesComponent },
       { path: 'estudiantes', component: EstudiantesComponent },
-      { path: 'materias', component: MateriasComponent },
+      { path: 'academico', component: AcademicoComponent },
+      { path: 'configuracion', component: ConfiguracionComponent },
+      { path: 'reportes', component: ReportesComponent },
       // Otras rutas hijas
     ]
   }, // Ruta para el perfil de admin

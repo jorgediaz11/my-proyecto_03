@@ -97,6 +97,17 @@ form button:last-child {
   margin-right: 0; /* Elimina el margen derecho del último botón */
 }
 
+/* Estilo específico para el botón "Limpiar" */
+form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
+  background-color: red;
+  color: white;
+  border: 1px solid darkred;
+  /* Mantén otros estilos que quieras conservar */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
 /* ============================== */
 /* Footer                         */
 /* ============================== */

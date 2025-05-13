@@ -1,0 +1,47 @@
+/* Contenedor principal en diseño de 2x2 */
+.academico-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+  gap: 20px; /* Espaciado entre los elementos */
+  padding: 20px;
+}
+
+/* Estilo para cada elemento */
+.academico-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Bordes semiredondeados */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de transición */
+  background-color: #f9f9f9;
+}
+
+/* Efecto al pasar el mouse */
+.academico-item:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Imagen */
+.academico-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Asegura que la imagen se ajuste al tamaño */
+  margin-right: 20px; /* Espaciado entre la imagen y el texto */
+  border-radius: 5px; /* Bordes ligeramente redondeados */
+}
+
+/* Título */
+.academico-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none; /* Sin subrayado */
+  transition: color 0.3s ease; /* Transición para el color */
+}
+
+/* Efecto al pasar el mouse sobre el título */
+.academico-title:hover {
+  color: #007bff; /* Cambia a azul */
+}

@@ -233,8 +233,22 @@ button[type="submit"] {
 }
 
 button[type="button"] {
-  background-color: #dc3545;
+  background-color: #dc3545; /* Fondo rojo */
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Estilo específico para el botón "Limpiar" */
+button:nth-of-type(1) { /* Apunta al primer botón (Limpiar) */
+  background-color: red;
+  color: white;
+  border: 1px solid darkred;
+  /* Mantén otros estilos que quieras conservar */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1em;
 }
 
 button:hover {

@@ -15,13 +15,15 @@ export class PerfilAdminPriComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
     { label: 'Inicio', icon: 'home', route: '/opciones' }, // Ejemplo de ruta
+    { label: 'Usuarios', icon: 'school', route: 'usuarios' },
     { label: 'Colegios', icon: 'school', route: 'colegios' },
     { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes' },
     { label: 'Estudiantes', icon: 'user-graduate', route: 'estudiantes' },
-    { label: 'Materias', icon: 'book', route: 'materias' },
-    { label: 'Aulas', icon: 'users', route: '/clientes' },
-    { label: 'Configuración', icon: 'cogs', route: '/configuracion' },
-    { label: 'Reportes', icon: 'chart-bar', route: '/reportes' },
+    { label: 'Academico', icon: 'book', route: 'academico' },
+    { label: 'Reportes', icon: 'users', route: 'clientes' },
+    { label: 'Auditoria', icon: 'cogs', route: 'configuracion' },
+    { label: 'Reportes', icon: 'chart-bar', route: 'reportes' },
+    { label: 'Perfil', icon: 'chart-bar', route: 'perfil' },
   ];
 
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)
