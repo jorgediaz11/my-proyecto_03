@@ -16,19 +16,22 @@
       <span>Administrador Principal</span>
     </div>
 
-<ul class="menu">
-  <li *ngFor="let item of menuItems" class="menu-item">
-    <a [routerLink]="item.route" routerLinkActive="active">
-      <i class="fas fa-{{item.icon}}"></i>
-      <span *ngIf="isMenuOpen">{{item.label}}</span>
-    </a>
-  </li>
-</ul>
+    <!-- Menu Navegación -->
+    <ul class="menu">
+      <li *ngFor="let item of menuItems" class="menu-item">
+        <a [routerLink]="item.route" routerLinkActive="active">
+          <i class="fas fa-{{item.icon}}"></i>
+          <span *ngIf="isMenuOpen">{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
+    <!-- Cierre Menu -->
 
     <!-- Enlace para regresar a la página de opciones -->
     <div class="link-container">
       <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
     </div>
+
   </aside>
 
   <!-- Contenido principal -->
@@ -40,6 +43,7 @@
       <router-outlet></router-outlet>
     </div>
   </main>
+
 </div>
 
 <!-- Footer -->

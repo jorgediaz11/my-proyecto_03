@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-academico',
-  templateUrl: './academico.component.html',
+  templateUrl: './academico.component.html',  //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.html
   styleUrls: ['./academico.component.css']
 })
 export class AcademicoComponent {

@@ -16,6 +16,8 @@ import { OpcionesComponent } from './components/opciones/opciones.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
+import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
+
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docente.component';
@@ -31,6 +33,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     LoginRegistroComponent,
     OpcionesComponent,
     PerfilAdminPriComponent,
+    UsuariosComponent,
     ColegiosComponent,
     PerfilAdminSecComponent,
     PerfilDocenteComponent,

@@ -6,12 +6,15 @@ import { LoginRegistroComponent } from './components/login-registro/login-regist
 import { OpcionesComponent } from './components/opciones/opciones.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
+import { PerfilAdminPriMuroComponent } from './components/perfil-admin-pri/perfil-admin-pri-muro.component'; // Importar el nuevo componente
+import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
 import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
-import { ConfiguracionComponent } from './components/perfil-admin-pri/opciones/configuracion/configuracion.component';
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component';
+import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
+import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docente.component';
@@ -25,12 +28,15 @@ export const routes: Routes = [
   { path: 'perfil-admin-pri',                               // Ruta para el perfil de admin pri
     component: PerfilAdminPriComponent,
     children: [
-      { path: 'colegios', component: ColegiosComponent },
-      { path: 'docentes', component: DocentesComponent },
-      { path: 'estudiantes', component: EstudiantesComponent },
-      { path: 'academico', component: AcademicoComponent },
-      { path: 'configuracion', component: ConfiguracionComponent },
-      { path: 'reportes', component: ReportesComponent },
+      { path: '', component: PerfilAdminPriMuroComponent }, // Ruta predeterminada
+      { path: 'usuarios', component: UsuariosComponent },   // Ruta para la sección de usuarios
+      { path: 'colegios', component: ColegiosComponent },   // Ruta para la sección de colegios
+      { path: 'docentes', component: DocentesComponent },   // Ruta para la sección de docentes
+      { path: 'estudiantes', component: EstudiantesComponent }, // Ruta para la sección de estudiantes
+      { path: 'academico', component: AcademicoComponent },     // Ruta para la sección académica
+      { path: 'reportes', component: ReportesComponent },    // Ruta para la sección de reportes
+      { path: 'auditoria', component: AuditoriaComponent },   // Ruta para la sección de configuración
+      { path: 'perfil', component: PerfilComponent },    // Ruta para la sección de reportes
       // Otras rutas hijas
     ]
   }, // Ruta para el perfil de admin
