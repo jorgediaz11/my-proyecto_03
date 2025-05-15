@@ -1,15 +1,15 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-perfil-admin-pri-muro',
+  selector: 'perfil-familia-muro',
   standalone: true,
   imports: [],
-  templateUrl: './perfil-admin-pri-muro.component.html',
-  styleUrls: ['./perfil-admin-pri-muro.component.css']
+  templateUrl: './perfil-familia-muro.component.html',
+  styleUrl: './perfil-familia-muro.component.css'
 })
-export class PerfilAdminPriMuroComponent implements AfterViewInit {
-  // Contadores
+export class PerfilFamiliaMuroComponent {
+// Contadores
   totalColegios = 10;
   totalProfesores = 50;
   totalAlumnos = 200;

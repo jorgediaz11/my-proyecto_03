@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+// Importar el módulo de enrutamiento
 @Component({
   selector: 'app-opciones',
   templateUrl: './opciones.component.html',

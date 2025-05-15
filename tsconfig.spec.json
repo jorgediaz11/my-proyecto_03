@@ -1,5 +1,3 @@
-//
-
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
@@ -10,7 +8,7 @@
     ]
   },
   "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.spec.ts",   // Included to prevent errors in IDEs
+    "src/**/*.d.ts"       //
   ]
 }

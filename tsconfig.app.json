@@ -13,8 +13,8 @@
     "server.ts"
   ],
   "include": [
-    "src/**/*.d.ts",
-    "src/**/*.ts",
-    "src/environments/**/*.ts"
+    "src/**/*.d.ts",                // Included to prevent errors in IDEs
+    "src/**/*.ts",                  // Included to prevent errors in IDEs
+    "src/environments/**/*.ts"      // Included to prevent errors in IDEs
   ]
 }

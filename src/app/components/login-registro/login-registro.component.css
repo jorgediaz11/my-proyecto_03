@@ -138,8 +138,8 @@ form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
 
 .to-options:hover {
   background-color: #218838; /* Un tono más oscuro para el hover */
-  color: #fff;
-  text-decoration: none;
+  color: #fff;            /* Color blanco al pasar el mouse */
+  text-decoration: none;    /* Elimina el subrayado al pasar el mouse */
 }
 
 .error-message {

@@ -147,8 +147,8 @@
   .login-footer {
     background-color: #28a745; /* Fondo verde */
     color: white; /* Texto blanco */
-    padding: 10px;
-    text-align: center;
+    padding: 10px;    /* Espacio interno */
+    text-align: center; /* Centra el texto */
     border: 1px solid #ccc; /* Borde fino */
   }
 

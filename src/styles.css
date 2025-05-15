@@ -1,5 +1,15 @@
+
+app-root {
+  width: 100%;
+  max-width: 1200px;  /*Ancho del Contenedor Principal*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+/* Estilos para el contenedor principal */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Roboto, "Helvetica Neue", sans-serif;;
   margin: 0;
   padding: 0;
   display: flex;
@@ -8,22 +18,8 @@ body {
   height: 100vh;
   background-color: #f4f4f9;
 }
-
-app-root {
-  width: 100%;
-  max-width: 1000px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-}
+/* Estilos para el contenedor principal */
 html, body {
   height: 100%;
+  margin-top: 60px; /* 56px navbar + 10px separación */
 }
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

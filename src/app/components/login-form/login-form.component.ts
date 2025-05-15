@@ -21,7 +21,7 @@ throw new Error('Method not implemented.');
       password: ['', Validators.required]
     });
   }
-
+  // Método para manejar el evento de clic en el botón de "Iniciar sesión"
   onSubmit(): void {
     const { username, password } = this.loginForm.value;
 
@@ -36,7 +36,7 @@ throw new Error('Method not implemented.');
       this.loginError = 'Credenciales inválidas. Inténtalo de nuevo.';
     }
   }
-
+  // Método para manejar el evento de clic en el botón de "Registrarse"
   resetForm(): void {
     this.loginForm.reset(); // Limpia todos los campos del formulario
   }

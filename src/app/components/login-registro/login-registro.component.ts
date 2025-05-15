@@ -19,7 +19,7 @@ export class LoginRegistroComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
+  // Método para manejar el evento de clic en el botón de "Registrarse"
   onSubmit(): void {
     if (this.registroForm.valid) {
       console.log('Formulario enviado:', this.registroForm.value);
@@ -27,9 +27,9 @@ export class LoginRegistroComponent {
       console.log('Formulario inválido');
     }
   }
-
+  // Método para manejar el evento de clic en el botón de "Iniciar sesión"
   onReset(): void {
     this.registroForm.reset(); // Limpia todos los campos del formulario
   }
-  
+
 }

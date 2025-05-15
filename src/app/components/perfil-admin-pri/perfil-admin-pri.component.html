@@ -17,14 +17,25 @@
     </div>
 
     <!-- Menu Navegación -->
-    <ul class="menu">
+    <!-- <ul class="menu">
       <li *ngFor="let item of menuItems" class="menu-item">
         <a [routerLink]="item.route" routerLinkActive="active">
           <i class="fas fa-{{item.icon}}"></i>
           <span *ngIf="isMenuOpen">{{item.label}}</span>
         </a>
       </li>
-    </ul>
+    </ul> -->
+  <ul class="menu">
+    <li *ngFor="let item of menuItems" class="menu-item">
+      <a
+        [routerLink]="item.route"
+        [class.disabled]="item.disabled"
+        [attr.tabindex]="item.disabled ? -1 : null">
+        <i class="fas fa-{{ item.icon }}"></i>
+        <span *ngIf="isMenuOpen">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
     <!-- Cierre Menu -->
 
     <!-- Enlace para regresar a la página de opciones -->

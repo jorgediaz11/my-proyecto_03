@@ -216,3 +216,9 @@
 .menu-item a:hover {
   color: #ddd; /* Cambia a un tono más claro al pasar el cursor */
 }
+
+.menu-item a.disabled {
+  pointer-events: none; /* Desactiva clics */
+  color: #ccc; /* Cambia el color para indicar que está deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor */
+}

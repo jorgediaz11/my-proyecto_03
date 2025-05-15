@@ -4,14 +4,14 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true, // Habilita la interoperabilidad con módulos CommonJS
+    "esModuleInterop": true,              // Habilita la interoperabilidad con módulos CommonJS
     "allowSyntheticDefaultImports": true, // Recomendado para trabajar con importaciones predeterminadas
-    "experimentalDecorators": true,
-    "outDir": "./dist/out-tsc",
-    "lib": ["ES2022", "dom"]
+    "experimentalDecorators": true,       // Habilita el uso de decoradores
+    "outDir": "./dist/out-tsc",           // Directorio de salida para los archivos compilados
+    "lib": ["ES2022", "dom"]              // Especifica las bibliotecas que se incluirán en la compilación
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts"                         // Incluye todos los archivos TypeScript en la carpeta src y sus subcarpetas
   ],
   "exclude": [
     "src/main.server.ts",

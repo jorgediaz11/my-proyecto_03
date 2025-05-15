@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="assets/images/login-logo.png" alt="Logo" class="login-logo me-2" />
+      LMS
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item" *ngFor="let item of menuItems">
+          <a
+            class="nav-link"
+            [routerLink]="item.label === 'Acceso' ? item.route : null"
+            href="#"
+            (click)="item.label !== 'Acceso' ? (onMenuItemClick(item, $event)) : null"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container text-center mt-5 contenido-inicio">
+  <h1 class="text-gray">{{ textoSeleccionado }}</h1>
+  <p class="text-gray" *ngIf="textoSeleccionado === 'Bienvenido a Nuestra Plataforma'">
+    Explora nuestras opciones y descubre todo lo que tenemos para ofrecer.
+  </p>
+</div>

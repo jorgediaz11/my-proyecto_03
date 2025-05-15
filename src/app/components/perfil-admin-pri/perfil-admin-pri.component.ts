@@ -4,6 +4,7 @@ interface MenuItem {
   label: string;
   icon: string;
   route: string;
+  disabled: boolean; // Added the missing 'disabled' property
 }
 
 @Component({
@@ -15,15 +16,16 @@ interface MenuItem {
 export class PerfilAdminPriComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/opciones' },        // Ejemplo de ruta
-    { label: 'Usuarios', icon: 'users', route: 'usuarios' },      // Cambié 'usuarios' a 'usuarios'
-    { label: 'Colegios', icon: 'school', route: 'colegios' },     // Cambié 'colegios' a 'colegios'
-    { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes' }, // Cambié 'docentes' a 'docentes'
-    { label: 'Estudiantes', icon: 'user-graduate', route: 'estudiantes' },  // Cambié 'estudiantes' a 'estudiantes'
-    { label: 'Academico', icon: 'book', route: 'academico' },     // Cambié 'academico' a 'academico'
-    { label: 'Reportes', icon: 'users', route: 'reportes' },      // Cambié 'clientes' a 'reportes'
-    { label: 'Auditoria', icon: 'cogs', route: 'auditoria' }, // Cambié 'configuracion' a 'configuracion'
-    { label: 'Perfil', icon: 'chart-bar', route: 'perfil' },      // Cambié 'perfil' a 'perfil'
+    { label: 'Inicio', icon: 'home', route: '', disabled: false },                      // Ruta al muro del perfil
+    { label: 'Usuarios', icon: 'user-friends', route: 'usuarios' , disabled: false },          // Cambié 'usuarios' a 'usuarios'
+    { label: 'Colegios', icon: 'school', route: 'colegios', disabled: false  },         // Cambié 'colegios' a 'colegios'
+    { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes', disabled: false  }, // Cambié 'docentes' a 'docentes'
+    { label: 'Estudiantes', icon: 'user-graduate', route: 'estudiantes', disabled: false  },  // Cambié 'estudiantes' a 'estudiantes'
+    { label: 'Academico', icon: 'book', route: 'academico', disabled: false  },         // Cambié 'academico' a 'academico'
+    { label: 'Reportes', icon: 'chart-bar', route: 'reportes', disabled: false  },          // Cambié 'clientes' a 'reportes'
+    { label: 'Auditoria', icon: 'clipboard-check', route: 'auditoria', disabled: false  },         // Cambié 'configuracion' a 'configuracion'
+    { label: 'Perfil', icon: 'user-circle', route: 'perfil', disabled: false  },          // Cambié 'perfil' a 'perfil'
+    { label: 'Cerrar Sesion', icon: 'sign-out-alt', route: '/opciones' , disabled: false },
   ];
 
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)

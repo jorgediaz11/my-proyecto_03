@@ -6,8 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
+// Inicio Principal
+import { InicioComponent } from './inicio/inicio.component';
 // Login / Registro
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginRegistroComponent } from './components/login-registro/login-registro.component';
@@ -20,15 +21,20 @@ import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuari
 
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
+// Perfil Docente
 import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docente.component';
+// Perfil Estudiante
 import { PerfilEstudianteComponent } from './components/perfil-estudiante/perfil-estudiante.component';
+// Perfil Familia
 import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-familia.component';
+// Otros Import
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
     AppComponent,
+    InicioComponent,
     LoginFormComponent,
     LoginRegistroComponent,
     OpcionesComponent,
@@ -39,7 +45,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     PerfilDocenteComponent,
     PerfilEstudianteComponent,
     PerfilFamiliaComponent,
-    ConfirmDialogComponent
+    //ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

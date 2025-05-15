@@ -12,9 +12,9 @@ export function app(): express.Express {
   const serverDistFolder = __dirname;
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
-
   const commonEngine = new CommonEngine();
 
+  // Use the Angular engine for rendering
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 

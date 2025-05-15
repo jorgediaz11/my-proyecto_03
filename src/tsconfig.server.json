@@ -8,8 +8,8 @@
     "types": []
   },
   "files": [
-    "src/main.server.ts",
-    "server.ts"
+    "src/main.server.ts", // Archivo principal del servidor
+    "server.ts"           // Archivo de entrada del servidor
   ],
   "angularCompilerOptions": {
     "entryModule": "src/app/app.server.module#AppServerModule"

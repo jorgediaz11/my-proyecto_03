@@ -1,57 +1,59 @@
+
 h2 {
     text-align: center;
     color: #333;
   }
 
-  p {
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
+p {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
 
-  li {
-    margin: 10px 0;
-  }
+li {
+  margin: 10px 0;
+}
 
-  a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 16px;
-  }
+a {
+  color: #202020;
+  text-decoration: none;
+  font-size: 16px;
+}
 
-  a:hover {
-    text-decoration: underline;
-  }
+a:hover {
+  text-decoration: underline;
 
-  .link-container {
-    text-align: center;
-    margin-top: 20px;
-  }
+}
 
-  .back-to-login {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 16px;
-  }
+.link-container {
+  text-align: center;
+  margin-top: 20px;
+}
 
-  .back-to-login:hover {
-    text-decoration: underline;
-  }
+.back-to-login {
+  color: #202020;
+  text-decoration: none;
+  font-size: 16px;
+}
 
-  .login-logo {
-    width: 250px; /* Ajusta el tamaño según sea necesario */
-    height: auto;
-    margin-bottom: 20px;
-    /* border-style:outset; */
-  }
+.back-to-login:hover {
+  text-decoration: underline;
+}
 
-  /* Header */
+.login-logo {
+  width: 250px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-bottom: 20px;
+  /* border-style:outset; */
+}
+
+/* Header */
 .login-header {
   display: flex;
   align-items: center;
