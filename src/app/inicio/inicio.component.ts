@@ -17,11 +17,13 @@ export class InicioComponent {
     { label: 'Contáctenos', route: '/contacto' }
   ];
 
-  textoSeleccionado: string = 'Bienvenido a Nuestra Plataforma';
+  textoTitulo: string = 'Bienvenido a Nuestra Plataforma';
+  textoDetalle: string = 'Detalle del Menu';
 
   onMenuItemClick(item: any, event: Event) {
     event.preventDefault();
-    this.textoSeleccionado = item.label;
+    this.textoTitulo = item.label;
+    this.textoDetalle = `Has seleccionado el menú: ${item.label}`;
   }
 
 }

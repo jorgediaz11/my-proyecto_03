@@ -21,5 +21,6 @@ body {
 /* Estilos para el contenedor principal */
 html, body {
   height: 100%;
-  margin-top: 60px; /* 56px navbar + 10px separación */
+  margin-top: 10px; /* 56px navbar + 10px separación */
 }
+/* Estilos para el contenedor principal */

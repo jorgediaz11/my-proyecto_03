@@ -36,7 +36,7 @@ export class PerfilFamiliaMuroComponent {
         {
           label: 'Participantes',
           data: [120, 60, 20],
-          backgroundColor: ['#007bff', '#ffc107', '#28a745']
+          backgroundColor: ['#28a745', '#ffc107', '#28a745']
         }
       ]
     },

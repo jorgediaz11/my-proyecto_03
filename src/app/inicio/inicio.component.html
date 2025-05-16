@@ -1,3 +1,4 @@
+<!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center" routerLink="/">
@@ -24,9 +25,163 @@
   </div>
 </nav>
 
+<!-- Contenedor principal -->
+<!-- Elementos destacados para la página de inicio -->
+<div class="container text-center contenido-inicio mb-3">
+  <!-- Seccion 01 -->
+  <div class="fw-bold titulo-principal mb-2 separador-20">
+    Transforma la manera de leer y aprender
+  </div>
+  <!-- Seccion 02 -->
+  <div class="descripcion-principal mb-4 separador-20">
+    Una plataforma interactiva que hace que la lectura sea divertida y efectiva para estudiantes de todas las edades.
+  </div>
+  <!-- Seccion 03 y Seccion 04 -->
+  <div class="mb-4">
+    <a class="btn btn-success btn-lg me-2" href="/prueba-gratis">Prueba gratis</a>
+    <a class="btn btn-outline-success btn-lg" href="/conoce-mas">Conoce más</a>
+  </div>
+  <!-- Seccion 05 -->
+  <div class="fw-bold subtitulo-principal mt-4 mb-3">
+        Transforma la manera de leer y aprender / Nuestra plataforma ofrece
+  </div>
+</div>
+
+<!-- Seccion Temporal -->
 <div class="container text-center mt-5 contenido-inicio">
-  <h1 class="text-gray">{{ textoSeleccionado }}</h1>
-  <p class="text-gray" *ngIf="textoSeleccionado === 'Bienvenido a Nuestra Plataforma'">
-    Explora nuestras opciones y descubre todo lo que tenemos para ofrecer.
+  <h1 class="text-gray">{{ textoTitulo }}</h1>
+  <p class="text-gray">
+    {{ textoDetalle }}
   </p>
 </div>
+
+<!-- Contenido Fichas Primncipales -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <!-- Ficha 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="card ficha-efecto h-100 text-center">
+        <img src="assets/images/portal-01.png" class="card-img-top" alt="Libros interactivos">
+        <div class="card-body">
+          <h4 class="card-title">Libros interactivos</h4>
+          <p class="card-text">Lecturas con actividades integradas que mejoran la comprensión.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Ficha 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="card ficha-efecto h-100 text-center">
+        <img src="assets/images/portal-02.png" class="card-img-top" alt="Evaluaciones">
+        <div class="card-body">
+          <h4 class="card-title">Evaluaciones</h4>
+          <p class="card-text">Pruebas adaptativas que miden el progreso de cada estudiante.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Ficha 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="card ficha-efecto h-100 text-center">
+        <img src="assets/images/portal-03.png" class="card-img-top" alt="Reportes detallados">
+        <div class="card-body">
+          <h4 class="card-title">Reportes detallados</h4>
+          <p class="card-text">Seguimiento del progreso con análisis y recomendaciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-secondary text-white pt-5 pb-3 mt-4 w-100">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- Columna 01 -->
+      <div class="col-md-3 mb-4 d-flex flex-column">
+        <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-white" style="font-size: 20px;">LMS Eureka</h5>
+            <p class="card-text text-start text-white">
+              Transformando la lectura en una experiencia interactiva y divertida para todos los estudiantes.
+            </p>
+            <div class="d-flex gap-3 mt-3">
+              <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook fa-2x text-primary"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram fa-2x text-danger"></i>
+              </a>
+              <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                <i class="fab fa-twitter fa-2x text-info"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Columna 05 debajo de la 01 -->
+        <div class="card mt-4 text-start p-3" style="border:none; box-shadow:none;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-white" style="font-size: 20px;">Suscríbete</h5>
+            <p class="card-text mb-2  text-white" style="font-size: 16px;">
+              Recibe las últimas noticias y actualizaciones.
+            </p>
+            <form class="d-flex">
+              <input type="email" class="form-control me-2" placeholder="Tu email">
+              <button class="btn btn-success" type="submit">
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Columna 02 -->
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-white" style="font-size: 20px;">Producto</h5>
+            <div class="d-flex flex-column gap-2 mt-3">
+              <a href="#" class="footer-link" style="font-size: 16px;">Características</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Precios</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Recursos</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">FAQ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Columna 03 -->
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-white" style="font-size: 20px;">Empresa</h5>
+            <div class="d-flex flex-column gap-2 mt-3">
+              <a href="#" class="footer-link" style="font-size: 16px;">Nosotros</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Blog</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Carreras</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Contacto</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Columna 04 -->
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-white" style="font-size: 20px;">Legal</h5>
+            <div class="d-flex flex-column gap-2 mt-3">
+              <a href="#" class="footer-link" style="font-size: 16px;">Privacidad</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Términos</a>
+              <a href="#" class="footer-link" style="font-size: 16px;">Seguridad</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Texto final -->
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="mt-4 text-center text-white" style="font-size: 1.3rem;">
+          © 2025 LMS Eureka. Todos los derechos reservados.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Fin del contenido -->

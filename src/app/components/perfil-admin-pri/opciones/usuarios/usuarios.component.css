@@ -1,7 +1,13 @@
+/* --- Estilos Generales de Texto --- */
 h2 {
-  color: #007bff;
+  color: #28a745;
 }
 
+label {
+  font-weight: bold;
+}
+
+/* --- Estilos de Listas --- */
 ul {
   list-style: none;
   padding: 0;
@@ -14,20 +20,32 @@ li {
   border-radius: 5px;
 }
 
+/* --- Estilos de Formularios --- */
 form {
   margin-top: 20px;
 }
 
+/* Estilos para elementos input (genérico) */
 input {
-  margin-right: 10px;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
+/* Estilos específicos para input dentro de formularios */
+form input {
+  margin-right: 10px; /* Aplica solo a inputs dentro de form (si es deseado) */
+}
+
+/* Estilos específicos para input dentro de tablas */
+table input {
+  width: 100%; /* Aplica solo a inputs dentro de table */
+}
+
+/* --- Estilos de Botones --- */
 button {
-  padding: 5px 10px;
-  background-color: #007bff;
+  padding: 8px 16px; /* Estilo general para botones */
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
@@ -35,10 +53,21 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #145c32;
 }
 
-/* Estilo para las pestañas */
+/* --- Estilos de Tablas --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+td {
+  padding: 8px;
+}
+
+/* --- Estilos para las Pestañas (Componente) --- */
 .tabs {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -57,13 +86,13 @@ button:hover {
   padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
-  color: #007bff;
+  color: #28a745;
   border-bottom: 2px solid transparent;
 }
 
 .tab-button.active {
-  border-bottom: 2px solid #007bff;
-  color: #0056b3;
+  border-bottom: 2px solid #28a745;
+  color: #4a6572;
 }
 
 .tab-content {
@@ -78,36 +107,43 @@ button:hover {
   display: block;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-td {
-  padding: 8px;
-}
-
-label {
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
+button[type="submit"] {
+  background-color: #198754;
+  color: #fff;
+  border: 1.5px solid #145c32;
   border-radius: 5px;
-}
-
-button {
   padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  margin-right: 8px;
   cursor: pointer;
+  transition: background 0.2s;
+}
+button[type="submit"]:hover {
+  background-color: #145c32;
 }
 
-button:hover {
-  background-color: #0056b3;
+button.btn-limpiar {
+  background-color: #198754;
+  color: #fff;
+  border: 1.5px solid #145c32;
+  border-radius: 5px;
+  padding: 8px 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn-limpiar:hover {
+  background-color: #145c32;
+}
+
+button.btn-cancelar {
+  background-color: #dc3545;
+  color: #fff;
+  border: 1.5px solid #a71d2a;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button.btn-cancelar:hover {
+  background-color: #a71d2a;
 }

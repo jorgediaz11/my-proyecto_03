@@ -37,9 +37,18 @@ a:hover {
 }
 
 .back-to-login {
-  color: #202020;
-  text-decoration: none;
+  display: inline-block;
+  min-width: 60px;
   font-size: 16px;
+  color: #198754;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .back-to-login:hover {
@@ -185,4 +194,23 @@ h2 {
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-link {
+  display: inline-block;
+  min-width: 60px;
+  font-size: 16px;
+  color: #198754;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.login-link:hover, .login-link:focus {
+  background: #e9ecef;
+  color: #145c32;
 }

@@ -21,9 +21,9 @@
       </div>
       <div class="button-container"></div>
         <!-- Mensaje de error al registrar -->
-        <button type="button" (click)="resetForm()">Limpiar</button>
+        <button type="button" class="btn-login btn-limpiar" (click)="resetForm()">Limpiar</button>
         <!-- Mensaje de inicio de sesion -->
-        <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+        <button type="submit" class="btn-login btn-iniciar" [disabled]="loginForm.invalid">Iniciar Sesión</button>
         <!-- Mensaje de error al iniciar sesión -->
         <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
         <p class="forgot-password" >Olvidé mi contraseña</p>
@@ -34,11 +34,12 @@
     <div class="register-section">
       <h2>Nuevo usuario</h2>
       <p>Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-      <!-- Botón para redirigir al registro -->
-      <a routerLink="/registro" class="to-options">Crear cuenta</a>
+      <!-- <button type="button" class="btn-login btn-crear">Crear cuenta</button> -->
+       <a routerLink="/login-registro" class="btn-link-crear">Crear cuenta</a>
       <br>
-      <!-- Enlace a la página de opciones -->
-      <a routerLink="/opciones" class="to-options">Ir a Opciones</a>
+      <a routerLink="/opciones" class="login-link">Ir a Opciones</a>
+      <br>
+      <a routerLink="/inicio" class="login-link">Ir a Inicio</a>
     </div>
 
   </div>

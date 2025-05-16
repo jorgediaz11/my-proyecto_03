@@ -16,7 +16,7 @@ export class UsuariosComponent {
 
   agregarUsuario(nombre: string, email: string) {
     const nuevoUsuario = { nombre, email };
-    this.usuarios.push(nuevoUsuario);
+    this.usuarios.push(nuevoUsuario); // Agregar el nuevo usuario al arreglo
   }
 
   selectTab(tab: string) {

@@ -43,7 +43,7 @@
 
 /* Efecto al pasar el mouse sobre el título */
 .academico-title:hover {
-  color: #007bff; /* Cambia a azul */
+  color: #28a745;
 }
 
 /* Contadores */
@@ -71,7 +71,7 @@
   margin: 5px 0 0;
   font-size: 1.5em;
   font-weight: bold;
-  color: #007bff;
+  color: #28a745;
 }
 
 /* Gráfica */

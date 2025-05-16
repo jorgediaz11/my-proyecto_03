@@ -17,25 +17,17 @@
     </div>
 
     <!-- Menu Navegación -->
-    <!-- <ul class="menu">
+    <ul class="menu">
       <li *ngFor="let item of menuItems" class="menu-item">
-        <a [routerLink]="item.route" routerLinkActive="active">
-          <i class="fas fa-{{item.icon}}"></i>
-          <span *ngIf="isMenuOpen">{{item.label}}</span>
+        <a
+          [routerLink]="item.route"
+          [class.disabled]="item.disabled"
+          [attr.tabindex]="item.disabled ? -1 : null">
+          <i class="fas fa-{{ item.icon }}"></i>
+          <span *ngIf="isMenuOpen">{{ item.label }}</span>
         </a>
       </li>
-    </ul> -->
-  <ul class="menu">
-    <li *ngFor="let item of menuItems" class="menu-item">
-      <a
-        [routerLink]="item.route"
-        [class.disabled]="item.disabled"
-        [attr.tabindex]="item.disabled ? -1 : null">
-        <i class="fas fa-{{ item.icon }}"></i>
-        <span *ngIf="isMenuOpen">{{ item.label }}</span>
-      </a>
-    </li>
-  </ul>
+    </ul>
     <!-- Cierre Menu -->
 
     <!-- Enlace para regresar a la página de opciones -->
@@ -48,7 +40,7 @@
   <!-- Contenido principal -->
   <main class="main-content">
     <header class="top-bar">
-      <div>Dashboard</div>
+      <div>Muro - Perfil Super Administrador</div>
     </header>
     <div class="content">
       <router-outlet></router-outlet>

@@ -188,28 +188,28 @@
 }
 
 .login-header h1 {
-  margin: 0; /* Elimina el margen del título */
-  font-size: 1.5em; /* Ajusta el tamaño del texto */
-  text-align: right; /* Alinea el texto a la derecha */
+  margin: 0;          /* Elimina el margen del título */
+  font-size: 1.5em;   /* Ajusta el tamaño del texto */
+  text-align: right;  /* Alinea el texto a la derecha */
 }
 
 /* Footer */
 .login-footer {
   background-color: #28a745; /* Fondo verde */
-  color: white; /* Texto blanco */
+  color: white;       /* Texto blanco */
   padding: 10px;
   text-align: center;
   border: 1px solid #ccc; /* Borde fino */
 }
 
 .menu-item a {
-  color: white; /* Asegúrate de que los textos sean blancos */
+  color: white;       /* Asegúrate de que los textos sean blancos */
   text-decoration: none;
   /*font-weight: bold;*/
 }
 
 .menu-item a:hover {
-  color: #ddd; /* Cambia a un tono más claro al pasar el cursor */
+  color: #ddd;        /* Cambia a un tono más claro al pasar el cursor */
 }
 
 .menu-item a {
@@ -219,6 +219,6 @@
 
 .menu-item a.disabled {
   pointer-events: none; /* Desactiva clics */
-  color: #ccc; /* Cambia el color para indicar que está deshabilitado */
-  cursor: not-allowed; /* Cambia el cursor */
+  color: #ccc;        /* Cambia el color para indicar que está deshabilitado */
+  cursor: not-allowed;  /* Cambia el cursor */
 }

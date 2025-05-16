@@ -35,8 +35,8 @@ export const routes: Routes = [
 // Ruta para el inicio
   { path: '', component: InicioComponent }, // Componente inicial
 // Ruta para el login y registro
-  { path: 'login', component: LoginFormComponent },              // Ruta para el login
-  { path: 'registro', component: LoginRegistroComponent },  // Ruta para el registro
+  { path: 'login', component: LoginFormComponent },         // Ruta para el login
+  { path: 'login-registro', component: LoginRegistroComponent },  // Ruta para el registro
 // Ruta para el menú de opciones
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones
 // Ruta para el perfil de admin

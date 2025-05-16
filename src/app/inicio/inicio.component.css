@@ -93,7 +93,7 @@ h1 {
 
 /* Estilos específicos para el contenido en la página de inicio */
 .contenido-inicio {
-  margin-top: calc(56px + 10px); /* Espacio desde la barra de navegación */
+  margin-top: calc(80px + 10px); /* Espacio desde la barra de navegación */
 }
 
 /* ==================================================
@@ -131,6 +131,11 @@ button:hover {
   font-size: 20px;        /* Doble del tamaño estándar (~16px) */
   color: #fff !important; /* Blanco */
   transition: color 0.3s;
+  margin-right: 20px;     /* Separación entre opciones */
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+  margin-right: 0;        /* Quita el margen a la última opción */
 }
 
 .navbar-nav .nav-link:hover,
@@ -142,4 +147,81 @@ button:hover {
 /* Texto en Gris (Clase reutilizable) */
 .text-gray {
   color: #6c757d; /* Gris Bootstrap */
+}
+
+.ficha-efecto {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.ficha-efecto:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  border: 2px solid #ffc107;
+}
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.titulo-principal {
+  font-size: 40px;
+  font-weight: bold;
+  color: #212529;
+  padding: 10px 20px;
+}
+
+.descripcion-principal {
+  font-size: 34px;
+  color: #495057;
+  padding: 10px 20px;
+  line-height: 1; /* Valor estándar y legible */
+}
+
+.ficha-btn {
+  transition: all 0.2s;
+}
+
+.ficha-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(40,167,69,0.12);
+}
+
+.subtitulo-principal {
+  font-size: 34px;
+  font-weight: bold;
+  color: #212529;
+  padding: 10px 20px;
+}
+
+.btn-outline-success {
+  border-width: 2px;
+  font-weight: bold;
+}
+
+.separador-20 {
+  margin-bottom: 20px !important;
+}
+
+.contenido-inicio {
+  margin-top: 550px;
+}
+.card {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+/* Enlaces del footer: gris claro y naranja al pasar el mouse */
+.footer-link {
+  color: #dee2e6 !important; /* Gris claro Bootstrap */
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: normal;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  color: orange !important;
+  font-weight: bold;
 }

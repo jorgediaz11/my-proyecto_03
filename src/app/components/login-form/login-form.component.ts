@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {
-onReset() {
-throw new Error('Method not implemented.');
+  onReset() {
+  throw new Error('Method not implemented.');
 }
   loginForm: FormGroup;
   loginError: string | null = null; // Para mostrar errores de autenticación
