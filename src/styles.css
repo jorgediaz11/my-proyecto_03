@@ -1,9 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 app-root {
   width: 100%;
-  max-width: 1200px;  /*Ancho del Contenedor Principal*/
+  /*max-width: 1200px;  /*Ancho del Contenedor Principal*/
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  /*padding: 20px;*/
   background: white;
   border-radius: 8px;
 }
@@ -21,6 +24,6 @@ body {
 /* Estilos para el contenedor principal */
 html, body {
   height: 100%;
-  margin-top: 10px; /* 56px navbar + 10px separación */
+  margin-top: 80px; /* 56px navbar + 10px separación */
 }
 /* Estilos para el contenedor principal */

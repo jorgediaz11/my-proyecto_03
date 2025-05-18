@@ -19,6 +19,7 @@ export class InicioComponent {
 
   textoTitulo: string = 'Bienvenido a Nuestra Plataforma';
   textoDetalle: string = 'Detalle del Menu';
+  isMenuOpen: any;
 
   onMenuItemClick(item: any, event: Event) {
     event.preventDefault();
