@@ -4,16 +4,14 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
-// Removed misplaced constructor
-
-interface Colegio {
+interface Colegio { // Define la interfaz Colegio
   id: number;
   nombre: string;
   direccion: string;
   telefono: string;
 }
 
-@Component({
+@Component({  // Cambié 'app-colegios' a 'app-colegios'
   selector: 'app-colegios',
   templateUrl: './colegios.component.html',
   styleUrls: ['./colegios.component.css']
@@ -28,6 +26,7 @@ export class ColegiosComponent implements OnInit {
   colegioForm: FormGroup;
   showForm: boolean = false;
 
+  // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.colegioForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -36,6 +35,7 @@ export class ColegiosComponent implements OnInit {
     });
   }
 
+  // Método para manejar el evento de clic en el botón de "Crear Colegio"
   ngOnInit(): void {
     for (let i = 1; i <= 25; i++) {
       this.colegios.push({

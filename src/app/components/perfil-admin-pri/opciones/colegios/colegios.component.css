@@ -8,7 +8,7 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #F3FEF5;  /* Fondo claro */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -31,17 +31,17 @@
 }
 
 .colegios-table th {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
   font-size: 0.95em; /* Tamaño ligeramente mayor para los encabezados */
 }
 
 .colegios-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f0f0f0;  /* Fondo gris claro */
 }
 
 .colegios-table tr:hover {
-  background-color: #ddd;
+  background-color: #ddd; /* Fondo gris al pasar el cursor */
 }
 
 /* ==========================================================================
@@ -55,21 +55,21 @@
 .pagination button {
   margin: 0 5px;
   padding: 5px 10px;
-  border: 1px solid #28a745;
-  background-color: white;
-  color: #28a745;
+  border: 1px solid #28a745;  /* Color verde */
+  background-color: white;  /* Fondo blanco */
+  color: #28a745; /* Color verde */
   cursor: pointer;
   border-radius: 4px;
 }
 
 .pagination button.active {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
 }
 
 .pagination button:hover {
-  background-color: #218838;
-  color: white;
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+  color: white; /* Texto blanco */
 }
 
 /* ==========================================================================
@@ -79,7 +79,7 @@
 .action-icon {
   margin: 0 5px;
   font-size: 1.2em;
-  color: #28a745;
+  color: #28a745; /* Color verde */
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -99,11 +99,11 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
+  background-color: #333; /* Fondo oscuro */
+  color: #fff;  /* Fondo blanco */
   padding: 5px 10px;
   border-radius: 4px;
-  white-space: nowrap;
+  white-space: nowrap;  /* Texto blanco */
   font-size: 0.6em; /* Igual al tamaño del texto de la tabla */
   z-index: 10;
   opacity: 1;
@@ -150,8 +150,8 @@
 
 .create-button {
   padding: 8px 15px;
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
   border: none;
   border-radius: 4px;
   font-size: 0.9em;
@@ -160,7 +160,7 @@
 }
 
 .create-button:hover {
-  background-color: #218838;
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
 }
 
 .filter-input {
@@ -186,7 +186,7 @@
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #F3FEF5;  /* Fondo claro */
 }
 
 .form-container h3 {
@@ -216,18 +216,18 @@
 }
 
 .form-container button[type="submit"] {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
 }
 
 .form-container button[type="submit"]:disabled {
-  background-color: #ccc;
+  background-color: #ccc; /* Borde fino */
   cursor: not-allowed;
 }
 
 .form-container button[type="button"] {
-  background-color: #dc3545;
-  color: white;
+  background-color: #dc3545;  /* Fondo rojo */
+  color: white; /* Texto blanco */
 }
 
 .button-container {
@@ -243,21 +243,21 @@ button {
 }
 
 button[type="submit"] {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
 }
 
 button[type="button"] {
-  background-color: #ffc107;
-  color: white;
+  background-color: #ffc107;  /* Fondo amarillo */
+  color: white; /* Texto blanco */
 }
 
 button[type="button"]:hover {
-  background-color: #e0a800;
+  background-color: #e0a800;  /* Amarillo más oscuro al pasar el cursor */
 }
 
 button[type="button"].cancel {
-  background-color: #dc3545;
+  background-color: #dc3545;  /* Fondo rojo */
 }
 
 button:hover {

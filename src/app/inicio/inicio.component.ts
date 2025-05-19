@@ -13,7 +13,7 @@ export class InicioComponent {
     { label: 'Niveles', route: '/niveles' },
     { label: 'Catálogo', route: '/catalogo' },
     { label: 'Noticias', route: '/noticias' },
-    { label: 'Acceso', route: '/login' }, // Enlace al login
+    { label: 'Acceso', route: '/login' },         // Enlace al login
     { label: 'Contáctenos', route: '/contacto' }
   ];
 
@@ -21,7 +21,7 @@ export class InicioComponent {
   textoDetalle: string = 'Detalle del Menu';
   isMenuOpen: any;
 
-  onMenuItemClick(item: any, event: Event) {
+  onMenuItemClick(item: any, event: Event) {    // Método para manejar el clic en un elemento del menú
     event.preventDefault();
     this.textoTitulo = item.label;
     this.textoDetalle = `Has seleccionado el menú: ${item.label}`;

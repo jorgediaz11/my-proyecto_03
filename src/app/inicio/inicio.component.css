@@ -3,7 +3,7 @@
    ================================================== */
 body {
   font-family: 'Arial', sans-serif; /* Fuente consistente */
-  background-color: #28a745; /* Fondo verde similar a las otras páginas */
+  background-color: #4EAD4F; /* Fondo verde */
   margin: 0;
   padding: 0;
 
@@ -49,7 +49,7 @@ h1 {
    Menú Horizontal
    ================================================== */
 .menu-horizontal {
-  background-color: #28a745; /* Fondo verde para el menú */
+  background-color: #4EAD4F; /* Fondo verde */
   padding: 20px 0;
 }
 
@@ -100,8 +100,8 @@ h1 {
    Botones (Opcional)
    ================================================== */
 button {
-  background-color: #28a745; /* Fondo verde para los botones */
-  color: white;
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -111,7 +111,7 @@ button {
 }
 
 button:hover {
-  background-color: #218838; /* Verde más oscuro al pasar el cursor */
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
 }
 
 /* ==================================================
@@ -129,7 +129,7 @@ button:hover {
 /* Barra de Navegación (Navbar) */
 .navbar-nav .nav-link {
   font-size: 20px;        /* Doble del tamaño estándar (~16px) */
-  color: #fff !important; /* Blanco */
+  color: white !important; /* Blanco */
   transition: color 0.3s;
   margin-right: 20px;     /* Separación entre opciones */
 }

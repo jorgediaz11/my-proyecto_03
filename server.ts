@@ -41,17 +41,17 @@ export function app(): express.Express {
       .catch((err) => next(err));
   });
 
-  return server;
+  return server;    // Return the server instance
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 4000; // Default port
 
   // Start up the Node server
-  const server = app();
-  server.listen(port, () => {
+  const server = app();                     // Call the app function to get the server instance
+  server.listen(port, () => {               // Start listening on the specified port
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
 
-run();
+run();      // Execute the run function to start the server

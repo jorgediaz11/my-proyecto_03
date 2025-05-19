@@ -7,9 +7,10 @@
 //   plugins: [],
 // }
 
+// tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}",
+    "./src/**/*.{html,ts}", // Adjust the path to your HTML and TypeScript files
   ],
   theme: {
     extend: {},

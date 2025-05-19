@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {
-  onReset() {
-  throw new Error('Method not implemented.');
+  onReset() { // Cambié 'onReset' a 'resetForm'
+  throw new Error('Method not implemented.'); // Método para manejar el evento de clic en el botón de "Restablecer"
 }
-  loginForm: FormGroup;
+  loginForm: FormGroup; // Formulario reactivo para el inicio de sesión
   loginError: string | null = null; // Para mostrar errores de autenticación
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {

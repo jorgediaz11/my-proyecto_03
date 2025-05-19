@@ -41,10 +41,10 @@ export class PerfilFamiliaMuroComponent {
       ]
     },
     options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false
+      responsive: true, // Hacer el gráfico responsivo
+      plugins: {  // Configuración de los plugins
+        legend: {         // Ocultar la leyenda
+          display: false  // Oculta la leyenda
         }
       }
     }

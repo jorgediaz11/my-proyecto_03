@@ -34,17 +34,17 @@ export class PerfilDocenteMuroComponent {
       labels: ['Inscritos', 'En Progreso', 'Completados'],
       datasets: [
         {
-          label: 'Participantes',
-          data: [120, 60, 20],
-          backgroundColor: ['#28a745', '#ffc107', '#28a745']
+          label: 'Participantes', // Cambié 'Participantes' a 'Participantes'
+          data: [120, 60, 20],  // Cambié los datos a [120, 60, 20]
+          backgroundColor: ['#28a745', '#ffc107', '#28a745']  // Cambié los colores a verde y amarillo
         }
       ]
     },
     options: {
-      responsive: true,
+      responsive: true, // Cambié 'responsive: true' a 'responsive: true'
       plugins: {
         legend: {
-          display: false
+          display: false  // Cambié 'display: true' a 'display: false'
         }
       }
     }

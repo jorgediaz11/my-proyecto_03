@@ -1,9 +1,9 @@
 /* Estilo global para enlaces */
 a {
-  color: inherit; /* Asegúrate de que los enlaces hereden el color del contenedor */
-  text-decoration: none;
+  color: inherit;             /* Asegúrate de que los enlaces hereden el color del contenedor */
+  text-decoration: none;      /* Sin subrayado por defecto */
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Subrayado al pasar el ratón */
 }

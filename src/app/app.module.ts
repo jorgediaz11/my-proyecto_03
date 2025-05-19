@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';   // Importa MatTabsModule aquí
 import { AppComponent } from './app.component';
 
 // Inicio Principal
@@ -16,9 +17,11 @@ import { LoginRegistroComponent } from './components/login-registro/login-regist
 import { OpcionesComponent } from './components/opciones/opciones.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
-import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
 import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
-
+import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
+import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
+import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
+import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 // Perfil Docente
@@ -41,6 +44,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     PerfilAdminPriComponent,
     UsuariosComponent,
     ColegiosComponent,
+    DocentesComponent,
+    EstudiantesComponent,
+    PerfilComponent,
     PerfilAdminSecComponent,
     PerfilDocenteComponent,
     PerfilEstudianteComponent,
@@ -48,16 +54,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     //ConfirmDialogComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule, // Necesario para Angular Material
-    MatDialogModule,
-    MatButtonModule,
-    ReactiveFormsModule, // Importa ReactiveFormsModule aquí
+    BrowserModule,            // Importa BrowserModule aquí
+    BrowserAnimationsModule,  // Necesario para Angular Material
+    MatDialogModule,          // Importa MatDialogModule aquí
+    MatButtonModule,          // Importa MatButtonModule aquí
+    MatTabsModule,            // Importa MatTabsModule aquí
+    ReactiveFormsModule,      // Importa ReactiveFormsModule aquí
     RouterModule.forRoot(routes)
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync()  // Proveedor para animaciones asincrónicas
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]   // Componente raíz de la aplicación
 })
-export class AppModule {}
+export class AppModule {}     // Módulo principal de la aplicación

@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos para el contenedor principal */
 app-root {
   width: 100%;
   /*max-width: 1200px;  /*Ancho del Contenedor Principal*/
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /*padding: 20px;*/
-  background: white;
+  background: white;  /* Fondo blanco */
   border-radius: 8px;
 }
 /* Estilos para el contenedor principal */
@@ -19,11 +20,10 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f9;
+  background-color: #f4f4f9;  /* Color de fondo */
 }
-/* Estilos para el contenedor principal */
+
 html, body {
   height: 100%;
   margin-top: 80px; /* 56px navbar + 10px separación */
 }
-/* Estilos para el contenedor principal */

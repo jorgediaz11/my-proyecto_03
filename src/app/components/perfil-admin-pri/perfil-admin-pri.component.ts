@@ -32,6 +32,6 @@ export class PerfilAdminPriComponent {
 
   // Método para manejar el evento de clic en un elemento del menú
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
   }
 }

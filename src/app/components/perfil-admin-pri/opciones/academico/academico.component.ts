@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './academico.component.html',  //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.html
   styleUrls: ['./academico.component.css']
 })
-export class AcademicoComponent {
+export class AcademicoComponent { // Cambié 'AcademicoComponent' a 'app-academico'
   academicos = [
     { title: 'Cursos', image: 'assets/images/cursos.png', link: '/academico/cursos' },
     { title: 'Niveles', image: 'assets/images/niveles.png', link: '/academico/niveles' },

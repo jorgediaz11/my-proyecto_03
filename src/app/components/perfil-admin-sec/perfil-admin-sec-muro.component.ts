@@ -29,22 +29,22 @@ export class PerfilAdminSecMuroComponent {
   }
 
   new Chart(ctx, {
-    type: 'bar',
+    type: 'bar',  // Tipo de gráfico
     data: {
-      labels: ['Inscritos', 'En Progreso', 'Completados'],
+      labels: ['Inscritos', 'En Progreso', 'Completados'],  // Etiquetas de las barras
       datasets: [
         {
-          label: 'Participantes',
-          data: [120, 60, 20],
-          backgroundColor: ['#28a745', '#ffc107', '#28a745']
+          label: 'Participantes', // Etiqueta del conjunto de datos
+          data: [120, 60, 20],  // Datos de ejemplo
+          backgroundColor: ['#28a745', '#ffc107', '#28a745']  // Colores de las barras
         }
       ]
     },
     options: {
-      responsive: true,
+      responsive: true, // Hacer el gráfico responsivo
       plugins: {
         legend: {
-          display: false
+          display: false  // Ocultar la leyenda
         }
       }
     }

@@ -80,6 +80,8 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
     //   }
     // });
     // Verifica si el gráfico se ha creado correctamente
+
+
 new Chart(ctx, {
   type: 'bar',
   data: {
@@ -109,17 +111,17 @@ new Chart(ctx, {
     },
     scales: {
       x: {
-        beginAtZero: true,
-        max: 200,
+        beginAtZero: true,  // Comienza desde cero
+        max: 200, // Valor máximo del eje X
         title: {
-          display: false,
-          text: 'Cantidad'
+          display: false, // Cambié a 'false' para ocultar el título del eje X
+          text: 'Cantidad'  // Cambié a 'Cantidad' para que coincida con el eje Y
         }
       },
       y: {
         title: {
-          display: false,
-          text: 'Estado'
+          display: false, // Cambié a 'false' para ocultar el título del eje Y
+          text: 'Estado'  // Cambié a 'Estado' para que coincida con el eje X
         },
         ticks: {
           // align: 'center'

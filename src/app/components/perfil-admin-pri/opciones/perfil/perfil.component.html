@@ -1,1 +1,110 @@
-<p>perfil works!</p>
+<h2>Perfil</h2>
+<!-- Este es el contenido de la pestaña de gestión de usuarios -->
+<div class="tabs">
+  <!-- Encabezados de las pestañas -->
+  <div class="tab-header">
+    <!-- <button class="tab-button active" (click)="selectTab('listado')">Perfil</button>
+    <button class="tab-button" (click)="selectTab('perfil')">Historial</button> -->
+    <button class="tab-button" [class.active]="activeTab === 'perfil'" (click)="selectTab('perfil')">Perfil</button>
+    <button class="tab-button" [class.active]="activeTab === 'listado'" (click)="selectTab('listado')">Historial</button>
+  </div>
+
+  <!-- Contenido de las pestañas -->
+  <div class="tab-content">
+    <!-- Pestaña de Listado -->
+    <div class="tab-panel" [ngClass]="{ active: activeTab === 'perfil' }">
+
+        <!-- Tab Perfil reorganizado con Tailwind -->
+        <div class="flex bg-white rounded-lg shadow p-6 gap-8">
+          <!-- Sección 1: Imagen y Rol -->
+          <div class="flex flex-col items-center justify-start min-w-[180px]">
+            <img [src]="perfilForm.value.foto" alt="Foto de perfil"
+                class="w-32 h-32 rounded-full mb-4 object-cover border border-gray-300 shadow" />
+            <span class="mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">Administrador Pri</span>
+          </div>
+          <!-- Línea divisoria vertical -->
+          <div class="border-l border-gray-300 mx-6"></div>
+          <!-- Sección 2: Campos del perfil -->
+          <div class="flex-1">
+            <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()" class="grid grid-cols-1 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Nombres:</label>
+                <input formControlName="nombres" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Apellidos:</label>
+                <input formControlName="apellidos" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Correo:</label>
+                <input formControlName="correo" type="email" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Teléfono:</label>
+                <input formControlName="telefono" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Foto (URL):</label>
+                <input formControlName="foto" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Contraseña:</label>
+                <div class="flex items-center">
+                  <input [type]="mostrarContrasena ? 'text' : 'password'" formControlName="contrasena"
+                        class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+                  <button type="button" (click)="mostrarContrasena = !mostrarContrasena"
+                          class="ml-2 text-xs text-blue-600 underline">Mostrar</button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña:</label>
+                <div class="flex items-center">
+                  <input [type]="mostrarConfirmar ? 'text' : 'password'" formControlName="confirmarContrasena"
+                        class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
+                  <button type="button" (click)="mostrarConfirmar = !mostrarConfirmar"
+                          class="ml-2 text-xs text-blue-600 underline">Mostrar</button>
+                </div>
+              </div>
+              <div *ngIf="perfilForm.errors?.mismatch" class="text-red-600 text-sm">
+                Las contraseñas no coinciden.
+              </div>
+              <button type="submit" [disabled]="!perfilForm.valid"
+                      class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Guardar Cambios
+              </button>
+            </form>
+          </div>
+        </div>
+
+    </div>
+
+    <!-- Pestaña de Agregar Usuario -->
+    <div class="tab-panel" [ngClass]="{ active: activeTab === 'listado' }">
+  <h3 class="text-lg font-semibold mb-4">Historial de Accesos</h3>
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table class="table-auto bg-white w-full">
+      <thead>
+        <tr>
+          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Fecha</th>
+          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Hora</th>
+          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">PC</th>
+          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">IP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let acceso of historialAccesos; let i = index"
+            [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+            class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.fecha }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.hora }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.pc }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.ip }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+
+  </div>
+</div>
+<!-- Fin de la pestaña de Agregar Usuario -->

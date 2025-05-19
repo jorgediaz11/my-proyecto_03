@@ -2,225 +2,225 @@
    Contenedor Principal
    ========================================================================== */
 
-   .login-container {
-    max-width: 800px; /* Ancho general del contenedor principal */
-    margin: 20px auto; /* Centra el contenedor horizontalmente */
-    padding: 20px;
-    border: 2px solid #ddd; /* Borde más grueso */
-    border-radius: 8px; /* Bordes redondeados */
-    background-color: #f9f9f9; /* Fondo claro */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un diseño más limpio */
-    text-align: center;
-  }
+.login-container {
+  max-width: 800px; /* Ancho general del contenedor principal */
+  margin: 20px auto; /* Centra el contenedor horizontalmente */
+  padding: 20px;
+  border: 2px solid #ddd; /* Borde más grueso */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #F3FEF5; /* Fondo claro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un diseño más limpio */
+  text-align: center;
+}
 
-  /* ==========================================================================
-     Contenedor de Login y Registro
-     ========================================================================== */
+/* ==========================================================================
+    Contenedor de Login y Registro
+    ========================================================================== */
 
-  .login-register-container {
-    display: flex; /* Distribuye las secciones horizontalmente */
-    justify-content: space-between; /* Espacio entre las secciones */
-    gap: 20px; /* Espacio entre los contenedores internos */
-    padding: 0 0px; /* Margen izquierdo y derecho de 20px */
-    font-family: sans-serif;
-  }
+.login-register-container {
+  display: flex; /* Distribuye las secciones horizontalmente */
+  justify-content: space-between; /* Espacio entre las secciones */
+  gap: 20px; /* Espacio entre los contenedores internos */
+  padding: 0 0px; /* Margen izquierdo y derecho de 20px */
+  font-family: sans-serif;
+}
 
-  /* Secciones individuales de Login y Registro */
-  .login-section,
-  .register-section {
-    padding: 20px;
-    border: 1px solid #ddd; /* Borde fino */
-    border-radius: 5px;
-    background-color: #fff; /* Fondo blanco */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para diseño */
-  }
+/* Secciones individuales de Login y Registro */
+.login-section,
+.register-section {
+  padding: 20px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 5px;
+  background-color: white;  /* Fondo blanco */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para diseño */
+}
 
-  .login-section {
-    flex: 3; /* Ocupa el 60% del espacio disponible */
-  }
+.login-section {
+  flex: 3; /* Ocupa el 60% del espacio disponible */
+}
 
-  .register-section {
-    flex: 2; /* Ocupa el 40% del espacio disponible */
-  }
+.register-section {
+  flex: 2; /* Ocupa el 40% del espacio disponible */
+}
 
-  /* ==========================================================================
-     Header de Login
-     ========================================================================== */
+/* ==========================================================================
+    Header de Login
+    ========================================================================== */
 
-  .login-header {
-    display: flex; /* Activa el diseño flexbox */
-    align-items: center; /* Centra verticalmente los elementos */
-    justify-content: space-between; /* Coloca el logo a la izquierda y el texto a la derecha */
-    background-color: #28a745; /* Fondo verde */
-    color: white; /* Texto blanco */
-    padding: 10px;
-    border: 1px solid #ccc; /* Borde fino */
-  }
+.login-header {
+  display: flex; /* Activa el diseño flexbox */
+  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: space-between; /* Coloca el logo a la izquierda y el texto a la derecha */
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borde fino */
+}
 
-  .login-header h1 {
-    margin: 0; /* Elimina el margen del título */
-    font-size: 1.5em; /* Ajusta el tamaño del texto */
-    text-align: right; /* Alinea el texto a la derecha */
-  }
+.login-header h1 {
+  margin: 0; /* Elimina el margen del título */
+  font-size: 1.5em; /* Ajusta el tamaño del texto */
+  text-align: right; /* Alinea el texto a la derecha */
+}
 
-  /* Logo de Login */
-  .login-logo {
-    width: 250px; /* Ajusta el tamaño según sea necesario */
-    height: auto;
-    margin-bottom: 20px;
-    /* border-style:outset; */
-  }
+/* Logo de Login */
+.login-logo {
+  width: 250px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-bottom: 20px;
+  /* border-style:outset; */
+}
 
-  /* ==========================================================================
-     Contenido Principal de Login
-     ========================================================================== */
+/* ==========================================================================
+    Contenido Principal de Login
+    ========================================================================== */
 
-  .login-content {
-    padding: 20px;
-    text-align: center;
-  }
+.login-content {
+  padding: 20px;
+  text-align: center;
+}
 
-  .login-form-layout {
-    border: 1px solid #ddd; /* Borde general para diseño */
-    border-radius: 5px;
-    max-width: 400px;
-    margin: 20px auto;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+.login-form-layout {
+  border: 1px solid #ddd; /* Borde general para diseño */
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  /* ==========================================================================
-     Formulario
-     ========================================================================== */
+/* ==========================================================================
+    Formulario
+    ========================================================================== */
 
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    margin: 0 auto;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+}
 
-  .form-group {
-    margin-bottom: 15px;
-  }
+.form-group {
+  margin-bottom: 15px;
+}
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-    text-align: left; /* Alinea el texto a la izquierda */
-  }
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+  text-align: left; /* Alinea el texto a la izquierda */
+}
 
-  input {
-    margin-bottom: 15px;
-    padding: 8px;
-    font-size: 14px;
-  }
+input {
+  margin-bottom: 15px;
+  padding: 8px;
+  font-size: 14px;
+}
 
-  input[type="text"],
-  input[type="password"] {
-    width: calc(100% - 16px); /* Ajuste para el padding y el borde */
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
+input[type="text"],
+input[type="password"] {
+  width: calc(100% - 16px); /* Ajuste para el padding y el borde */
+  border: 1px solid #ccc; /* Borde fino */
+  border-radius: 3px;
+}
 
-  /* Botón */
-  button {
-    padding: 10px;
-    background-color: #28a745; /* Mismo color que el header */
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-  }
+/* Botón */
+button {
+  padding: 10px;
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
 
-  button:hover {
-    background-color: #218838; /* Un tono más oscuro para el hover */
-  }
+button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
 
-  /* ==========================================================================
-     Footer de Login
-     ========================================================================== */
+/* ==========================================================================
+    Footer de Login
+    ========================================================================== */
 
-  .login-footer {
-    background-color: #28a745; /* Fondo verde */
-    color: white; /* Texto blanco */
-    padding: 10px;    /* Espacio interno */
-    text-align: center; /* Centra el texto */
-    border: 1px solid #ccc; /* Borde fino */
-  }
+.login-footer {
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;    /* Espacio interno */
+  text-align: center; /* Centra el texto */
+  border: 1px solid #ccc; /* Borde fino */
+}
 
-  /* ==========================================================================
-     Enlaces
-     ========================================================================== */
+/* ==========================================================================
+    Enlaces
+    ========================================================================== */
 
-  /* Enlace de Olvidé mi contraseña */
-  .forgot-password {
+/* Enlace de Olvidé mi contraseña */
+.forgot-password {
   margin-top: 10px;
   font-size: 0.9em;
-  color: #198754; /* Verde Bootstrap, igual que login-link */
+  color: #4EAD4F; /* Fondo verde */
   cursor: pointer;
   font-weight: normal;
   transition: font-weight 0.2s;
-  }
+}
 
 .forgot-password:hover,
 .forgot-password:focus {
     font-weight: bold;
-    color: #198754;
+    color: #4EAD4F;   /* Fondo verde */
     text-decoration: underline;
   }
 
-  /* Contenedor de Enlaces */
-  .link-container {
-    text-align: center;
-    margin-top: 15px;
-  }
+/* Contenedor de Enlaces */
+.link-container {
+  text-align: center;
+  margin-top: 15px;
+}
 
-  .options-link {
-    color: #28a745;
-    text-decoration: none;
-    font-size: 14px;
-  }
+.options-link {
+  color: #4EAD4F; /* Fondo verde */
+  text-decoration: none;
+  font-size: 14px;
+}
 
-  .options-link:hover {
-    text-decoration: underline;
-  }
+.options-link:hover {
+  text-decoration: underline;
+}
 
-  /* Enlace "To Options" (puede ser para cambiar entre login/registro) */
-  .to-options {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #28a745; /* Mismo color que el header */
-    color: white; /* Texto blanco */
-    text-decoration: none;
-    border: 2px solid #218838;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    text-align: center;
-    margin-top: 20px; /* Agregado para consistencia con la ubicación original */
-  }
+/* Enlace "To Options" (puede ser para cambiar entre login/registro) */
+.to-options {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  text-decoration: none;
+  border: 2px solid #218838;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+  margin-top: 20px; /* Agregado para consistencia con la ubicación original */
+}
 
-  .to-options:hover {
-    background-color: #218838; /* Un tono más oscuro para el hover */
-    color: #fff;
-    text-decoration: none;
-  }
+.to-options:hover {
+  background-color: #218838; /* Un tono más oscuro para el hover */
+  color: #fff;  /* Fondo blanco */
+  text-decoration: none;
+}
 
   /* ==========================================================================
      Encabezados de Sección
      ========================================================================== */
 
-  h2 {
-    color: #333;
-    margin-bottom: 15px;
-  }
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
 
-  .button-container {
+.button-container {
   margin-top: 10px;
 }
 
@@ -233,13 +233,13 @@ button {
 }
 
 button[type="submit"] {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
 }
 
 button[type="button"] {
   background-color: #dc3545; /* Fondo rojo */
-  color: white;
+  color: white; /* Texto blanco */
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -247,8 +247,8 @@ button[type="button"] {
 
 /* Estilo específico para el botón "Limpiar" */
 button:nth-of-type(1) { /* Apunta al primer botón (Limpiar) */
-  background-color: red;
-  color: white;
+  background-color: #dc3545; /* Fondo rojo */
+  color: white; /* Texto blanco */
   border: 1px solid darkred;
   /* Mantén otros estilos que quieras conservar */
   padding: 10px;
@@ -280,32 +280,32 @@ button:hover {
 }
 
 .btn-limpiar {
-  background: #dc3545;
-  color: #fff;
-  border-color: #dc3545;
+  background: #dc3545;  /* Fondo rojo */
+  color: #fff;  /* Fondo blanco */
+  border-color: #a71d2a;    /* Rojo más oscuro */
 }
 .btn-limpiar:hover, .btn-limpiar:focus {
-  background: #a71d2a;
-  border-color: #a71d2a;
-  color: #fff;
+  background: #dc3545;    /* Fondo rojo */
+  border-color: #a71d2a;    /* Rojo más oscuro */
+  color: #fff;  /* Fondo blanco */
 }
 
 .btn-iniciar {
-  background: #28a745 !important;
-  color: #fff !important;
-  border-color: #145c32 !important;
+  background: #4EAD4F !important; /* Fondo verde */
+  color: #fff !important; /* Fondo blanco */
+  border-color: #145c32 !important; /* Verde más oscuro */
 }
 .btn-crear {
-  background: #28a745 !important;
-  color: #fff !important;
-  border-color: #145c32 !important;
+  background: #4EAD4F !important; /* Fondo verde */
+  color: #fff !important; /* Fondo blanco */
+  border-color: #145c32 !important; /* Verde más oscuro */
 }
 
 .btn-iniciar:hover, .btn-iniciar:focus,
 .btn-crear:hover, .btn-crear:focus {
-  background: #198754 !important;
-  border-color: #145c32 !important;
-  color: #fff !important;
+  background: #4EAD4F !important; /* Fondo verde */
+  border-color: #145c32 !important; /* Verde más oscuro */
+  color: #fff !important; /* Fondo blanco */
 }
 
 .button-container {
@@ -320,7 +320,7 @@ button:hover {
   height: 44px;
   line-height: 44px;
   font-size: 16px;
-  color: #198754;
+  color: #4EAD4F; /* Fondo verde */
   background: transparent;
   border: none;
   border-radius: 6px;
@@ -333,12 +333,12 @@ button:hover {
 
 .login-link:hover, .login-link:focus {
   background: #e9ecef;
-  color: #145c32;
+  color: #145c32; /* Verde más oscuro */
 }
 
 .btn-iniciar,
 .btn-crear {
-  border: 1px solid #145c32 !important;
+  border: 1px solid #145c32 !important; /* Verde más oscuro */
 }
 
 .btn-link-crear {
@@ -350,9 +350,9 @@ button:hover {
   font-size: 16px;
   font-weight: bold;
   border-radius: 6px;
-  border: 1px solid #145c32;
-  background: #28a745;
-  color: #fff;
+  border: 1px solid #145c32;  /* Verde más oscuro */
+  background: #4EAD4F;  /* Fondo verde */
+  color: #fff;  /* Fondo blanco */
   margin: 0 8px 8px 0;
   transition: background 0.2s, color 0.2s;
   text-align: center;
@@ -363,7 +363,7 @@ button:hover {
 }
 .btn-link-crear:hover,
 .btn-link-crear:focus {
-  background: #198754;
-  color: #fff;
-  border-color: #145c32;
+  background: #4EAD4F;  /* Fondo verde */
+  color: #fff;  /* Fondo blanco */
+  border-color: #145c32;  /* Verde más oscuro */
 }

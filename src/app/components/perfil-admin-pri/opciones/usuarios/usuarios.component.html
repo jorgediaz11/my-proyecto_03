@@ -1,5 +1,5 @@
 <h2>Gestión de Usuarios</h2>
-
+<!-- Este es el contenido de la pestaña de gestión de usuarios -->
 <div class="tabs">
   <!-- Encabezados de las pestañas -->
   <div class="tab-header">
@@ -22,25 +22,27 @@
     <!-- Pestaña de Agregar Usuario -->
     <div class="tab-panel" [ngClass]="{ active: activeTab === 'agregar' }">
       <h3>Agregar Usuario</h3>
-    <form (submit)="agregarUsuario(nombre.value, email.value); nombre.value=''; email.value=''; $event.preventDefault()">
-      <table>
-        <tr>
-          <td><label for="nombre">Nombre:</label></td>
-          <td><input id="nombre" #nombre type="text" required /></td>
-        </tr>
-        <tr>
-          <td><label for="email">Email:</label></td>
-          <td><input id="email" #email type="email" required /></td>
-        </tr>
-        <tr>
-          <td colspan="2" style="text-align: center;">
-            <button type="submit" class="btn-crear">Agregar</button>
-            <button type="button" class="btn-limpiar" (click)="nombre.value=''; email.value=''">Limpiar</button>
-            <button type="button" class="btn-cancelar" (click)="selectTab('listado')">Cancelar</button>
-          </td>
-        </tr>
-      </table>
-    </form>
+      <form (submit)="agregarUsuario(nombre.value, email.value); nombre.value=''; email.value=''; $event.preventDefault()">
+        <table>
+          <tr>
+            <td><label for="nombre">Nombre:</label></td>
+            <td><input id="nombre" #nombre type="text" required /></td>
+          </tr>
+          <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input id="email" #email type="email" required /></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center;">
+              <button type="submit" class="btn-crear">Agregar</button>
+              <button type="button" class="btn-limpiar" (click)="nombre.value=''; email.value=''">Limpiar</button>
+              <button type="button" class="btn-cancelar" (click)="selectTab('listado')">Cancelar</button>
+            </td>
+          </tr>
+        </table>
+      </form>
     </div>
+
   </div>
 </div>
+<!-- Fin de la pestaña de Agregar Usuario -->

@@ -26,9 +26,9 @@
      ========================================================================== */
 
   .top-bar {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0;  /* Fondo gris claro */
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;  /* Borde fino */
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
@@ -39,8 +39,8 @@
      ========================================================================== */
 
   .sidebar {
-    background-color: #28a745;
-    color: white;
+    background-color: #4EAD4F;  /* Fondo verde */
+    color: white; /* Texto blanco */
     width: 250px;
     transition: width 0.3s ease-in-out;
     overflow-y: auto;
@@ -59,7 +59,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #4a6572;
+    border-bottom: 1px solid #4a6572; /* Color de fondo para el item activo */
   }
 
   .sidebar .logo span {
@@ -74,9 +74,9 @@
 
   /* Botón para togglear el menú */
   .sidebar .menu-toggle {
-    background-color: transparent;
+    background-color: transparent;  /* Fondo transparente */
     border: none;
-    color: white;
+    color: white; /* Texto blanco */
     font-size: 1.2em;
     cursor: pointer;
     margin-right: 10px;
@@ -100,11 +100,11 @@
   }
 
   .sidebar .menu .menu-item:hover {
-    background-color: #218838;
+    background-color: #218838;  /* Verde más oscuro al pasar el cursor */
   }
 
   .sidebar .menu .menu-item.active {
-    background-color: #4a6572;
+    background-color: #4a6572;  /* Color de fondo para el item activo */
     font-weight: bold;
   }
 
@@ -142,7 +142,7 @@
   .perfil-admin-sec-layout {
     padding: 20px;
     border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    background-color: #F3FEF5;  /* Fondo claro */
     border-radius: 5px;
   }
 
@@ -154,7 +154,7 @@
     display: inline-block;
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #28a745; /* Mismo color que el header */
+    background-color: #4EAD4F; /* Fondo verde */
     color: white; /* Texto blanco */
     text-decoration: none;
     border: 1px solid #218838;
@@ -170,8 +170,8 @@
   }
 
   .back-to-options:hover {
-    background-color: #218838;
-    color: #fff;
+    background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+    color: #fff;  /* Fondo blanco */
     text-decoration: none;
   }
 
@@ -180,7 +180,7 @@
   display: flex; /* Activa el diseño flexbox */
   align-items: center; /* Centra verticalmente los elementos */
   justify-content: space-between; /* Coloca el logo a la izquierda y el texto a la derecha */
-  background-color: #28a745; /* Fondo verde */
+  background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   padding: 10px;
   border: 1px solid #ccc; /* Borde fino */
@@ -200,7 +200,7 @@
 
 /* Footer */
 .login-footer {
-  background-color: #28a745; /* Fondo verde */
+  background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   padding: 10px;
   text-align: center;
@@ -208,7 +208,7 @@
 }
 
 .menu-item a {
-  color: white;
+  color: white; /* Texto blanco */
   text-decoration: none;
 }
 

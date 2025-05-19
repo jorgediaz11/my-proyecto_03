@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 // Importar el módulo de enrutamiento
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  // Proveedor del servicio en la raíz de la aplicación
 })
 export class AuthService {  //  Servicio de autenticación
   // Constructor del servicio de autenticación

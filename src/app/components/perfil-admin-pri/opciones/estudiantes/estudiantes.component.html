@@ -1,1 +1,96 @@
-<p>estudiantes works!</p>
+<div class="estudiantes-container">
+  <h2>Lista de Estudiantes</h2>
+
+  <!-- Filtro y botón para crear -->
+  <div class="filter-container">
+    <!-- Botón para crear un nuevo registro -->
+    <button class="create-button" (click)="createEstudiante()">Nuevo Estudiante</button>
+
+    <!-- Filtro -->
+    <div class="filter-input">
+      <label for="search">Buscar Estudiante:</label>
+      <input
+        id="search"
+        type="text"
+
+        (input)="filterEstudiantes()"
+        placeholder="Ingrese el nombre del Estudiante"
+      />
+    </div>
+  </div>
+
+  <!-- Formulario para nuevo Estudiante -->
+  <div *ngIf="showForm" class="form-container">
+    <h3>Nuevo Estudiante</h3>
+    <form [formGroup]="estudianteForm" (ngSubmit)="saveEstudiante()">
+      <div>
+        <label for="nombre">Nombres:</label>
+        <input id="nombre" formControlName="nombres" type="text" />
+      </div>
+      <div>
+        <label for="direccion">Apellidos:</label>
+        <input id="direccion" formControlName="apellidos" type="text" />
+      </div>
+      <div>
+        <label for="nivel">Nivel:</label>
+        <input id="nivel" formControlName="nivel" type="text" placeholder="Nivel" />
+      </div>
+      <div>
+        <label for="grado">Grado:</label>
+        <input id="grado" formControlName="grado" type="text" placeholder="Grado"/>
+      </div>
+      <div>
+        <label for="seccion">Seccion:</label>
+        <input id="seccion" formControlName="seccion" type="text" placeholder="Seccion" />
+      </div>
+      <button type="submit" [disabled]="estudianteForm.invalid">Guardar</button>
+      <button type="button" (click)="resetForm()">Limpiar</button>
+      <button type="button" (click)="cancelCreate()">Cancelar</button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <table class="estudiantes-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Nivel</th>
+        <th>Grado</th>
+        <th>Seccion</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of paginatedEstudiantes">
+        <td>{{ estudiante.id }}</td>
+        <td>{{ estudiante.nombres }}</td>
+        <td>{{ estudiante.apellidos }}</td>
+        <td>{{ estudiante.nivel }}</td>
+        <td>{{ estudiante.grado }}</td>
+        <td>{{ estudiante.seccion }}</td>
+        <td>
+          <!-- Ícono para Ver -->
+          <i class="fas fa-eye action-icon" title="Detalles" (click)="viewEstudiante(estudiante.id)"></i>
+          <!-- Ícono para Editar -->
+          <i class="fas fa-edit action-icon" title="Editar" (click)="editEstudiante(estudiante.id)"></i>
+          <!-- Ícono para Eliminar -->
+          <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteEstudiante(estudiante.id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="pagination">
+    <button
+      *ngFor="let page of getTotalPages(); let i = index"
+      [class.active]="currentPage === i + 1"
+      (click)="changePage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+</div>
+<!-- Fin del contenedor de Estudiantes -->

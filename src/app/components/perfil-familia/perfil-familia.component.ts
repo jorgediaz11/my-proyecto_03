@@ -26,6 +26,6 @@ export class PerfilFamiliaComponent {
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)
 
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
   }
 }

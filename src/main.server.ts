@@ -3,7 +3,7 @@ import { environment } from './environments/environment';
 
 // Importar el módulo de enrutamiento
 if (environment.production) {
-  enableProdMode();
+  enableProdMode(); // Importar el módulo de enrutamiento
 }
 // Importar el módulo de enrutamiento
 export default function bootstrap() {

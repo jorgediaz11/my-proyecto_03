@@ -5,9 +5,9 @@ import { environment } from './environments/environment';
 
 // Importar el módulo de enrutamiento
 if (environment.production) {
-  enableProdMode();
+  enableProdMode();                     // Importar el módulo de enrutamiento
 }
 // Importar el módulo de enrutamiento
 platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+  .bootstrapModule(AppModule)           // Importar el módulo de enrutamiento
+  .catch((err) => console.error(err));  // Importar el módulo de enrutamiento

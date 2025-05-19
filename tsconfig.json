@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "strict": true,
+    "target": "ES2022",                   // Especifica la versión de ECMAScript a la que se compilará el código
+    "module": "CommonJS",                 // Especifica el sistema de módulos a utilizar
+    "moduleResolution": "node",           // Resuelve módulos utilizando la estrategia de Node.js
+    "strict": true,                       // Habilita todas las comprobaciones estrictas
     "esModuleInterop": true,              // Habilita la interoperabilidad con módulos CommonJS
     "allowSyntheticDefaultImports": true, // Recomendado para trabajar con importaciones predeterminadas
     "experimentalDecorators": true,       // Habilita el uso de decoradores
@@ -14,7 +14,7 @@
     "src/**/*.ts"                         // Incluye todos los archivos TypeScript en la carpeta src y sus subcarpetas
   ],
   "exclude": [
-    "src/main.server.ts",
-    "server.ts"
+    "src/main.server.ts",                 // Excluye el archivo main.server.ts de la compilación
+    "server.ts"                           // Excluye el archivo server.ts de la compilación
   ]
 }

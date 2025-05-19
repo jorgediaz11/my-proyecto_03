@@ -1,6 +1,6 @@
 /* --- Estilos Generales de Texto --- */
 h2 {
-  color: #28a745;
+  color: #28a745; /* Color verde */
 }
 
 label {
@@ -15,7 +15,7 @@ ul {
 
 li {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
   margin-bottom: 5px;
   border-radius: 5px;
 }
@@ -28,7 +28,7 @@ form {
 /* Estilos para elementos input (genérico) */
 input {
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
   border-radius: 5px;
 }
 
@@ -45,15 +45,15 @@ table input {
 /* --- Estilos de Botones --- */
 button {
   padding: 8px 16px; /* Estilo general para botones */
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #145c32;
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
 }
 
 /* --- Estilos de Tablas --- */
@@ -69,14 +69,14 @@ td {
 
 /* --- Estilos para las Pestañas (Componente) --- */
 .tabs {
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
   border-radius: 5px;
   padding: 10px;
 }
 
 .tab-header {
   display: flex;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;  /* Borde fino */
   margin-bottom: 10px;
 }
 
@@ -86,13 +86,13 @@ td {
   padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
-  color: #28a745;
+  color: #28a745; /* Color verde */
   border-bottom: 2px solid transparent;
 }
 
 .tab-button.active {
-  border-bottom: 2px solid #28a745;
-  color: #4a6572;
+  border-bottom: 2px solid #28a745; /* Color verde */
+  color: #4a6572; /* Color de fondo para el item activo */
 }
 
 .tab-content {
@@ -108,9 +108,9 @@ td {
 }
 
 button[type="submit"] {
-  background-color: #198754;
-  color: #fff;
-  border: 1.5px solid #145c32;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: #fff;  /* Fondo blanco */
+  border: 1.5px solid #145c32;  /* Verde más oscuro */
   border-radius: 5px;
   padding: 8px 16px;
   margin-right: 8px;
@@ -118,13 +118,13 @@ button[type="submit"] {
   transition: background 0.2s;
 }
 button[type="submit"]:hover {
-  background-color: #145c32;
+  background-color: #145c32;  /* Verde más oscuro */
 }
 
 button.btn-limpiar {
-  background-color: #198754;
-  color: #fff;
-  border: 1.5px solid #145c32;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: #fff;  /* Fondo blanco */
+  border: 1.5px solid #145c32;  /* Verde más oscuro */
   border-radius: 5px;
   padding: 8px 16px;
   margin-right: 8px;
@@ -132,18 +132,18 @@ button.btn-limpiar {
   transition: background 0.2s;
 }
 button.btn-limpiar:hover {
-  background-color: #145c32;
+  background-color: #145c32;  /* Verde más oscuro */
 }
 
 button.btn-cancelar {
-  background-color: #dc3545;
-  color: #fff;
-  border: 1.5px solid #a71d2a;
+  background-color: #dc3545;    /* Fondo rojo */
+  color: #fff;  /* Fondo blanco */
+  border: 1.5px solid #a71d2a;  /* Borde rojo oscuro */
   border-radius: 5px;
   padding: 8px 16px;
   cursor: pointer;
   transition: background 0.2s;
 }
 button.btn-cancelar:hover {
-  background-color: #a71d2a;
+  background-color: #a71d2a;  /* Borde rojo oscuro */
 }

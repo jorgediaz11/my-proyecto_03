@@ -1,1 +1,90 @@
-<p>docentes works!</p>
+<div class="docentes-container">
+  <h2>Lista de Docentes</h2>
+
+  <!-- Filtro y botón para crear -->
+  <div class="filter-container">
+    <!-- Botón para crear un nuevo registro -->
+    <button class="create-button" (click)="createDocente()">Nuevo Docente</button>
+
+    <!-- Filtro -->
+    <div class="filter-input">
+      <label for="search">Buscar Docente:</label>
+      <input
+        id="search"
+        type="text"
+
+        (input)="filterDocentes()"
+        placeholder="Ingrese el nombre del Docente"
+      />
+    </div>
+  </div>
+
+  <!-- Formulario para nuevo Docente -->
+  <div *ngIf="showForm" class="form-container">
+    <h3>Nuevo Docente</h3>
+    <form [formGroup]="docenteForm" (ngSubmit)="saveDocente()">
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" formControlName="nombres" type="text" />
+      </div>
+      <div>
+        <label for="nombre">Apellidos:</label>
+        <input id="nombre" formControlName="apellidos" type="text" />
+      </div>
+      <div>
+        <label for="direccion">Correo:</label>
+        <input id="direccion" formControlName="correo" type="text" />
+      </div>
+      <div>
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" formControlName="telefono" type="text" placeholder="123-456-7890" />
+      </div>
+      <button type="submit" [disabled]="docenteForm.invalid">Guardar</button>
+      <button type="button" (click)="resetForm()">Limpiar</button>
+      <button type="button" (click)="cancelCreate()">Cancelar</button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <table class="docentes-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let docente of paginatedDocentes">
+        <td>{{ docente.id }}</td>
+        <td>{{ docente.nombres }}</td>
+        <td>{{ docente.apellidos }}</td>
+        <td>{{ docente.correo }}</td>
+        <td>{{ docente.telefono }}</td>
+        <td>
+          <!-- Ícono para Ver -->
+          <i class="fas fa-eye action-icon" title="Detalles" (click)="viewDocente(docente.id)"></i>
+          <!-- Ícono para Editar -->
+          <i class="fas fa-edit action-icon" title="Editar" (click)="editDocente(docente.id)"></i>
+          <!-- Ícono para Eliminar -->
+          <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteDocente(docente.id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="pagination">
+    <button
+      *ngFor="let page of getTotalPages(); let i = index"
+      [class.active]="currentPage === i + 1"
+      (click)="changePage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+</div>
+<!-- Fin del contenedor de Docentes -->

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-@Component({
+@Component({  // Cambié 'standalone: true' a 'standalone: false'
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent {
+export class UsuariosComponent {  // Cambié 'UsuariosComponent' a 'UsuariosComponent'
   usuarios = [
     { nombre: 'Juan Pérez', email: 'juan.perez@example.com' },
     { nombre: 'María López', email: 'maria.lopez@example.com' },

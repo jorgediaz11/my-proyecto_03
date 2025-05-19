@@ -7,7 +7,7 @@
   padding: 20px;
   border: 2px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #F3FEF5; /* Fondo claro */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
@@ -19,10 +19,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
 }
 
 .login-header h1 {
@@ -67,7 +67,7 @@ label {
 input {
   width: calc(100% - 16px);
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
   border-radius: 3px;
   font-size: 14px;
 }
@@ -75,7 +75,7 @@ input {
 /* Estilos para los botones */
 button {
   padding: 10px 20px; /* Tamaño uniforme para ambos botones */
-  background-color: #28a745; /* Mismo color que el header */
+  background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   border: none;
   cursor: pointer;
@@ -85,7 +85,7 @@ button {
 }
 
 button:hover {
-  background-color: #218838; /* Un tono más oscuro para el hover */
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
 }
 
 /* Contenedor de los botones dentro del formulario */
@@ -99,9 +99,9 @@ form button:last-child {
 
 /* Estilo específico para el botón "Limpiar" */
 form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
-  background-color: red;
-  color: white;
-  border: 1px solid darkred;
+  background-color: #dc3545; /* Fondo rojo */
+  color: white; /* Texto blanco */
+  border: 1px solid #a71d2a;  /* Borde rojo oscuro */
   /* Mantén otros estilos que quieras conservar */
   padding: 10px 20px;
   border-radius: 5px;
@@ -112,11 +112,11 @@ form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
 /* Footer                         */
 /* ============================== */
 .login-footer {
-  background-color: #28a745;
-  color: white;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
   padding: 10px;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Borde fino */
 }
 
 /* ============================== */
@@ -125,7 +125,7 @@ form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
 .to-options {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #28a745; /* Mismo color que el header */
+  background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   text-decoration: none;
   border: 2px solid #218838;
@@ -138,12 +138,12 @@ form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
 
 .to-options:hover {
   background-color: #218838; /* Un tono más oscuro para el hover */
-  color: #fff;            /* Color blanco al pasar el mouse */
+  color: white; /* Color blanco al pasar el mouse */
   text-decoration: none;    /* Elimina el subrayado al pasar el mouse */
 }
 
 .error-message {
-  color: red; /* Color rojo para los mensajes de error */
+  color: #dc3545; /* Fondo rojo para los mensajes de error */
   font-weight: bold; /* Texto en negrita */
   font-size: 0.9em; /* Tamaño de fuente ligeramente más pequeño */
   margin-top: 5px; /* Espacio entre el mensaje y el campo */
