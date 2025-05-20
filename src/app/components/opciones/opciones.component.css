@@ -100,7 +100,7 @@ a:hover {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #F3FEF5; /* Fondo claro */
+  background-color: white; /* Fondo claro */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

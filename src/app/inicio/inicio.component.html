@@ -2,12 +2,8 @@
 <nav class="bg-green-600 fixed top-0 left-0 w-full z-50 shadow">
   <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
     <!-- Logo -->
-<a
-  class="flex items-center gap-2 px-2 py-1"
-  routerLink="/"
->
-  <img src="assets/images/login-logo.png" alt="Logo" />
-</a>
+    <img src="assets/images/login-logo.png" alt="Logo" class="w-32 h-auto min-w-[250px] min-h-[40px]" />
+
     <!-- Titulo -->
     <button class="block md:hidden text-white focus:outline-none" (click)="isMenuOpen = !isMenuOpen">
       <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,17 +29,19 @@
   </div>
 </nav>
 
-<!-- Contenedor principal -->
 <!-- Elementos destacados para la página de inicio -->
 <div class="container text-center contenido-inicio mb-3">
+
   <!-- Seccion 01 -->
   <div class="fw-bold titulo-principal mb-2 separador-20">
     Transforma la manera de leer y aprender
   </div>
+
   <!-- Seccion 02 -->
   <div class="descripcion-principal mb-4 separador-20">
     Una plataforma interactiva que hace que la lectura sea divertida y efectiva para estudiantes de todas las edades.
   </div>
+
   <!-- Seccion 03 y Seccion 04 -->
   <div class="mb-4">
     <a class="btn btn-success btn-lg me-2" href="/prueba-gratis">Prueba gratis</a>
@@ -66,6 +64,7 @@
 <!-- Contenido Fichas Primncipales -->
 <div class="container mt-4">
   <div class="row justify-content-center">
+
     <!-- Ficha 1 -->
     <div class="col-md-4 mb-4">
       <div class="card ficha-efecto h-100 text-center">
@@ -76,6 +75,7 @@
         </div>
       </div>
     </div>
+
     <!-- Ficha 2 -->
     <div class="col-md-4 mb-4">
       <div class="card ficha-efecto h-100 text-center">
@@ -86,6 +86,7 @@
         </div>
       </div>
     </div>
+
     <!-- Ficha 3 -->
     <div class="col-md-4 mb-4">
       <div class="card ficha-efecto h-100 text-center">
@@ -140,6 +141,7 @@
           </div>
         </div>
       </div>
+
       <!-- Columna 02 -->
       <div class="col-md-3 mb-4">
         <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
@@ -154,6 +156,7 @@
           </div>
         </div>
       </div>
+
       <!-- Columna 03 -->
       <div class="col-md-3 mb-4">
         <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
@@ -168,6 +171,7 @@
           </div>
         </div>
       </div>
+
       <!-- Columna 04 -->
       <div class="col-md-3 mb-4">
         <div class="card h-100 text-start p-3" style="border:none; box-shadow:none;">
@@ -182,6 +186,7 @@
         </div>
       </div>
     </div>
+
     <!-- Texto final -->
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -190,6 +195,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </footer>
 <!-- Fin del contenido -->

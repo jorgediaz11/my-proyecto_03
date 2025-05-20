@@ -10,7 +10,7 @@ export class PerfilComponent {
   usuarioActivo = {
     nombres: 'Juan',
     apellidos: 'Pérez',
-    correo: 'juan.perez@ejemplo.com',
+    correo: 'juan.perez@gmail.com',
     telefono: '987654321',
     foto: 'https://randomuser.me/api/portraits/men/1.jpg'
   };
@@ -28,7 +28,7 @@ export class PerfilComponent {
   ];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {            // Constructor
     this.perfilForm = this.fb.group({
       nombres: [this.usuarioActivo.nombres, Validators.required],
       apellidos: [this.usuarioActivo.apellidos, Validators.required],

@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilEstudianteComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/opciones', disabled: false },                   // Ejemplo de ruta
+    { label: 'Inicio', icon: 'home', route: '/perfil-estudiante', disabled: false },                   // Ejemplo de ruta
     { label: 'Cursos', icon: 'book-open', route: '/productos', disabled: true },              // Deshabilitado
     { label: 'Evaluaciones', icon: 'file-alt', route: '/clientes', disabled: true },          // Deshabilitado
     { label: 'Progreso', icon: 'chart-line', route: '/configuracion', disabled: true },       // Deshabilitado

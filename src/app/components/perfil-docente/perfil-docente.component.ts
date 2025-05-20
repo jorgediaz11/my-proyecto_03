@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilDocenteComponent {
     // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/opciones', disabled: false },                   // Habilitado
+    { label: 'Inicio', icon: 'home', route: '//perfil-docente', disabled: false },                   // Habilitado
     { label: 'Clases', icon: 'chalkboard-teacher', route: '/', disabled: true },              // Deshabilitado
     { label: 'Estudiantes', icon: 'user-graduate', route: '/', disabled: true },              // Deshabilitado
     { label: 'Calificaciones', icon: 'clipboard-list', route: '/', disabled: true },          // Deshabilitado

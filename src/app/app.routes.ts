@@ -34,12 +34,15 @@ import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-f
 export const routes: Routes = [
 // Ruta para el inicio
   { path: '', component: InicioComponent }, // Componente inicial
-// Ruta para el login y registro
+
+  // Ruta para el login y registro
   { path: 'login', component: LoginFormComponent },         // Ruta para el login
   { path: 'login-registro', component: LoginRegistroComponent },  // Ruta para el registro
-// Ruta para el menú de opciones
+
+  // Ruta para el menú de opciones
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones
-// Ruta para el perfil de admin
+
+  // Ruta para el perfil de admin
   { path: 'perfil-admin-pri',                               // Ruta para el perfil de admin pri
     component: PerfilAdminPriComponent,
     children: [
@@ -55,6 +58,7 @@ export const routes: Routes = [
       // Otras rutas hijas
     ]
   },
+
 // Ruta para el perfil de admin sec
   { path: 'perfil-admin-sec',                               // Ruta para el perfil de admin sec
     component: PerfilAdminSecComponent,
@@ -63,6 +67,7 @@ export const routes: Routes = [
       // Otras rutas hijas
     ]
   },
+
 // Ruta para el perfil de docente
   { path: 'perfil-docente',
     component: PerfilDocenteComponent,                      // Ruta para el perfil de docente
@@ -71,6 +76,7 @@ export const routes: Routes = [
       // Otras rutas hijas
     ]
   },
+
 // Ruta para el perfil de estudiante
   { path: 'perfil-estudiante',
     component: PerfilEstudianteComponent,                   // Ruta para el perfil de estudiante
@@ -79,6 +85,7 @@ export const routes: Routes = [
       // Otras rutas hijas
     ]
   },
+
 // Ruta para el perfil de familia
   { path: 'perfil-familia',
     component: PerfilFamiliaComponent,                      // Ruta para el perfil de familia
@@ -87,6 +94,7 @@ export const routes: Routes = [
       // Otras rutas hijas
     ]
   },
+
 // Redirección para rutas no válidas
   { path: '**', redirectTo: '' }                            // Redirige a la ruta inicial si no se encuentra la ruta solicitada
 ];

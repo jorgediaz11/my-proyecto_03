@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  // Importa el decorador Component de Angular
 
 interface MenuItem {
   label: string;      // Cambié 'label' a 'label'
@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilAdminPriComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/opciones', disabled: false },                   // Ruta al muro del perfil
+    { label: 'Inicio', icon: 'home', route: '/perfil-admin-pri', disabled: false },                   // Ruta al muro del perfil
     { label: 'Usuarios', icon: 'user-friends', route: 'usuarios' , disabled: false },         // Cambié 'usuarios' a 'usuarios'
     { label: 'Colegios', icon: 'school', route: 'colegios', disabled: false  },               // Cambié 'colegios' a 'colegios'
     { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes', disabled: false  },   // Cambié 'docentes' a 'docentes'

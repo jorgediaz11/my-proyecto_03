@@ -21,7 +21,7 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
+  server.get('*.*', express.static(browserDistFolder, {     // Serve static files
     maxAge: '1y'
   }));
 
@@ -30,7 +30,7 @@ export function app(): express.Express {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
-      .render({
+      .render({   // Render the Angular application
         //bootstrap,
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,

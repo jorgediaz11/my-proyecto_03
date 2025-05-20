@@ -9,8 +9,8 @@ export class AuthService {  //  Servicio de autenticación
   login(username: string, password: string): boolean {
     // Aquí puedes implementar la lógica de autenticación
     if (username === 'admin' && password === '1122') {
-      return true; // Credenciales válidas
+      return true;  // Credenciales válidas
     }
-    return false; // Credenciales inválidas
+    return false;   // Credenciales inválidas
   }
 }

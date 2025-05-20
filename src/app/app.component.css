@@ -3,7 +3,7 @@ a {
   color: inherit;             /* Asegúrate de que los enlaces hereden el color del contenedor */
   text-decoration: none;      /* Sin subrayado por defecto */
 }
-
+/* Efecto al pasar el ratón sobre los enlaces */
 a:hover {
   text-decoration: underline; /* Subrayado al pasar el ratón */
 }

@@ -36,7 +36,7 @@
 .academico-title {
   font-size: 1em;
   font-weight: bold;
-  color: #333;
+  color: #333;  /* Color de texto */
   text-decoration: none; /* Sin subrayado */
   transition: color 0.3s ease; /* Transición para el color */
 }

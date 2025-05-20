@@ -16,8 +16,36 @@ interface Colegio { // Define la interfaz Colegio
   templateUrl: './colegios.component.html',
   styleUrls: ['./colegios.component.css']
 })
-export class ColegiosComponent implements OnInit {
-  colegios: Colegio[] = [];
+// export class ColegiosComponent implements OnInit {
+export class ColegiosComponent  {
+  colegios: Colegio[] = [
+    { id:1, nombre: 'Colegio Central', direccion: 'Av. Principal 123', telefono: '987654321' },
+    { id:2, nombre: 'Colegio San Martín', direccion: 'Calle Lima 456', telefono: '912345678' },
+    { id:3, nombre: 'Colegio América', direccion: 'Jr. Amazonas 789', telefono: '934567890' },
+    { id:4, nombre: 'Colegio Santa Rosa', direccion: 'Av. Grau 101', telefono: '945678901' },
+    { id:5, nombre: 'Colegio Nacional', direccion: 'Calle Bolívar 202', telefono: '956789012' },
+    { id:6, nombre: 'Colegio Moderno', direccion: 'Av. Arequipa 303', telefono: '967890123' },
+    { id:7, nombre: 'Colegio Libertad', direccion: 'Jr. Cusco 404', telefono: '978901234' },
+    { id:8, nombre: 'Colegio Unión', direccion: 'Av. Tacna 505', telefono: '989012345' },
+    { id:9, nombre: 'Colegio Progreso', direccion: 'Calle Piura 606', telefono: '900123456' },
+    { id:10, nombre: 'Colegio Esperanza', direccion: 'Jr. Puno 707', telefono: '911234567' },
+    { id:11, nombre: 'Colegio Futuro', direccion: 'Av. Angamos 808', telefono: '922345678' },
+    { id:12, nombre: 'Colegio Horizonte', direccion: 'Calle Tarapacá 909', telefono: '933456789' },
+    { id:13, nombre: 'Colegio San José', direccion: 'Jr. Moquegua 111', telefono: '944567890' },
+    { id:14, nombre: 'Colegio San Pedro', direccion: 'Av. Colonial 222', telefono: '955678901' },
+    { id:15, nombre: 'Colegio Santa Ana', direccion: 'Calle Junín 333', telefono: '966789012' },
+    { id:16, nombre: 'Colegio San Pablo', direccion: 'Jr. Loreto 444', telefono: '977890123' },
+    { id:17, nombre: 'Colegio San Lucas', direccion: 'Av. Brasil 555', telefono: '988901234' },
+    { id:18, nombre: 'Colegio San Marcos', direccion: 'Calle Ayacucho 666', telefono: '999012345' },
+    { id:19, nombre: 'Colegio San Juan', direccion: 'Jr. Huánuco 777', telefono: '910123456' },
+    { id:20, nombre: 'Colegio San Mateo', direccion: 'Av. Javier Prado 888', telefono: '921234567' },
+    { id:21, nombre: 'Colegio San Gabriel', direccion: 'Calle Libertad 999', telefono: '932345678' },
+    { id:22, nombre: 'Colegio San Rafael', direccion: 'Jr. Independencia 121', telefono: '943456789' },
+    { id:23, nombre: 'Colegio San Andrés', direccion: 'Av. La Marina 232', telefono: '954567890' },
+    { id:24, nombre: 'Colegio San Antonio', direccion: 'Calle Olivos 343', telefono: '965678901' },
+    { id:25, nombre: 'Colegio San Francisco', direccion: 'Jr. Palmeras 454', telefono: '976789012' }
+  ];
+
   filteredColegios: Colegio[] = [];
   paginatedColegios: Colegio[] = [];
   currentPage: number = 1;
@@ -37,14 +65,14 @@ export class ColegiosComponent implements OnInit {
 
   // Método para manejar el evento de clic en el botón de "Crear Colegio"
   ngOnInit(): void {
-    for (let i = 1; i <= 25; i++) {
-      this.colegios.push({
-        id: i,
-        nombre: `Colegio ${i}`,
-        direccion: `Dirección ${i}`,
-        telefono: `123-456-78${i}`
-      });
-    }
+    // for (let i = 1; i <= 25; i++) {
+    //   this.colegios.push({
+    //     id: i,
+    //     nombre: `Colegio ${i}`,
+    //     direccion: `Dirección ${i}`,
+    //     telefono: `123-456-78${i}`
+    //   });
+    // }
     this.filteredColegios = [...this.colegios];
     this.updatePaginatedColegios();
   }

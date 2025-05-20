@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
     AppModule,        // Importa el módulo principal de la aplicación
     ServerModule      // Importa el módulo del servidor
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // Componente raíz de la aplicación
 })
 export class AppServerModule {
   // Lógica específica del componente

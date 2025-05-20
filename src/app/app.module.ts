@@ -7,6 +7,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';   // Importa MatTabsModule aquí
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
+import { FormsModule } from '@angular/forms'; // <-- Agrega esto
 
 // Inicio Principal
 import { InicioComponent } from './inicio/inicio.component';
@@ -21,6 +23,8 @@ import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuari
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
 import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
+import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component'; // Importa el componente de reportes
+import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
@@ -46,6 +50,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ColegiosComponent,
     DocentesComponent,
     EstudiantesComponent,
+    ReportesComponent,
+    AuditoriaComponent,
     PerfilComponent,
     PerfilAdminSecComponent,
     PerfilDocenteComponent,
@@ -55,6 +61,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   ],
   imports: [
     BrowserModule,            // Importa BrowserModule aquí
+    FormsModule, // <-- Agrega esto
+    HttpClientModule, // Agrega HttpClientModule a los imports
     BrowserAnimationsModule,  // Necesario para Angular Material
     MatDialogModule,          // Importa MatDialogModule aquí
     MatButtonModule,          // Importa MatButtonModule aquí

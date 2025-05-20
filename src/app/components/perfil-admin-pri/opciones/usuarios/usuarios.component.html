@@ -3,12 +3,21 @@
 <div class="tabs">
   <!-- Encabezados de las pestañas -->
   <div class="tab-header">
-    <button class="tab-button active" (click)="selectTab('listado')">Listado</button>
-    <button class="tab-button" (click)="selectTab('agregar')">Agregar Usuario</button>
+    <button
+      class="tab-button"
+      [ngClass]="{ active: activeTab === 'listado' }"
+      (click)="selectTab('listado')"
+    >Listado</button>
+    <button
+      class="tab-button"
+      [ngClass]="{ active: activeTab === 'agregar' }"
+      (click)="selectTab('agregar')"
+    >Agregar Usuario</button>
   </div>
 
   <!-- Contenido de las pestañas -->
   <div class="tab-content">
+
     <!-- Pestaña de Listado -->
     <div class="tab-panel" [ngClass]="{ active: activeTab === 'listado' }">
       <h3>Listado</h3>
@@ -44,5 +53,6 @@
     </div>
 
   </div>
+
 </div>
 <!-- Fin de la pestaña de Agregar Usuario -->

@@ -17,8 +17,33 @@ interface Docente { // Define la interfaz Docente
   templateUrl: './docentes.component.html',
   styleUrls: ['./docentes.component.css']
 })
-export class DocentesComponent implements OnInit {
-  docentes: Docente[] = [];
+// export class DocentesComponent implements OnInit {
+export class DocentesComponent {
+  docentes: Docente[] = [
+    { id: 1, nombres: 'Juan', apellidos: 'Pérez García', correo: 'juan.perez@colegio.com', telefono: '987654321' },
+    { id: 2, nombres: 'Ana', apellidos: 'López Torres', correo: 'ana.lopez@colegio.com', telefono: '912345678' },
+    { id: 3, nombres: 'Carlos', apellidos: 'Ruiz Díaz', correo: 'carlos.ruiz@colegio.com', telefono: '934567890' },
+    { id: 4, nombres: 'Lucía', apellidos: 'Torres Vega', correo: 'lucia.torres@colegio.com', telefono: '945678901' },
+    { id: 5, nombres: 'Pedro', apellidos: 'Gómez Ríos', correo: 'pedro.gomez@colegio.com', telefono: '956789012' },
+    { id: 6, nombres: 'María', apellidos: 'Sánchez León', correo: 'maria.sanchez@colegio.com', telefono: '967890123' },
+    { id: 7, nombres: 'Luis', apellidos: 'Fernández Soto', correo: 'luis.fernandez@colegio.com', telefono: '978901234' },
+    { id: 8, nombres: 'Elena', apellidos: 'Ramírez Cruz', correo: 'elena.ramirez@colegio.com', telefono: '989012345' },
+    { id: 9, nombres: 'Miguel', apellidos: 'Castro Peña', correo: 'miguel.castro@colegio.com', telefono: '900123456' },
+    { id: 10, nombres: 'Patricia', apellidos: 'Vargas Silva', correo: 'patricia.vargas@colegio.com', telefono: '911234567' },
+    { id: 11, nombres: 'Jorge', apellidos: 'Morales Paredes', correo: 'jorge.morales@colegio.com', telefono: '922345678' },
+    { id: 12, nombres: 'Rosa', apellidos: 'Herrera Salas', correo: 'rosa.herrera@colegio.com', telefono: '933456789' },
+    { id: 13, nombres: 'Alberto', apellidos: 'Mendoza Rojas', correo: 'alberto.mendoza@colegio.com', telefono: '944567890' },
+    { id: 14, nombres: 'Carmen', apellidos: 'Flores Medina', correo: 'carmen.flores@colegio.com', telefono: '955678901' },
+    { id: 15, nombres: 'Ricardo', apellidos: 'Ortega Ramos', correo: 'ricardo.ortega@colegio.com', telefono: '966789012' },
+    { id: 16, nombres: 'Sofía', apellidos: 'Guerrero Díaz', correo: 'sofia.guerrero@colegio.com', telefono: '977890123' },
+    { id: 17, nombres: 'Gabriel', apellidos: 'Reyes Campos', correo: 'gabriel.reyes@colegio.com', telefono: '988901234' },
+    { id: 18, nombres: 'Paula', apellidos: 'Chávez Luna', correo: 'paula.chavez@colegio.com', telefono: '999012345' },
+    { id: 19, nombres: 'Andrés', apellidos: 'Silva Torres', correo: 'andres.silva@colegio.com', telefono: '910123456' },
+    { id: 20, nombres: 'Valeria', apellidos: 'Paredes Soto', correo: 'valeria.paredes@colegio.com', telefono: '921234567' }
+  ];
+
+
+
   filteredDocentes: Docente[] = [];
   paginatedDocentes: Docente[] = [];
   currentPage: number = 1;
@@ -39,15 +64,15 @@ export class DocentesComponent implements OnInit {
 
   // Método para manejar el evento de clic en el botón de "Crear Docente"
   ngOnInit(): void {
-    for (let i = 1; i <= 25; i++) {
-      this.docentes.push({
-        id: i,
-        nombres: `Docente ${i}`,
-        apellidos: `Docente ${i}`,
-        correo: `Dirección ${i}`,
-        telefono: `123-456-78${i}`
-      });
-    }
+    // for (let i = 1; i <= 25; i++) {
+    //   this.docentes.push({
+    //     id: i,
+    //     nombres: `Docente ${i}`,
+    //     apellidos: `Docente ${i}`,
+    //     correo: `Dirección ${i}`,
+    //     telefono: `123-456-78${i}`
+    //   });
+    // }
     this.filteredDocentes = [...this.docentes];
     this.updatePaginatedDocentes();
   }

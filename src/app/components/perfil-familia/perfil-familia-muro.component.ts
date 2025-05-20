@@ -29,20 +29,20 @@ export class PerfilFamiliaMuroComponent {
   }
 
   new Chart(ctx, {
-    type: 'bar',
+    type: 'bar',          // Tipo de gráfico  'bar'
     data: {
       labels: ['Inscritos', 'En Progreso', 'Completados'],
       datasets: [
         {
-          label: 'Participantes',
-          data: [120, 60, 20],
+          label: 'Participantes',   // Cambié 'Participantes' a 'Participantes'
+          data: [120, 60, 20],      // Cambié los datos a [120, 60, 20]
           backgroundColor: ['#28a745', '#ffc107', '#28a745']
         }
       ]
     },
     options: {
-      responsive: true, // Hacer el gráfico responsivo
-      plugins: {  // Configuración de los plugins
+      responsive: true,   // Hacer el gráfico responsivo
+      plugins: {          // Configuración de los plugins
         legend: {         // Ocultar la leyenda
           display: false  // Oculta la leyenda
         }

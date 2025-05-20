@@ -16,10 +16,10 @@ export class InicioComponent {
     { label: 'Acceso', route: '/login' },         // Enlace al login
     { label: 'Contáctenos', route: '/contacto' }
   ];
-
+  // Propiedades para el título y detalle del menú
   textoTitulo: string = 'Bienvenido a Nuestra Plataforma';
   textoDetalle: string = 'Detalle del Menu';
-  isMenuOpen: any;
+  isMenuOpen: any;  // Variable para controlar el estado del menú
 
   onMenuItemClick(item: any, event: Event) {    // Método para manejar el clic en un elemento del menú
     event.preventDefault();

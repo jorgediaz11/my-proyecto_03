@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilAdminSecComponent {
   // Lógica específica del componente
 menuItems: MenuItem[] = [
-  { label: 'Inicio', icon: 'home', route: '/opciones', disabled: false },                   // Ejemplo de ruta
+  { label: 'Inicio', icon: 'home', route: '//perfil-admin-sec', disabled: false },                   // Ejemplo de ruta
   { label: 'Docentes', icon: 'chalkboard-teacher', route: '/', disabled: true },            // Deshabilitado
   { label: 'Alumnos', icon: 'user-graduate', route: '/', disabled: true },                  // Deshabilitado
   { label: 'Cursos', icon: 'book', route: '/', disabled: true },                            // Deshabilitado

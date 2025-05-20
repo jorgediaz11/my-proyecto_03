@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-academico',
+  selector: 'app-academico',  // Cambié 'app-academico' a 'app-academico'
   templateUrl: './academico.component.html',  //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.html
-  styleUrls: ['./academico.component.css']
+  styleUrls: ['./academico.component.css']    //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.css
 })
 export class AcademicoComponent { // Cambié 'AcademicoComponent' a 'app-academico'
   academicos = [

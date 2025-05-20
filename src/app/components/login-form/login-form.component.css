@@ -107,7 +107,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #555;
+  color: #555;    /* Color del texto */
   text-align: left; /* Alinea el texto a la izquierda */
 }
 

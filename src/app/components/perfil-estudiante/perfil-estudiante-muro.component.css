@@ -1,5 +1,5 @@
 /* Contenedor principal en diseño de 2x2 */
-.academico-grid {
+.contenedor-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columnas */
   gap: 20px; /* Espaciado entre los elementos */
@@ -7,7 +7,7 @@
 }
 
 /* Estilo para cada elemento */
-.academico-item {
+.contenedor-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -18,13 +18,13 @@
 }
 
 /* Efecto al pasar el mouse */
-.academico-item:hover {
+.contenedor-item:hover {
   transform: scale(1.05); /* Aumenta ligeramente el tamaño */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
 }
 
 /* Imagen */
-.academico-item img {
+.contenedor-item img {
   width: 60px;
   height: 60px;
   object-fit: cover; /* Asegura que la imagen se ajuste al tamaño */
@@ -33,7 +33,7 @@
 }
 
 /* Título */
-.academico-title {
+.contenedor-title {
   font-size: 1em;
   font-weight: bold;
   color: #333;
@@ -42,7 +42,7 @@
 }
 
 /* Efecto al pasar el mouse sobre el título */
-.academico-title:hover {
+.contenedor-title:hover {
   color: #28a745; /* Color verde */
 }
 

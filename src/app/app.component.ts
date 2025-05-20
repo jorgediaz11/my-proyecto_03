@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',  // Archivo HTML del componente
   styleUrls: ['./app.component.css']    // Archivo CSS del componente
 })
+// Clase principal de la aplicación
 export class AppComponent {
   // Lógica específica del componente
   title = 'My Proyecto 02';             // Título de la aplicación

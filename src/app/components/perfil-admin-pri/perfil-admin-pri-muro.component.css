@@ -1,20 +1,23 @@
 /* Contenedor principal en diseño de 2x2 */
 .academico-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-  gap: 20px; /* Espaciado entre los elementos */
-  padding: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
 }
 
 /* Estilo para cada elemento */
 .academico-item {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc; /* Borde fino */
-  border-radius: 10px; /* Bordes semiredondeados */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de transición */
-  background-color: #F3FEF5;  /* Fondo claro */
+  width: calc(60px + 20ch); /* 50px imagen + ancho de 10 caracteres */
+  min-width: 120px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 12px 8px;
 }
 
 /* Efecto al pasar el mouse */
@@ -23,24 +26,45 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
 }
 
-/* Imagen */
+/* Imagen a la izquierda */
 .academico-item img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover; /* Asegura que la imagen se ajuste al tamaño */
-  margin-right: 20px; /* Espaciado entre la imagen y el texto */
-  border-radius: 5px; /* Bordes ligeramente redondeados */
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-right: 12px;
+}
+
+/* Contenedor de texto y botón a la derecha */
+.academico-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
 }
 
 /* Título */
 .academico-title {
-  font-size: 1em;
-  font-weight: bold;
-  color: #333;
-  text-decoration: none; /* Sin subrayado */
-  transition: color 0.3s ease; /* Transición para el color */
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Botón desactivado */
+.academico-btn {
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  border: none;
+  background: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+  margin-top: 2px;
+  opacity: 0.7;
+}
 /* Efecto al pasar el mouse sobre el título */
 .academico-title:hover {
   color: #28a745; /* Color verde */
@@ -50,7 +74,7 @@
 .counters {
   display: flex;
   justify-content: space-around;
-  margin: 20px 0;
+  margin: 5px 0;
 }
 
 .counter-item {
@@ -64,7 +88,7 @@
 .counter-item h3 {
   margin: 0;
   font-size: 1.2em;
-  color: #333;
+  color: #333;  /* Color del texto - revisar */
 }
 
 .counter-item p {
@@ -85,4 +109,12 @@ canvas {
   display: block;
   width: 100% !important;
   height: 300px !important;
+}
+
+/* Puedes poner esto en perfil-admin-pri-muro.component.css */
+.img-50 {
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }

@@ -20,12 +20,12 @@
     <option>San Juan de Lurigancho</option>
     <option>...</option>
   </select>
-  <select class="border rounded px-3 py-2">
+  <!-- <select class="border rounded px-3 py-2">
     <option selected disabled>Zona</option>
     <option>Lima Este</option>
     <option>Lima Norte</option>
     <option>Lima Sur</option>
-  </select>
+  </select> -->
   <select class="border rounded px-3 py-2">
     <option selected disabled>Colegio</option>
     <option>San Martín</option>
@@ -44,12 +44,12 @@
     <option>Comunicación</option>
     <option>...</option>
   </select>
-  <select class="border rounded px-3 py-2">
+  <!-- <select class="border rounded px-3 py-2">
     <option selected disabled>Estudiante</option>
     <option>Juan Pérez</option>
     <option>María López</option>
     <option>...</option>
-  </select>
+  </select> -->
 </div>
 
 <!-- Botones de exportar e importar -->
@@ -87,27 +87,50 @@
   </button>
 </div>
 
-<!-- Tabla de ejemplo -->
+<!-- Contenedor de Tabla // Datos de ejemplo -->
 <div class="overflow-x-auto rounded-lg shadow">
-  <table class="min-w-full bg-white">
+  <!-- Tabla de Reportes -->
+  <table class="min-w-full bg-white w-full">
     <thead>
       <tr>
-        <th class="px-6 py-3 bg-blue-600 text-left text-xs font-bold text-white uppercase tracking-wider">Nombre</th>
-        <th class="px-6 py-3 bg-blue-600 text-left text-xs font-bold text-white uppercase tracking-wider">Colegio</th>
-        <th class="px-6 py-3 bg-blue-600 text-left text-xs font-bold text-white uppercase tracking-wider">Nivel</th>
-        <th class="px-6 py-3 bg-blue-600 text-left text-xs font-bold text-white uppercase tracking-wider">Curso</th>
-        <th class="px-6 py-3 bg-blue-600 text-left text-xs font-bold text-white uppercase tracking-wider">Nota</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nro</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nombre</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Colegio</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nivel</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Curso</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nota</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Juan Pérez</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">San Martín</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Secundaria</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Matemática</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">18</td>
+      <tr *ngFor="let estudiante of estudiantesPaginados; let i = index"
+          [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+          class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nombre }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.colegio }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nivel }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.curso }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.notas }}</td>
       </tr>
-      <!-- Más filas de ejemplo -->
     </tbody>
   </table>
+  <!-- Fin de tabla -->
+</div>
+
+<!-- Controles de paginación -->
+<div class="flex justify-center items-center gap-2 mt-4">
+  <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">
+    Anterior
+  </button>
+  <ng-container *ngFor="let page of [].constructor(totalPages); let idx = index">
+    <button
+      class="px-3 py-1 rounded"
+      [ngClass]="currentPage === idx + 1 ? 'bg-green-600 text-white' : 'bg-gray-200'"
+      (click)="cambiarPagina(idx + 1)">
+      {{ idx + 1 }}
+    </button>
+  </ng-container>
+  <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">
+    Siguiente
+  </button>
 </div>

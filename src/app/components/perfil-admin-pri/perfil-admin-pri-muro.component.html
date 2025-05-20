@@ -1,4 +1,4 @@
-<h2>Muro - Perfil Admin Pri</h2>
+<!-- <h2>Muro - Perfil Admin Pri</h2> -->
 <!-- <p>Este es el contenido predeterminado que se muestra al ingresar al perfil de administrador principal.</p> -->
 <!-- Contadores -->
 <div class="counters">
@@ -20,32 +20,49 @@
   </div>
 </div>
 
-<!-- Gráfica -->
-<div class="chart-container">
-  <!-- <h3>Progreso de Participantes</h3> -->
-  <canvas id="progressChart" width="400" height="200"></canvas>
+<!-- Gráficas lado a lado -->
+<div class="flex flex-col md:flex-row gap-8 my-8">
+  <!-- Gráfico 01: Progreso de Participantes -->
+  <div class="flex-1">
+    <h3 class="font-bold text-green-700 mb-3" style="font-weight: bold;">Progreso de Participantes</h3>
+    <canvas id="progressChart" width="400" height="200"></canvas>
+  </div>
+  <!-- Gráfico 02: Alumnos por Aula (Primaria) -->
+  <div class="flex-1">
+    <h3 class="font-bold text-green-700 mb-3" style="font-weight: bold;">Alumnos por Aula (Primaria)</h3>
+    <canvas id="aulasChart" width="400" height="200"></canvas>
+  </div>
 </div>
 
-<!-- Gráfica -->
+<!-- Botones Extra -->
 <div class="academico-grid">
   <div class="academico-item">
-    <img src="../assets/images/cursos.png" alt="Logo" class="login-logo" />
-    <a class="academico-title">CURSOS</a>
+    <img src="../assets/images/cursos.png" alt="Logo" class="login-logo img-50" />
+    <div class="academico-info">
+      <span class="academico-title">CURSOS</span>
+      <button class="academico-btn" disabled>Ver más</button>
+    </div>
   </div>
-
   <div class="academico-item">
-    <img src="../assets/images/niveles.png" alt="Logo" class="login-logo" />
-    <a class="academico-title">NIVELES</a>
+    <img src="../assets/images/niveles.png" alt="Logo" class="login-logo img-50" />
+    <div class="academico-info">
+      <span class="academico-title">NIVELES</span>
+      <button class="academico-btn" disabled>Ver más</button>
+    </div>
   </div>
-
   <div class="academico-item">
-    <img src="../assets/images/grados.png" alt="Logo" class="login-logo" />
-    <a class="academico-title">GRADOS</a>
+    <img src="../assets/images/grados.png" alt="Logo" class="login-logo img-50" />
+    <div class="academico-info">
+      <span class="academico-title">GRADOS</span>
+      <button class="academico-btn" disabled>Ver más</button>
+    </div>
   </div>
-
   <div class="academico-item">
-    <img src="../assets/images/secciones.png" alt="Logo" class="login-logo" />
-    <a class="academico-title">SECCIONES</a>
+    <img src="../assets/images/secciones.png" alt="Logo" class="login-logo img-50" />
+    <div class="academico-info">
+      <span class="academico-title">SECCIONES</span>
+      <button class="academico-btn" disabled>Ver más</button>
+    </div>
   </div>
 </div>
-<!-- Fin Gráfica -->
+<!-- Fin Botones -->

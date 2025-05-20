@@ -25,7 +25,7 @@
 .docentes-table th,
 .docentes-table td {
   font-size: 0.9em; /* Reducir el tamaño del texto */
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde gris */
   padding: 6px; /* Reducir el espacio interno */
   text-align: left;
 }

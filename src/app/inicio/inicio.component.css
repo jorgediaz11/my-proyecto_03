@@ -152,7 +152,7 @@ button:hover {
 .ficha-efecto {
   transition: transform 0.3s, box-shadow 0.3s;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: hidden; /* Para bordes redondeados */
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .ficha-efecto:hover {

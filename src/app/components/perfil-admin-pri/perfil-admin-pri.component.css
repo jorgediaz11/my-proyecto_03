@@ -158,7 +158,7 @@
     background-color: #28a745; /* Mismo color que el header */
     color: white; /* Texto blanco */
     text-decoration: none;
-    border: 1px solid #218838;
+    border: 1px solid #218838;  /* Borde verde */
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;

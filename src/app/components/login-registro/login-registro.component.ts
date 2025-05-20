@@ -6,11 +6,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './login-registro.component.html',
   styleUrls: ['./login-registro.component.css']
 })
-export class LoginRegistroComponent {
+export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-login-registro'
   // Lógica específica del componente
   registroForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {  // Inyecta el FormBuilder para crear formularios reactivos
     this.registroForm = this.fb.group({
       usuario: ['', [Validators.required, Validators.minLength(3)]],
       nombres: ['', [Validators.required, Validators.minLength(3)]],

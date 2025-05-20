@@ -135,7 +135,7 @@
 
 .filter-container input {
   padding: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde fino */
   border-radius: 4px;
   font-size: 0.9em;
   width: 250px;

@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service'; // Importa el servicio de autenticación
 import { Router } from '@angular/router';
 
-@Component({
+@Component({  // Cambié 'app-login-form' a 'app-login-form'
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent {
+export class LoginFormComponent { // Cambié 'app-login-form' a 'app-login-form'
   onReset() { // Cambié 'onReset' a 'resetForm'
   throw new Error('Method not implemented.'); // Método para manejar el evento de clic en el botón de "Restablecer"
 }

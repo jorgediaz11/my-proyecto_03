@@ -11,7 +11,7 @@
     "src/main.server.ts", // Archivo principal del servidor
     "server.ts"           // Archivo de entrada del servidor
   ],
-  "angularCompilerOptions": {
+  "angularCompilerOptions": { // Opciones del compilador de Angular
     "entryModule": "src/app/app.server.module#AppServerModule"
   }
 }

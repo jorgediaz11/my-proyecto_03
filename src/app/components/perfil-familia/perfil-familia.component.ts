@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilFamiliaComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/opciones', disabled: false },                   // Ejemplo de ruta
+    { label: 'Inicio', icon: 'home', route: '//perfil-familia', disabled: false },                   // Ejemplo de ruta
     { label: 'Progreso', icon: 'chart-line', route: '/productos', disabled: true },           // Deshabilitado
     { label: 'Comunicados', icon: 'bullhorn', route: '/configuracion', disabled: true },      // Deshabilitado
     { label: 'Mensajeria', icon: 'envelope', route: '/reportes', disabled: true },            // Deshabilitado
