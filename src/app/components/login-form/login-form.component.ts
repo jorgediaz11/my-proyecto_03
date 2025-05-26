@@ -23,7 +23,7 @@ export class LoginFormComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password : ['', Validators.required]
     });
   }
   // Método para manejar el evento de clic en el botón de "Iniciar sesión"

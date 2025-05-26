@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login-registro',
-  templateUrl: './login-registro.component.html',
-  styleUrls: ['./login-registro.component.css']
+  selector: 'app-login-registro', // Asegúrate de que el selector sea único y descriptivo
+  templateUrl: './login-registro.component.html', // Asegúrate de que la ruta al archivo HTML sea correcta
+  styleUrls: ['./login-registro.component.css'] // Asegúrate de que la ruta al archivo CSS sea correcta
 })
 export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-login-registro'
   // Lógica específica del componente

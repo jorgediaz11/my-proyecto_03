@@ -25,8 +25,8 @@
 
 /* Imagen */
 .academico-item img {
-  width: 80px;
-  height: 80px;
+  width: 80px;  /* Ancho fijo para la imagen */
+  height: 80px; /* Alto fijo para la imagen */
   object-fit: cover; /* Asegura que la imagen se ajuste al tamaño */
   margin-right: 20px; /* Espaciado entre la imagen y el texto */
   border-radius: 5px; /* Bordes ligeramente redondeados */

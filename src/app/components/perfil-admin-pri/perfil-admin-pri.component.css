@@ -157,7 +157,7 @@
     padding: 10px 15px;
     background-color: #28a745; /* Mismo color que el header */
     color: white; /* Texto blanco */
-    text-decoration: none;
+    text-decoration: none;  /* Sin subrayado */
     border: 1px solid #218838;  /* Borde verde */
     border-radius: 5px;
     cursor: pointer;
@@ -178,7 +178,7 @@
   justify-content: space-between; /* Coloca el logo a la izquierda y el texto a la derecha */
   background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
-  padding: 10px;
+  padding: 10px;  /* Espacio interno */
   border: 1px solid #ccc; /* Borde fino */
 }
 

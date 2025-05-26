@@ -5,10 +5,10 @@
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  border: 2px solid #ddd;
+  border: 2px solid #ddd; /* Borde fino */
   border-radius: 8px;
   background-color: #F3FEF5; /* Fondo claro */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   text-align: center;
 }
 
@@ -128,7 +128,7 @@ form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
   background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   text-decoration: none;
-  border: 2px solid #218838;
+  border: 2px solid #218838;  /* Borde verde */
   border-radius: 5px;
   font-size: 1em;
   cursor: pointer;

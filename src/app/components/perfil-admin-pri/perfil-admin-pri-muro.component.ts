@@ -2,9 +2,9 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 @Component({
-  selector: 'app-perfil-admin-pri-muro',
-  templateUrl: './perfil-admin-pri-muro.component.html',
-  styleUrls: ['./perfil-admin-pri-muro.component.css']
+  selector: 'app-perfil-admin-pri-muro',                  // Cambié 'app-perfil-admin-pri-muro' a 'app-perfil-admin-pri-muro'
+  templateUrl: './perfil-admin-pri-muro.component.html',  // Cambié 'perfil-admin-pri-muro.component.html' a 'perfil-admin-pri-muro.component.html'
+  styleUrls: ['./perfil-admin-pri-muro.component.css']    // Cambié 'perfil-admin-pri-muro.component.css' a 'perfil-admin-pri-muro.component.css'
 })
 export class PerfilAdminPriMuroComponent implements AfterViewInit {
   // Contadores

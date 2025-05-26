@@ -162,15 +162,16 @@ button:hover {
   font-size: 0.9em;
   color: darkred; /* Texto rojo oscuro */
   cursor: pointer;
-  font-weight: normal;
+  font-weight: bold;
+  /*font-weight: normal;*/
   transition: font-weight 0.2s;
 }
 
 .forgot-password:hover,
 .forgot-password:focus {
     font-weight: bold;
-    color: #4EAD4F;   /* Fondo verde */
-    text-decoration: underline;
+    /*color: #4EAD4F;   /* Fondo verde */
+    /*text-decoration: underline;*/
   }
 
 /* Contenedor de Enlaces */
