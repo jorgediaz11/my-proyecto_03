@@ -160,7 +160,7 @@ button:hover {
 .forgot-password {
   margin-top: 10px;
   font-size: 0.9em;
-  color: #4EAD4F; /* Fondo verde */
+  color: darkred; /* Texto rojo oscuro */
   cursor: pointer;
   font-weight: normal;
   transition: font-weight 0.2s;

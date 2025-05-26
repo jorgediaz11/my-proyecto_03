@@ -11,24 +11,26 @@
   <div class="login-register-container">
     <!-- Formulario de inicio de sesión -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="login-section">
-      <h2>Iniciar sesión</h2>
-      <div class="form-group">
-        <label for="username">Usuario:</label>
-        <input id="username" formControlName="username" type="text" placeholder="Ingresa tu usuario" />
-      </div>
-      <div class="form-group">
-        <label for="password">Clave:</label>
-        <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
-      </div>
-      <div class="button-container"></div>
-        <!-- Mensaje de error al registrar -->
-        <button type="button" class="btn-login btn-limpiar" (click)="resetForm()">Limpiar</button>
-        <!-- Mensaje de inicio de sesion -->
-        <button type="submit" class="btn-login btn-iniciar" [disabled]="loginForm.invalid">Iniciar Sesión</button>
-        <!-- Mensaje de error al iniciar sesión -->
-        <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
-        <p class="forgot-password" >Olvidé mi contraseña</p>
+      <div class="login-section">
+        <h2>Iniciar sesión</h2>
+        <div class="form-group">
+          <label for="email">Correo:</label>
+          <input id="email" formControlName="email" type="text" placeholder="Ingresa tu Correo" />
+        </div>
+        <div class="form-group">
+            <label for="password">Clave:</label>
+            <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
+        </div>
+        <div class="button-container">
+          <!-- Mensaje de error al registrar -->
+          <button type="button" class="btn-login btn-limpiar" (click)="resetForm()">Limpiar</button>
+          <!-- Mensaje de inicio de sesion -->
+          <button type="submit" class="btn-login btn-iniciar" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+          <!-- Mensaje de error al iniciar sesión -->
+        </div>
+        <!-- <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
+        <p class="forgot-password" >Olvidé mi contraseña</p> -->
+        <p *ngIf="submitted && loginError" class="forgot-password">{{ loginError }}</p>
       </div>
     </form>
 

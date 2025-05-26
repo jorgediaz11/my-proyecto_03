@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -61,13 +61,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
   ],
   imports: [
     BrowserModule,            // Importa BrowserModule aquí
-    FormsModule, // <-- Agrega esto
-    HttpClientModule, // Agrega HttpClientModule a los imports
+    FormsModule,              // <-- Agrega esto
+    HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
     BrowserAnimationsModule,  // Necesario para Angular Material
     MatDialogModule,          // Importa MatDialogModule aquí
     MatButtonModule,          // Importa MatButtonModule aquí
     MatTabsModule,            // Importa MatTabsModule aquí
-    ReactiveFormsModule,      // Importa ReactiveFormsModule aquí
+    ReactiveFormsModule,      // Importa ReactiveFormsModule aquí BackEnd
     RouterModule.forRoot(routes)
   ],
   providers: [

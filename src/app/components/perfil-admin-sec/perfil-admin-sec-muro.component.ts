@@ -15,39 +15,132 @@ export class PerfilAdminSecMuroComponent {
   totalAlumnos = 200;
   totalCursos = 15;
 
+  // Datos para los gráficos
+  // Datos simulados
+  primariaGrados = ['1ro', '2do', '3ro', '4to', '5to', '6to'];
+  primariaAlumnos = [30, 28, 32, 27, 29, 31];
+  secundariaGrados = ['1ro', '2do', '3ro', '4to', '5to'];
+  secundariaAlumnos = [25, 26, 24, 23, 22];
+
   ngAfterViewInit() {
     console.log('ngAfterViewInit ejecutado');
-    this.renderChart();
+    this.renderCharts();
   }
 
-  renderChart() {
-  console.log('Inicializando el gráfico...');
-  const ctx = document.getElementById('progressChart') as HTMLCanvasElement;
-  if (!ctx) {
-    console.error('No se encontró el elemento canvas con ID "progressChart"');
-    return;
-  }
-
-  new Chart(ctx, {
-    type: 'bar',        //  Tipo de gráfico 'bar'
-    data: {
-      labels: ['Inscritos', 'En Progreso', 'Completados'],  // Etiquetas de las barras
-      datasets: [
-        {
-          label: 'Participantes',   // Cambié 'Participantes' a 'Participantes'
-          data: [120, 60, 20],      // Cambié los datos a [120, 60, 20]
-          backgroundColor: ['#28a745', '#ffc107', '#28a745']
-        }
-      ]
-    },
-    options: {
-      responsive: true,   // Hacer el gráfico responsivo
-      plugins: {          // Configuración de los plugins
-        legend: {         // Ocultar la leyenda
-          display: false  // Oculta la leyenda
-        }
+  renderCharts() {
+    // Gráfico 01: Barras verticales - Alumnos por grado de primaria
+    new Chart('chartPrimariaBar', {
+      type: 'bar',
+      data: {
+        labels: this.primariaGrados,
+        datasets: [{
+          label: 'Alumnos',
+          data: this.primariaAlumnos,
+          backgroundColor: '#4EAD4F'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
       }
-    }
-  });
-}
+    });
+
+    // Gráfico 02: Lineal - Alumnos por grado de primaria
+    new Chart('chartPrimariaLine', {
+      type: 'line',
+      data: {
+        labels: this.primariaGrados,
+        datasets: [{
+          label: 'Alumnos',
+          data: this.primariaAlumnos,
+          borderColor: '#22c55e',
+          backgroundColor: 'rgba(34,197,94,0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // Gráfico 03: Barras verticales - Alumnos por grado de secundaria
+    new Chart('chartSecundariaBar', {
+      type: 'bar',
+      data: {
+        labels: this.secundariaGrados,
+        datasets: [{
+          label: 'Alumnos',
+          data: this.secundariaAlumnos,
+          backgroundColor: '#3B82F6'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // Gráfico 04: Lineal - Alumnos por grado de secundaria
+    new Chart('chartSecundariaLine', {
+      type: 'line',
+      data: {
+        labels: this.secundariaGrados,
+        datasets: [{
+          label: 'Alumnos',
+          data: this.secundariaAlumnos,
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(59,130,246,0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // Gráfico 05: Pie - Población por grado de primaria
+    new Chart('chartPrimariaPie', {
+      type: 'pie',
+      data: {
+        labels: this.primariaGrados,
+        datasets: [{
+          data: this.primariaAlumnos,
+          backgroundColor: [
+            '#4EAD4F', '#22c55e', '#a3e635', '#bef264', '#facc15', '#fbbf24'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+
+    // Gráfico 06: Pie - Población por grado de secundaria
+    new Chart('chartSecundariaPie', {
+      type: 'pie',
+      data: {
+        labels: this.secundariaGrados,
+        datasets: [{
+          data: this.secundariaAlumnos,
+          backgroundColor: [
+            '#3B82F6', '#2563eb', '#60a5fa', '#93c5fd', '#a5b4fc'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+  }
+
 }

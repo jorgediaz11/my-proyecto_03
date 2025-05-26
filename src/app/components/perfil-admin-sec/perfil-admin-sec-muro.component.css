@@ -96,3 +96,37 @@ canvas {
   display: block;
   margin: 0 auto;
 }
+
+.charts-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 22px;
+  justify-content: center;
+}
+.chart-small {
+  width: 180px;
+  height: 180px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+}
+.chart-large {
+  width: 360px;
+  height: 360px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+}
+.chart-label {
+  margin-top: 8px;
+  font-weight: 600;
+  text-align: center;
+}
