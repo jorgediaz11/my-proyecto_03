@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  // Importar el decorador Component de Angular
 
 // Importar el módulo de enrutamiento
 @Component({

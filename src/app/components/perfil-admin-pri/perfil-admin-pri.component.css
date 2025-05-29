@@ -76,7 +76,7 @@
   /* Botón para togglear el menú */
   .sidebar .menu-toggle {
     background-color: transparent;  /* Fondo transparente */
-    border: none;
+    border: none; /* Sin borde */
     color: white; /* Texto blanco */
     font-size: 1.2em;
     cursor: pointer;
@@ -87,7 +87,7 @@
   /* Lista del menú */
   .sidebar .menu {
     list-style: none;
-    padding: 0;
+    padding: 0; /* Elimina el padding */
     margin: 0;
   }
 
@@ -142,7 +142,7 @@
 
   .perfil-admin-sec-layout {
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Borde fino */
     background-color: #F3FEF5;  /* Fondo claro */
     border-radius: 5px;
   }

@@ -43,7 +43,7 @@
     /* Cambia el color de fondo */
     color: white; /* Texto blanco */
     width: 250px;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out; /* Transición suave al cambiar el ancho */
     overflow-y: auto;
   }
 
@@ -97,7 +97,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease; /* Transición suave al cambiar el color de fondo */
   }
 
   .sidebar .menu .menu-item:hover {

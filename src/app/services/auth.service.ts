@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core'; // Importar el decorador Injectable de Angular para definir un servicio
+import { HttpClient } from '@angular/common/http';  // Importar HttpClient de Angular para realizar solicitudes HTTP
+import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar respuestas asíncronas
 
 // Importar el módulo de enrutamiento
 // @Injectable({

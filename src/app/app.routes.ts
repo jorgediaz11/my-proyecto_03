@@ -60,26 +60,26 @@ export const routes: Routes = [
   },
 
 // Ruta para el perfil de admin sec
-  { path: 'perfil-admin-sec',                               // Ruta para el perfil de admin sec
+  { path: 'perfil-admin-sec',                                 // Ruta para el perfil de admin sec
     component: PerfilAdminSecComponent,
     children: [
-      { path: '', component: PerfilAdminSecMuroComponent }  // Ruta predeterminada
+      { path: '', component: PerfilAdminSecMuroComponent }    // Ruta predeterminada
       // Otras rutas hijas
     ]
   },
 
 // Ruta para el perfil de docente
   { path: 'perfil-docente',
-    component: PerfilDocenteComponent,                      // Ruta para el perfil de docente
+    component: PerfilDocenteComponent,                        // Ruta para el perfil de docente
     children: [
-      { path: '', component: PerfilDocenteMuroComponent }   // Ruta predeterminada
+      { path: '', component: PerfilDocenteMuroComponent }     // Ruta predeterminada
       // Otras rutas hijas
     ]
   },
 
 // Ruta para el perfil de estudiante
   { path: 'perfil-estudiante',
-    component: PerfilEstudianteComponent,                   // Ruta para el perfil de estudiante
+    component: PerfilEstudianteComponent,                     // Ruta para el perfil de estudiante
     children: [
       { path: '', component: PerfilEstudianteMuroComponent }  // Ruta predeterminada
       // Otras rutas hijas
@@ -88,13 +88,13 @@ export const routes: Routes = [
 
 // Ruta para el perfil de familia
   { path: 'perfil-familia',
-    component: PerfilFamiliaComponent,                      // Ruta para el perfil de familia
+    component: PerfilFamiliaComponent,                        // Ruta para el perfil de familia
     children: [
-      { path: '', component: PerfilFamiliaMuroComponent }   // Ruta predeterminada
+      { path: '', component: PerfilFamiliaMuroComponent }     // Ruta predeterminada
       // Otras rutas hijas
     ]
   },
 
 // Redirección para rutas no válidas
-  { path: '**', redirectTo: '' }                            // Redirige a la ruta inicial si no se encuentra la ruta solicitada
+  { path: '**', redirectTo: '' }                              // Redirige a la ruta inicial si no se encuentra la ruta solicitada
 ];

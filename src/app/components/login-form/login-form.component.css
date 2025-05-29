@@ -197,7 +197,7 @@ button:hover {
   background-color: #4EAD4F; /* Fondo verde */
   color: white; /* Texto blanco */
   text-decoration: none;
-  border: 2px solid #218838;
+  border: 2px solid #218838;  /* Borde verde más oscuro */
   border-radius: 5px;
   font-size: 1em;
   cursor: pointer;
@@ -250,7 +250,7 @@ button[type="button"] {
 button:nth-of-type(1) { /* Apunta al primer botón (Limpiar) */
   background-color: #dc3545; /* Fondo rojo */
   color: white; /* Texto blanco */
-  border: 1px solid darkred;
+  border: 1px solid darkred;  /* Borde rojo oscuro */
   /* Mantén otros estilos que quieras conservar */
   padding: 10px;
   border-radius: 5px;

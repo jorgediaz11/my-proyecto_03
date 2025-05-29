@@ -93,16 +93,16 @@ export class PerfilAdminSecMuroComponent {
         datasets: [{
           label: 'Alumnos',
           data: this.secundariaAlumnos,
-          borderColor: '#2563eb',
-          backgroundColor: 'rgba(59,130,246,0.2)',
+          borderColor: '#2563eb', // Color del borde
+          backgroundColor: 'rgba(59,130,246,0.2)',  // Color de fondo con opacidad
           fill: true,
           tension: 0.4
         }]
       },
       options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
+        responsive: true, // Hacer el gráfico responsivo
+        plugins: { legend: { display: false } },  // Ocultar leyenda
+        scales: { y: { beginAtZero: true } }  // Eje Y comienza en cero
       }
     });
 

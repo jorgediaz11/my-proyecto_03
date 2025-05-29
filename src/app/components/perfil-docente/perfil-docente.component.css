@@ -96,7 +96,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease; /* Transición suave al cambiar el color de fondo */
   }
 
   .sidebar .menu .menu-item:hover {
@@ -141,7 +141,7 @@
 
   .perfil-admin-sec-layout {
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Borde fino */
     background-color: #F3FEF5;  /* Fondo claro */
     border-radius: 5px;
   }

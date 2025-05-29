@@ -1,5 +1,5 @@
-import { enableProdMode } from '@angular/core';
-import { environment } from './environments/environment';
+import { enableProdMode } from '@angular/core'; // Importar el módulo de enrutamiento 02
+import { environment } from './environments/environment'; // Importar el módulo de enrutamiento 02
 
 // Importar el módulo de enrutamiento 02
 if (environment.production) {

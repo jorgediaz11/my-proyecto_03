@@ -22,7 +22,7 @@ export class PerfilDocenteComponent {
     { label: 'Calificaciones', icon: 'clipboard-list', route: '/', disabled: true },          // Deshabilitado
     { label: 'Reportes', icon: 'chart-bar', route: '/', disabled: true },                     // Deshabilitado
     { label: 'Mensajería', icon: 'envelope', route: '/', disabled: true },                    // Deshabilitado
-    { label: 'Cerrar Sesion', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
+    { label: 'Cerrar sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
   ];
 
   isMenuOpen = true; // Controla el estado del menú (abierto/cerrado)

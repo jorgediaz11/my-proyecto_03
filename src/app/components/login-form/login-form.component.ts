@@ -33,7 +33,7 @@ export class LoginFormComponent {
     this.loginError = null; // Limpia el mensaje de error al intentar iniciar sesión
     if (this.loginForm.invalid) return; // Si el formulario es inválido, no hace nada
     const { email, password } = this.loginForm.value; // Obtiene los valores del formulario
-    this.loginError = 'email: ' + email + ' password: ' + password; // Muestra los valores en el mensaje de error (para depuración)
+    //this.loginError = 'email: ' + email + ' password: ' + password; // Muestra los valores en el mensaje de error (para depuración)
     // Llama al servicio de autenticación para iniciar sesión
     this.authService.login(email, password).subscribe({ // Cambié 'authService.login' a 'this.authService.login'
       // next: (response) => {          // Maneja la respuesta del servidor
@@ -44,7 +44,7 @@ export class LoginFormComponent {
           localStorage.setItem('access_token', response.access_token);
           this.loginError = 'LOGIN EXITOSO';
           // Redirige si quieres
-          // this.router.navigate(['/opciones']);
+          this.router.navigate(['/opciones']);
         } else {
           this.loginError = 'Respuesta inesperada del servidor';
         }

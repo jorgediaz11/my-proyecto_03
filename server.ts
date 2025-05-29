@@ -1,8 +1,8 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr';
+import { APP_BASE_HREF } from '@angular/common';  // Importación del token APP_BASE_HREF para establecer la base de las rutas
+import { CommonEngine } from '@angular/ssr';  // Importación del motor común de Angular para renderizado del lado del servidor
 import express, { Request, Response, NextFunction } from 'express'; // Importación con tipos
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path'; // Importación de funciones de manejo de rutas
 import bootstrap from './src/main.server';
 
 // The Express app is exported so that it can be used by serverless Functions.

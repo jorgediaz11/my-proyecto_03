@@ -158,7 +158,7 @@ button:hover {
 .ficha-efecto:hover {
   transform: translateY(-10px) scale(1.03);
   box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  border: 2px solid #ffc107;
+  border: 2px solid #ffc107;  /* Borde amarillo al pasar el mouse */
 }
 .card-img-top {
   height: 180px;
@@ -168,13 +168,13 @@ button:hover {
 .titulo-principal {
   font-size: 40px;
   font-weight: bold;
-  color: #212529;
+  color: #212529; /* Color gris oscuro */
   padding: 10px 20px;
 }
 
 .descripcion-principal {
   font-size: 34px;
-  color: #495057;
+  color: #495057; /* Color gris medio */
   padding: 10px 20px;
   line-height: 1; /* Valor estándar y legible */
 }
@@ -222,6 +222,15 @@ button:hover {
 
 .footer-link:hover,
 .footer-link:focus {
-  color: orange !important;
+  color: orange !important; /* Anaranjado al pasar el mouse */
   font-weight: bold;
+}
+
+.menu-hover-orange:hover {
+  color: #ff9800 !important;  /* Anaranjado al pasar el mouse */
+}
+
+.ficha-efecto:hover {
+  box-shadow: 0 4px 24px 0 rgba(255, 152, 0, 0.5) !important;
+  transition: box-shadow 0.3s;
 }

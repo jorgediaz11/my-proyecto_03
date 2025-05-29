@@ -22,8 +22,8 @@ menuItems: MenuItem[] = [
   { label: 'Cursos', icon: 'book', route: '/', disabled: true },                            // Deshabilitado
   { label: 'Calificaciones', icon: 'clipboard-list', route: '/', disabled: true },          // Deshabilitado
   { label: 'Reportes', icon: 'chart-bar', route: '/', disabled: true },                     // Deshabilitado
-  { label: 'Mensajeria', icon: 'envelope', route: '/', disabled: true },                    // Deshabilitado
-  { label: 'Cerrar Sesion', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
+  { label: 'Mensajería', icon: 'envelope', route: '/', disabled: true },                    // Deshabilitado
+  { label: 'Cerrar sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
 ];
 
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)

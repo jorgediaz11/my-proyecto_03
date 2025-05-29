@@ -6,7 +6,13 @@ module.exports = {
     "./src/**/*.{html,ts}", // Adjust the path to your HTML and TypeScript files
   ],
   theme: {
-    extend: {},
+      extend: {
+        colors: {
+          'verde-claro': '#76B177',
+          'hover-verde-claro': '#F3FEF5',
+          'hover-verde': '#DDFBD9'
+        }
+      }
   },
   plugins: [],
 }

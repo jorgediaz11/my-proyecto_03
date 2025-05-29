@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-login-registro'
   // Lógica específica del componente
-  registroForm: FormGroup;
+  registroForm: FormGroup;  // Define un FormGroup para manejar el formulario de registro
 
   constructor(private fb: FormBuilder) {  // Inyecta el FormBuilder para crear formularios reactivos
     this.registroForm = this.fb.group({
@@ -22,7 +22,7 @@ export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-log
   }
   // Método para manejar el evento de clic en el botón de "Registrarse"
   onSubmit(): void {
-    if (this.registroForm.valid) {
+    if (this.registroForm.valid) {  // Verifica si el formulario es válido
       console.log('Formulario enviado:', this.registroForm.value);
     } else {
       console.log('Formulario inválido');

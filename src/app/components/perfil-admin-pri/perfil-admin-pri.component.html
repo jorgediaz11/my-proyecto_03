@@ -5,53 +5,54 @@
     <h1>Administrador Principal</h1>
   </header>
 
-<!-- Contenedor principal -->
-<div class="portal-container" [ngClass]="{'menu-open': isMenuOpen}">
-  <!-- Sidebar -->
-  <aside class="sidebar" [ngClass]="{'menu-open': isMenuOpen}">
-    <div class="logo">
-      <button class="menu-toggle" (click)="toggleMenu()">
-        <i class="fas fa-bars"></i>
-      </button>
-      <span>Administrador Principal</span>
-    </div>
+  <!-- Contenedor principal -->
+  <div class="portal-container" [ngClass]="{'menu-open': isMenuOpen}">
+    <!-- Sidebar -->
+    <aside class="sidebar" [ngClass]="{'menu-open': isMenuOpen}">
+      <div class="logo">
+        <button class="menu-toggle" (click)="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <span>Administrador Principal</span>
+      </div>
 
-    <!-- Menu Navegación -->
-    <ul class="menu">
-      <li *ngFor="let item of menuItems" class="menu-item">
-        <a
-          [routerLink]="item.route"
-          [class.disabled]="item.disabled"
-          [attr.tabindex]="item.disabled ? -1 : null">
-          <i class="fas fa-{{ item.icon }}"></i>
-          <span *ngIf="isMenuOpen">{{ item.label }}</span>
-        </a>
-      </li>
-    </ul>
-    <!-- Cierre Menu -->
+      <!-- Menu Navegación -->
+      <ul class="menu">
+        <li *ngFor="let item of menuItems" class="menu-item">
+          <a
+            [routerLink]="item.route"
+            [class.disabled]="item.disabled"
+            [attr.tabindex]="item.disabled ? -1 : null">
+            <i class="fas fa-{{ item.icon }}"></i>
+            <span *ngIf="isMenuOpen">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+      <!-- Cierre Menu -->
 
-    <!-- Enlace para regresar a la página de opciones -->
-    <!-- <div class="link-container">
-      <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
-    </div> -->
+      <!-- Enlace para regresar a la página de opciones -->
+      <!-- <div class="link-container">
+        <a routerLink="/opciones" class="back-to-options">Regresar a Opciones</a>
+      </div> -->
 
-  </aside>
+    </aside>
 
-  <!-- Contenido principal -->
-  <main class="main-content">
-    <header class="top-bar">
-      <div>Muro - Perfil Administrador Principal</div>
-    </header>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <header class="top-bar">
+        <div>Muro - Perfil Administrador Principal</div>
+      </header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
 
-</div>
+  </div>
 
-<!-- Footer -->
-<footer class="login-footer">
-  <p>© 2025 Plataforma Educativa</p>
-</footer>
+  <!-- Footer -->
+  <footer class="login-footer">
+    <p>© 2025 Plataforma Educativa</p>
+  </footer>
+
 </div>
 <!-- Fin del contenedor principal -->

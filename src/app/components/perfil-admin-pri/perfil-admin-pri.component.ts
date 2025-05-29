@@ -16,7 +16,7 @@ interface MenuItem {
 export class PerfilAdminPriComponent {
   // Lógica específica del componente
   menuItems: MenuItem[] = [
-    { label: 'Inicio', icon: 'home', route: '/perfil-admin-pri', disabled: false },                   // Ruta al muro del perfil
+    { label: 'Inicio', icon: 'home', route: '/perfil-admin-pri', disabled: false },           // Ruta al muro del perfil
     { label: 'Usuarios', icon: 'user-friends', route: 'usuarios' , disabled: false },         // Cambié 'usuarios' a 'usuarios'
     { label: 'Colegios', icon: 'school', route: 'colegios', disabled: false  },               // Cambié 'colegios' a 'colegios'
     { label: 'Docentes', icon: 'chalkboard-teacher', route: 'docentes', disabled: false  },   // Cambié 'docentes' a 'docentes'
@@ -25,7 +25,7 @@ export class PerfilAdminPriComponent {
     { label: 'Reportes', icon: 'chart-bar', route: 'reportes', disabled: false  },            // Cambié 'clientes' a 'reportes'
     { label: 'Auditoría', icon: 'clipboard-check', route: 'auditoria', disabled: false  },    // Cambié 'configuracion' a 'configuracion'
     { label: 'Perfil', icon: 'user-circle', route: 'perfil', disabled: false  },              // Cambié 'perfil' a 'perfil'
-    { label: 'Cerrar Sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
+    { label: 'Cerrar sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
   ];
 
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)
@@ -34,4 +34,5 @@ export class PerfilAdminPriComponent {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
   }
+
 }

@@ -19,8 +19,8 @@ export class PerfilFamiliaComponent {
     { label: 'Inicio', icon: 'home', route: '//perfil-familia', disabled: false },                   // Ejemplo de ruta
     { label: 'Progreso', icon: 'chart-line', route: '/productos', disabled: true },           // Deshabilitado
     { label: 'Comunicados', icon: 'bullhorn', route: '/configuracion', disabled: true },      // Deshabilitado
-    { label: 'Mensajeria', icon: 'envelope', route: '/reportes', disabled: true },            // Deshabilitado
-    { label: 'Cerrar Sesion', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
+    { label: 'Mensajería', icon: 'envelope', route: '/reportes', disabled: true },            // Deshabilitado
+    { label: 'Cerrar sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
   ];
 
   isMenuOpen = true; // Para controlar el estado del menú (abierto/cerrado)

@@ -1,6 +1,7 @@
 /* ============================== */
 /* Contenedor Principal           */
 /* ============================== */
+
 .login-registro-container {
   max-width: 600px;
   margin: 20px auto;
@@ -15,6 +16,7 @@
 /* ============================== */
 /* Header                         */
 /* ============================== */
+
 .login-header {
   display: flex;
   align-items: center;

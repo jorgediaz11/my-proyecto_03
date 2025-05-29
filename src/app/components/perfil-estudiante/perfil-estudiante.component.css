@@ -141,7 +141,7 @@
 
   .perfil-admin-sec-layout {
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Borde fino */
     background-color: #F3FEF5;  /* Fondo claro */
     border-radius: 5px;
   }
@@ -157,7 +157,7 @@
     background-color: #4EAD4F; /* Fondo verde */
     color: white; /* Texto blanco */
     text-decoration: none;
-    border: 1px solid #218838;
+    border: 1px solid #218838;  /* Borde verde */
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
