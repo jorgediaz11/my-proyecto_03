@@ -6,7 +6,7 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde fino */
   border-radius: 8px;
   background-color: #F3FEF5;  /* Fondo claro */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -175,7 +175,7 @@
 
 .filter-input input {
   padding: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde fino */
   border-radius: 4px;
   font-size: 0.9em;
   width: 250px;
@@ -184,7 +184,7 @@
 .form-container {
   margin: 20px 0;
   padding: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde fino */
   border-radius: 8px;
   background-color: #F3FEF5;  /* Fondo claro */
 }
@@ -203,7 +203,7 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Borde fino */
   border-radius: 4px;
 }
 

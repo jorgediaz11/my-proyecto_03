@@ -8,13 +8,13 @@ import { Component } from '@angular/core';
 export class InicioComponent {
   // Lógica específica del componente
   menuItems = [
-    { label: 'Inicio', route: '/' },
-    { label: 'Nosotros', route: '/nosotros' },
-    { label: 'Niveles', route: '/niveles' },
-    { label: 'Catálogo', route: '/catalogo' },
-    { label: 'Noticias', route: '/noticias' },
+    { label: 'Inicio', route: '/' },              // Enlace a la página de inicio
+    { label: 'Nosotros', route: '/nosotros' },    // Enlace a la página "Nosotros"
+    { label: 'Niveles', route: '/niveles' },      // Enlace a la página "Niveles"
+    { label: 'Catálogo', route: '/catalogo' },    // Enlace al catálogo
+    { label: 'Noticias', route: '/noticias' },    // Enlace a la página de noticias
     { label: 'Acceso', route: '/login' },         // Enlace al login
-    { label: 'Contáctenos', route: '/contacto' }
+    { label: 'Contáctenos', route: '/contacto' }  // Enlace a la página de contacto
   ];
   // Propiedades para el título y detalle del menú
   textoTitulo: string = 'Plataforma Eureka';

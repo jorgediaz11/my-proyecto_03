@@ -1,85 +1,119 @@
-<!-- Este contenedor incluye el formulario para crear un nuevo estudiante, la tabla de estudiantes y la paginación -->
 <div class="colegios-container">
   <h2>Lista de Colegios</h2>
 
-  <!-- Filtro y botón para crear -->
-  <div class="filter-container">
-    <!-- Botón para crear un nuevo registro -->
-    <button class="create-button" (click)="createColegio()">Nuevo Colegio</button>
+  <!-- Pestañas -->
+  <div class="mb-4 border-b border-gray-200 h-[60%]">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-4 rounded-t-lg border-b-2"
+          [ngClass]="{
+            'border-green-600 text-green-600': activeTab === 'tabla',
+            'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300': activeTab !== 'tabla'
+          }"
+          (click)="activeTab = 'tabla'"
+          type="button"
+          role="tab"
+        >
+          Tabla de Colegios
+        </button>
+      </li>
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-4 rounded-t-lg border-b-2"
+          [ngClass]="{
+            'border-green-600 text-green-600': activeTab === 'nuevo',
+            'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-300': activeTab !== 'nuevo'
+          }"
+          (click)="activeTab = 'nuevo'"
+          type="button"
+          role="tab"
+        >
+          Nuevo Colegio
+        </button>
+      </li>
+    </ul>
+  </div>
 
+  <!-- Panel: Tabla de Colegios -->
+  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="h-[60%] overflow-auto">
     <!-- Filtro -->
-    <div class="filter-input">
-      <label for="search">Buscar Colegio:</label>
-      <input
-        id="search"
-        type="text"
+    <div class="filter-container mb-4 flex flex-wrap items-center gap-4">
+      <div class="filter-input">
+        <label for="search">Buscar Colegio:</label>
+        <input
+          id="search"
+          type="text"
+          (input)="filterColegios()"
+          placeholder="Ingrese el nombre del colegio"
+        />
+      </div>
+      <button class="create-button" (click)="activeTab = 'nuevo'">Nuevo Colegio</button>
+    </div>
 
-        (input)="filterColegios()"
-        placeholder="Ingrese el nombre del colegio"
-      />
+    <!-- Tabla -->
+    <table class="colegios-table w-full text-left border">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colegio of paginatedColegios">
+          <td>{{ colegio.id }}</td>
+          <td>{{ colegio.nombre }}</td>
+          <td>{{ colegio.direccion }}</td>
+          <td>{{ colegio.telefono }}</td>
+          <td>
+            <i class="fas fa-eye action-icon" title="Detalles" (click)="viewColegio(colegio.id)"></i>
+            <i class="fas fa-edit action-icon" title="Editar" (click)="editColegio(colegio.id)"></i>
+            <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination mt-4 flex gap-2">
+      <button
+        *ngFor="let page of getTotalPages(); let i = index"
+        [class.active]="currentPage === i + 1"
+        (click)="changePage(i + 1)"
+        class="px-3 py-1 rounded border border-gray-300"
+        [ngClass]="{'bg-green-600 text-white': currentPage === i + 1, 'bg-white text-gray-700': currentPage !== i + 1}"
+      >
+        {{ i + 1 }}
+      </button>
     </div>
   </div>
 
-  <!-- Formulario para nuevo colegio -->
-  <div *ngIf="showForm" class="form-container">
-    <h3>Nuevo Colegio</h3>
-    <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()">
-      <div>
-        <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text" />
-      </div>
-      <div>
-        <label for="direccion">Dirección:</label>
-        <input id="direccion" formControlName="direccion" type="text" />
-      </div>
-      <div>
-        <label for="telefono">Teléfono:</label>
-        <input id="telefono" formControlName="telefono" type="text" placeholder="123-456-7890" />
-      </div>
-      <button type="submit" [disabled]="colegioForm.invalid">Guardar</button>
-      <button type="button" (click)="resetForm()">Limpiar</button>
-      <button type="button" (click)="cancelCreate()">Cancelar</button>
-    </form>
-  </div>
-
-  <!-- Tabla -->
-  <table class="colegios-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Dirección</th>
-        <th>Teléfono</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let colegio of paginatedColegios">
-        <td>{{ colegio.id }}</td>
-        <td>{{ colegio.nombre }}</td>
-        <td>{{ colegio.direccion }}</td>
-        <td>{{ colegio.telefono }}</td>
-        <td>
-          <!-- Ícono para Ver -->
-          <i class="fas fa-eye action-icon" title="Detalles" (click)="viewColegio(colegio.id)"></i>
-          <!-- Ícono para Editar -->
-          <i class="fas fa-edit action-icon" title="Editar" (click)="editColegio(colegio.id)"></i>
-          <!-- Ícono para Eliminar -->
-          <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Paginación -->
-  <div class="pagination">
-    <button
-      *ngFor="let page of getTotalPages(); let i = index"
-      [class.active]="currentPage === i + 1"
-      (click)="changePage(i + 1)"
-    >
-      {{ i + 1 }}
-    </button>
+  <!-- Panel: Nuevo Colegio -->
+  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="form-container max-w-lg mx-auto bg-white p-6 rounded shadow">
+      <h3 class="text-lg font-bold mb-4">Nuevo Colegio</h3>
+      <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()">
+        <div class="mb-4">
+          <label for="nombre" class="block mb-1">Nombre:</label>
+          <input id="nombre" formControlName="nombre" type="text" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label for="direccion" class="block mb-1">Dirección:</label>
+          <input id="direccion" formControlName="direccion" type="text" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label for="telefono" class="block mb-1">Teléfono:</label>
+          <input id="telefono" formControlName="telefono" type="text" placeholder="123-456-7890" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
+          <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
+          <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-<!-- Fin del contenedor de colegios -->

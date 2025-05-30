@@ -9,14 +9,14 @@ interface MenuItem {
 
 @Component({
   // standalone: true,
-  selector: 'app-perfil-admin-sec',
-  templateUrl: './perfil-admin-sec.component.html',
-  styleUrls: ['./perfil-admin-sec.component.css']
+  selector: 'app-perfil-admin-sec',   // Asegúrate de que el selector sea correcto
+  templateUrl: './perfil-admin-sec.component.html', // Asegúrate de que la ruta sea correcta
+  styleUrls: ['./perfil-admin-sec.component.css'] // Asegúrate de que la ruta sea correcta
 })
 export class PerfilAdminSecComponent {
   // Lógica específica del componente
 menuItems: MenuItem[] = [
-  { label: 'Inicio', icon: 'home', route: '//perfil-admin-sec', disabled: false },                   // Ejemplo de ruta
+  { label: 'Inicio', icon: 'home', route: '//perfil-admin-sec', disabled: false },          // Ejemplo de ruta
   { label: 'Docentes', icon: 'chalkboard-teacher', route: '/', disabled: true },            // Deshabilitado
   { label: 'Alumnos', icon: 'user-graduate', route: '/', disabled: true },                  // Deshabilitado
   { label: 'Cursos', icon: 'book', route: '/', disabled: true },                            // Deshabilitado

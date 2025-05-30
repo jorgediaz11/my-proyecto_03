@@ -183,28 +183,28 @@
 }
 
 .login-logo {
-  width: 100px; /* Ajusta el tamaño del logo */
+  width: 100px;         /* Ajusta el tamaño del logo */
   height: auto;
-  margin-right: 20px; /* Espacio entre el logo y el texto */
+  margin-right: 20px;   /* Espacio entre el logo y el texto */
 }
 
 .login-header h1 {
-  margin: 0;          /* Elimina el margen del título */
-  font-size: 1.5em;   /* Ajusta el tamaño del texto */
-  text-align: right;  /* Alinea el texto a la derecha */
+  margin: 0;            /* Elimina el margen del título */
+  font-size: 1.5em;     /* Ajusta el tamaño del texto */
+  text-align: right;    /* Alinea el texto a la derecha */
 }
 
 /* Footer */
 .login-footer {
   background-color: #4EAD4F; /* Fondo verde */
-  color: white; /* Texto blanco */
+  color: white;       /* Texto blanco */
   padding: 10px;
   text-align: center;
   border: 1px solid #ccc; /* Borde fino */
 }
 
 .menu-item a {
-  color: white; /* Asegúrate de que los textos sean blancos */
+  color: white;       /* Asegúrate de que los textos sean blancos */
   text-decoration: none;
   /*font-weight: bold;*/
 }
@@ -214,7 +214,7 @@
 }
 
 .menu-item a {
-  color: white; /* Texto blanco */
+  color: white;       /* Texto blanco */
   text-decoration: none;
 }
 

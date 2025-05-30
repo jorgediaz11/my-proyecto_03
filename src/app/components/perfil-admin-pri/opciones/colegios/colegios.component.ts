@@ -53,7 +53,6 @@ export class ColegiosComponent  {
   searchTerm: string = '';
   colegioForm: FormGroup;
   showForm: boolean = false;
-
   // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.colegioForm = this.fb.group({
@@ -198,4 +197,11 @@ export class ColegiosComponent  {
       }
     });
   }
+
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
+
+  selectTab(tab: 'tabla' | 'nuevo') {
+    this.activeTab = tab;
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService, Usuario } from '../../../../services/usuario.service';
 
 @Component({  // Cambié 'standalone: true' a 'standalone: false'
@@ -7,23 +8,37 @@ import { UsuarioService, Usuario } from '../../../../services/usuario.service';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {  // Cambié 'UsuariosComponent' a 'UsuariosComponent'
-  usuarios = [
-    { nombre: 'Juan Pérez', email: 'juan.perez@example.com' },
-    { nombre: 'María López', email: 'maria.lopez@example.com' },
-    { nombre: 'Carlos García', email: 'carlos.garcia@example.com' }
+
+
+  usuarioForm: FormGroup;
+  perfiles = [
+    { value: 'adminpri', label: 'Admin Pro' },
+    { value: 'admincol', label: 'Admin Col' },
+    { value: 'docentes', label: 'Docentes' },
+    { value: 'estudiantes', label: 'Estudiantes' },
+    { value: 'editor', label: 'Editor' }
   ];
 
-  activeTab = 'listado'; // Pestaña activa por defecto
-
-  agregarUsuario(nombre: string, email: string) {
-    const nuevoUsuario = { nombre, email };
-    this.usuarios.push(nuevoUsuario); // Agregar el nuevo usuario al arreglo
+  constructor(private fb: FormBuilder) {
+    this.usuarioForm = this.fb.group({
+      correo: ['', [Validators.required, Validators.email]],
+      nombres: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      perfil: ['', Validators.required],
+      weight: ['', [Validators.required, Validators.min(0)]],
+      descripcion: ['', Validators.required]
+    });
   }
 
-  selectTab(tab: string) {
-    this.activeTab = tab;
+  onSubmit() {
+    if (this.usuarioForm.valid) {
+      console.log('Formulario enviado:', this.usuarioForm.value);
+      // Aquí iría la lógica para enviar los datos al servidor
+    } else {
+      // Marcar todos los campos como touched para mostrar errores
+      this.usuarioForm.markAllAsTouched();
+    }
   }
-}
 
 // Services
 // export class UsuariosComponent implements OnInit {
@@ -52,3 +67,5 @@ export class UsuariosComponent {  // Cambié 'UsuariosComponent' a 'UsuariosComp
 
 //   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
 // }
+
+}

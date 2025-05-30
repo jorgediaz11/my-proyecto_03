@@ -97,7 +97,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease; /* Transición suave al cambiar el color de fondo */
   }
 
   .sidebar .menu .menu-item:hover {

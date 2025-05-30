@@ -1,58 +1,123 @@
-<h2>Gestión de Usuarios</h2>
-<!-- Este es el contenido de la pestaña de gestión de usuarios -->
-<div class="tabs">
-  <!-- Encabezados de las pestañas -->
-  <div class="tab-header">
-    <button
-      class="tab-button"
-      [ngClass]="{ active: activeTab === 'listado' }"
-      (click)="selectTab('listado')"
-    >Listado</button>
-    <button
-      class="tab-button"
-      [ngClass]="{ active: activeTab === 'agregar' }"
-      (click)="selectTab('agregar')"
-    >Agregar Usuario</button>
-  </div>
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="space-y-6">
 
-  <!-- Contenido de las pestañas -->
-  <div class="tab-content">
 
-    <!-- Pestaña de Listado -->
-    <div class="tab-panel" [ngClass]="{ active: activeTab === 'listado' }">
-      <h3>Listado</h3>
-      <ul>
-        <li *ngFor="let usuario of usuarios">
-          <strong>{{ usuario.nombre }}</strong> - {{ usuario.email }}
-        </li>
-      </ul>
+      <!-- Sección Nombre del Producto -->
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold text-gray-700">Nombre del Usuario</h2>
+
+      <!-- Sección Nombre del Usuario -->
+      <div>
+        <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo del Usuario</label>
+        <input
+          type="email"
+          id="correo"
+          formControlName="correo"
+          placeholder="ingrese el correo del usuario"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched">
+        <div *ngIf="usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+          El correo es obligatorio
+        </div>
+        <div *ngIf="usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+          Ingresa un correo válido
+        </div>
+      </div>
+
+      <!-- Nombres y Apellidos en la misma línea -->
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-full md:w-1/2 px-2">
+          <label for="nombres" class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
+          <input
+            type="text"
+            id="nombres"
+            formControlName="nombres"
+            placeholder="Nombres"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched">
+          <div *ngIf="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched" class="text-red-500 text-sm mt-1">
+            Este campo es requerido
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 px-2">
+          <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+          <div class="relative rounded-md shadow-sm">
+
+            <input
+              type="text"
+              id="apellidos"
+              formControlName="apellidos"
+              placeholder="Apellidos"
+              class="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-300]="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched">
+          </div>
+          <div *ngIf="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched" class="text-red-500 text-sm mt-1">
+            Este campo es requerido
+          </div>
+        </div>
+      </div>
+
+      <!-- Perfil y Peso en la misma línea -->
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-full md:w-1/2 px-2">
+          <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+          <select
+            id="perfil"
+            formControlName="perfil"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched">
+            <option value="" disabled>Selecciona un Perfil</option>
+            <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{perfil.label}}</option>
+          </select>
+          <div *ngIf="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched" class="text-red-500 text-sm mt-1">
+            Por favor selecciona un Perfil
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 px-2">
+          <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Peso del artículo (kg)</label>
+          <input
+            type="number"
+            id="weight"
+            formControlName="weight"
+            placeholder="12"
+            step="0.1"
+            min="0"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('weight')?.invalid && usuarioForm.get('weight')?.touched">
+          <div *ngIf="usuarioForm.get('weight')?.invalid && usuarioForm.get('weight')?.touched" class="text-red-500 text-sm mt-1">
+            Por favor ingresa un peso válido (mayor o igual a 0)
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Descripción -->
+      <div class="space-y-4">
+        <div>
+          <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripciónes</label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            placeholder="Escribe aquí una descripción"
+            rows="4"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched"></textarea>
+          <div *ngIf="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched" class="text-red-500 text-sm mt-1">
+            Este campo es requerido
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de enviar -->
+      <div class="pt-4">
+      <button
+        type="submit"
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        [disabled]="usuarioForm.invalid">
+        Añadir Usuario
+      </button>
+      </div>
+
     </div>
 
-    <!-- Pestaña de Agregar Usuario -->
-    <div class="tab-panel" [ngClass]="{ active: activeTab === 'agregar' }">
-      <h3>Agregar Usuario</h3>
-      <form (submit)="agregarUsuario(nombre.value, email.value); nombre.value=''; email.value=''; $event.preventDefault()">
-        <table>
-          <tr>
-            <td><label for="nombre">Nombre:</label></td>
-            <td><input id="nombre" #nombre type="text" required /></td>
-          </tr>
-          <tr>
-            <td><label for="email">Email:</label></td>
-            <td><input id="email" #email type="email" required /></td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: center;">
-              <button type="submit" class="btn-crear">Agregar</button>
-              <button type="button" class="btn-limpiar" (click)="nombre.value=''; email.value=''">Limpiar</button>
-              <button type="button" class="btn-cancelar" (click)="selectTab('listado')">Cancelar</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
-
-  </div>
-
+  </form>
 </div>
-<!-- Fin de la pestaña de Agregar Usuario -->

@@ -84,8 +84,8 @@ td {
   flex: 1;
   padding: 12px 0;
   border: none;
-  background: #f5f5f5;
-  color: #222;
+  background: #f5f5f5;  /* fondo gris claro */
+  color: #222;  /* texto oscuro */
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
@@ -106,7 +106,7 @@ td {
 
 .tab-button:hover:not(.active) {
   background: #76B177; /* verde fuerte */
-  color: #fff;
+  color: #fff;  /* texto blanco */
 }
 
 .tab-content {
