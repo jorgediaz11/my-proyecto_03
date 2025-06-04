@@ -1,6 +1,6 @@
 // /** @type {import('tailwindcss').Config} */
 // This is a Tailwind CSS configuration file that specifies the content files to scan for class names.
-// tailwind.config.js
+// tailwind.config.js 002
 module.exports = {
   content: [
     "./src/**/*.{html,ts}", // Adjust the path to your HTML and TypeScript files

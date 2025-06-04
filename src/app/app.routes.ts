@@ -29,6 +29,9 @@ import { PerfilEstudianteMuroComponent } from './components/perfil-estudiante/pe
 // Perfil Familia
 import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-familia.component';
 import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-familia-muro.component';   // Importar el nuevo componente
+// Perfil Editor
+import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.component';
+import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component'; // Importar el nuevo componente
 
 // Confirm Dialog
 export const routes: Routes = [
@@ -95,6 +98,14 @@ export const routes: Routes = [
     ]
   },
 
+// Ruta para el perfil editor
+{ path: 'perfil-editor',
+    component: PerfilEditorComponent,                        // Ruta para el perfil Editor
+    children: [
+      { path: '', component: PerfilEditorMuroComponent }     // Ruta predeterminada
+      // Otras rutas hijas
+    ]
+  },
 // Redirección para rutas no válidas
   { path: '**', redirectTo: '' }                              // Redirige a la ruta inicial si no se encuentra la ruta solicitada
 ];

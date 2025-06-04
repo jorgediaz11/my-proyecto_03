@@ -4,50 +4,19 @@
 
   <!-- Filtro y botón para crear -->
   <div class="filter-container">
-    <!-- Botón para crear un nuevo registro -->
-    <button class="create-button" (click)="createEstudiante()">Nuevo Estudiante</button>
-
     <!-- Filtro -->
     <div class="filter-input">
       <label for="search">Buscar Estudiante:</label>
       <input
         id="search"
         type="text"
-
         (input)="filterEstudiantes()"
         placeholder="Ingrese el nombre del Estudiante"
       />
     </div>
-  </div>
 
-  <!-- Formulario para nuevo Estudiante -->
-  <div *ngIf="showForm" class="form-container">
-    <h3>Nuevo Estudiante</h3>
-    <form [formGroup]="estudianteForm" (ngSubmit)="saveEstudiante()">
-      <div>
-        <label for="nombre">Nombres:</label>
-        <input id="nombre" formControlName="nombres" type="text" />
-      </div>
-      <div>
-        <label for="direccion">Apellidos:</label>
-        <input id="direccion" formControlName="apellidos" type="text" />
-      </div>
-      <div>
-        <label for="nivel">Nivel:</label>
-        <input id="nivel" formControlName="nivel" type="text" placeholder="Nivel" />
-      </div>
-      <div>
-        <label for="grado">Grado:</label>
-        <input id="grado" formControlName="grado" type="text" placeholder="Grado"/>
-      </div>
-      <div>
-        <label for="seccion">Seccion:</label>
-        <input id="seccion" formControlName="seccion" type="text" placeholder="Seccion" />
-      </div>
-      <button type="submit" [disabled]="estudianteForm.invalid">Guardar</button>
-      <button type="button" (click)="resetForm()">Limpiar</button>
-      <button type="button" (click)="cancelCreate()">Cancelar</button>
-    </form>
+    <!-- Botón para crear un nuevo registro -->
+    <button class="create-button" (click)="createEstudiante()">Nuevo Estudiante</button>
   </div>
 
   <!-- Tabla -->
@@ -93,5 +62,57 @@
       {{ i + 1 }}
     </button>
   </div>
+
 </div>
+
+<!-- Formulario para nuevo Estudiante -->
+<div *ngIf="showForm" class="form-container">
+  <h3>Nuevo Estudiante</h3>
+  <form [formGroup]="estudianteForm" (ngSubmit)="saveEstudiante()">
+    <div>
+      <label for="nombre">Nombres:</label>
+      <input id="nombre" formControlName="nombres" type="text" />
+    </div>
+    <div>
+      <label for="direccion">Apellidos:</label>
+      <input id="direccion" formControlName="apellidos" type="text" />
+    </div>
+    <div>
+      <label for="nivel">Nivel:</label>
+      <input id="nivel" formControlName="nivel" type="text" placeholder="Nivel" />
+    </div>
+    <div>
+      <label for="grado">Grado:</label>
+      <input id="grado" formControlName="grado" type="text" placeholder="Grado"/>
+    </div>
+    <div>
+      <label for="seccion">Seccion:</label>
+      <input id="seccion" formControlName="seccion" type="text" placeholder="Seccion" />
+    </div>
+    <button type="submit" [disabled]="estudianteForm.invalid">Guardar</button>
+    <button type="button" (click)="resetForm()">Limpiar</button>
+    <button type="button" (click)="cancelCreate()">Cancelar</button>
+  </form>
+</div>
+
 <!-- Fin del contenedor de Estudiantes -->
+ <!-- <<Campos básicos:>>
+ID (autogenerado)
+Nombres (requerido)
+Apellidos (requerido)
+Fecha de nacimiento
+Género (dropdown)
+DNI/Identificación (requerido)
+Foto/perfil
+Dirección
+Teléfono
+Correo electrónico (validado)
+Estado (Activo/Inactivo)
+<<Campos académicos:>>
+Colegio (relación)
+Nivel educativo
+Grado
+Sección
+Fecha de ingreso
+Promedio académico
+Observaciones-->

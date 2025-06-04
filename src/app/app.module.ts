@@ -42,6 +42,9 @@ import { PerfilEstudianteComponent } from './components/perfil-estudiante/perfil
 // Perfil Familia
 import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-familia.component';
 
+// Perfil Familia
+import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.component';
+
 // Otros Import
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';

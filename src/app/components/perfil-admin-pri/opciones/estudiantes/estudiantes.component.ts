@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
-import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 interface Estudiante { // Define la interfaz Estudiante
@@ -92,46 +91,6 @@ export class EstudiantesComponent {
 
   // Método para manejar el evento de clic en el botón de "Crear Estudiante"
 ngOnInit(): void {
-  // const primariaGrados = ['1ero', '2do', '3ero', '4to', '5to', '6to'];
-  // const secundariaGrados = ['1er', '2do', '3er', '4to', '5to'];
-  // const secciones = ['A', 'B', 'C'];
-
-  // // 6 Inicial
-  // for (let i = 1; i <= 6; i++) {
-  //   this.estudiantes.push({
-  //     id: i,
-  //     nombres: `Nombre ${i}`,
-  //     apellidos: `Apellido ${i}`,
-  //     nivel: 'Inicial',
-  //     grado: '',
-  //     seccion: secciones[Math.floor(Math.random() * secciones.length)],
-  //   });
-  // }
-
-  // // 15 Primaria
-  // for (let i = 7; i <= 21; i++) {
-  //   this.estudiantes.push({
-  //     id: i,
-  //     nombres: `Nombre ${i}`,
-  //     apellidos: `Apellido ${i}`,
-  //     nivel: 'Primaria',
-  //     grado: primariaGrados[Math.floor(Math.random() * primariaGrados.length)],
-  //     seccion: secciones[Math.floor(Math.random() * secciones.length)],
-  //   });
-  // }
-
-  // // 15 Secundaria
-  // for (let i = 22; i <= 36; i++) {
-  //   this.estudiantes.push({
-  //     id: i,
-  //     nombres: `Nombre ${i}`,
-  //     apellidos: `Apellido ${i}`,
-  //     nivel: 'Secundaria',
-  //     grado: secundariaGrados[Math.floor(Math.random() * secundariaGrados.length)],
-  //     seccion: secciones[Math.floor(Math.random() * secciones.length)],
-  //   });
-  // }
-
   this.filteredEstudiantes = [...this.estudiantes];
   this.updatePaginatedEstudiantes();
 }
@@ -259,4 +218,39 @@ ngOnInit(): void {
       }
     });
   }
+
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
+
+  selectTab(tab: 'tabla' | 'nuevo') {
+    this.activeTab = tab;
+  }
+
 }
+
+// Services
+// export class UsuariosComponent implements OnInit {
+//   usuarios: Usuario[] = [];
+//   mensajeError: string = ''; // Para mostrar mensajes de error en el template
+
+//   constructor(private usuarioService: UsuarioService) { }
+
+//   ngOnInit(): void {
+//     this.cargarUsuarios();
+//   }
+
+//   cargarUsuarios(): void {
+//     this.usuarioService.getUsuarios().subscribe(
+//       (data: Usuario[]) => {
+//         this.usuarios = data;
+//         this.mensajeError = ''; // Limpia cualquier mensaje de error anterior
+//       },
+//       (error) => {
+//         console.error('Error al cargar los usuarios:', error);
+//         this.mensajeError = 'Error al cargar la lista de usuarios. Por favor, inténtalo de nuevo más tarde.';
+//         // Aquí podrías implementar una lógica más sofisticada para manejar diferentes tipos de errores
+//       }
+//     );
+//   }
+
+//   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
+// }

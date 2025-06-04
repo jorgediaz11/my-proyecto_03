@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  // Asegúrate de que el import sea correcto
 
 interface MenuItem {
   label: string;

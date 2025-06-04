@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
+//import { UsuarioService, Usuario } from '../../../../services/usuario.service';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 interface Colegio { // Define la interfaz Colegio
@@ -53,6 +54,7 @@ export class ColegiosComponent  {
   searchTerm: string = '';
   colegioForm: FormGroup;
   showForm: boolean = false;
+
   // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.colegioForm = this.fb.group({
@@ -64,14 +66,6 @@ export class ColegiosComponent  {
 
   // Método para manejar el evento de clic en el botón de "Crear Colegio"
   ngOnInit(): void {
-    // for (let i = 1; i <= 25; i++) {
-    //   this.colegios.push({
-    //     id: i,
-    //     nombre: `Colegio ${i}`,
-    //     direccion: `Dirección ${i}`,
-    //     telefono: `123-456-78${i}`
-    //   });
-    // }
     this.filteredColegios = [...this.colegios];
     this.updatePaginatedColegios();
   }
@@ -205,3 +199,52 @@ export class ColegiosComponent  {
   }
 
 }
+
+// Services
+// export class UsuariosComponent implements OnInit {
+//   usuarios: Usuario[] = [];
+//   mensajeError: string = ''; // Para mostrar mensajes de error en el template
+
+//   constructor(private usuarioService: UsuarioService) { }
+
+//   ngOnInit(): void {
+//     this.cargarUsuarios();
+//   }
+
+//   cargarUsuarios(): void {
+//     this.usuarioService.getUsuarios().subscribe(
+//       (data: Usuario[]) => {
+//         this.usuarios = data;
+//         this.mensajeError = ''; // Limpia cualquier mensaje de error anterior
+//       },
+//       (error) => {
+//         console.error('Error al cargar los usuarios:', error);
+//         this.mensajeError = 'Error al cargar la lista de usuarios. Por favor, inténtalo de nuevo más tarde.';
+//         // Aquí podrías implementar una lógica más sofisticada para manejar diferentes tipos de errores
+//       }
+//     );
+//   }
+
+//   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
+// }
+
+// <<Información general:>>
+// ID (autogenerado)
+// Nombre (requerido)
+// Código modular (requerido)
+// Dirección completa
+// Teléfono
+// Correo electrónico
+// Página web
+// Logo
+// Director(a) (relación)
+// <<Ubigeo:>>
+// Departamento
+// Provincia
+// Distrito
+// <<Configuración académica:>>
+// Niveles educativos ofrecidos
+// Turnos (mañana/tarde/noche)
+// Aforo máximo
+// Fecha de fundación
+// Estado (Activo/Inactivo)

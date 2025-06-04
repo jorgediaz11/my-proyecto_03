@@ -17,9 +17,9 @@ import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar 
 //   }
 // }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root' }) // Proveedor del servicio de autenticación en la raíz de la aplicación
 export class AuthService {
-  private apiUrl = 'https://consolacentral.onrender.com/auth/signin';
+  private apiUrl = 'https://consolacentral.onrender.com/auth/signin'; // URL del endpoint de inicio de sesión
 
   constructor(private http: HttpClient) {}  // Constructor del servicio de autenticación
   // Método para iniciar sesión

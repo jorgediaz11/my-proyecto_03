@@ -32,7 +32,7 @@ export class PerfilFamiliaMuroComponent {
     type: 'bar',          // Tipo de gráfico  'bar'
     data: {
       labels: ['Inscritos', 'En Progreso', 'Completados'],
-      datasets: [
+      datasets: [         // Datos del gráfico
         {
           label: 'Participantes',   // Cambié 'Participantes' a 'Participantes'
           data: [120, 60, 20],      // Cambié los datos a [120, 60, 20]

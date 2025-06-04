@@ -11,7 +11,8 @@
 
   <!-- Contenido de las pestañas -->
   <div class="tab-content">
-    <!-- Pestaña de Listado -->
+
+    <!-- Pestaña de Listado de Usuarios -->
     <div class="tab-panel" [ngClass]="{ active: activeTab === 'perfil' }">
 
         <!-- Tab Perfil reorganizado con Tailwind -->
@@ -80,31 +81,32 @@
 
     <!-- Pestaña de Agregar Usuario -->
     <div class="tab-panel" [ngClass]="{ active: activeTab === 'listado' }">
-  <h3 class="text-lg font-semibold mb-4">Historial de Accesos</h3>
-  <div class="overflow-x-auto rounded-lg shadow">
-    <table class="table-auto bg-white w-full">
-      <thead>
-        <tr>
-          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Fecha</th>
-          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Hora</th>
-          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">PC</th>
-          <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">IP</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let acceso of historialAccesos; let i = index"
-            [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
-            class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.fecha }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.hora }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.pc }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.ip }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <h3 class="text-lg font-semibold mb-4">Historial de Accesos</h3>
+      <div class="overflow-x-auto rounded-lg shadow">
+        <table class="table-auto bg-white w-full">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Fecha</th>
+              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Hora</th>
+              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">PC</th>
+              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">IP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let acceso of historialAccesos; let i = index"
+                [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.fecha }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.hora }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.pc }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.ip }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </div>
+
 </div>
 <!-- Fin de la pestaña de Agregar Usuario -->

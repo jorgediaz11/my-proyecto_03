@@ -64,15 +64,6 @@ export class DocentesComponent {
 
   // Método para manejar el evento de clic en el botón de "Crear Docente"
   ngOnInit(): void {
-    // for (let i = 1; i <= 25; i++) {
-    //   this.docentes.push({
-    //     id: i,
-    //     nombres: `Docente ${i}`,
-    //     apellidos: `Docente ${i}`,
-    //     correo: `Dirección ${i}`,
-    //     telefono: `123-456-78${i}`
-    //   });
-    // }
     this.filteredDocentes = [...this.docentes];
     this.updatePaginatedDocentes();
   }
@@ -199,4 +190,39 @@ export class DocentesComponent {
       }
     });
   }
+
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
+
+  selectTab(tab: 'tabla' | 'nuevo') {
+    this.activeTab = tab;
+  }
+
 }
+
+// Services
+// export class UsuariosComponent implements OnInit {
+//   usuarios: Usuario[] = [];
+//   mensajeError: string = ''; // Para mostrar mensajes de error en el template
+
+//   constructor(private usuarioService: UsuarioService) { }
+
+//   ngOnInit(): void {
+//     this.cargarUsuarios();
+//   }
+
+//   cargarUsuarios(): void {
+//     this.usuarioService.getUsuarios().subscribe(
+//       (data: Usuario[]) => {
+//         this.usuarios = data;
+//         this.mensajeError = ''; // Limpia cualquier mensaje de error anterior
+//       },
+//       (error) => {
+//         console.error('Error al cargar los usuarios:', error);
+//         this.mensajeError = 'Error al cargar la lista de usuarios. Por favor, inténtalo de nuevo más tarde.';
+//         // Aquí podrías implementar una lógica más sofisticada para manejar diferentes tipos de errores
+//       }
+//     );
+//   }
+
+//   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
+// }

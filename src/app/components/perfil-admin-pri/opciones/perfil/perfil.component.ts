@@ -56,4 +56,5 @@ export class PerfilComponent {
   selectTab(tab: string) {
     this.activeTab = tab;
   }
+
 }

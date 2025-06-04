@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';  // Importa el decorador Component de Angular
-
+// Importa el decorador Component de Angular
+// Asegúrate de que las rutas sean correctas según tu estructura de carpetas
 interface MenuItem {
   label: string;      // Cambié 'label' a 'label'
   icon: string;       // Cambié 'icon' a 'icon'

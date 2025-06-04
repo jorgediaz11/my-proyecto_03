@@ -1,123 +1,250 @@
-<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="space-y-6">
+<div class="usuarios-container w-full max-w-full">
+  <h2>Gestión de Usuarios</h2>
 
+  <!-- Pestañas -->
+  <div class="mb-4 border-b border-gray-200 h-[24%]">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'tabla' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'tabla'"
+          type="button"
+          role="tab"
+        >
+          Tabla de Usuarios
+        </button>
+      </li>
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'nuevo' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'nuevo'"
+          type="button"
+          role="tab"
+        >
+          Nuevo Usuario
+        </button>
+      </li>
+    </ul>
+  </div>
 
-      <!-- Sección Nombre del Producto -->
-    <div class="space-y-4">
-      <h2 class="text-xl font-semibold text-gray-700">Nombre del Usuario</h2>
-
-      <!-- Sección Nombre del Usuario -->
-      <div>
-        <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo del Usuario</label>
+  <!-- Panel: Tabla de Usuarios -->
+  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="h-[60%] overflow-auto">
+    <!-- Filtro (opcional, puedes quitar si no lo usas) -->
+    <div class="filter-container mb-4 flex flex-wrap items-center gap-4">
+      <div class="filter-input">
+        <label for="searchUser">Buscar Usuario:</label>
         <input
-          type="email"
-          id="correo"
-          formControlName="correo"
-          placeholder="ingrese el correo del usuario"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched">
-        <div *ngIf="usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
-          El correo es obligatorio
-        </div>
-        <div *ngIf="usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
-          Ingresa un correo válido
-        </div>
+          id="searchUser"
+          type="text"
+          [(ngModel)]="searchUser"
+          (input)="filterUsuarios()"
+          placeholder="Ingrese el correo o nombre"
+          class="border rounded px-2 py-1"
+        />
       </div>
-
-      <!-- Nombres y Apellidos en la misma línea -->
-      <div class="flex flex-wrap -mx-2">
-        <div class="w-full md:w-1/2 px-2">
-          <label for="nombres" class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
-          <input
-            type="text"
-            id="nombres"
-            formControlName="nombres"
-            placeholder="Nombres"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            [class.border-red-300]="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched">
-          <div *ngIf="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched" class="text-red-500 text-sm mt-1">
-            Este campo es requerido
-          </div>
-        </div>
-        <div class="w-full md:w-1/2 px-2">
-          <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
-          <div class="relative rounded-md shadow-sm">
-
-            <input
-              type="text"
-              id="apellidos"
-              formControlName="apellidos"
-              placeholder="Apellidos"
-              class="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              [class.border-red-300]="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched">
-          </div>
-          <div *ngIf="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched" class="text-red-500 text-sm mt-1">
-            Este campo es requerido
-          </div>
-        </div>
-      </div>
-
-      <!-- Perfil y Peso en la misma línea -->
-      <div class="flex flex-wrap -mx-2">
-        <div class="w-full md:w-1/2 px-2">
-          <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
-          <select
-            id="perfil"
-            formControlName="perfil"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            [class.border-red-300]="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched">
-            <option value="" disabled>Selecciona un Perfil</option>
-            <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{perfil.label}}</option>
-          </select>
-          <div *ngIf="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched" class="text-red-500 text-sm mt-1">
-            Por favor selecciona un Perfil
-          </div>
-        </div>
-        <div class="w-full md:w-1/2 px-2">
-          <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Peso del artículo (kg)</label>
-          <input
-            type="number"
-            id="weight"
-            formControlName="weight"
-            placeholder="12"
-            step="0.1"
-            min="0"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            [class.border-red-300]="usuarioForm.get('weight')?.invalid && usuarioForm.get('weight')?.touched">
-          <div *ngIf="usuarioForm.get('weight')?.invalid && usuarioForm.get('weight')?.touched" class="text-red-500 text-sm mt-1">
-            Por favor ingresa un peso válido (mayor o igual a 0)
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección Descripción -->
-      <div class="space-y-4">
-        <div>
-          <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripciónes</label>
-          <textarea
-            id="descripcion"
-            formControlName="descripcion"
-            placeholder="Escribe aquí una descripción"
-            rows="4"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            [class.border-red-300]="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched"></textarea>
-          <div *ngIf="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched" class="text-red-500 text-sm mt-1">
-            Este campo es requerido
-          </div>
-        </div>
-      </div>
-
-      <!-- Botón de enviar -->
-      <div class="pt-4">
-      <button
-        type="submit"
-        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        [disabled]="usuarioForm.invalid">
-        Añadir Usuario
-      </button>
-      </div>
-
+      <button class="create-button" (click)="activeTab = 'nuevo'">Nuevo Usuario</button>
     </div>
 
-  </form>
+    <!-- Tabla de usuarios -->
+    <table class="usuarios-table w-full text-left border">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Correo</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Perfil</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of paginatedUsuarios">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.nombres }}</td>
+          <td>{{ usuario.apellidos }}</td>
+          <td>{{ usuario.perfil }}</td>
+          <td>{{ usuario.descripcion }}</td>
+          <td>
+            <span class="flex items-center gap-4">
+              <i class="fas fa-eye action-icon" title="Detalles" (click)="viewUsuario(usuario)"></i>
+              <i class="fas fa-edit action-icon" title="Modificar" (click)="editUsuario(usuario)"></i>
+              <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteUsuario(usuario)"></i>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination mt-4 flex gap-2">
+      <button
+        *ngFor="let page of getTotalPages(); let i = index"
+        [class.active]="currentPage === i + 1"
+        (click)="changePage(i + 1)"
+        class="px-3 py-1 rounded border border-gray-300"
+        [ngClass]="{'bg-indigo-600 text-white': currentPage === i + 1, 'bg-white text-gray-700': currentPage !== i + 1}"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel: Nuevo Usuario -->
+  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold text-gray-700">Datos del Usuario</h2>
+
+          <!-- Usuario y Perfil a la izquierda, Imagen a la derecha -->
+          <div class="flex flex-col md:flex-row gap-4 mb-4">
+            <!-- Subsección izquierda: Usuario y Perfil -->
+            <div class="flex-1 flex flex-col gap-4">
+              <!-- Usuario -->
+              <div>
+                <label for="usuario" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+                <input
+                  type="text"
+                  id="usuario"
+                  formControlName="usuario"
+                  placeholder="Usuario"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  [class.border-red-300]="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched">
+                <div *ngIf="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched" class="text-red-500 text-sm mt-1">
+                  Este campo es requerido
+                </div>
+              </div>
+              <!-- Perfil -->
+              <div>
+                <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Perfil</label>
+                <select
+                  id="perfil"
+                  formControlName="perfil"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  [class.border-red-300]="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched">
+                  <!-- <option value="" disabled>Selecciona un Perfil</option> -->
+                  <!-- <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{perfil.label}}</option> -->
+                  <option *ngFor="let perfil of perfiles; let i = index" [value]="perfil.value" [selected]="i === 0">{{perfil.label}}</option>
+                </select>
+
+                <div *ngIf="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched" class="text-red-500 text-sm mt-1">
+                  Por favor selecciona un Perfil
+                </div>
+              </div>
+            </div>
+            <!-- Subsección derecha: Solo imagen -->
+            <div class="flex flex-col justify-center items-center md:w-1/3 w-full">
+              <!-- <img [src]="userImgUrl || 'https://via.placeholder.com/80x80?text=User'" alt="Imagen Usuario" class="w-24 h-24 object-cover rounded-full border" /> -->
+              <img src="/assets/images/michael-gough.png" alt="Imagen Usuario" class="w-40 h-40 object-cover rounded-full border" />
+            </div>
+          </div>
+
+          <!-- Subir imagen de usuario (fuera del bloque de imagen) -->
+          <!-- <div class="mb-4">
+            <label for="userImg" class="block text-sm font-medium text-gray-700 mb-1">Cambiar Imagen:</label>
+            <input id="userImg" type="file" (change)="onUserImgChange($event)" class="w-full border rounded px-3 py-2" />
+          </div> -->
+
+          <!-- Nombres y Apellidos en la misma línea -->
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-full md:w-1/2 px-2">
+              <label for="nombres" class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
+              <input
+                type="text"
+                id="nombres"
+                formControlName="nombres"
+                placeholder="Nombres"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-300]="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched">
+              <div *ngIf="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched" class="text-red-500 text-sm mt-1">
+                Este campo es requerido
+              </div>
+            </div>
+            <div class="w-full md:w-1/2 px-2">
+              <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+              <div class="relative rounded-md shadow-sm">
+                <input
+                  type="text"
+                  id="apellidos"
+                  formControlName="apellidos"
+                  placeholder="Apellidos"
+                  class="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  [class.border-red-300]="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched">
+              </div>
+              <div *ngIf="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched" class="text-red-500 text-sm mt-1">
+                Este campo es requerido
+              </div>
+            </div>
+          </div>
+
+          <!-- Correo -->
+          <div>
+            <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo del Usuario</label>
+            <input
+              type="email"
+              id="correo"
+              formControlName="correo"
+              placeholder="ingrese el correo del usuario"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched">
+            <div *ngIf="usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+              El correo es obligatorio
+            </div>
+            <div *ngIf="usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+              Ingresa un correo válido
+            </div>
+          </div>
+
+          <!-- Sección Descripción -->
+          <div>
+            <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+            <textarea
+              id="descripcion"
+              formControlName="descripcion"
+              placeholder="Escribe aquí una descripción"
+              rows="4"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-300]="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched"></textarea>
+            <div *ngIf="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched" class="text-red-500 text-sm mt-1">
+              Este campo es requerido
+            </div>
+          </div>
+
+          <!-- Botón de enviar -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              [disabled]="usuarioForm.invalid">
+              Añadir Usuario
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
 </div>

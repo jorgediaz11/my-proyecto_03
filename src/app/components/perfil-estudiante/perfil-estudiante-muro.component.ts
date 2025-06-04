@@ -3,8 +3,6 @@ import { Chart } from 'chart.js';
 
 @Component({
   selector: 'perfil-estudiante-muro',
-  standalone: true,
-  imports: [],
   templateUrl: './perfil-estudiante-muro.component.html',
   styleUrl: './perfil-estudiante-muro.component.css'
 })

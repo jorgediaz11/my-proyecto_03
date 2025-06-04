@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {                    // Opciones de compilación para TypeScript
+  "compilerOptions": {                    // Opciones de compilación para TypeScript 003
     "target": "ES2022",                   // Especifica la versión de ECMAScript a la que se compilará el código
     "module": "CommonJS",                 // Especifica el sistema de módulos a utilizar
     "moduleResolution": "node",           // Resuelve módulos utilizando la estrategia de Node.js

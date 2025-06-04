@@ -14,7 +14,7 @@ export interface Usuario {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'  // Proveedor del servicio de usuario en la raíz de la aplicación
 })
 export class UsuarioService {
 

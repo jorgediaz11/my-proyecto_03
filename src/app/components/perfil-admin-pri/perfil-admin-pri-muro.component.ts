@@ -31,7 +31,7 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
     }
 
     new Chart(ctx, {
-      type: 'bar',
+      type: 'bar',  // Cambié 'horizontalBar' a 'bar' para compatibilidad con Chart.js 3 y superior
       data: {
         labels: ['Inscritos', 'En Progreso', 'Completados'],
         datasets: [
@@ -80,7 +80,7 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
     }
 
     new Chart(ctx, {
-      type: 'bar',
+      type: 'bar',  // Cambié 'horizontalBar' a 'bar' para compatibilidad con Chart.js 3 y superior
       data: {
         labels: [
           '1er Grado', '2do Grado', '3er Grado', '4to Grado', '5to Grado', '6to Grado'

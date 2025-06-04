@@ -18,19 +18,22 @@
           </p>
         </div>
 
-        <div class="form-group">
-          <label for="nombres">Nombres:</label>
-          <input id="nombres" formControlName="nombres" type="text" placeholder="Ingresar Nombres" />
-          <p *ngIf="registroForm.get('nombres')?.invalid && registroForm.get('nombres')?.touched" class="error-message">
-            El nombre es obligatorio.
-          </p>
-        </div>
-        <div class="form-group">
-          <label for="apellidos">Apellidos:</label>
-          <input id="apellidos" formControlName="apellidos" type="text" placeholder="Ingresar Apellidos" />
-          <p *ngIf="registroForm.get('apellidos')?.invalid && registroForm.get('apellidos')?.touched" class="error-message">
-            El apellido es obligatorio.
-          </p>
+        <!-- Nombres y Apellidos en la misma línea -->
+        <div class="flex gap-4">
+          <div class="form-group w-1/2">
+            <label for="nombres">Nombres:</label>
+            <input id="nombres" formControlName="nombres" type="text" placeholder="Ingresar Nombres" />
+            <p *ngIf="registroForm.get('nombres')?.invalid && registroForm.get('nombres')?.touched" class="error-message">
+              El nombre es obligatorio.
+            </p>
+          </div>
+          <div class="form-group w-1/2">
+            <label for="apellidos">Apellidos:</label>
+            <input id="apellidos" formControlName="apellidos" type="text" placeholder="Ingresar Apellidos" />
+            <p *ngIf="registroForm.get('apellidos')?.invalid && registroForm.get('apellidos')?.touched" class="error-message">
+              El apellido es obligatorio.
+            </p>
+          </div>
         </div>
 
         <div class="form-group">
@@ -40,27 +43,28 @@
             Ingresa un correo válido.
           </p>
         </div>
-        <div class="form-group">
-          <label for="password">Ingrese Contraseña:</label>
-          <input id="password" formControlName="password" type="password" placeholder="Crea una contraseña" />
-          <p *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="error-message">
-            La contraseña es obligatoria y debe tener al menos 6 caracteres.
-          </p>
-        </div>
-        <div class="form-group">
-          <label for="password">Repetir Contraseña:</label>
-          <input id="password2" formControlName="password2" type="password" placeholder="Crea una contraseña" />
-          <p *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="error-message">
-            La contraseña es obligatoria y debe tener al menos 6 caracteres.
-          </p>
-        </div>
-        <!-- Mensaje de error al registrar -->
-        <button type="submit" class="to-options">Registrar</button>
-        <!-- Mensaje de error al registrar -->
-        <button type="button" class="to-options" (click)="onReset()">Limpiar</button>
-        <!-- Botón para regresar al login -->
-        <button routerLink="/login" class="to-options">Regresar al Login</button>
 
+        <!-- Contraseñas en la misma línea -->
+        <div class="flex gap-4">
+          <div class="form-group w-1/2">
+            <label for="password">Ingrese Contraseña:</label>
+            <input id="password" formControlName="password" type="password" placeholder="Crea una contraseña" />
+            <p *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="error-message">
+              La contraseña es obligatoria y debe tener al menos 6 caracteres.
+            </p>
+          </div>
+          <div class="form-group w-1/2">
+            <label for="password2">Repetir Contraseña:</label>
+            <input id="password2" formControlName="password2" type="password" placeholder="Crea una contraseña" />
+            <p *ngIf="registroForm.get('password2')?.invalid && registroForm.get('password2')?.touched" class="error-message">
+              La contraseña es obligatoria y debe tener al menos 6 caracteres.
+            </p>
+          </div>
+        </div>
+
+        <button type="submit" class="to-options">Registrar</button>
+        <button type="button" class="to-options" (click)="onReset()">Limpiar</button>
+        <button routerLink="/login" class="to-options">Regresar al Login</button>
       </form>
 
     </main>

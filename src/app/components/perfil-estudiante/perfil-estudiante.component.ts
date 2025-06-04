@@ -4,7 +4,7 @@ interface MenuItem {
   label: string;
   icon: string;
   route: string;
-  disabled: boolean;
+  disabled: boolean;  // Propiedad para indicar si el elemento está deshabilitado
 }
 
 @Component({

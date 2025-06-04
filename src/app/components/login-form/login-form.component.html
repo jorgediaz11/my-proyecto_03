@@ -14,12 +14,12 @@
       <div class="login-section">
         <h2>Iniciar sesión</h2>
         <div class="form-group">
-          <label for="email">Correo:</label>
-          <input id="email" formControlName="email" type="text" placeholder="Ingresa tu Correo" />
+          <label for="email2">Correo:</label>
+          <input id="email2" formControlName="email2" type="email2" placeholder="Ingresa tu Correo" />
         </div>
         <div class="form-group">
-            <label for="password">Clave:</label>
-            <input id="password" formControlName="password" type="password" placeholder="Ingresa tu clave" />
+            <label for="password2">Clave:</label>
+            <input id="password2" formControlName="password2" type="password2" placeholder="Ingresa tu clave" />
         </div>
         <div class="button-container">
           <!-- Mensaje de error al registrar -->
@@ -56,44 +56,85 @@
 </div>
 <!-- Fin del contenedor principal -->
 
-<!-- Estilos para el componente de inicio de sesión -->
- <section class="bg-gray-50 dark:bg-gray-600">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-32 h-auto min-w-[250px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
-          Eureka LMS
-      </a>
-      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div class="p-6 space-y-4 md:space-y-3 sm:p-8">
-              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Inicia sesión en tu cuenta
-              </h1>
-              <form class="space-y-4 md:space-y-6" action="#">
-                  <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
-                      <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-                  </div>
-                  <div>
-                      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                  </div>
-                  <div class="flex items-center justify-between">
-                      <div class="flex items-start">
-                          <div class="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
-                          </div>
-                          <div class="ml-3 text-sm">
-                            <label for="remember" class="text-gray-500 dark:text-gray-300">Recordar</label>
-                          </div>
-                      </div>
-                      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Recuperar contraseña?</a>
-                  </div>
-                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Iniciar sesión</button>
-                  <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Crear nueva cuenta  <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Registrarse</a>
-                  </p>
-              </form>
-          </div>
+<!-- Este contenedor incluye el formulario para crear un nuevo usuario -->
+<!-- Componente de inicio de sesión -->
+ <section class="bg-gray-50 dark:bg-gray-600 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-4xl bg-white rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden">
+    <!-- Sección Izquierda: Login -->
+
+<div class="w-full md:w-1/2 flex flex-col justify-center p-8 border-2 border-red-500 min-h-[32rem]">
+  <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white border-2 border-blue-500">
+    <img class="w-32 h-auto min-w-[250px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
+    Eureka LMS
+  </a>
+  <h1 class="text-lg font-semibold text-gray-800 mb-1 text-center border-2 border-yellow-500">
+    Inicia sesión en tu cuenta
+  </h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6 border-2 border-green-500">
+    <!-- Correo -->
+    <div class="border-2 border-purple-500">
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+      <input type="email" id="email" formControlName="email" placeholder="Ingresa tu Correo [correo@dominio.com]"
+        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+      <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+        <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
+        <span *ngIf="loginForm.get('email')?.errors?.['email']">Ingresa un correo válido.</span>
       </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="border-2 border-pink-500">
+      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+      <input type="password" id="password" formControlName="password" placeholder="Ingresa tu clave [••••••••]"
+        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+      <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">
+        <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
+        <span *ngIf="loginForm.get('password')?.errors?.['pattern']">Debe contener al menos una mayúscula, una minúscula y 4 números.</span>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between border-2 border-orange-500">
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input id="remember" type="checkbox"
+            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="remember" class="text-gray-500 dark:text-gray-300">Recordar</label>
+        </div>
+      </div>
+      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Recuperar contraseña?</a>
+    </div>
+    <button
+      type="submit"
+      class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+      [disabled]="loginForm.invalid">Iniciar sesión</button>
+  </form>
+</div>
+
+    <!-- Línea divisoria vertical -->
+    <div class="hidden md:block w-px bg-gray-200"></div>
+
+    <!-- Sección Derecha: Imagen y accesos -->
+    <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white min-h-[32rem] gap-4 border-2 border-red-500">
+      <div class="flex flex-col items-center w-full border-2 border-blue-500">
+        <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain border-2 border-green-500">
+        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center border-2 border-yellow-500">¿Nuevo usuario?</h2>
+        <p class="mb-2 text-gray-600 text-center border-2 border-purple-500">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
+        <a routerLink="/login-registro"
+          class="w-full text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition mb-2 border-2 border-pink-500">Registrar Nuevo Usuario</a>
+
+
+        <div class="flex w-full gap-2 border-2 border-cyan-500">
+          <a routerLink="/opciones"
+            class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition border-2 border-lime-500">Ir a Opciones</a>
+          <a routerLink="/inicio"
+            class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition border-2 border-amber-500">Ir a Inicio</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>

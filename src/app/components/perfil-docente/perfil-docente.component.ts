@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface MenuItem {
   label: string;
@@ -14,7 +15,7 @@ interface MenuItem {
   styleUrls: ['./perfil-docente.component.css']
 })
 export class PerfilDocenteComponent {
-    // Lógica específica del componente
+  // Lógica específica del componente
   menuItems: MenuItem[] = [
     { label: 'Inicio', icon: 'home', route: '//perfil-docente', disabled: false },                   // Habilitado
     { label: 'Clases', icon: 'chalkboard-teacher', route: '/', disabled: true },              // Deshabilitado

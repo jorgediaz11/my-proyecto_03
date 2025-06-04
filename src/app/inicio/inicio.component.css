@@ -191,7 +191,7 @@ button:hover {
 .subtitulo-principal {
   font-size: 34px;
   font-weight: bold;
-  color: #212529;
+  color: #212529; /* Color gris oscuro */
   padding: 10px 20px;
 }
 
@@ -231,6 +231,6 @@ button:hover {
 }
 
 .ficha-efecto:hover {
-  box-shadow: 0 4px 24px 0 rgba(255, 152, 0, 0.5) !important;
+  box-shadow: 0 4px 24px 0 rgba(255, 152, 0, 0.5) !important; /* Sombra más pronunciada al pasar el mouse */
   transition: box-shadow 0.3s;
 }

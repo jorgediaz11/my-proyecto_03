@@ -1,4 +1,186 @@
-/* --- Estilos Generales de Texto --- */
+/* ==========================================================================
+   Contenedor Principal de Usuarios
+   ========================================================================== */
+
+.usuarios-container {
+  /* max-width: 800px; */
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 8px;
+  background-color: #F3FEF5;  /* Fondo claro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Tabla de Usuarios
+   ========================================================================== */
+
+.usuarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: left;
+}
+
+.usuarios-table th {
+  background-color: #4EAD4F;
+  color: white;
+  font-size: 0.95em;
+}
+
+.usuarios-table tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+.usuarios-table tr:hover {
+  background-color: #ddd;
+}
+
+/* ==========================================================================
+   Paginación
+   ========================================================================== */
+
+.pagination {
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #28a745;  /* Color verde */
+  background-color: white;  /* Fondo blanco */
+  color: #28a745; /* Color verde */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+}
+
+.pagination button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+  color: white; /* Texto blanco */
+}
+
+/* ==========================================================================
+   Íconos de Acción
+   ========================================================================== */
+
+.action-icon {
+  margin: 0 5px;
+  font-size: 1.2em;
+  color: #28a745; /* Color verde */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.action-icon:hover {
+  color: #218838;
+}
+
+/* Opcional: Estilo para el tooltip (si no usas el atributo `title`) */
+.action-icon[title] {
+  position: relative;
+}
+
+.action-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; /* Fondo oscuro */
+  color: #fff;  /* Fondo blanco */
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;  /* Texto blanco */
+  font-size: 0.6em; /* Igual al tamaño del texto de la tabla */
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.action-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+  z-index: 10;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-container input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+}
+
+.filter-input label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-input input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.create-button {
+  padding: 8px 15px;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
+
 h2 {
   color: #28a745; /* Color verde */
 }
@@ -7,158 +189,20 @@ label {
   font-weight: bold;
 }
 
-/* --- Estilos de Listas --- */
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 ul {
   list-style: none;
   padding: 0;
 }
 
 li {
-  padding: 10px;
-  border: 1px solid #ccc; /* Borde fino */
+  /* padding: 10px; */
+  border: 1px solid #ccc;
   margin-bottom: 5px;
   border-radius: 5px;
-}
-
-/* --- Estilos de Formularios --- */
-form {
-  margin-top: 20px;
-}
-
-/* Estilos para elementos input (genérico) */
-input {
-  padding: 5px;
-  border: 1px solid #ccc; /* Borde fino */
-  border-radius: 5px;
-}
-
-/* Estilos específicos para input dentro de formularios */
-form input {
-  margin-right: 10px; /* Aplica solo a inputs dentro de form (si es deseado) */
-}
-
-/* Estilos específicos para input dentro de tablas */
-table input {
-  width: 100%; /* Aplica solo a inputs dentro de table */
-}
-
-/* --- Estilos de Botones --- */
-button {
-  padding: 8px 16px; /* Estilo general para botones */
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: white; /* Texto blanco */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
-}
-
-/* --- Estilos de Tablas --- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-td {
-  padding: 8px;
-}
-
-/* --- Estilos para las Pestañas (Componente) --- */
-.tabs {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: #fff;
-  margin-bottom: 24px;
-}
-
-.tab-header {
-  display: flex;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.tab-button {
-  flex: 1;
-  padding: 12px 0;
-  border: none;
-  background: #f5f5f5;  /* fondo gris claro */
-  color: #222;  /* texto oscuro */
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  border-right: 1px solid #e0e0e0;
-  outline: none;
-}
-
-.tab-button:last-child {
-  border-right: none;
-}
-
-.tab-button.active {
-  background: #DDFBD9; /* verde claro */
-  color: #76B177; /* verde más fuerte */
-  border-bottom: 3px solid #76B177; /* verde más fuerte */
-  z-index: 2;
-}
-
-.tab-button:hover:not(.active) {
-  background: #76B177; /* verde fuerte */
-  color: #fff;  /* texto blanco */
-}
-
-.tab-content {
-  padding: 10px;
-}
-
-.tab-panel {
-  display: none;
-  padding: 24px 16px;
-}
-
-.tab-panel.active {
-  display: block;
-}
-
-button[type="submit"] {
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: #fff;  /* Fondo blanco */
-  border: 1.5px solid #145c32;  /* Verde más oscuro */
-  border-radius: 5px;
-  padding: 8px 16px;
-  margin-right: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button[type="submit"]:hover {
-  background-color: #145c32;  /* Verde más oscuro */
-}
-
-button.btn-limpiar {
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: #fff;  /* Fondo blanco */
-  border: 1.5px solid #145c32;  /* Verde más oscuro */
-  border-radius: 5px;
-  padding: 8px 16px;
-  margin-right: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button.btn-limpiar:hover {
-  background-color: #145c32;  /* Verde más oscuro */
-}
-
-button.btn-cancelar {
-  background-color: #dc3545;    /* Fondo rojo */
-  color: #fff;  /* Fondo blanco */
-  border: 1.5px solid #a71d2a;  /* Borde rojo oscuro */
-  border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button.btn-cancelar:hover {
-  background-color: #a71d2a;  /* Borde rojo oscuro */
 }

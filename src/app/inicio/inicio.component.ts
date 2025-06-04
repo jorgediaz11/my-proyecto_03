@@ -24,8 +24,8 @@ export class InicioComponent {
   // Método para manejar el clic en un elemento del menú
   onMenuItemClick(item: any, event: Event) {
     event.preventDefault();
-    this.textoTitulo = item.label;
-    this.textoDetalle = `Has seleccionado el menú: ${item.label}`;
+    this.textoTitulo = item.label;                                  // Actualiza el título del menú
+    this.textoDetalle = `Has seleccionado el menú: ${item.label}`;  // Actualiza el título y detalle del menú
   }
 
 }

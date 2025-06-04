@@ -41,8 +41,8 @@ export class PerfilAdminSecMuroComponent {
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
+        plugins: { legend: { display: false } },  // Ocultar leyenda
+        scales: { y: { beginAtZero: true } }  // Eje Y comienza en cero
       }
     });
 

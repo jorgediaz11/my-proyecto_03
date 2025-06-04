@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service'; // Importa el servicio de autenticación
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; // Importa el enrutador para redirigir después del inicio de sesión exitoso
 
 @Component({  // Cambié 'app-login-form' a 'app-login-form'
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css']
+  selector: 'app-login-form',                 // Asegúrate de que el selector sea único y descriptivo
+  templateUrl: './login-form.component.html', // Asegúrate de que la ruta al archivo HTML sea correcta
+  styleUrls: ['./login-form.component.css']   // Asegúrate de que la ruta al archivo CSS sea correcta
 })
 export class LoginFormComponent {
   onReset() {                                 // Cambié 'onReset' a 'resetForm'
@@ -15,15 +15,17 @@ export class LoginFormComponent {
 
   loginForm: FormGroup;                       // Formulario reactivo para el inicio de sesión
   loginError: string | null = null;           // Para mostrar errores de autenticación
-  // Variables para interactuar con el endpoint
-  // email = '';     // Campo de correo electrónico
-  // password = '';  // Campo de contraseña
-  // error = '';     // Para mostrar errores de autenticación
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password : ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=(?:.*\d){4,}).+$/)
+        ]
+      ]
     });
   }
   // Método para manejar el evento de clic en el botón de "Iniciar sesión"
@@ -55,20 +57,6 @@ export class LoginFormComponent {
         console.error('Error de inicio de sesión:', err); // Muestra el error en la consola
       }
     });
-
-
-    // if (this.authService.login(username, password)) {
-    //   // Redirigir o realizar alguna acción en caso de éxito
-    //   console.log('Inicio de sesión exitoso');
-    //   //this.loginError = null;
-    //   this.loginError = 'Credenciales OK';
-    //   this.router.navigate(['/opciones']); // Redirigir a OpcionesComponent
-    // } else {
-    //   // Mostrar un mensaje de error en caso de credenciales inválidas
-    //   this.loginError = 'Credenciales inválidas. Inténtalo de nuevo.';
-    // }
-
-
   }
 
   // Método para manejar el evento de clic en el botón de "Registrarse"

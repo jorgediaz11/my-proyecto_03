@@ -12,15 +12,15 @@ export class OpcionesComponent {
   constructor(private router: Router) {}
 
   irAlLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); // Cambié 'irAlLogin' a 'irAlLogin'
   }
 
   irAInicio() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/']);  // Cambié 'irAInicio' a 'irAInicio'
   }
 
-  showUserMenu = false;
-  showSidebar = true;
+  showUserMenu = false; // Cambié 'showUserMenu' a 'showUserMenu'
+  showSidebar = true;   // Cambié 'showSidebar' a 'showSidebar'
 
   toggleUserMenu() {
     this.showUserMenu = !this.showUserMenu;

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login-registro', // Asegúrate de que el selector sea único y descriptivo
+  selector: 'app-login-registro',                 // Asegúrate de que el selector sea único y descriptivo
   templateUrl: './login-registro.component.html', // Asegúrate de que la ruta al archivo HTML sea correcta
-  styleUrls: ['./login-registro.component.css'] // Asegúrate de que la ruta al archivo CSS sea correcta
+  styleUrls: ['./login-registro.component.css']   // Asegúrate de que la ruta al archivo CSS sea correcta
 })
 export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-login-registro'
   // Lógica específica del componente
@@ -16,8 +16,20 @@ export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-log
       nombres: ['', [Validators.required, Validators.minLength(3)]],
       apellidos: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password2: ['', [Validators.required, Validators.minLength(6)]]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=(?:.*\d){4,}).+$/)
+        ]
+      ],
+      password2: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=(?:.*\d){4,}).+$/)
+        ]
+      ]
     });
   }
   // Método para manejar el evento de clic en el botón de "Registrarse"
