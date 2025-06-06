@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';  // Asegúrate de que el import sea correcto
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -58,9 +58,19 @@ export class ColegiosComponent  {
   // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.colegioForm = this.fb.group({
+      usuario: ['', Validators.required],
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]]
+      correo: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]],
+      niveles: [[], Validators.required],
+      turnos: [[], Validators.required],
+      aforo: ['', [
+        Validators.required,
+        Validators.pattern(/^\d+$/), // Solo números
+        Validators.min(0)
+      ]],
+      estado: [''], // Valor inicial vacío
     });
   }
 
@@ -192,9 +202,9 @@ export class ColegiosComponent  {
     });
   }
 
-  activeTab: 'tabla' | 'nuevo' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
-  selectTab(tab: 'tabla' | 'nuevo') {
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
   }
 
@@ -229,7 +239,7 @@ export class ColegiosComponent  {
 // }
 
 // <<Información general:>>
-// ID (autogenerado)
+// ID (autogenerado) 01
 // Nombre (requerido)
 // Código modular (requerido)
 // Dirección completa
@@ -238,13 +248,13 @@ export class ColegiosComponent  {
 // Página web
 // Logo
 // Director(a) (relación)
-// <<Ubigeo:>>
+// <<Ubigeo:>> 02
 // Departamento
 // Provincia
 // Distrito
 // <<Configuración académica:>>
-// Niveles educativos ofrecidos
-// Turnos (mañana/tarde/noche)
+// Niveles educativos ofrecidos ok
+// Turnos (mañana/tarde/noche)  ok
 // Aforo máximo
-// Fecha de fundación
-// Estado (Activo/Inactivo)
+// Fecha de fundación       ok
+// Estado (Activo/Inactivo) ok

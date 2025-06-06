@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';  // Asegúrate de que el import sea correcto
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
+//import { UsuarioService, Usuario } from '../../../../services/usuario.service';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 interface Docente { // Define la interfaz Docente
@@ -55,9 +56,12 @@ export class DocentesComponent {
   // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.docenteForm = this.fb.group({
+      usuario: ['', Validators.required],
+      //perfil: [this.perfiles[0]?.value || 'Admin Pri', Validators.required],
+      perfil: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
-      correo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]]
     });
   }
@@ -191,9 +195,9 @@ export class DocentesComponent {
     });
   }
 
-  activeTab: 'tabla' | 'nuevo' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
-  selectTab(tab: 'tabla' | 'nuevo') {
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
   }
 
@@ -226,3 +230,24 @@ export class DocentesComponent {
 
 //   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
 // }
+
+// <<Campos básicos:>>
+// ID (autogenerado)
+// Nombres (requerido)
+// Apellidos (requerido)
+// DNI/Identificación (requerido)
+// Fecha de nacimiento
+// Género (dropdown)
+// Foto/perfil
+// Dirección
+// Teléfono
+// Correo electrónico (validado)
+// Estado (Activo/Inactivo)
+// <<Campos profesionales:>>
+// Especialidad (dropdown)
+// Grados académicos
+// Años de experiencia
+// Cursos asignados (relación múltiple)
+// Horario disponible
+// Tipo de contrato
+// Fecha de contratación

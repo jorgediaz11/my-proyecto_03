@@ -16,5 +16,8 @@
     "src/**/*.d.ts",                // Included to prevent errors in IDEs
     "src/**/*.ts",                  // Included to prevent errors in IDEs
     "src/environments/**/*.ts"      // Included to prevent errors in IDEs
+  ],
+  "exclude": [
+    "src/main.server.ts"
   ]
 }

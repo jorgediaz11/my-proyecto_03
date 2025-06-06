@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';  // Asegúrate de que el import sea correcto
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -81,6 +81,10 @@ export class EstudiantesComponent {
   // Definición de las columnas para la tabla
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.estudianteForm = this.fb.group({
+      usuario: ['', Validators.required],
+      //perfil: [this.perfiles[0]?.value || 'Admin Pri', Validators.required],
+      perfil: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       nivel: ['', Validators.required],
@@ -219,9 +223,9 @@ ngOnInit(): void {
     });
   }
 
-  activeTab: 'tabla' | 'nuevo' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
-  selectTab(tab: 'tabla' | 'nuevo') {
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
   }
 
@@ -254,3 +258,24 @@ ngOnInit(): void {
 
 //   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
 // }
+
+// <<Campos básicos:>>
+// ID (autogenerado)
+// Nombres (requerido)
+// Apellidos (requerido)
+// Fecha de nacimiento
+// Género (dropdown)
+// DNI/Identificación (requerido)
+// Foto/perfil
+// Dirección
+// Teléfono
+// Correo electrónico (validado)
+// Estado (Activo/Inactivo)
+// <<Campos académicos:>>
+// Colegio (relación)
+// Nivel educativo
+// Grado
+// Sección
+// Fecha de ingreso
+// Promedio académico
+// Observaciones

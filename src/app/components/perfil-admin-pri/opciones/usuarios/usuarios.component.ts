@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  // Asegúrate de que el import sea correcto
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -54,6 +54,8 @@ constructor(private fb: FormBuilder, private dialog: MatDialog) {
     perfil: [this.perfiles[0]?.value || 'Admin Pri', Validators.required],
     //perfil: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
+    clave1: ['', Validators.required],  // Campo para la contraseña
+    clave2: ['', Validators.required],  // Campo para la confirmación de contraseña
     nombres: ['', Validators.required],
     apellidos: ['', Validators.required],
     descripcion: ['', Validators.required],
@@ -197,26 +199,11 @@ updatePaginatedUsuarios(): void {
     });
   }
 
-  activeTab: 'tabla' | 'nuevo' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
-  selectTab(tab: 'tabla' | 'nuevo') {
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
   }
-
-// <<Datos de acceso:>>
-// ID (autogenerado)
-// Nombre de usuario (requerido)  OK
-// Contraseña (requerido, encriptada) OK
-// Correo electrónico (validado)  OK
-// Rol/Perfil (Admin/Docente/Estudiante/Padre) OK
-// Fecha de creación
-// Último acceso
-// Estado (Activo/Inactivo/Bloqueado)
-// <<Datos personales:>>
-// Relación con persona (Docente/Estudiante)
-// Foto de perfil
-// Preferencias de notificación
-
 
 }
 
@@ -247,3 +234,17 @@ updatePaginatedUsuarios(): void {
 
 //   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
 // }
+
+// <<Datos de acceso:>>
+// ID (autogenerado)
+// Nombre de usuario (requerido)
+// Contraseña (requerido, encriptada)
+// Correo electrónico (validado)
+// Rol (Admin/Docente/Estudiante/Padre)
+// Fecha de creación
+// Último acceso
+// Estado (Activo/Inactivo/Bloqueado)
+// <<Datos personales:>>
+// Relación con persona (Docente/Estudiante)
+// Foto de perfil
+// Preferencias de notificación

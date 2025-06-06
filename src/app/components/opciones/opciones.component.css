@@ -211,6 +211,6 @@ h2 {
 }
 
 .login-link:hover, .login-link:focus {
-  background: #e9ecef;
+  background: #e9ecef;  /* Fondo gris claro */
   color: #145c32; /* Verde más oscuro */
 }

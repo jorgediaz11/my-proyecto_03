@@ -16,11 +16,11 @@ export class OpcionesComponent {
   }
 
   irAInicio() {
-    this.router.navigate(['/']);  // Cambié 'irAInicio' a 'irAInicio'
+    this.router.navigate(['/']);      // Cambié 'irAInicio' a 'irAInicio'
   }
 
-  showUserMenu = false; // Cambié 'showUserMenu' a 'showUserMenu'
-  showSidebar = true;   // Cambié 'showSidebar' a 'showSidebar'
+  showUserMenu = false;               // Cambié 'showUserMenu' a 'showUserMenu'
+  showSidebar = true;                 // Cambié 'showSidebar' a 'showSidebar'
 
   toggleUserMenu() {
     this.showUserMenu = !this.showUserMenu;
