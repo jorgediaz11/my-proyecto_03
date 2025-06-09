@@ -25,5 +25,5 @@ body {
 
 html, body {
   height: 100%;                 /* Asegura que el contenedor ocupe toda la altura */
-  margin-top: 80px;             /* 56px navbar + 10px separación */
+  /* margin-top: 80px;  */            /* 56px navbar + 10px separación */
 }

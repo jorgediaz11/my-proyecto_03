@@ -4,6 +4,7 @@ import { InicioComponent } from './inicio/inicio.component';
 // Login / Registro
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginRegistroComponent } from './components/login-registro/login-registro.component';
+import { LoginRecuperaComponent } from './components/login-recupera/login-recupera.component'; // Importar el componente de recuperación de contraseña
 // Menu TMP Opciones
 import { OpcionesComponent } from './components/opciones/opciones.component';
 // Perfil Administrador Pri
@@ -41,6 +42,7 @@ export const routes: Routes = [
   // Ruta para el login y registro
   { path: 'login', component: LoginFormComponent },         // Ruta para el login
   { path: 'login-registro', component: LoginRegistroComponent },  // Ruta para el registro
+  { path: 'login-recupera', component: LoginRecuperaComponent }, // Ruta para la recuperación de contraseña
 
   // Ruta para el menú de opciones
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones

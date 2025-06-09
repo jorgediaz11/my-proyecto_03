@@ -37,7 +37,7 @@ export class LoginRegistroComponent { // Cambié 'app-login-registro' a 'app-log
     if (this.registroForm.valid) {  // Verifica si el formulario es válido
       console.log('Formulario enviado:', this.registroForm.value);
     } else {
-      console.log('Formulario inválido');
+      console.log('Formulario inválido'); // Muestra un mensaje si el formulario no es válido
     }
   }
   // Método para manejar el evento de clic en el botón de "Iniciar sesión"

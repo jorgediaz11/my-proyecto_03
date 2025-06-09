@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({    // Asegúrate de que el selector sea único y descriptivo
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  selector: 'app-inicio',   // Selector del componente, utilizado en las plantillas HTML
+  templateUrl: './inicio.component.html', // Ruta al archivo de plantilla HTML del componente
+  styleUrls: ['./inicio.component.css'] // Ruta al archivo de estilos CSS del componente
 })
 export class InicioComponent {
   // Lógica específica del componente

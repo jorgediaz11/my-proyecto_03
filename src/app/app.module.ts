@@ -16,6 +16,7 @@ import { InicioComponent } from './inicio/inicio.component';
 // Login / Registro
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginRegistroComponent } from './components/login-registro/login-registro.component';
+import { LoginRecuperaComponent } from './components/login-recupera/login-recupera.component'; // Importar el componente de recuperación de contraseña
 
 // Menu TMP Opciones
 import { OpcionesComponent } from './components/opciones/opciones.component';
@@ -55,6 +56,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     InicioComponent,
     LoginFormComponent,
     LoginRegistroComponent,
+    LoginRecuperaComponent,
     OpcionesComponent,
     PerfilAdminPriComponent,
     UsuariosComponent,

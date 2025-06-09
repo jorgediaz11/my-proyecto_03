@@ -3,19 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service'; // Importa el servicio de autenticación
 import { Router } from '@angular/router'; // Importa el enrutador para redirigir después del inicio de sesión exitoso
 
-@Component({  // Cambié 'app-login-form' a 'app-login-form'
-  selector: 'app-login-form',                 // Asegúrate de que el selector sea único y descriptivo
-  templateUrl: './login-form.component.html', // Asegúrate de que la ruta al archivo HTML sea correcta
-  styleUrls: ['./login-form.component.css']   // Asegúrate de que la ruta al archivo CSS sea correcta
+@Component({  // Cambié 'app-login-recupera' a 'app-login-recupera'
+  selector: 'app-login-recupera',
+  templateUrl: './login-recupera.component.html',
+  styleUrl: './login-recupera.component.css'
 })
-export class LoginFormComponent {
-  validationMessage: any;
+export class LoginRecuperaComponent {
+validationMessage: any;
 
-  loginForm: FormGroup;                       // Formulario reactivo para el inicio de sesión
+  recuperaForm: FormGroup;                       // Formulario reactivo para el inicio de sesión
   loginError: string | null = null;           // Para mostrar errores de autenticación
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    this.loginForm = this.fb.group({
+    this.recuperaForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
         '',
@@ -31,8 +31,8 @@ export class LoginFormComponent {
   onSubmit(): void {
     this.submitted = true; // Marca el formulario como enviado
     this.loginError = null; // Limpia el mensaje de error al intentar iniciar sesión
-    if (this.loginForm.invalid) return; // Si el formulario es inválido, no hace nada
-    const { email, password } = this.loginForm.value; // Obtiene los valores del formulario
+    if (this.recuperaForm.invalid) return; // Si el formulario es inválido, no hace nada
+    const { email, password } = this.recuperaForm.value; // Obtiene los valores del formulario
     //this.loginError = 'email: ' + email + ' password: ' + password; // Muestra los valores en el mensaje de error (para depuración)
     // Llama al servicio de autenticación para iniciar sesión
     this.authService.login(email, password).subscribe({ // Cambié 'authService.login' a 'this.authService.login'
@@ -59,12 +59,12 @@ export class LoginFormComponent {
 
   // Método para manejar el evento de clic en el botón de "Registrarse"
   resetForm(): void {
-    this.loginForm.reset(); // Limpia todos los campos del formulario
+    this.recuperaForm.reset(); // Limpia todos los campos del formulario
     this.loginError = '';   // Limpia el mensaje de error
   }
 
   onReset() {
-    this.loginForm.reset();
+    this.recuperaForm.reset();
   }
 
 }
