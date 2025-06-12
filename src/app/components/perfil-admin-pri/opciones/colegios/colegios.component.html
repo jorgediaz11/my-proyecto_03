@@ -1,9 +1,9 @@
 <!-- Colegios Component HTML -->
-<div class="colegios-container">
+<div class="colegios-container p-4 bg-gray-100 rounded-lg shadow-md">
   <h2>Lista de Colegios</h2>
 
   <!-- Pestañas -->
-  <div class="mb-4 border-b border-gray-200 h-[24%]">
+  <div class="mb-4 border-b border-gray-200">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
       <!-- Pestaña 1: Tabla de Colegios -->
       <li class="mr-2" role="presentation">
@@ -92,49 +92,46 @@
     </div>
 
     <!-- Panel: Tabla de Colegios -->
-    <!-- <table class="colegios-table w-full text-left border"> -->
-    <table class="colegios-table">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg overflow-hidden">
+      <thead class="bg-yellow-200">
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Dirección</th>
-          <th>Teléfono</th>
-          <th>Acciones</th>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Nombre</th>
+          <th class="px-4 py-2">Dirección</th>
+          <th class="px-4 py-2">Teléfono</th>
+          <th class="px-4 py-2">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let colegio of paginatedColegios">
-          <td>{{ colegio.id }}</td>
-          <td>{{ colegio.nombre }}</td>
-          <td>{{ colegio.direccion }}</td>
-          <td>{{ colegio.telefono }}</td>
-          <td>
-            <!-- <span class="flex items-center gap-4"> -->
-              <!-- Ícono para Ver -->
-              <i class="fas fa-eye action-icon" title="Detalles" (click)="viewColegio(colegio.id); $event.stopPropagation()"></i>
-              <!-- Ícono para Editar -->
-              <i class="fas fa-edit action-icon" title="Editar" (click)="editColegio(colegio.id)"></i>
-              <!-- Ícono para Eliminar -->
-              <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
-            <!-- </span> -->
+        <tr *ngFor="let colegio of paginatedColegios" class="hover:bg-yellow-50 transition">
+          <td class="px-4 py-2">{{ colegio.id }}</td>
+          <td class="px-4 py-2">{{ colegio.nombre }}</td>
+          <td class="px-4 py-2">{{ colegio.direccion }}</td>
+          <td class="px-4 py-2">{{ colegio.telefono }}</td>
+          <td class="px-4 py-2 flex gap-2">
+            <i class="fas fa-eye text-green-600 cursor-pointer hover:scale-110 transition" title="Detalles" (click)="viewColegio(colegio.id); $event.stopPropagation()"></i>
+            <i class="fas fa-edit text-yellow-600 cursor-pointer hover:scale-110 transition" title="Editar" (click)="editColegio(colegio.id)"></i>
+            <i class="fas fa-trash text-red-600 cursor-pointer hover:scale-110 transition" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
           </td>
         </tr>
       </tbody>
     </table>
 
     <!-- Paginación -->
-    <div class="pagination mt-4 flex gap-2">
+    <div class="pagination mt-4 flex gap-2 justify-center">
       <button
         *ngFor="let page of getTotalPages(); let i = index"
-        [class.active]="currentPage === i + 1"
         (click)="changePage(i + 1)"
-        class="px-3 py-1 rounded border border-gray-300"
-        [ngClass]="{'bg-green-600 text-white': currentPage === i + 1, 'bg-white text-gray-700': currentPage !== i + 1}"
+        class="px-3 py-1 rounded border border-gray-300 transition"
+        [ngClass]="{
+          'bg-green-600 text-white font-bold shadow': currentPage === i + 1,
+          'bg-white text-gray-700 hover:bg-yellow-100': currentPage !== i + 1
+        }"
       >
         {{ i + 1 }}
       </button>
     </div>
+
   </div>
 
   <!-- Panel: Nuevo Colegio -->
@@ -186,17 +183,17 @@
             <label for="correo" class="block mb-1">Correo Electrónico:</label>
             <input id="correo" formControlName="correo" type="email" placeholder="Ingrese Correo" class="w-full border rounded px-3 py-2" />
           </div>
-          <!-- Descripción -->
-          <div class="mb-4">
-            <label for="descripcion" class="block mb-1">Descripción:</label>
-            <textarea id="descripcion" formControlName="descripcion" rows="2" placeholder="Descripción" class="w-full border rounded px-3 py-2"></textarea>
-          </div>
 
           <!-- Botones -->
           <div class="flex gap-2">
-            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
-            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
-            <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
+            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Guardar</button>
+            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 transition">Limpiar</button>
+            <button
+              type="button"
+              (click)="activeTab = 'tabla'"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+              Cancelar
+            </button>
           </div>
 
         </div>
@@ -297,10 +294,15 @@
           </div>
 
           <!-- Botones centrados -->
-          <div class="flex gap-2 justify-center">
+          <div class="flex gap-2">
             <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
             <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
-            <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
+            <button
+              type="button"
+              (click)="cancelCreate(); activeTab = 'tabla'"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+              Cancelar
+            </button>
           </div>
         </div>
       </form>

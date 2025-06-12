@@ -15,11 +15,11 @@
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           <img class="w-32 h-auto min-w-[120px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
         </a>
-        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Inicia sesión en tu cuenta</h2>
+        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Crear nueva cuenta</h2>
 
         <!-- Formumario de Registro -->
         <form (ngSubmit)="onSubmit()" [formGroup]="registroForm">
-          <h2>Crear una cuenta</h2>
+          <!-- <h2>Crear una cuenta</h2> -->
           <div class="form-group">
             <label for="usuario">Usuario:</label>
             <input id="usuario" formControlName="usuario" type="text" placeholder="Ingresa tu usuario" />
@@ -72,27 +72,49 @@
             </div>
           </div>
 
-          <button type="submit" class="to-options">Registrar</button>
-          <button type="button" class="to-options" (click)="onReset()">Limpiar</button>
-          <button routerLink="/login" class="to-options">Regresar al Login</button>
-      </form>
+          <!-- Botones Limpiar y Registrar, alineados horizontalmente -->
+          <div class="flex justify-center items-center gap-4 mt-4">
+            <button
+              type="button"
+              class="w-[30%] flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+              (click)="onReset()">
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              class="w-[60%] flex items-center justify-center text-white bg-green-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+            >
+              Registrar Usuario
+            </button>
+          </div>
+
+        </form>
 
       </div>
-
+      <!-- Línea divisoria -->
+      <div class="w-px bg-gray-200 hidden md:block"></div>
 
       <!-- Registro y accesos -->
       <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
         <div class="flex flex-col items-center w-full">
           <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
           <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">¿Nuevo usuario?</h2>
-          <p class="mb-2 text-gray-600 text-center">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-          <a routerLink="/login-registro"
-            class="w-full text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition mb-2">Registrar Nuevo Usuario</a>
-          <div class="flex w-full gap-2">
+          <p class="mb-2 text-gray-600 text-center mb-4">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
+          <div class="flex w-full gap-4">
             <a routerLink="/opciones"
-              class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition">Ir a Opciones</a>
+              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+              Ir a Opciones
+            </a>
             <a routerLink="/inicio"
-              class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition">Ir a Inicio</a>
+              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+              Ir a Inicio
+            </a>
+          </div>
+          <div class="w-full mt-2">
+            <a routerLink="/login"
+              class="block text-center px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow w-full">
+              Regresar al Login
+            </a>
           </div>
         </div>
       </div>

@@ -36,4 +36,15 @@ export class PerfilAdminPriComponent {
     this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
   }
 
+  showUserMenu = false;               // Cambié 'showUserMenu' a 'showUserMenu'
+  showSidebar = true;                 // Cambié 'showSidebar' a 'showSidebar'
+
+  toggleUserMenu() {
+    this.showUserMenu = !this.showUserMenu;
+  }
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+  }
+
 }

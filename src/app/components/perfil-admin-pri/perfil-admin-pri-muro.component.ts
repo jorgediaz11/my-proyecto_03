@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-perfil-admin-pri-muro',                  // Cambié 'app-perfil-admin-pri-muro' a 'app-perfil-admin-pri-muro'
@@ -14,6 +15,7 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
   totalCursos = 15;
 
   ngAfterViewInit() {
+    Chart.register(ChartDataLabels); // Registra el plugin
     this.renderProgressChart();
     this.renderAulasChart();
   }
@@ -31,17 +33,25 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
     }
 
     new Chart(ctx, {
-      type: 'bar',  // Cambié 'horizontalBar' a 'bar' para compatibilidad con Chart.js 3 y superior
+      type: 'bar',
       data: {
         labels: ['Inscritos', 'En Progreso', 'Completados'],
         datasets: [
           {
-            label: 'Participantes',
-            data: [120, 60, 20],
-            backgroundColor: ['#dc3545', '#ffc107', '#007bff'],
+            label: 'Primaria',
+            data: [100, 50, 30],
+            backgroundColor: ['#dc3545', '#dc3545', '#dc3545'],
             borderColor: ['#a71d2a', '#b38600', '#145c32'],
             borderWidth: 1,
-            barThickness: 40
+            barThickness: 30
+          },
+          {
+            label: 'Secundaria',
+            data: [80, 40, 25],
+            backgroundColor: ['#4EAD4F', '#4EAD4F', '#4EAD4F'],
+            borderColor: ['#357a38', '#b36b00', '#5b21b6'],
+            borderWidth: 1,
+            barThickness: 30
           }
         ]
       },
@@ -49,8 +59,23 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
         responsive: true,
         indexAxis: 'y',
         plugins: {
-          legend: { display: false }, // Ocultar leyenda
-          title: { display: false, text: 'Progreso de Participantes' }
+          legend: {
+            display: true,
+            position: 'bottom'
+          },
+          title: { display: true, text: 'Progreso de Participantes' },
+          datalabels: {
+            anchor: 'center',
+            align: 'center',
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            formatter: function(value) {
+              return value;
+            }
+          }
         },
         scales: {
           x: {
@@ -63,9 +88,12 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
             ticks: { align: 'start' }
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
+
   }
+
 
   renderAulasChart() {
     const canvas = document.getElementById('aulasChart') as HTMLCanvasElement;
@@ -89,20 +117,24 @@ export class PerfilAdminPriMuroComponent implements AfterViewInit {
           {
             label: 'Registrados',
             data: [8, 15, 12, 20, 18, 10],
-            backgroundColor: '#4EAD4F'
+            backgroundColor: '#4EAD4F',
+            borderWidth: 1,
+            barThickness: 40
           },
           {
             label: 'Pendientes',
             data: [12, 5, 8, 0, 2, 10],
-            backgroundColor: '#F59E42'
+            backgroundColor: '#F59E42',
+            borderWidth: 1,
+            barThickness: 40
           }
         ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'top' },
-          title: { display: false, text: 'Alumnos por Aula (Primaria)' }
+          legend: { position: 'bottom' },
+          title: { display: true, text: 'Alumnos por Aula (Primaria)' }
         },
         scales: {
           x: { stacked: true },

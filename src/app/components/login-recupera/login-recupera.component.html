@@ -17,6 +17,7 @@
         </a>
         <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Recuperar Accesos</h2>
 
+        <p class="mb-2 text-gray-600 text-center">Ingrese cirección de correo electrónico de recuperación</p>
         <!-- Formumario de Registro -->
         <form [formGroup]="recuperaForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
           <!-- Correo -->
@@ -29,30 +30,6 @@
               <span *ngIf="recuperaForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
               <span *ngIf="recuperaForm.get('email')?.errors?.['email']">Ingresa un correo válido.</span>
             </div>
-          </div>
-
-          <!-- Contraseña -->
-          <div class="border-2 border-pink-500">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-            <input type="password" id="password" formControlName="password" placeholder="Ingresa tu clave [••••••••]"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required>
-            <div *ngIf="recuperaForm.get('password')?.touched && recuperaForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">
-              <span *ngIf="recuperaForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
-              <span *ngIf="recuperaForm.get('password')?.errors?.['pattern']">Debe contener al menos una mayúscula, una minúscula y 4 números.</span>
-            </div>
-          </div>
-
-          <!-- Recordar y recuperar contraseña -->
-          <div class="flex flex-col md:flex-row items-center justify-between border-2 border-orange-500 gap-2 md:gap-0">
-            <div class="flex items-center">
-              <input id="remember" type="checkbox"
-                class="w-4 h-4 border border-gray-300 rounded-b-lg bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
-              <label for="remember" class="ml-2 text-sm text-gray-500 dark:text-gray-300">Recordar</label>
-            </div>
-            <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
-              Recuperar contraseña?
-            </a>
           </div>
 
           <!-- Mensajes de validación globales -->
@@ -72,7 +49,7 @@
               type="submit"
               class="w-[60%] text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center"
               [disabled]="recuperaForm.invalid">
-              Iniciar sesión
+              Enviar Solicitud
             </button>
           </div>
 
@@ -84,22 +61,29 @@
       <!-- Línea divisoria vertical -->
       <div class="hidden md:block w-px bg-gray-200"></div>
 
-      <!-- Registro y accesos -->
-      <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
-        <div class="flex flex-col items-center w-full">
-          <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
-          <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">¿Nuevo usuario?</h2>
-          <p class="mb-2 text-gray-600 text-center">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-          <a routerLink="/login-registro"
-            class="w-full text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition mb-2">Registrar Nuevo Usuario</a>
-          <div class="flex w-full gap-2">
-            <a routerLink="/opciones"
-              class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition">Ir a Opciones</a>
-            <a routerLink="/inicio"
-              class="w-1/2 text-center inline-block px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition">Ir a Inicio</a>
+        <!-- Registro y accesos -->
+        <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
+          <div class="flex flex-col items-center w-full">
+            <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
+            <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Recuperar Credenciales</h2>
+            <p class="mb-2 text-gray-600 text-center">Revisar el correo con el cual se registró.</p>
+            <a routerLink="/login-registro"
+              class="w-full text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition mb-2 shadow">
+              Registrar Nuevo Usuario
+            </a>
+            <div class="flex w-full gap-2">
+              <a routerLink="/opciones"
+                class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+                Ir a Opciones
+              </a>
+              <a routerLink="/inicio"
+                class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+                Ir a Inicio
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+
     </div>
 
     <!-- Piso 3: Franja inferior (mismo ancho que el piso 1) -->

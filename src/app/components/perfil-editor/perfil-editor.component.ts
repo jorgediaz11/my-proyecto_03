@@ -46,11 +46,11 @@ export class PerfilEditorComponent {
   showSidebar = true;   // Cambié 'showSidebar' a 'showSidebar'
 
   toggleUserMenu() {
-    this.showUserMenu = !this.showUserMenu;
+    this.showUserMenu = !this.showUserMenu; // Cambié 'toggleUserMenu' a 'toggleUserMenu'
   }
 
   toggleSidebar() {
-    this.showSidebar = !this.showSidebar;
+    this.showSidebar = !this.showSidebar; // Cambié 'toggleSidebar' a 'toggleSidebar'
   }
 
 
