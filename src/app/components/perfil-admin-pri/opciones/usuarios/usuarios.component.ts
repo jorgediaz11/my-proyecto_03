@@ -2,7 +2,7 @@ import { Component } from '@angular/core';  // Asegúrate de que el import sea c
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
-//import { UsuarioService, Usuario } from '../../../../services/usuario.service';
+import { UsuarioService, Usuario as UsuarioApi } from '../../../../services/usuario.service';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 interface Usuario { // Define la interfaz Usuario

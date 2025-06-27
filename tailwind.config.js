@@ -10,7 +10,8 @@ module.exports = {
         colors: {
           'verde-claro': '#76B177',
           'hover-verde-claro': '#F3FEF5',
-          'hover-verde': '#DDFBD9'
+          'hover-verde': '#DDFBD9',
+          'verde-eureka': '#6FCF97', // Cambia este valor por el tono que prefieras
         }
       }
   },

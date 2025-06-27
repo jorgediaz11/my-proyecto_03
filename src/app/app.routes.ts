@@ -66,7 +66,7 @@ export const routes: Routes = [
 
 // Ruta para el perfil de admin sec
   { path: 'perfil-admin-sec',                                 // Ruta para el perfil de admin sec
-    component: PerfilAdminSecComponent,
+    component: PerfilAdminSecComponent,                     // Componente del perfil de admin sec
     children: [
       { path: '', component: PerfilAdminSecMuroComponent }    // Ruta predeterminada
       // Otras rutas hijas

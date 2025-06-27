@@ -1,4 +1,4 @@
-<nav class="bg-green-600 dark:bg-gray-800 shadow fixed top-0 left-0 w-full z-50 text-white text-2xl border-2 border-red-500">
+<nav class="bg-green-400 dark:bg-gray-800 shadow fixed top-0 left-0 w-full z-50 text-white text-2xl border-2 border-red-500">
   <div class="max-w-screen-xl mx-auto px-4 2xl:px-0 py-3 flex items-center justify-between">
 
       <!-- Logo -->
@@ -10,7 +10,7 @@
         </div>
 
         <!-- Menú horizontal (escritorio) -->
-        <ul class="hidden lg:flex items-center gap-6">
+        <ul class="hidden lg:flex items-center gap-6 border border-blue-500">
           <li><span class="font-semibold text-white text-2xl transition-colors duration-200 hover:text-orange-500 cursor-pointer select-none">Inicio</span></li>
           <li><span class="font-semibold text-white text-2xl transition-colors duration-200 hover:text-orange-500 cursor-pointer select-none">Nosotros</span></li>
           <li><span class="font-semibold text-white text-2xl transition-colors duration-200 hover:text-orange-500 cursor-pointer select-none">Niveles</span></li>
@@ -26,7 +26,7 @@
       </div>
 
       <!-- Botón menú móvil -->
-      <div class="flex items-center lg:hidden">
+      <div class="flex items-center lg:hidden border border-blue-500">
         <button id="btn-menu-movil" class="lg:hidden p-2 rounded-md text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -35,7 +35,7 @@
       </div>
 
     <!-- Menú móvil (oculto por defecto) -->
-    <div id="menu-movil" class="hidden lg:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+    <div id="menu-movil" class="hidden lg:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 border border-blue-500">
       <ul class="flex flex-col px-6 py-4 gap-3">
         <li><a href="#" class="block text-base font-semibold text-gray-800 hover:text-green-600 dark:text-white dark:hover:text-green-400 transition">Inicio</a></li>
         <li><a href="#" class="block text-base font-semibold text-gray-800 hover:text-green-600 dark:text-white dark:hover:text-green-400 transition">Nosotros</a></li>
@@ -59,9 +59,9 @@
 
 
 <!-- Contenido principal con Tailwind - Más limpio y con mejor espaciado -->
-<main class="max-w-7xl mx-auto px-4 pb-10 border-2 border-blue-500 bg-blue-100" style="margin-top: calc(20rem + 1cm);">
+<main class="max-w-7xl mx-auto px-4 pb-10 border-2 border-blue-500 bg-blue-100 border border-red-500" style="margin-top: 52rem;">
   <!-- Sección hero con mejor jerarquía visual -->
-  <section class="text-center mb-16">
+  <section class="text-center mb-16 border border-green-500">
     <!-- <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6"> -->
     <h1 class="text-8xl md:text-9xl text-gray-800 mb-6 font-extrabold">
       Transforma la manera de leer y aprender
@@ -84,27 +84,27 @@
   </section>
 
   <!-- Sección de fichas con grid de Tailwind - Más moderna y con hover effects -->
-  <section class="mb-16">
+  <section class="mb-16 border border-green-500">
     <h2 class="text-3xl text-center text-gray-800 mb-12 font-extrabold">
       Nuestra Plataforma Ofrece
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border border-purple-500">
       <!-- Ficha 1 actualizada -->
-      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full">
+      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full border border-pink-500">
         <img src="assets/images/portal-01.png" class="w-96 h-96 mb-5 object-contain" alt="Libros interactivos">
         <h4 class="text-lg font-bold mb-2 text-gray-800">Libros interactivos</h4>
         <p class="text-gray-600">Lecturas con actividades integradas que mejoran la comprensión.</p>
       </div>
 
       <!-- Ficha 2 -->
-      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full">
+      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full border border-pink-500">
         <img src="assets/images/portal-02.png" class="w-96 h-96 mb-5 object-contain" alt="Evaluaciones">
         <h4 class="text-lg font-bold mb-2 text-gray-800">Evaluaciones</h4>
         <p class="text-gray-600">Pruebas adaptativas que miden el progreso de cada estudiante.</p>
       </div>
 
       <!-- Ficha 3 -->
-      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full">
+      <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 h-full border border-pink-500">
         <img src="assets/images/portal-03.png" class="w-96 h-96 mb-5 object-contain" alt="Reportes detallados">
         <h4 class="text-lg font-bold mb-2 text-gray-800">Reportes detallados</h4>
         <p class="text-gray-600">Seguimiento del progreso con análisis y recomendaciones.</p>
@@ -115,11 +115,11 @@
 </main>
 
 <!-- Footer actualizado con Tailwind - Más limpio y organizado -->
-<footer class="bg-gray-800 text-white py-12 w-full">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+<footer class="bg-gray-800 text-white py-12 w-full border border-yellow-500">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 border border-yellow-500">
     <!-- Columna 1 - Logo y descripción -->
-    <div class="flex flex-col gap-6">
-      <div>
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 border border-yellow-500">
+    <div class="border border-orange-500">
         <h5 class="text-xl font-bold mb-4">LMS Eureka</h5>
         <p class="mb-4 text-gray-300">
           Transformando la lectura en una experiencia interactiva y divertida para todos los estudiantes.
@@ -138,7 +138,7 @@
       </div>
 
       <!-- Formulario de suscripción actualizado -->
-      <div>
+      <div class="border border-orange-500">
         <h5 class="text-xl font-bold mb-4">Suscríbete</h5>
         <p class="mb-4 text-gray-300">
           Recibe las últimas noticias y actualizaciones.
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Columna 2 - Producto -->
-    <div>
+    <div class="border border-orange-500">
       <h5 class="text-xl font-bold mb-4">Producto</h5>
       <div class="flex flex-col gap-3">
         <a href="#" class="text-gray-300 hover:text-white transition">Características</a>
@@ -164,7 +164,7 @@
     </div>
 
     <!-- Columna 3 - Empresa -->
-    <div>
+    <div class="border border-orange-500">
       <h5 class="text-xl font-bold mb-4">Empresa</h5>
       <div class="flex flex-col gap-3">
         <a href="#" class="text-gray-300 hover:text-white transition">Nosotros</a>
@@ -175,7 +175,7 @@
     </div>
 
     <!-- Columna 4 - Legal -->
-    <div>
+    <div class="border border-orange-500">
       <h5 class="text-xl font-bold mb-4">Legal</h5>
       <div class="flex flex-col gap-3">
         <a href="#" class="text-gray-300 hover:text-white transition">Privacidad</a>
@@ -186,11 +186,12 @@
   </div>
 
   <!-- Derechos reservados -->
-  <div class="mt-12 text-center text-gray-400 text-sm">
+  <div class="mt-12 text-center text-gray-400 text-sm border border-yellow-500">
     © 2025 LMS Eureka. Todos los derechos reservados.
   </div>
 </footer>
 
+<!-- Scripts necesarios para el menú móvil -->
 <script>
   const btn = document.getElementById('btn-menu-movil');
   const menu = document.getElementById('menu-movil');

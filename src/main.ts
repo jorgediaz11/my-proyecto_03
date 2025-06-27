@@ -3,7 +3,7 @@ import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import 'flowbite';
+import 'flowbite';  // Importar Flowbite para estilos y componentes adicionales
 
 // Importar el módulo de enrutamiento
 if (environment.production) {

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
-import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router'; // Importa RouterModule para el enrutamiento
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importa BrowserAnimationsModule para animaciones de Angular Material
+import { MatDialogModule } from '@angular/material/dialog'; // Importa MatDialogModule aquí
+import { MatButtonModule } from '@angular/material/button'; // Importa MatButtonModule aquí
 import { MatTabsModule } from '@angular/material/tabs';   // Importa MatTabsModule aquí
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule

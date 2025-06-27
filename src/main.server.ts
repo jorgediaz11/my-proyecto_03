@@ -6,7 +6,7 @@ if (environment.production) {
   enableProdMode(); // Importar el módulo de enrutamiento 02
 }
 // Importar el módulo de enrutamiento 02
-export default function bootstrap() {
+export default function bootstrap() { // Función para inicializar el servidor
   // Lógica para inicializar el servidor 02
   // Lógica específica del componente 02
 }

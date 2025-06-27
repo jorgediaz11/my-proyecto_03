@@ -17,8 +17,8 @@ export class InicioComponent {
     { label: 'Contáctenos', route: '/contacto' }  // Enlace a la página de contacto
   ];
   // Propiedades para el título y detalle del menú
-  textoTitulo: string = 'Plataforma Eureka';
-  textoDetalle: string = 'Detalle del Menu';
+  textoTitulo: string = 'Plataforma Eureka 01';
+  textoDetalle: string = 'Detalle del Menu 01';
   isMenuOpen: any;  // Variable para controlar el estado del menú
 
   // Método para manejar el clic en un elemento del menú

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  // Importa el decorador Component de Angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service'; // Importa el servicio de autenticación
 import { Router } from '@angular/router'; // Importa el enrutador para redirigir después del inicio de sesión exitoso
@@ -34,7 +34,8 @@ export class LoginFormComponent {
     if (this.loginForm.invalid) return; // Si el formulario es inválido, no hace nada
     const { email, password } = this.loginForm.value; // Obtiene los valores del formulario
     //this.loginError = 'email: ' + email + ' password: ' + password; // Muestra los valores en el mensaje de error (para depuración)
-    // Llama al servicio de autenticación para iniciar sesión
+
+    // Llama al servicio de autenticación para iniciar sesión ENDPOINT - API
     this.authService.login(email, password).subscribe({ // Cambié 'authService.login' a 'this.authService.login'
       // next: (response) => {          // Maneja la respuesta del servidor
       next: (response: any) => {

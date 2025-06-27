@@ -4,7 +4,7 @@ import { AppComponent } from './app.component'; // Importar el componente raíz 
 import { AppModule } from './app.module'; // Importar el módulo principal de la aplicación
 
 // Importar el módulo de enrutamiento
-@NgModule({
+@NgModule({ // Decorador NgModule para definir el módulo
   imports: [
     AppModule,        // Importa el módulo principal de la aplicación
     ServerModule      // Importa el módulo del servidor

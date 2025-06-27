@@ -1,4 +1,4 @@
-/* Estilo global para enlaces 003 */
+/* Estilo global para enlaces 004 */
 import { Component } from '@angular/core';  // Importar el decorador Component de Angular
 
 // Importar el módulo de enrutamiento
