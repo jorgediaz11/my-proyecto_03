@@ -1,4 +1,4 @@
-/* Estilo global para enlaces 004 */
+/* Estilo global para enlaces 005 */
 import { Component } from '@angular/core';  // Importar el decorador Component de Angular
 
 // Importar el módulo de enrutamiento
@@ -10,5 +10,5 @@ import { Component } from '@angular/core';  // Importar el decorador Component d
 // Clase principal de la aplicación
 export class AppComponent {
   // Lógica específica del componente
-  title = 'My Proyecto 02';             // Título de la aplicación
+  title = 'My Proyecto 02: Back + Front';             // Título de la aplicación
 }

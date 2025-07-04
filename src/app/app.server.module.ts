@@ -12,5 +12,5 @@ import { AppModule } from './app.module'; // Importar el módulo principal de la
   bootstrap: [AppComponent] // Componente raíz de la aplicación
 })
 export class AppServerModule {
-  // Lógica específica del componente
+  // Lógica específica del componente 002
 }

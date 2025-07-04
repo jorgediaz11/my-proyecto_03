@@ -44,6 +44,11 @@ export const routes: Routes = [
   { path: 'login-registro', component: LoginRegistroComponent },  // Ruta para el registro
   { path: 'login-recupera', component: LoginRecuperaComponent }, // Ruta para la recuperación de contraseña
 
+  // Agregar estas líneas a tu array de routes existente
+  { path: 'users', component: UsuariosComponent },
+  { path: 'users/create', component: UsuariosComponent }, // o un componente específico de creación
+  { path: 'users/edit/:id', component: UsuariosComponent }, // o un componente específico de edición
+
   // Ruta para el menú de opciones
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones
 

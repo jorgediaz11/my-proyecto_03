@@ -4,13 +4,15 @@ import { HttpClient } from '@angular/common/http';  // Importar HttpClient de An
 import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar respuestas asíncronas
 
 export interface Usuario {
-  usuario: string;
-  nombres: string;
-  apellidos: string;
-  correo: string;
-  telefono: string;
-  perfil: string;
   id?: number;
+  idcolegio?: number;  // Campo opcional para el ID del colegio
+  idrol?: number;  // Campo opcional para el ID del rol
+  nombre: string;
+  apellido: string;
+  correo: string;
+  estado: string;
+  username: string;
+  password: string;
 }
 
 @Injectable({
@@ -18,7 +20,7 @@ export interface Usuario {
 })
 export class UsuarioService {
 
-  private apiUrl = 'http://tu-servidor.com/api/usuarios';
+  private apiUrl = 'http://localhost:3000/users';
   // ¡Asegúrate de que esta URL sea correcta!
 
   constructor(private http: HttpClient) { }

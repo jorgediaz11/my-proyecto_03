@@ -1,123 +1,316 @@
-<!-- Componente de formulario de inicio de sesión -->
-<section class="bg-gray-50 dark:bg-gray-600 min-h-screen flex flex-col justify-center items-center">
-
-  <!-- Capa central con 3 pisos -->
-  <div class="w-full max-w-4xl flex flex-col items-center">
-
-    <!-- Piso 1: Franja superior (mismo ancho que el piso 3) -->
-    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-t-lg flex items-center justify-end pr-4 text-white font-bold">
-      Eureka LMS
-    </div>
-
-    <!-- Piso 2: Contenido principal (login, línea, registro) -->
-    <div class="w-full bg-white flex flex-col md:flex-row shadow-lg border-2 border-orange-400 rounded-lg overflow-hidden">
-      <!-- Login -->
-      <div class="w-full md:w-1/2 flex flex-col justify-center p-8">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-32 h-auto min-w-[120px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
-        </a>
-        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Inicia sesión en tu cuenta</h2>
-
-        <!-- Formumario de Registro -->
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
-          <!-- Correo -->
-          <div class="border-2 border-purple-500">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
-            <input type="email" id="email" formControlName="email" placeholder="Ingresa tu Correo [correo@dominio.com]"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required>
-            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">
-              <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
-              <span *ngIf="loginForm.get('email')?.errors?.['email']">Ingresa un correo válido.</span>
-            </div>
-          </div>
-
-          <!-- Contraseña -->
-          <div class="border-2 border-pink-500">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-            <input type="password" id="password" formControlName="password" placeholder="Ingresa tu clave [••••••••]"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required>
-            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">
-              <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
-              <span *ngIf="loginForm.get('password')?.errors?.['pattern']">Debe contener al menos una mayúscula, una minúscula y 4 números.</span>
-            </div>
-          </div>
-
-          <!-- Recordar y recuperar contraseña -->
-          <div class="flex flex-col md:flex-row items-center justify-between border-2 border-orange-500 gap-2 md:gap-0">
-            <div class="flex items-center">
-              <input id="remember" type="checkbox"
-                class="w-4 h-4 border border-gray-300 rounded-b-lg bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
-              <label for="remember" class="ml-2 text-sm text-gray-500 dark:text-gray-300">Recordar</label>
-            </div>
-            <!-- Enlace para recuperar contraseña debajo del formulario de registro -->
-            <div class="w-full mt-2 flex justify-center">
-              <a routerLink="/login-recupera"
-                class="text-blue-600 hover:underline font-semibold text-sm text-center">
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
-          </div>
-
-          <!-- Mensajes de validación globales -->
-          <div *ngIf="validationMessage" class="text-red-600 text-center font-semibold mb-2">
-            {{ validationMessage }}
-          </div>
-
-          <!-- Botones de acción -->
-          <div class="flex gap-4">
-            <button
-              type="button"
-              class="w-[30%] flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
-              (click)="onReset()">
-              Limpiar
-            </button>
-            <button
-              type="submit"
-              class="w-[60%] flex items-center justify-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"
-              [disabled]="loginForm.invalid">
-              Iniciar sesión
-            </button>
-          </div>
-
-          <p *ngIf="submitted && loginError" class="forgot-password">{{ loginError }}</p>
-
-          </form>
-
-      </div>
-      <!-- Línea divisoria vertical -->
-      <div class="hidden md:block w-px bg-gray-200"></div>
-
-      <!-- Registro y accesos -->
-      <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4 border-2 border-orange-400 rounded-lg">
-        <div class="flex flex-col items-center w-full">
-          <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
-          <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">¿Nuevo usuario?</h2>
-          <p class="mb-2 text-gray-600 text-center">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-          <a routerLink="/login-registro"
-            class="w-full text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition mb-2 shadow">
-            Registrar Nuevo Usuario
-          </a>
-          <div class="flex w-full gap-2">
-            <a routerLink="/opciones"
-              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-              Ir a Opciones
-            </a>
-            <a routerLink="/inicio"
-              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-              Ir a Inicio
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Piso 3: Franja inferior (mismo ancho que el piso 1) -->
-    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-b-lg flex items-center justify-center pr-4 text-white font-bold">
-      Eureka &#64;2025
+<div class="login-container">
+  <!-- LOADING OVERLAY -->
+  <div *ngIf="loading" class="loading-overlay" role="dialog" aria-modal="true" aria-labelledby="loading-title">
+    <div class="loading-content">
+      <div class="spinner" aria-hidden="true"></div>
+      <span id="loading-title" class="loading-text">Iniciando sesión...</span>
     </div>
   </div>
 
-</section>
+  <!-- FORMULARIO PRINCIPAL -->
+  <div class="login-card">
+    <!-- HEADER -->
+    <div class="login-header">
+      <div class="logo-container">
+        <i class="fas fa-graduation-cap logo-icon" aria-hidden="true"></i>
+      </div>
+      <h1 class="login-title">Iniciar Sesión</h1>
+      <p class="login-subtitle">Accede a tu cuenta del sistema educativo</p>
+    </div>
+
+    <!-- FORMULARIO CON SAFE BINDING -->
+    <form
+      *ngIf="loginForm; else loadingForm"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="login-form"
+      novalidate
+      aria-labelledby="login-title">
+
+      <!-- CAMPO CORREO -->
+      <div class="form-group">
+        <label for="correo" class="form-label">
+          <i class="fas fa-envelope label-icon" aria-hidden="true"></i>
+          Correo Electrónico
+          <span class="required-asterisk" aria-label="Campo requerido">*</span>
+        </label>
+
+        <div class="input-container">
+          <input
+            id="correo"
+            type="email"
+            formControlName="correo"
+            (input)="onFieldChange('correo')"
+            (blur)="onFieldBlur('correo')"
+            class="form-input"
+            [class.error]="hasFieldError('correo')"
+            [class.success]="isFieldValid('correo')"
+            [class.touched]="isFieldTouched('correo')"
+            placeholder="Ej: usuario@colegio.edu"
+            autocomplete="email"
+            spellcheck="false"
+            [attr.aria-describedby]="hasFieldError('correo') ? 'correo-error correo-help' : 'correo-help'"
+            [attr.aria-invalid]="hasFieldError('correo')"
+            [attr.aria-required]="true">
+
+          <!-- ICONOS DE ESTADO -->
+          <div class="input-status">
+            <i *ngIf="isFieldValid('correo')"
+               class="fas fa-check-circle success-icon"
+               aria-hidden="true"
+               title="Correo válido"></i>
+            <i *ngIf="hasFieldError('correo')"
+               class="fas fa-exclamation-circle error-icon"
+               aria-hidden="true"
+               title="Error en el correo"></i>
+          </div>
+        </div>
+
+        <!-- AYUDA CONTEXTUAL -->
+        <div id="correo-help" class="field-help" *ngIf="!hasFieldError('correo') && !isFieldValid('correo')">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          Ingresa tu correo electrónico institucional
+        </div>
+
+        <!-- MENSAJE DE ERROR -->
+        <div *ngIf="hasFieldError('correo')"
+             class="error-message"
+             id="correo-error"
+             role="alert"
+             aria-live="polite">
+          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+          {{ getFieldError('correo') }}
+        </div>
+      </div>
+
+      <!-- CAMPO CONTRASEÑA -->
+      <div class="form-group">
+        <label for="password" class="form-label">
+          <i class="fas fa-lock label-icon" aria-hidden="true"></i>
+          Contraseña
+          <span class="required-asterisk" aria-label="Campo requerido">*</span>
+        </label>
+
+        <div class="input-container">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            (input)="onFieldChange('password')"
+            (blur)="onFieldBlur('password')"
+            class="form-input password-input"
+            [class.error]="hasFieldError('password')"
+            [class.success]="isFieldValid('password')"
+            [class.touched]="isFieldTouched('password')"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+            [attr.aria-describedby]="hasFieldError('password') ? 'password-error password-help' : 'password-help'"
+            [attr.aria-invalid]="hasFieldError('password')"
+            [attr.aria-required]="true">
+
+          <!-- TOGGLE PASSWORD VISIBILITY -->
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            [attr.title]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            tabindex="0">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" aria-hidden="true"></i>
+          </button>
+
+          <!-- ICONOS DE ESTADO -->
+          <div class="input-status">
+            <i *ngIf="isFieldValid('password')"
+               class="fas fa-check-circle success-icon"
+               aria-hidden="true"
+               title="Contraseña válida"></i>
+            <i *ngIf="hasFieldError('password')"
+               class="fas fa-exclamation-circle error-icon"
+               aria-hidden="true"
+               title="Error en la contraseña"></i>
+          </div>
+        </div>
+
+        <!-- AYUDA CONTEXTUAL -->
+        <div id="password-help" class="field-help" *ngIf="!hasFieldError('password') && !isFieldValid('password')">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          Mínimo 6 caracteres: 1 mayúscula, 1 minúscula, 4 números
+        </div>
+
+        <!-- MENSAJE DE ERROR -->
+        <div *ngIf="hasFieldError('password')"
+             class="error-message"
+             id="password-error"
+             role="alert"
+             aria-live="polite">
+          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+          {{ getFieldError('password') }}
+        </div>
+      </div>
+
+      <!-- ALERTA DE ERROR GENERAL -->
+      <div *ngIf="loginError"
+           class="alert alert-error"
+           role="alert"
+           id="login-error"
+           aria-live="assertive">
+        <div class="alert-content">
+          <i class="fas fa-exclamation-circle alert-icon" aria-hidden="true"></i>
+          <div class="alert-text">
+            <strong>Error de autenticación</strong>
+            <span>{{ loginError }}</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="alert-close"
+          (click)="clearError()"
+          aria-label="Cerrar mensaje de error"
+          title="Cerrar mensaje">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- BOTÓN DE ENVÍO -->
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="loading || !isFormValid"
+        [class.loading]="loading"
+        [attr.aria-describedby]="loginError ? 'login-error' : null">
+
+        <span *ngIf="!loading" class="btn-content">
+          <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+          <span>Iniciar Sesión</span>
+        </span>
+
+        <span *ngIf="loading" class="btn-content">
+          <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+          <span>Iniciando sesión...</span>
+        </span>
+      </button>
+
+      <!-- INDICADOR DE PROGRESO DE VALIDACIÓN -->
+      <div class="form-progress" *ngIf="submitted && !loading">
+        <div class="progress-bar">
+          <div class="progress-fill"
+               [style.width.%]="getFormProgress()"
+               [class.complete]="isFormValid">
+          </div>
+        </div>
+        <span class="progress-text">
+          {{ getFormProgress() }}% completado
+        </span>
+      </div>
+
+      <!-- ENLACES ADICIONALES -->
+      <div class="form-links">
+        <button
+          type="button"
+          (click)="goToForgotPassword()"
+          class="link link-forgot"
+          [disabled]="loading">
+          <i class="fas fa-question-circle" aria-hidden="true"></i>
+          <span>¿Olvidaste tu contraseña?</span>
+        </button>
+
+        <div class="divider" aria-hidden="true">
+          <span>o</span>
+        </div>
+
+        <button
+          type="button"
+          (click)="goToRegister()"
+          class="link link-register"
+          [disabled]="loading">
+          <i class="fas fa-user-plus" aria-hidden="true"></i>
+          <span>Crear nueva cuenta</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- TEMPLATE DE CARGA DE FORMULARIO -->
+    <ng-template #loadingForm>
+      <div class="loading-form" role="status" aria-label="Cargando formulario">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="loading-text">Preparando formulario...</p>
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- FOOTER FINAL LIMPIO -->
+    <div class="login-footer">
+      <p class="footer-text">
+        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+        Sistema de Gestión Educativa &copy; 2025
+      </p>
+      <p class="footer-subtitle">
+        Plataforma segura para la gestión educativa
+      </p>
+    </div>
+  </div>
+
+  <!-- PANEL DE INFORMACIÓN LATERAL -->
+  <div class="info-panel" *ngIf="!loading" [@slideIn]>
+    <div class="info-content">
+      <div class="info-header">
+        <i class="fas fa-graduation-cap info-icon" aria-hidden="true"></i>
+        <h3>Bienvenido al Sistema</h3>
+      </div>
+
+      <p class="info-description">
+        Plataforma integral de gestión educativa con herramientas avanzadas para la administración escolar.
+      </p>
+
+      <ul class="feature-list" role="list">
+        <li class="feature-item" role="listitem">
+          <i class="fas fa-users feature-icon" aria-hidden="true"></i>
+          <div class="feature-text">
+            <strong>Gestión de Usuarios</strong>
+            <span>Administra estudiantes, docentes y personal</span>
+          </div>
+        </li>
+        <li class="feature-item" role="listitem">
+          <i class="fas fa-school feature-icon" aria-hidden="true"></i>
+          <div class="feature-text">
+            <strong>Administración Escolar</strong>
+            <span>Control completo de la institución</span>
+          </div>
+        </li>
+        <li class="feature-item" role="listitem">
+          <i class="fas fa-chart-line feature-icon" aria-hidden="true"></i>
+          <div class="feature-text">
+            <strong>Reportes y Analytics</strong>
+            <span>Estadísticas y métricas en tiempo real</span>
+          </div>
+        </li>
+        <li class="feature-item" role="listitem">
+          <i class="fas fa-cogs feature-icon" aria-hidden="true"></i>
+          <div class="feature-text">
+            <strong>Configuración Avanzada</strong>
+            <span>Personalización completa del sistema</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="info-footer">
+        <div class="version-info">
+          <i class="fas fa-code-branch" aria-hidden="true"></i>
+          <span>Versión 3.0.1</span>
+        </div>
+        <div class="support-info">
+          <i class="fas fa-headset" aria-hidden="true"></i>
+          <span>Soporte 24/7</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAY DE FONDO -->
+  <div class="background-overlay" aria-hidden="true"></div>
+</div>
