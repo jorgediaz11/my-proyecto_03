@@ -7,7 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';   // Importa MatTabsModule aquí
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
+import { HttpClientModule, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http'; // Importa HttpClientModule
 import { FormsModule } from '@angular/forms'; // <-- Agrega esto
 
 // Inicio Principal
@@ -37,6 +37,8 @@ import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-famil
 // Otros Import
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import loggingInterceptor from './interceptors/logging,interceptor';
+import authInterceptor from './interceptors/auth,interceptor';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     RouterModule.forRoot(routes)
   ],
   providers: [
-    provideAnimationsAsync()  // Proveedor para animaciones asincrónicas
+    provideAnimationsAsync(),  // Proveedor para animaciones asincrónicas
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([loggingInterceptor, authInterceptor]),
+    )
   ],
   bootstrap: [AppComponent]   // Componente raíz de la aplicación
 })

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // Importar el módulo de enrutamiento
 // @Injectable({
@@ -19,7 +20,8 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'https://consolacentral.onrender.com/auth/signin';
+  private baseUrl = environment.apiUrl;
+  private apiUrl = `${this.baseUrl}/auth/signin`;
 
   constructor(private http: HttpClient) {}  // Constructor del servicio de autenticación
   // Método para iniciar sesión

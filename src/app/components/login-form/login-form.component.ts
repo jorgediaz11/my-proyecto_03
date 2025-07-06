@@ -44,7 +44,7 @@ export class LoginFormComponent {
           localStorage.setItem('access_token', response.access_token);
           this.loginError = 'LOGIN EXITOSO';
           // Redirige si quieres
-          // this.router.navigate(['/opciones']);
+          this.router.navigate(['/opciones']);
         } else {
           this.loginError = 'Respuesta inesperada del servidor';
         }
