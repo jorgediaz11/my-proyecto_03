@@ -1,0 +1,409 @@
+<!-- Docentes Component HTML -->
+<div class="docentes-container">
+  <h2>Lista de Docentes</h2>
+
+  <!-- Pestañas -->
+  <div class="mb-4 border-b border-gray-200 h-[24%]">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+      <!-- Pestaña 1: Tabla de Docentes -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'tabla' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'tabla'"
+          type="button"
+          role="tab"
+        >
+          Tabla de Docentes
+        </button>
+      </li>
+      <!-- Pestaña 2: Nuevo Docentes -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'nuevo' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'nuevo'"
+          type="button"
+          role="tab"
+        >
+          Nuevo Docente
+        </button>
+      </li>
+      <!-- Pestaña 3: Avanzado -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'avanzado' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'avanzado'"
+          type="button"
+          role="tab"
+        >
+          Avanzado
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Panel: Tabla de Docentes -->
+  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="h-[60%] overflow-auto">
+    <!-- Filtro (opcional, puedes quitar si no lo usas) -->
+    <div class="filter-container mb-4 flex flex-wrap items-center gap-4">
+      <div class="filter-input">
+        <label for="search">Buscar Docente:</label>
+        <input
+          id="search"
+          type="text"
+          [(ngModel)]="searchUser"
+          (input)="filterDocentes()"
+          placeholder="Ingrese el nombre del Docente"
+          class="border rounded px-2 py-1"
+        />
+      </div>
+
+      <!-- Botón para crear un nuevo registro -->
+      <button class="create-button" (click)="createDocente()">Nuevo Docente</button>
+    </div>
+
+    <!-- Panel: Tabla de Docentes -->
+    <!-- Tabla -->
+    <!-- <table class="colegios-table w-full text-left border"> -->
+    <table class="docentes-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let docente of paginatedDocentes">
+          <td>{{ docente.id }}</td>
+          <td>{{ docente.nombres }}</td>
+          <td>{{ docente.apellidos }}</td>
+          <td>{{ docente.correo }}</td>
+          <td>{{ docente.telefono }}</td>
+
+          <td>
+            <!-- Ícono para Ver -->
+            <i class="fas fa-eye action-icon" title="Detalles" (click)="viewDocente(docente.id)"></i>
+            <!-- Ícono para Editar -->
+            <i class="fas fa-edit action-icon" title="Editar" (click)="editDocente(docente.id)"></i>
+            <!-- Ícono para Eliminar -->
+            <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteDocente(docente.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination">
+      <button
+        *ngFor="let page of getTotalPages(); let i = index"
+        [class.active]="currentPage === i + 1"
+        (click)="changePage(i + 1)"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Panel: Nuevo Docente -->
+  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <!-- <h3 class="text-lg font-bold mb-4 border-2 border-blue-400 p-2">Nuevo Docente</h3> -->
+    <form [formGroup]="docenteForm" (ngSubmit)="saveDocente()" class="space-y-6">
+
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold text-gray-700">Datos del Docente</h2>
+
+        <!-- Usuario y Perfil a la izquierda, Imagen a la derecha -->
+        <div class="flex flex-col md:flex-row gap-4 mb-4">
+          <!-- Subsección izquierda: Usuario y Perfil -->
+          <div class="flex-1 flex flex-col gap-4">
+            <!-- Usuario -->
+            <div>
+              <label for="usuario" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+              <input
+                type="text"
+                id="usuario"
+                formControlName="usuario"
+                placeholder="Usuario"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-300]="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched">
+              <div *ngIf="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched" class="text-red-500 text-sm mt-1">
+                Este campo es requerido
+              </div>
+            </div>
+            <!-- Perfil -->
+            <div>
+              <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Perfil</label>
+              <select
+                id="perfil"
+                formControlName="perfil"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-300]="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched">
+                <!-- <option value="" disabled>Selecciona un Perfil</option> -->
+                <!-- <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{perfil.label}}</option> -->
+                <option *ngFor="let perfil of perfiles; let i = index" [value]="perfil.value" [selected]="i === 0">{{perfil.label}}</option>
+              </select>
+
+              <div *ngIf="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched" class="text-red-500 text-sm mt-1">
+                Por favor selecciona un Perfil
+              </div>
+            </div>
+          </div>
+          <!-- Subsección derecha: Solo imagen -->
+          <div class="flex flex-col justify-center items-center md:w-1/3 w-full">
+            <!-- <img [src]="userImgUrl || 'https://via.placeholder.com/80x80?text=User'" alt="Imagen Usuario" class="w-24 h-24 object-cover rounded-full border" /> -->
+            <img src="/assets/images/user_docente.png" alt="Imagen Usuario" class="w-40 h-40 object-cover rounded-full border" />
+          </div>
+        </div>
+
+        <!-- Subir imagen de usuario (fuera del bloque de imagen) -->
+        <!-- <div class="mb-4">
+          <label for="userImg" class="block text-sm font-medium text-gray-700 mb-1">Cambiar Imagen:</label>
+          <input id="userImg" type="file" (change)="onUserImgChange($event)" class="w-full border rounded px-3 py-2" />
+        </div> -->
+
+        <!-- Nombres y Apellidos en la misma línea -->
+        <div class="flex flex-wrap -mx-2">
+          <div class="w-full md:w-1/2 px-2">
+            <label for="nombres" class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
+            <input
+              type="text"
+              id="nombres"
+              formControlName="nombres"
+              placeholder="Nombres"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-300]="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched">
+            <div *ngIf="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched" class="text-red-500 text-sm mt-1">
+              Este campo es requerido
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 px-2">
+            <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+            <div class="relative rounded-md shadow-sm">
+              <input
+                type="text"
+                id="apellidos"
+                formControlName="apellidos"
+                placeholder="Apellidos"
+                class="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-300]="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched">
+            </div>
+            <div *ngIf="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched" class="text-red-500 text-sm mt-1">
+              Este campo es requerido
+            </div>
+          </div>
+        </div>
+
+        <!-- Correo -->
+        <div>
+          <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo del Usuario</label>
+          <input
+            type="email"
+            id="correo"
+            formControlName="correo"
+            placeholder="ingrese el correo del usuario"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched">
+          <div *ngIf="usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+            El correo es obligatorio
+          </div>
+          <div *ngIf="usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched" class="text-red-500 text-sm mt-1">
+            Ingresa un correo válido
+          </div>
+        </div>
+
+        <!-- Sección Descripción -->
+        <div>
+          <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            placeholder="Escribe aquí una descripción"
+            rows="4"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [class.border-red-300]="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched"></textarea>
+          <div *ngIf="usuarioForm.get('descripcion')?.invalid && usuarioForm.get('descripcion')?.touched" class="text-red-500 text-sm mt-1">
+            Este campo es requerido
+          </div>
+        </div>
+
+        <!-- Botón de enviar -->
+        <div class="pt-4">
+          <button
+            type="submit"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            [disabled]="usuarioForm.invalid">
+            Añadir Usuario
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+    </div>
+  </div>
+
+  <!-- Panel: Nuevo Colegio | Avanzado -->
+  <div *ngIf="activeTab === 'avanzado'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="max-w-5xl mx-auto px-2 py-6 bg-white rounded-lg shadow-md">
+      <!-- <h3 class="text-lg font-bold mb-4 border-2 border-blue-400 p-2">Nuevo Colegio</h3> -->
+      <!-- Panel: Avanzado (actualiza solo el contenido del formulario avanzado) -->
+      <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()" class="space-y-6">
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold text-gray-700 text-center">Datos Avanzados del Colegio</h2>
+
+          <!-- 1ra línea: Departamento, Provincia y Distrito -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="departamento" class="block mb-1">Departamento:</label>
+              <select id="departamento" formControlName="departamento" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let dep of departamentos" [value]="dep">{{dep}}</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="provincia" class="block mb-1">Provincia:</label>
+              <select id="provincia" formControlName="provincia" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let prov of provincias" [value]="prov">{{prov}}</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="distrito" class="block mb-1">Distrito:</label>
+              <select id="distrito" formControlName="distrito" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let dist of distritos" [value]="dist">{{dist}}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2da línea: Niveles (multi), Turnos (multi), Fundación (fecha) -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="niveles" class="block mb-1">Niveles:</label>
+              <select id="niveles" formControlName="niveles" class="w-full border rounded px-3 py-2" multiple size="3">
+                <!-- <option *ngFor="let nivel of niveles" [value]="nivel">{{nivel}}</option> -->
+                <option value="Inicial">Inicial</option>
+                <option value="Primaria">Primaria</option>
+                <option value="Secundaria">Secundaria</option>
+              </select>
+              <small class="text-gray-500">Ctrl+Click para seleccionar varios</small>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="turnos" class="block mb-1">Turnos:</label>
+              <select id="turnos" formControlName="turnos" class="w-full border rounded px-3 py-2" multiple size="3">
+                <!-- <option *ngFor="let turno of turnos" [value]="turno">{{turno}}</option> -->
+                <option value="Mañana">Mañana</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noche">Noche</option>
+              </select>
+              <small class="text-gray-500">Ctrl+Click para seleccionar varios</small>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="fundacion" class="block mb-1">Fundación:</label>
+              <input id="fundacion" formControlName="fundacion" type="date" class="w-full border rounded px-3 py-2" />
+            </div>
+          </div>
+
+          <!-- 3ra línea: Aforo máximo y Estado -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="aforo" class="block mb-1">Aforo máximo:</label>
+              <input id="aforo" formControlName="aforo" type="number" placeholder="0" min="0" class="w-full border rounded px-3 py-2" />
+              <div *ngIf="colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid" class="text-red-500 text-xs mt-1">
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['required']">El aforo es obligatorio.</span>
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['pattern']">Solo se permiten números.</span>
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0.</span>
+              </div>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="estado" class="block mb-1">Estado:</label>
+              <select id="estado" formControlName="estado" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]"></div>
+          </div>
+
+          <!-- 4ta línea: Observaciones -->
+          <div class="mb-4">
+            <label for="observaciones" class="block mb-1">Observaciones:</label>
+            <textarea id="observaciones" formControlName="observaciones" rows="3" placeholder="Observaciones" class="w-full border rounded px-3 py-2"></textarea>
+          </div>
+
+          <!-- Botones centrados -->
+          <div class="flex gap-2 justify-center">
+            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
+            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
+            <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Fin del contenedor de Docentes -->
+
+<!--
+<<Campos básicos:>>
+ID (autogenerado)
+Nombres (requerido)
+Apellidos (requerido)
+DNI/Identificación (requerido)
+Fecha de nacimiento
+Género (dropdown)
+Foto/perfil
+Dirección
+Teléfono
+Correo electrónico (validado)
+Estado (Activo/Inactivo)
+<<Campos profesionales:>> 03
+Especialidad (dropdown)
+Grados académicos
+Años de experiencia
+Cursos asignados (relación múltiple)
+Horario disponible
+Tipo de contrato
+Fecha de contratación
+-->

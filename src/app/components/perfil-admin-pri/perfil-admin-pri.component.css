@@ -1,0 +1,216 @@
+
+h2 {
+    text-align: center;
+    color: #333;
+  }
+
+p {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+li {
+  margin: 10px 0;
+}
+
+a {
+  color: #202020;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+a:hover {
+  text-decoration: underline;
+
+}
+
+.link-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-login {
+  display: inline-block;
+  min-width: 60px;
+  font-size: 16px;
+  color: #4EAD4F; /* Fondo verde */
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.back-to-login:hover {
+  text-decoration: underline;
+}
+
+.login-logo {
+  width: 250px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-bottom: 20px;
+  /* border-style:outset; */
+}
+
+/* Header */
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+.login-logo {
+  width: 150px; /* Incrementa el tamaño en un 50% (antes era 100px) */
+  height: auto; /* Mantiene la proporción del logo */
+  margin-bottom: 20px;
+}
+
+.login-header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+/* Footer */
+.login-footer {
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+/* Contenedor principal */
+.opciones-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 8px;
+  background-color: white; /* Fondo claro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenido principal */
+.opciones-content {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilo para las celdas de la tabla */
+.options-table td {
+  text-align: left; /* Alinea el texto a la izquierda */
+  padding: 8px; /* Agrega un poco de espacio interno */
+}
+
+.options-table th {
+  text-align: left; /* Alinea los encabezados a la izquierda */
+  padding: 8px; /* Agrega un poco de espacio interno */
+}
+
+.opciones-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.modern-table {
+  width: 60%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modern-table th,
+.modern-table td {
+  padding: 12px 10px;
+  text-align: left;
+}
+
+.modern-table th {
+  background-color: #4caf50;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  font-weight: bold;
+}
+
+.modern-table tr:nth-child(even) {
+  background-color: #F3FEF5;  /* Fondo claro */
+}
+
+.modern-table tr:hover {
+  background-color: #f1f1f1;  /* Fondo gris claro al pasar el cursor */
+}
+
+.action-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #4caf50;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
+
+.empty-space {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-space img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.login-link {
+  display: inline-block;
+  min-width: 60px;
+  font-size: 16px;
+  color: #4EAD4F; /* Fondo verde */
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.login-link:hover, .login-link:focus {
+  background: #e9ecef;  /* Fondo gris claro */
+  color: #145c32; /* Verde más oscuro */
+}

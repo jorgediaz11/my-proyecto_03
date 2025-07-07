@@ -1,0 +1,8 @@
+/* --- Estilos Generales de Texto --- */
+h2 {
+  color: #28a745; /* Color verde */
+}
+
+label {
+  font-weight: bold;  /* Negrita */
+}

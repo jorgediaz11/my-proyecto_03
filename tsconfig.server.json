@@ -1,0 +1,15 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. 003 */
+{
+  "extends": "./tsconfig.json", // Extends the base TypeScript configuration
+  "compilerOptions": {       // Compiler options for the server-side TypeScript configuration
+    "outDir": "./out-tsc/server", // The output directory for the compiled files
+    "target": "es2016", // Specifies the ECMAScript target version
+    "types": [] // An empty array to avoid errors in IDEs
+  },
+  "files": [
+    "src/main.server.ts"  // The main entry point for server-side rendering
+  ],
+  "angularCompilerOptions": {
+    "entryModule": "src/app/app.server.module#AppServerModule"  // The entry module for server-side rendering
+  }
+}

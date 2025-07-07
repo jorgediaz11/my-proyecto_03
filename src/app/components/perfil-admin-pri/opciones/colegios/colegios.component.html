@@ -1,0 +1,338 @@
+<!-- Colegios Component HTML -->
+<div class="colegios-container p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2>Lista de Colegios</h2>
+
+  <!-- Pestañas -->
+  <div class="mb-4 border-b border-gray-200">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+      <!-- Pestaña 1: Tabla de Colegios -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'tabla' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'tabla'"
+          type="button"
+          role="tab"
+        >
+          Tabla de Colegios
+        </button>
+      </li>
+      <!-- Pestaña 2: Nuevo Colegio -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'nuevo' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'nuevo'"
+          type="button"
+          role="tab"
+        >
+          Nuevo Colegio
+        </button>
+      </li>
+      <!-- Pestaña 3: Avanzado -->
+      <li class="mr-2" role="presentation">
+        <button
+          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
+          [ngStyle]="activeTab === 'avanzado' ? {
+            'background-color': '#f6a93e',
+            'color': '#fff',
+            'border-color': '#f6a93e',
+            'font-weight': 'bold'
+          } : {
+            'background-color': '#fde9a2',
+            'color': '#b48a2c',
+            'border-color': '#fde9a2'
+          }"
+          (click)="activeTab = 'avanzado'"
+          type="button"
+          role="tab"
+        >
+          Avanzado
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Panel: Tabla de Colegios -->
+  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="h-[60%] overflow-auto">
+    <!-- Filtro (opcional, puedes quitar si no lo usas) -->
+    <div class="filter-container mb-4 flex flex-wrap items-center gap-4">
+      <div class="filter-input">
+        <label for="search">Buscar Colegio:</label>
+        <input
+          id="search"
+          type="text"
+          [(ngModel)]="searchUser"
+          (input)="filterColegios()"
+          placeholder="Ingrese el nombre del colegio"
+          class="border rounded px-2 py-1"
+        />
+      </div>
+
+      <!-- Botón para crear un nuevo registro -->
+      <button class="create-button" (click)="activeTab = 'nuevo'">Nuevo Colegio</button>
+    </div>
+
+    <!-- Panel: Tabla de Colegios -->
+    <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg overflow-hidden">
+      <thead class="bg-yellow-200">
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Nombre</th>
+          <th class="px-4 py-2">Dirección</th>
+          <th class="px-4 py-2">Teléfono</th>
+          <th class="px-4 py-2">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colegio of paginatedColegios" class="hover:bg-yellow-50 transition">
+          <td class="px-4 py-2">{{ colegio.id }}</td>
+          <td class="px-4 py-2">{{ colegio.nombre }}</td>
+          <td class="px-4 py-2">{{ colegio.direccion }}</td>
+          <td class="px-4 py-2">{{ colegio.telefono }}</td>
+          <td class="px-4 py-2 flex gap-2">
+            <i class="fas fa-eye text-green-600 cursor-pointer hover:scale-110 transition" title="Detalles" (click)="viewColegio(colegio.id); $event.stopPropagation()"></i>
+            <i class="fas fa-edit text-yellow-600 cursor-pointer hover:scale-110 transition" title="Editar" (click)="editColegio(colegio.id)"></i>
+            <i class="fas fa-trash text-red-600 cursor-pointer hover:scale-110 transition" title="Eliminar" (click)="deleteColegio(colegio.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination mt-4 flex gap-2 justify-center">
+      <button
+        *ngFor="let page of getTotalPages(); let i = index"
+        (click)="changePage(i + 1)"
+        class="px-3 py-1 rounded border border-gray-300 transition"
+        [ngClass]="{
+          'bg-green-600 text-white font-bold shadow': currentPage === i + 1,
+          'bg-white text-gray-700 hover:bg-yellow-100': currentPage !== i + 1
+        }"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Panel: Nuevo Colegio -->
+  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <!-- <h3 class="text-lg font-bold mb-4 border-2 border-blue-400 p-2">Nuevo Colegio</h3> -->
+      <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()" class="space-y-6">
+
+        <!-- Datos del Nuevo Colegio -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold text-gray-700">Datos del Colegio</h2>
+
+          <!-- Logo y cambio de logo -->
+          <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
+            <div class="flex flex-col items-center">
+              <img src="/assets/images/logo-sanremo.png" alt="Logo Colegio San Remo" class="w-32 h-20 object-contain border rounded mb-2">
+              <!-- <img [src]="logoUrl || 'https://via.placeholder.com/120x80?text=Logo'" alt="Logo Colegio" class="w-32 h-20 object-contain border rounded mb-2"> -->
+              <span class="text-xs text-gray-500">Logo actual</span>
+            </div>
+            <div class="flex-1">
+              <label for="logo" class="block mb-1">Cambiar Logo:</label>
+              <input id="logo" type="file" (change)="onLogoChange($event)" class="w-full border rounded px-3 py-2" />
+            </div>
+          </div>
+
+          <!-- Nombre -->
+          <div class="mb-4">
+            <label for="nombre" class="block mb-1">Nombre:</label>
+            <input id="nombre" formControlName="nombre" type="text" placeholder="Ingrese Nombre" class="w-full border rounded px-3 py-2" />
+          </div>
+          <!-- Dirección -->
+          <div class="mb-4">
+            <label for="direccion" class="block mb-1">Dirección:</label>
+            <input id="direccion" formControlName="direccion" type="text" placeholder="Ingrese Dirección" class="w-full border rounded px-3 py-2" />
+          </div>
+          <!-- Página web y Teléfono en la misma línea -->
+          <div class="flex flex-wrap gap-4 mb-4">
+            <div class="flex-1 min-w-[220px] max-w-[500px]">
+              <label for="website" class="block mb-1">Página Web:</label>
+              <input id="website" formControlName="website" type="url" placeholder="www.dominio.com" class="w-full border rounded px-3 py-2" />
+            </div>
+            <div class="flex-1 min-w-[180px] max-w-[340px]">
+              <label for="telefono" class="block mb-1">Teléfono:</label>
+              <input id="telefono" formControlName="telefono" type="text" placeholder="123-456-7890" class="w-full border rounded px-3 py-2" />
+            </div>
+          </div>
+          <!-- Correo electrónico -->
+          <div class="mb-4">
+            <label for="correo" class="block mb-1">Correo Electrónico:</label>
+            <input id="correo" formControlName="correo" type="email" placeholder="Ingrese Correo" class="w-full border rounded px-3 py-2" />
+          </div>
+
+          <!-- Botones -->
+          <div class="flex gap-2">
+            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Guardar</button>
+            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 transition">Limpiar</button>
+            <button
+              type="button"
+              (click)="activeTab = 'tabla'"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+              Cancelar
+            </button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Panel: Nuevo Colegio | Avanzado -->
+  <div *ngIf="activeTab === 'avanzado'" role="tabpanel" class="h-[60%] overflow-auto">
+    <div class="max-w-5xl mx-auto px-2 py-6 bg-white rounded-lg shadow-md">
+      <!-- <h3 class="text-lg font-bold mb-4 border-2 border-blue-400 p-2">Nuevo Colegio</h3> -->
+      <!-- Panel: Avanzado (actualiza solo el contenido del formulario avanzado) -->
+      <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()" class="space-y-6">
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold text-gray-700 text-center">Datos Avanzados del Colegio</h2>
+
+          <!-- 1ra línea: Departamento, Provincia y Distrito -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="departamento" class="block mb-1">Departamento:</label>
+              <select id="departamento" formControlName="departamento" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let dep of departamentos" [value]="dep">{{dep}}</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="provincia" class="block mb-1">Provincia:</label>
+              <select id="provincia" formControlName="provincia" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let prov of provincias" [value]="prov">{{prov}}</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="distrito" class="block mb-1">Distrito:</label>
+              <select id="distrito" formControlName="distrito" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option *ngFor="let dist of distritos" [value]="dist">{{dist}}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2da línea: Niveles (multi), Turnos (multi), Fundación (fecha) -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="niveles" class="block mb-1">Niveles:</label>
+              <select id="niveles" formControlName="niveles" class="w-full border rounded px-3 py-2" multiple size="3">
+                <!-- <option *ngFor="let nivel of niveles" [value]="nivel">{{nivel}}</option> -->
+                <option value="Inicial">Inicial</option>
+                <option value="Primaria">Primaria</option>
+                <option value="Secundaria">Secundaria</option>
+              </select>
+              <small class="text-gray-500">Ctrl+Click para seleccionar varios</small>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="turnos" class="block mb-1">Turnos:</label>
+              <select id="turnos" formControlName="turnos" class="w-full border rounded px-3 py-2" multiple size="3">
+                <!-- <option *ngFor="let turno of turnos" [value]="turno">{{turno}}</option> -->
+                <option value="Mañana">Mañana</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noche">Noche</option>
+              </select>
+              <small class="text-gray-500">Ctrl+Click para seleccionar varios</small>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="fundacion" class="block mb-1">Fundación:</label>
+              <input id="fundacion" formControlName="fundacion" type="date" class="w-full border rounded px-3 py-2" />
+            </div>
+          </div>
+
+          <!-- 3ra línea: Aforo máximo y Estado -->
+          <div class="flex flex-wrap gap-2 mb-4 justify-center">
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="aforo" class="block mb-1">Aforo máximo:</label>
+              <input id="aforo" formControlName="aforo" type="number" placeholder="0" min="0" class="w-full border rounded px-3 py-2" />
+              <div *ngIf="colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid" class="text-red-500 text-xs mt-1">
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['required']">El aforo es obligatorio.</span>
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['pattern']">Solo se permiten números.</span>
+                <span *ngIf="colegioForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0.</span>
+              </div>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]">
+              <label for="estado" class="block mb-1">Estado:</label>
+              <select id="estado" formControlName="estado" class="w-full border rounded px-3 py-2">
+                <option value="">Seleccione</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[220px] max-w-[340px]"></div>
+          </div>
+
+          <!-- 4ta línea: Observaciones -->
+          <div class="mb-4">
+            <label for="observaciones" class="block mb-1">Observaciones:</label>
+            <textarea id="observaciones" formControlName="observaciones" rows="3" placeholder="Observaciones" class="w-full border rounded px-3 py-2"></textarea>
+          </div>
+
+          <!-- Botones centrados -->
+          <div class="flex gap-2">
+            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
+            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
+            <button
+              type="button"
+              (click)="cancelCreate(); activeTab = 'tabla'"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Fin del contenedor de Colegios -->
+
+<!--
+Información general:
+ID (autogenerado)
+Nombre (requerido)
+Código modular (requerido)
+Dirección completa    OK
+Teléfono              OK
+Correo electrónico    OK
+Página web            OK
+Logo                  OK
+Director(a) (relación)
+Ubigeo:               OK
+Departamento
+Provincia
+Distrito
+Configuración académica:  OK
+Niveles educativos ofrecidos
+Turnos (mañana/tarde/noche)
+Aforo máximo
+Fecha de fundación
+Estado (Activo/Inactivo)
+-->

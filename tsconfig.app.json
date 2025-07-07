@@ -1,0 +1,23 @@
+//* To learn more about this file see: https://angular.io/config/tsconfig. 003 */
+{
+  "extends": "./tsconfig.json",     // Extends the base TypeScript configuration
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",      // The output directory for the compiled files
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "src/main.ts",                  // The main entry point for the application
+    "src/main.server.ts",           // The main entry point for server-side rendering
+    "server.ts"                     // The main entry point for the server
+  ],
+  "include": [
+    "src/**/*.d.ts",                // Included to prevent errors in IDEs
+    "src/**/*.ts",                  // Included to prevent errors in IDEs
+    "src/environments/**/*.ts"      // Included to prevent errors in IDEs
+  ],
+  "exclude": [
+    "src/main.server.ts"
+  ]
+}

@@ -1,0 +1,188 @@
+/* ============================== */
+/* Contenedor Principal           */
+/* ============================== */
+
+.login-registro-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #ddd; /* Borde fino */
+  border-radius: 8px;
+  background-color: #F3FEF5; /* Fondo claro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  text-align: center;
+}
+
+/* ============================== */
+/* Header                         */
+/* ============================== */
+
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+.login-header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.login-logo {
+  width: 250px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-bottom: 20px;
+  /* border-style:outset; */
+}
+
+/* ============================== */
+/* Contenido Principal            */
+/* ============================== */
+.login-registro-content {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Estilos para las etiquetas dentro del formulario */
+form label {
+  display: block; /* Asegura que cada etiqueta ocupe una línea completa */
+  text-align: left; /* Alinea el texto a la izquierda */
+  margin-bottom: 5px; /* Agrega un poco de espacio debajo de la etiqueta */
+  font-weight: bold; /* Resalta el texto de la etiqueta */
+  color: #555; /* Color del texto */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;  /* Color del texto */
+}
+
+input {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ccc; /* Borde fino */
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+/* Estilos para los botones */
+button {
+  padding: 10px 20px; /* Tamaño uniforme para ambos botones */
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
+
+/* Contenedor de los botones dentro del formulario */
+form button {
+  margin-right: 20px; /* Espacio de 20px entre los botones */
+}
+
+form button:last-child {
+  margin-right: 0; /* Elimina el margen derecho del último botón */
+}
+
+/* Estilo específico para el botón "Limpiar" */
+form button:nth-of-type(2) {  /* Apunta al segundo botón (Limpiar) */
+  background-color: #dc3545; /* Fondo rojo */
+  color: white; /* Texto blanco */
+  border: 1px solid #a71d2a;  /* Borde rojo oscuro */
+  /* Mantén otros estilos que quieras conservar */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* ============================== */
+/* Footer                         */
+/* ============================== */
+.login-footer {
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Borde fino */
+}
+
+/* ============================== */
+/* Enlace a otras opciones       */
+/* ============================== */
+.to-options {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #4EAD4F; /* Fondo verde */
+  color: white; /* Texto blanco */
+  text-decoration: none;
+  border: 2px solid #218838;  /* Borde verde */
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+}
+
+.to-options:hover {
+  background-color: #218838; /* Un tono más oscuro para el hover */
+  color: white; /* Color blanco al pasar el mouse */
+  text-decoration: none;    /* Elimina el subrayado al pasar el mouse */
+}
+
+/* ============================== */
+/* Estados de Error               */
+/* ============================== */
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+input.error,
+input.ng-invalid.ng-touched {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Spinner para loading */
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.125em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+.spinner-border-sm {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-width: 0.125em;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================== */

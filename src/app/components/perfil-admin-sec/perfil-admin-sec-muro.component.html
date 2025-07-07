@@ -1,0 +1,82 @@
+<h2>Bienvenido al Muro - Administrador Colegio</h2>
+<!-- <p>Este es el contenido predeterminado que se muestra al ingresar al perfil de administrador principal.</p> -->
+<!-- Contadores -->
+<div class="counters">
+  <div class="counter-item">
+    <h3>Colegios</h3>
+    <p>{{ totalColegios }}</p>
+  </div>
+  <div class="counter-item">
+    <h3>Profesores</h3>
+    <p>{{ totalProfesores }}</p>
+  </div>
+  <div class="counter-item">
+    <h3>Alumnos</h3>
+    <p>{{ totalAlumnos }}</p>
+  </div>
+  <div class="counter-item">
+    <h3>Cursos</h3>
+    <p>{{ totalCursos }}</p>
+  </div>
+</div>
+
+
+<!-- Gráfica -->
+<!-- Primera fila: 4 gráficos pequeños -->
+<div class="charts-row">
+  <div class="chart-small">
+    <canvas id="chartPrimariaBar"></canvas>
+    <div class="chart-label">Primaria - Barras</div>
+  </div>
+
+  <div class="chart-small">
+    <canvas id="chartPrimariaLine"></canvas>
+    <div class="chart-label">Primaria - Línea</div>
+  </div>
+
+  <div class="chart-small">
+    <canvas id="chartSecundariaBar"></canvas>
+    <div class="chart-label">Secundaria - Barras</div>
+  </div>
+
+  <div class="chart-small">
+    <canvas id="chartSecundariaLine"></canvas>
+    <div class="chart-label">Secundaria - Línea</div>
+  </div>
+</div>
+<!-- Segunda fila: 2 gráficos grandes -->
+<div class="charts-row">
+  <div class="chart-large">
+    <canvas id="chartPrimariaPie"></canvas>
+    <div class="chart-label">Primaria - Pie</div>
+  </div>
+
+  <div class="chart-large">
+    <canvas id="chartSecundariaPie"></canvas>
+    <div class="chart-label">Secundaria - Pie</div>
+  </div>
+</div>
+<!-- Fin Gráfica -->
+
+<!-- Gráfica -->
+<div class="contenedor-grid">
+  <div class="contenedor-item">
+    <img src="../assets/images/cursos.png" alt="Logo" class="login-logo" />
+    <a class="contenedor-title">CURSOS</a>
+  </div>
+
+  <div class="contenedor-item">
+    <img src="../assets/images/niveles.png" alt="Logo" class="login-logo" />
+    <a class="contenedor-title">NIVELES</a>
+  </div>
+
+  <div class="contenedor-item">
+    <img src="../assets/images/grados.png" alt="Logo" class="login-logo" />
+    <a class="contenedor-title">GRADOS</a>
+  </div>
+
+  <div class="contenedor-item">
+    <img src="../assets/images/secciones.png" alt="Logo" class="login-logo" />
+    <a class="contenedor-title">SECCIONES</a>
+  </div>
+</div>

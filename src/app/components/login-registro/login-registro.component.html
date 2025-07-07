@@ -1,0 +1,174 @@
+<section class="bg-gray-50 dark:bg-gray-600 min-h-screen flex flex-col justify-center items-center">
+
+  <!-- Capa central con 3 pisos -->
+  <div class="w-full max-w-4xl flex flex-col items-center">
+
+    <!-- Piso 1: Franja superior (mismo ancho que el piso 3) -->
+    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-t-lg flex items-center justify-end pr-4 text-white font-bold">
+      Eureka LMS
+    </div>
+
+    <!-- Piso 2: Contenido principal (login, línea, registro) -->
+    <div class="w-full bg-white flex flex-col md:flex-row shadow-lg">
+      <!-- Login -->
+      <div class="w-full md:w-1/2 flex flex-col justify-center p-8">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img class="w-32 h-auto min-w-[120px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
+        </a>
+        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Crear nueva cuenta</h2>
+
+        <!-- Formumario de Registro -->
+        <form (ngSubmit)="onSubmit()" [formGroup]="registroForm">
+          <!-- <h2>Crear una cuenta</h2> -->
+          <div class="form-group">
+            <label for="usuario">Usuario:</label>
+            <input
+              id="usuario"
+              formControlName="usuario"
+              type="text"
+              placeholder="Ingresa tu usuario"
+              [class.error]="getFieldError('usuario')"
+            />
+            <p *ngIf="getFieldError('usuario')" class="error-message">
+              {{ getFieldError('usuario') }}
+            </p>
+          </div>
+
+          <!-- Nombres y Apellidos en la misma línea -->
+          <div class="flex gap-4">
+            <div class="form-group w-1/2">
+              <label for="nombres">Nombres:</label>
+              <input
+                id="nombres"
+                formControlName="nombres"
+                type="text"
+                placeholder="Ingresar Nombres"
+                [class.error]="getFieldError('nombres')"
+              />
+              <p *ngIf="getFieldError('nombres')" class="error-message">
+                {{ getFieldError('nombres') }}
+              </p>
+            </div>
+            <div class="form-group w-1/2">
+              <label for="apellidos">Apellidos:</label>
+              <input
+                id="apellidos"
+                formControlName="apellidos"
+                type="text"
+                placeholder="Ingresar Apellidos"
+                [class.error]="getFieldError('apellidos')"
+              />
+              <p *ngIf="getFieldError('apellidos')" class="error-message">
+                {{ getFieldError('apellidos') }}
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo Electrónico:</label>
+            <input
+              id="email"
+              formControlName="email"
+              type="email"
+              placeholder="Ingresa tu correo"
+              [class.error]="getFieldError('email')"
+            />
+            <p *ngIf="getFieldError('email')" class="error-message">
+              {{ getFieldError('email') }}
+            </p>
+          </div>
+
+          <!-- Contraseñas en la misma línea -->
+          <div class="flex gap-4">
+            <div class="form-group w-1/2">
+              <label for="password">Ingrese Contraseña:</label>
+              <input
+                id="password"
+                formControlName="password"
+                type="password"
+                placeholder="Crea una contraseña"
+                [class.error]="getFieldError('password')"
+              />
+              <p *ngIf="getFieldError('password')" class="error-message">
+                {{ getFieldError('password') }}
+              </p>
+            </div>
+            <div class="form-group w-1/2">
+              <label for="password2">Repetir Contraseña:</label>
+              <input
+                id="password2"
+                formControlName="password2"
+                type="password"
+                placeholder="Confirma tu contraseña"
+                [class.error]="getFieldError('password2')"
+              />
+              <p *ngIf="getFieldError('password2')" class="error-message">
+                {{ getFieldError('password2') }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Botones Limpiar y Registrar, alineados horizontalmente -->
+          <div class="flex justify-center items-center gap-4 mt-4">
+            <button
+              type="button"
+              class="w-[30%] flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+              (click)="onReset()"
+              [disabled]="loading">
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              class="w-[60%] flex items-center justify-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="loading || !registroForm.valid"
+            >
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+              {{ loading ? 'Registrando...' : 'Registrar Usuario' }}
+            </button>
+          </div>
+
+          <!-- Mensaje de error general -->
+          <div *ngIf="registroError" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {{ registroError }}
+          </div>
+
+        </form>
+
+      </div>
+      <!-- Línea divisoria -->
+      <div class="w-px bg-gray-200 hidden md:block"></div>
+
+      <!-- Registro y accesos -->
+      <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
+        <div class="flex flex-col items-center w-full">
+          <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
+          <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">¿Nuevo usuario?</h2>
+          <p class="mb-2 text-gray-600 text-center mb-4">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
+          <div class="flex w-full gap-4">
+            <a routerLink="/opciones"
+              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+              Ir a Opciones
+            </a>
+            <a routerLink="/inicio"
+              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+              Ir a Inicio
+            </a>
+          </div>
+          <div class="w-full mt-2">
+            <a routerLink="/login"
+              class="block text-center px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow w-full">
+              Regresar al Login
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Piso 3: Franja inferior (mismo ancho que el piso 1) -->
+    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-b-lg flex items-center justify-center pr-4 text-white font-bold">
+      ©2025 Plataforma Educativa
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,600 @@
+/* ==========================================================================
+   LOGIN FORM - ESTILOS COMPLETOS Y MODERNOS
+   ========================================================================== */
+
+/* CONTENEDOR PRINCIPAL */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* TARJETA DE LOGIN */
+.login-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER DEL LOGIN */
+.login-header {
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  color: white;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.logo-container {
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  font-size: 3rem;
+  color: white;
+  opacity: 0.9;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
+}
+
+.login-subtitle {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* FORMULARIO */
+.login-form {
+  padding: 2rem 1.5rem 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.label-icon {
+  color: #4EAD4F;
+  font-size: 0.875rem;
+}
+
+/* CONTENEDOR DE INPUT */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.875rem 3rem 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #fafafa;
+  color: #374151;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4EAD4F;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
+  background-color: white;
+}
+
+.form-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  background-color: #fef2f2;
+}
+
+.form-input.success {
+  border-color: #10b981;
+  background-color: #f0fdf4;
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ICONOS DE ESTADO */
+.input-icons {
+  position: absolute;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.success-icon {
+  color: #10b981;
+  font-size: 0.875rem;
+}
+
+.error-icon {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+/* TOGGLE PASSWORD */
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  z-index: 10;
+}
+
+.password-toggle:hover {
+  color: #4EAD4F;
+  background-color: rgba(78, 173, 79, 0.1);
+}
+
+.password-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(78, 173, 79, 0.2);
+}
+
+/* MENSAJES DE ERROR */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+/* ALERTA GENERAL */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.alert-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+/* BOTÓN SUBMIT */
+.btn-submit {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(78, 173, 79, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 12px -1px rgba(78, 173, 79, 0.4);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-submit.loading {
+  pointer-events: none;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ENLACES */
+.form-links {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4EAD4F;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.link:hover {
+  color: #3d8b40;
+  background-color: rgba(78, 173, 79, 0.1);
+}
+
+.divider {
+  margin: 1rem 0;
+  position: relative;
+  text-align: center;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.divider span {
+  background-color: white;
+  color: #6b7280;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  position: relative;
+}
+
+/* FOOTER */
+.login-footer {
+  padding: 1rem 1.5rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.footer-text {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+/* PANEL DE INFORMACIÓN */
+.info-panel {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  width: 300px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  z-index: 0;
+  opacity: 0.95;
+}
+
+.info-content h3 {
+  color: #4EAD4F;
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.info-content p {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-list i {
+  color: #4EAD4F;
+  width: 1rem;
+}
+
+/* LOADING OVERLAY */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.loading-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #4EAD4F;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: #374151;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 0.5rem;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .info-panel {
+    display: none;
+  }
+
+  .login-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .login-form {
+    padding: 1.5rem 1rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0;
+  }
+
+  .login-card {
+    border-radius: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .form-input {
+    padding: 1rem 3rem 1rem 0.875rem;
+  }
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+
+.login-card {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HOVER EFFECTS */
+.form-input:hover {
+  border-color: #d1d5db;
+}
+
+.form-input:focus:hover {
+  border-color: #4EAD4F;
+}
+
+/* FOCUS STATES */
+.btn-submit:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.3);
+}
+
+.link:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(78, 173, 79, 0.2);
+}
+
+/* ==========================================================================
+   ESTILOS ADICIONALES PARA MODALES
+   ========================================================================== */
+
+/* ENLACES DEL FOOTER MEJORADOS */
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  margin-top: 0.5rem;
+}
+
+.footer-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  position: relative;
+}
+
+.footer-link:hover {
+  color: var(--primary-dark);
+  background-color: rgba(78, 173, 79, 0.1);
+  text-decoration: underline;
+}
+
+.footer-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(78, 173, 79, 0.3);
+}
+
+.separator {
+  color: var(--gray-400);
+  font-weight: 300;
+}
+
+/* PERSONALIZACIÓN DE SWEETALERT2 MODALES */
+:global(.privacy-modal),
+:global(.terms-modal) {
+  font-family: 'Inter', 'Segoe UI', sans-serif !important;
+}
+
+:global(.btn-confirm-privacy),
+:global(.btn-confirm-terms) {
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+:global(.btn-confirm-privacy):hover,
+:global(.btn-confirm-terms):hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(78, 173, 79, 0.3) !important;
+}
+
+/* RESPONSIVE PARA FOOTER */
+@media (max-width: 480px) {
+  .footer-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .footer-link {
+    display: block;
+    text-align: center;
+    padding: 0.5rem;
+  }
+}

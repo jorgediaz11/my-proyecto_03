@@ -1,0 +1,144 @@
+
+
+/* ==========================================================================
+   Íconos de Acción
+   ========================================================================== */
+
+.action-icon {
+  margin: 0 5px;
+  font-size: 1.2em;
+  color: #28a745;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  will-change: color;
+  backface-visibility: hidden;
+}
+
+.action-icon:hover {
+  color: #218838;
+}
+
+/* Opcional: Estilo para el tooltip (si no usas el atributo `title`) */
+.action-icon[title] {
+  position: relative;
+}
+
+.action-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.6em;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.action-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+  z-index: 10;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-container input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+}
+
+.filter-input label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-input input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+/* ==========================================================================
+   Botón de Crear Colegio
+   ========================================================================== */
+.create-button {
+  padding: 8px 15px;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
+
+/* ==========================================================================
+   Estilos Generales
+   ========================================================================== */
+h2 {
+  color: #28a745; /* Color verde */
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  /* padding: 10px; */
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}

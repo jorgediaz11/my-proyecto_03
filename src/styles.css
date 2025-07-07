@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos para el contenedor principal 002 */
+app-root {
+  width: 100%;  /* Ancho del Contenedor Principal */
+  /*max-width: 1200px;  /*Ancho del Contenedor Principal*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del contenedor */
+  /*padding: 20px;*/
+  background: white;  /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+}
+/* Estilos para el contenedor principal */
+body {
+  font-family: Arial, Roboto, "Helvetica Neue", sans-serif;;
+  margin: 0;                    /* Elimina el margen por defecto */
+  padding: 0;                   /* Elimina el margen y el padding por defecto */
+  display: flex;                /* Activa el diseño flexbox */
+  justify-content: center;      /* Centra horizontalmente */
+  align-items: center;          /* Centra horizontalmente */
+  height: 100vh;                /* Centra verticalmente */
+  background-color: #f4f4f9;  /* Color de fondo */
+}
+
+html, body {
+  height: 100%;                 /* Asegura que el contenedor ocupe toda la altura */
+  /* margin-top: 80px;  */            /* 56px navbar + 10px separación */
+}

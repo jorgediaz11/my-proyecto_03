@@ -1,0 +1,6 @@
+/* Style for the profile admin wall component */
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 300px !important;
+}

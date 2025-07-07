@@ -1,0 +1,71 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# 📝 ARCHIVOS DE DOCUMENTACIÓN DE DESARROLLO
+# Excluir documentación técnica generada durante el desarrollo
+AUTHENTICATION_STANDARDS.md
+CRUD_PASSWORD_FIX.md
+INTEGRATION_SUCCESS.md
+MIGRATION_GUIDE.md
+PASSWORD_SOLUTION_COMPLETE.md
+PASSWORD_VALIDATION_STRATEGY.md
+SECURITY_AUDIT_REPORT.md
+SECURITY_ISSUE_RESOLUTION.md
+SERVICES_STATUS.md
+STANDARD_SUMMARY.md
+TESTING_GUIDE.md
+VERIFICATION_COMPLETE.md
+GITHUB_UPLOAD_COMMANDS.md
+
+# 🔧 SCRIPTS DE DESARROLLO Y TESTING
+*.ps1
+*.sql
+SECURITY_TEST*.ps1
+github_upload_essential.sh
+GITIGNORE_DOCS_OPTIONAL.txt
+postgresql_rename_columns.sql
+
+# 📋 MANTENER ARCHIVOS IMPORTANTES
+# README.md - Documentación principal del proyecto (NO excluir)
+# package.json - Dependencias (NO excluir)
+# angular.json - Configuración Angular (NO excluir)

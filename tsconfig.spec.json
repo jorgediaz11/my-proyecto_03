@@ -1,0 +1,14 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. 002 */
+{
+  "extends": "./tsconfig.json", // Extends the base TypeScript configuration
+  "compilerOptions": {    // Compiler options for the test environment
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"         // Included to prevent errors in IDEs
+    ]
+  },
+  "include": [
+    "src/**/*.spec.ts",   // Included to prevent errors in IDEs
+    "src/**/*.d.ts"       //  Included to prevent errors in IDEs
+  ]
+}

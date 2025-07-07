@@ -1,0 +1,17 @@
+// Configuracion de TypeScript para el servidor 002
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {        // Se extiende la configuracion base de TypeScript
+    "outDir": "./dist/out-tsc/server",
+    "target": "ES2022",       // Se especifica la versión de ECMAScript a utilizar
+    "module": "CommonJS",     // Se especifica el módulo como CommonJS para compatibilidad con Node.js
+    "types": []               // Se especifica un arreglo vacío para evitar errores en IDEs
+  },
+  "files": [
+    "src/main.server.ts",     // Archivo principal del servidor
+    "server.ts"               // Archivo de entrada del servidor
+  ],
+  "angularCompilerOptions": { // Opciones del compilador de Angular
+    "entryModule": "src/app/app.server.module#AppServerModule"
+  }
+}

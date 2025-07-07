@@ -1,0 +1,136 @@
+<h2 class="text-2xl font-bold mb-6 text-center">Módulo de Reportes</h2>
+
+<!-- Filtros combinables -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Departamento</option>
+    <option>Lima</option>
+    <option>Arequipa</option>
+    <option>...</option>
+  </select>
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Provincia</option>
+    <option>Lima</option>
+    <option>Huaral</option>
+    <option>...</option>
+  </select>
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Distrito</option>
+    <option>Ate</option>
+    <option>San Juan de Lurigancho</option>
+    <option>...</option>
+  </select>
+  <!-- <select class="border rounded px-3 py-2">
+    <option selected disabled>Zona</option>
+    <option>Lima Este</option>
+    <option>Lima Norte</option>
+    <option>Lima Sur</option>
+  </select> -->
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Colegio</option>
+    <option>San Martín</option>
+    <option>Santa Rosa</option>
+    <option>...</option>
+  </select>
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Nivel</option>
+    <option>Inicial</option>
+    <option>Primaria</option>
+    <option>Secundaria</option>
+  </select>
+  <select class="border rounded px-3 py-2">
+    <option selected disabled>Curso</option>
+    <option>Matemática</option>
+    <option>Comunicación</option>
+    <option>...</option>
+  </select>
+  <!-- <select class="border rounded px-3 py-2">
+    <option selected disabled>Estudiante</option>
+    <option>Juan Pérez</option>
+    <option>María López</option>
+    <option>...</option>
+  </select> -->
+</div>
+
+<!-- Botones de exportar e importar -->
+<div class="flex flex-wrap gap-4 mb-8 justify-center">
+  <button class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+    <!-- Excel Icon (Heroicons) -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path d="M4 4h16v16H4V4z" fill="#fff"/>
+      <text x="7" y="17" font-size="10" fill="#22c55e" font-family="Arial">XLS</text>
+    </svg>
+    Exportar Excel
+  </button>
+  <button class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+    <!-- PDF Icon (Heroicons) -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <rect x="4" y="4" width="16" height="16" rx="2" fill="#fff"/>
+      <text x="7" y="17" font-size="10" fill="#dc2626" font-family="Arial">PDF</text>
+    </svg>
+    Exportar PDF
+  </button>
+  <button class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+    <!-- Word Icon (Heroicons) -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <rect x="4" y="4" width="16" height="16" rx="2" fill="#fff"/>
+      <text x="7" y="17" font-size="10" fill="#2563eb" font-family="Arial">DOC</text>
+    </svg>
+    Exportar Word
+  </button>
+  <button class="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
+    <!-- Import Icon (Heroicons) -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    Importar Datos
+  </button>
+</div>
+
+<!-- Contenedor de Tabla // Datos de ejemplo -->
+<div class="overflow-x-auto rounded-lg shadow">
+  <!-- Tabla de Reportes -->
+  <table class="min-w-full bg-white w-full">
+    <thead>
+      <tr>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nro</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nombre</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Colegio</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nivel</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Curso</th>
+        <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Nota</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantesPaginados; let i = index"
+          [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+          class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nombre }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.colegio }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nivel }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.curso }}</td>
+        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.notas }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Fin de tabla -->
+</div>
+
+<!-- Controles de paginación -->
+<div class="flex justify-center items-center gap-2 mt-4">
+  <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">
+    Anterior
+  </button>
+  <ng-container *ngFor="let page of [].constructor(totalPages); let idx = index">
+    <button
+      class="px-3 py-1 rounded"
+      [ngClass]="currentPage === idx + 1 ? 'bg-green-600 text-white' : 'bg-gray-200'"
+      (click)="cambiarPagina(idx + 1)">
+      {{ idx + 1 }}
+    </button>
+  </ng-container>
+  <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">
+    Siguiente
+  </button>
+</div>
