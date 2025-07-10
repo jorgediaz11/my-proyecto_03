@@ -1,345 +1,661 @@
-<!-- Estudiante Component HTML -->
- <div class="estudiantes-container">
-  <h2>Lista de Estudiantes</h2>
+<!-- Estudiantes Component HTML -->
+<div class="estudiantes-container w-full max-w-full">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Estudiantes</h2>
 
-  <!-- Pestañas -->
-  <div class="mb-4 border-b border-gray-200 h-[24%]">
-    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
-      <!-- Pestaña 1: Tabla de Colegios -->
-      <li class="mr-2" role="presentation">
-        <button
-          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
-          [ngStyle]="activeTab === 'tabla' ? {
-            'background-color': '#f6a93e',
-            'color': '#fff',
-            'border-color': '#f6a93e',
-            'font-weight': 'bold'
-          } : {
-            'background-color': '#fde9a2',
-            'color': '#b48a2c',
-            'border-color': '#fde9a2'
-          }"
-          (click)="activeTab = 'tabla'"
-          type="button"
-          role="tab"
-        >
-          Tabla de Estudiantes
-        </button>
-      </li>
-      <!-- Pestaña 2: Nuevo Colegio -->
-      <li class="mr-2" role="presentation">
-        <button
-          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
-          [ngStyle]="activeTab === 'nuevo' ? {
-            'background-color': '#f6a93e',
-            'color': '#fff',
-            'border-color': '#f6a93e',
-            'font-weight': 'bold'
-          } : {
-            'background-color': '#fde9a2',
-            'color': '#b48a2c',
-            'border-color': '#fde9a2'
-          }"
-          (click)="activeTab = 'nuevo'"
-          type="button"
-          role="tab"
-        >
-          Nuevo Estudiantes
-        </button>
-      </li>
-      <!-- Pestaña 3: Avanzado -->
-      <li class="mr-2" role="presentation">
-        <button
-          class="inline-block p-2 rounded-t-lg border-b-2 transition-colors duration-200"
-          [ngStyle]="activeTab === 'avanzado' ? {
-            'background-color': '#f6a93e',
-            'color': '#fff',
-            'border-color': '#f6a93e',
-            'font-weight': 'bold'
-          } : {
-            'background-color': '#fde9a2',
-            'color': '#b48a2c',
-            'border-color': '#fde9a2'
-          }"
-          (click)="activeTab = 'avanzado'"
-          type="button"
-          role="tab"
-        >
-          Avanzado
-        </button>
-      </li>
-    </ul>
-  </div>
+  <!-- ✅ PESTAÑAS OPTIMIZADAS CON TAILWIND CSS -->
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="flex space-x-8" aria-label="Tabs">
 
-  <!-- Panel: Tabla de Estudiantes -->
-  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="h-[60%] overflow-auto">
-    <!-- Filtro (opcional, puedes quitar si no lo usas) -->
-    <div class="filter-container mb-4 flex flex-wrap items-center gap-4">
-      <div class="filter-input">
-        <label for="search">Buscar Estudiante:</label>
-        <input
-          id="search"
-          type="text"
-          (input)="filterEstudiantes()"
-          placeholder="Ingrese el nombre del Estudiante"
-        />
-      </div>
-
-      <!-- Botón para crear un nuevo registro -->
-      <button class="create-button" (click)="createEstudiante()">Nuevo Estudiante</button>
-    </div>
-
-    <!-- Tabla -->
-    <!-- <table class="estudiantes-table w-full text-left border"> -->
-    <table class="estudiantes-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>Nivel</th>
-          <th>Grado</th>
-          <th>Seccion</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of paginatedEstudiantes">
-          <td>{{ estudiante.id }}</td>
-          <td>{{ estudiante.nombres }}</td>
-          <td>{{ estudiante.apellidos }}</td>
-          <td>{{ estudiante.nivel }}</td>
-          <td>{{ estudiante.grado }}</td>
-          <td>{{ estudiante.seccion }}</td>
-          <td>
-            <!-- <span class="flex items-center gap-4"> -->
-              <!-- Ícono para Ver -->
-              <i class="fas fa-eye action-icon" title="Detalles" (click)="viewEstudiante(estudiante.id)"></i>
-              <!-- Ícono para Editar -->
-              <i class="fas fa-edit action-icon" title="Editar" (click)="editEstudiante(estudiante.id)"></i>
-              <!-- Ícono para Eliminar -->
-              <i class="fas fa-trash action-icon" title="Eliminar" (click)="deleteEstudiante(estudiante.id)"></i>
-            <!-- </span> -->
-            </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Paginación -->
-    <div class="pagination mt-4 flex gap-2">
+      <!-- Pestaña 1: Tabla de Estudiantes -->
       <button
-        *ngFor="let page of getTotalPages(); let i = index"
-        [class.active]="currentPage === i + 1"
-        (click)="changePage(i + 1)"
-        class="px-3 py-1 rounded border border-gray-300"
-        [ngClass]="{'bg-green-600 text-white': currentPage === i + 1, 'bg-white text-gray-700': currentPage !== i + 1}"
+        type="button"
+        (click)="activeTab = 'tabla'"
+        [class]="activeTab === 'tabla'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'tabla'"
       >
-        {{ i + 1 }}
+        <i class="fas fa-table mr-2"></i>
+        Tabla de Estudiantes
       </button>
-    </div>
+
+      <!-- Pestaña 2: Nuevo Estudiante -->
+      <button
+        type="button"
+        (click)="activeTab = 'nuevo'"
+        [class]="activeTab === 'nuevo'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'nuevo'"
+      >
+        <i class="fas fa-user-plus mr-2"></i>
+        Nuevo Estudiante
+      </button>
+
+      <!-- Pestaña 3: Avanzado -->
+      <button
+        type="button"
+        (click)="activeTab = 'avanzado'"
+        [class]="activeTab === 'avanzado'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'avanzado'"
+      >
+        <i class="fas fa-cogs mr-2"></i>
+        Configuración Avanzada
+      </button>
+
+    </nav>
   </div>
 
-  <!-- Panel: Nuevo Estudiante -->
-  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="h-[60%] overflow-auto">
-    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <form [formGroup]="estudianteForm" (ngSubmit)="saveEstudiante()" class="space-y-6">
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold text-gray-700">Datos del Estudiante</h2>
+  <div class="tab-content">
 
-          <!-- Usuario y Perfil a la izquierda, Imagen a la derecha -->
-          <div class="flex flex-col md:flex-row gap-4 mb-4">
-            <!-- Subsección izquierda: Usuario y Perfil -->
-            <div class="flex-1 flex flex-col gap-4">
-              <!-- Usuario -->
-              <div>
-                <label for="usuario" class="block text-sm font-medium text-gray-700 mb-1">Estudiante</label>
+    <!-- Panel: Tabla de Estudiantes -->
+    <div
+      *ngIf="activeTab === 'tabla'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-tabla'"
+    >
+      <!-- Encabezado con filtro y botón -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+        <div class="p-4 border-b border-gray-200">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <!-- Filtro de búsqueda -->
+            <div class="flex-1 max-w-md">
+              <label for="searchEstudiante" class="block text-sm font-medium text-gray-700 mb-2">
+                Buscar Estudiante:
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fas fa-search text-gray-400"></i>
+                </div>
                 <input
+                  id="searchEstudiante"
                   type="text"
-                  id="usuario"
-                  formControlName="usuario"
-                  placeholder="Usuario"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  [class.border-red-300]="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched">
-                <div *ngIf="usuarioForm.get('usuario')?.invalid && usuarioForm.get('usuario')?.touched" class="text-red-500 text-sm mt-1">
-                  Este campo es requerido
-                </div>
+                  [(ngModel)]="searchEstudiante"
+                  (input)="filterEstudiantes()"
+                  placeholder="Ingrese nombre, apellido o grado"
+                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                />
               </div>
-              <!-- Perfil -->
+            </div>
+            <!-- Botón Nuevo Estudiante -->
+            <button
+              type="button"
+              (click)="createEstudiante()"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+            >
+              <i class="fas fa-plus mr-2"></i>
+              Nuevo Estudiante
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de estudiantes -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombres</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellidos</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nivel</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grado</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sección</th>
+                <th scope="col" class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let estudiante of paginatedEstudiantes; trackBy: trackByEstudianteId" class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ estudiante.id }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.nombres }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.apellidos }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.nivel }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.grado }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.seccion }}</td>
+                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
+                  <div class="flex justify-center space-x-2">
+                    <button
+                      type="button"
+                      (click)="viewEstudiante(estudiante.id)"
+                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                      title="Ver detalles"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      type="button"
+                      (click)="editEstudiante(estudiante.id)"
+                      class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                      title="Editar"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button
+                      type="button"
+                      (click)="deleteEstudiante(estudiante.id)"
+                      class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                      title="Eliminar"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Estado vacío -->
+              <tr *ngIf="paginatedEstudiantes.length === 0">
+                <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <i class="fas fa-graduation-cap text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-lg font-medium text-gray-900 mb-2">No hay estudiantes</p>
+                    <p class="text-gray-500">{{ searchEstudiante ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer estudiante.' }}</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="getTotalPages().length > 1">
+          <div class="flex items-center justify-between">
+            <div class="flex-1 flex justify-between sm:hidden">
+              <button
+                (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Anterior
+              </button>
+              <button
+                (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage === getTotalPages().length"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Siguiente
+              </button>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div>
-                <label for="perfil" class="block text-sm font-medium text-gray-700 mb-1">Perfil</label>
-                <select
-                  id="perfil"
-                  formControlName="perfil"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  [class.border-red-300]="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched">
-                  <!-- <option value="" disabled>Selecciona un Perfil</option> -->
-                  <!-- <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{perfil.label}}</option> -->
-                  <option *ngFor="let perfil of perfiles; let i = index" [value]="perfil.value" [selected]="i === 0">{{perfil.label}}</option>
-                </select>
-
-                <div *ngIf="usuarioForm.get('perfil')?.invalid && usuarioForm.get('perfil')?.touched" class="text-red-500 text-sm mt-1">
-                  Por favor selecciona un Perfil
-                </div>
+                <p class="text-sm text-gray-700">
+                  Mostrando
+                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                  a
+                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredEstudiantes.length) }}</span>
+                  de
+                  <span class="font-medium">{{ filteredEstudiantes.length }}</span>
+                  resultados
+                </p>
+              </div>
+              <div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                  <button
+                    *ngFor="let page of getTotalPages(); let i = index"
+                    (click)="changePage(i + 1)"
+                    [class]="currentPage === i + 1
+                      ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
+                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
+                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                  >
+                    {{ i + 1 }}
+                  </button>
+                </nav>
               </div>
             </div>
-            <!-- Subsección derecha: Solo imagen -->
-            <div class="flex flex-col justify-center items-center md:w-1/3 w-full">
-              <!-- <img [src]="userImgUrl || 'https://via.placeholder.com/80x80?text=User'" alt="Imagen Usuario" class="w-24 h-24 object-cover rounded-full border" /> -->
-              <img src="/assets/images/user_estudiante.png" alt="Imagen Usuario" class="w-40 h-40 object-cover rounded-full border" />
-            </div>
-          </div>
-
-          <!-- 1ra línea: Nombres y Apellidos -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label for="nombres">Nombres:</label>
-              <input id="nombres" formControlName="nombres" type="text" class="w-full border rounded px-3 py-2" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label for="apellidos">Apellidos:</label>
-              <input id="apellidos" formControlName="apellidos" type="text" class="w-full border rounded px-3 py-2" />
-            </div>
-          </div>
-
-          <!-- 2da línea: Fecha de nacimiento y Género -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label for="fecNacimiento">Fec. Nacimiento:</label>
-              <input id="fecNacimiento" formControlName="fecNacimiento" type="date" class="w-full border rounded px-3 py-2" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label for="genero">Género:</label>
-              <select id="genero" formControlName="genero" class="w-full border rounded px-3 py-2">
-                <option value="">Seleccione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Otro">Otro</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 3ra línea: DNI y Estado -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label for="dni">Nro DNI:</label>
-              <input id="dni" formControlName="dni" type="text" class="w-full border rounded px-3 py-2" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label for="estado">Estado:</label>
-              <select id="estado" formControlName="estado" class="w-full border rounded px-3 py-2">
-                <option value="">Seleccione</option>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 4ta línea: Dirección y Teléfono -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label for="direccion">Dirección:</label>
-              <input id="direccion" formControlName="direccion" type="text" placeholder="Dirección del Estudiante" class="w-full border rounded px-3 py-2" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label for="telefono">Teléfono:</label>
-              <input id="telefono" formControlName="telefono" type="text" placeholder="Teléfono del Estudiante" class="w-full border rounded px-3 py-2" />
-            </div>
-          </div>
-
-          <!-- 5ta línea: Correo -->
-          <div class="mb-4">
-            <label for="correo">Correo electrónico:</label>
-            <input id="correo" formControlName="correo" type="email" placeholder="Correo electrónico del Estudiante" class="w-full border rounded px-3 py-2" />
-          </div>
-
-          <!-- Botones -->
-          <div class="flex gap-2">
-            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
-            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
-            <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
 
-  <!-- Panel: Avanzado  -->
-  <div *ngIf="activeTab === 'avanzado'" role="tabpanel" class="h-[60%] overflow-auto">
-    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <form [formGroup]="estudianteForm" (ngSubmit)="saveEstudiante()" class="space-y-6">
-        <div class="space-y-4">
-          <!-- 1ra línea: Colegio (lectura) y Nivel/Grado/Sección (lectura) -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label class="block mb-1">Colegio:</label>
-              <input type="text" [value]="estudianteForm.get('colegio')?.value" readonly class="w-full border rounded px-3 py-2 bg-gray-100" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label class="block mb-1">Nivel / Grado / Sección:</label>
-              <input type="text"
-                [value]="
-                  (estudianteForm.get('nivel')?.value || '') + ' / ' +
-                  (estudianteForm.get('grado')?.value || '') + ' / ' +
-                  (estudianteForm.get('seccion')?.value || '')
-                "
-                readonly
-                class="w-full border rounded px-3 py-2 bg-gray-100" />
-            </div>
+    <!-- Panel: Nuevo Estudiante -->
+    <div
+      *ngIf="activeTab === 'nuevo'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-nuevo'"
+    >
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">
+              {{ isEditing ? 'Editar Estudiante' : 'Nuevo Estudiante' }}
+            </h3>
+            <p class="mt-1 text-sm text-gray-500">
+              {{ isEditing ? 'Modifica la información del estudiante' : 'Completa la información para crear un nuevo estudiante' }}
+            </p>
           </div>
 
-          <!-- 2da línea: Fecha de ingreso y Promedio académico -->
-          <div class="flex flex-wrap gap-4 mb-4">
-            <div class="flex-1 min-w-[180px]">
-              <label for="fechaIngreso" class="block mb-1">Fecha de ingreso:</label>
-              <input id="fechaIngreso" formControlName="fechaIngreso" type="date" class="w-full border rounded px-3 py-2" />
-            </div>
-            <div class="flex-1 min-w-[180px]">
-              <label for="promedio" class="block mb-1">Promedio académico:</label>
-              <input id="promedio" formControlName="promedio" type="number" step="0.01" class="w-full border rounded px-3 py-2" />
-            </div>
-          </div>
+          <form [formGroup]="estudianteForm" (ngSubmit)="onSubmit()" class="p-6">
+            <div class="space-y-6">
+              <!-- Usuario y Rol con imagen -->
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-6">
+                  <!-- Usuario -->
+                  <div>
+                    <label for="usuario" class="block text-sm font-medium text-gray-700 mb-2">Usuario *</label>
+                    <input
+                      type="text"
+                      id="usuario"
+                      formControlName="usuario"
+                      placeholder="Ingrese el nombre de usuario del estudiante"
+                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      [class.border-red-300]="estudianteForm.get('usuario')?.invalid && estudianteForm.get('usuario')?.touched"
+                    >
+                    <div *ngIf="estudianteForm.get('usuario')?.invalid && estudianteForm.get('usuario')?.touched" class="mt-1 text-sm text-red-600">
+                      Este campo es requerido
+                    </div>
+                  </div>
 
-          <!-- 3ra línea: Observaciones -->
-          <div class="mb-4">
-            <label for="observaciones" class="block mb-1">Observaciones:</label>
-            <textarea id="observaciones" formControlName="observaciones" rows="4" placeholder="Observaciones" class="w-full border rounded px-3 py-2"></textarea>
-          </div>
+                  <!-- Perfil -->
+                  <div>
+                    <label for="perfil" class="block text-sm font-medium text-gray-700 mb-2">Perfil *</label>
+                    <select
+                      id="perfil"
+                      formControlName="perfil"
+                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      [class.border-red-300]="estudianteForm.get('perfil')?.invalid && estudianteForm.get('perfil')?.touched"
+                    >
+                      <option value="" disabled>Seleccione un perfil</option>
+                      <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{ perfil.label }}</option>
+                    </select>
+                    <div *ngIf="estudianteForm.get('perfil')?.invalid && estudianteForm.get('perfil')?.touched" class="mt-1 text-sm text-red-600">
+                      Por favor selecciona un perfil
+                    </div>
+                  </div>
+                </div>
 
-          <!-- Botones -->
-          <div class="flex gap-2 mt-4">
-            <button type="submit" [disabled]="colegioForm.invalid" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar</button>
-            <button type="button" (click)="resetForm()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">Limpiar</button>
-            <button type="button" (click)="cancelCreate()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancelar</button>
-          </div>
+                <!-- Imagen del estudiante -->
+                <div class="flex items-center justify-center">
+                  <div class="text-center">
+                    <img
+                      src="/assets/images/user_estudiante.png"
+                      alt="Avatar del estudiante"
+                      class="w-32 h-32 rounded-full border-4 border-gray-200 shadow-sm mx-auto"
+                    >
+                    <p class="mt-2 text-sm text-gray-500">Avatar del estudiante</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nombres y Apellidos -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
+                  <input
+                    type="text"
+                    id="nombres"
+                    formControlName="nombres"
+                    placeholder="Ingrese los nombres"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('nombres')?.invalid && estudianteForm.get('nombres')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('nombres')?.invalid && estudianteForm.get('nombres')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+
+                <div>
+                  <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
+                  <input
+                    type="text"
+                    id="apellidos"
+                    formControlName="apellidos"
+                    placeholder="Ingrese los apellidos"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('apellidos')?.invalid && estudianteForm.get('apellidos')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('apellidos')?.invalid && estudianteForm.get('apellidos')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fecha de nacimiento y Género -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="fecNacimiento" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Nacimiento *</label>
+                  <input
+                    type="date"
+                    id="fecNacimiento"
+                    formControlName="fecNacimiento"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('fecNacimiento')?.invalid && estudianteForm.get('fecNacimiento')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('fecNacimiento')?.invalid && estudianteForm.get('fecNacimiento')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+
+                <div>
+                  <label for="genero" class="block text-sm font-medium text-gray-700 mb-2">Género *</label>
+                  <select
+                    id="genero"
+                    formControlName="genero"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('genero')?.invalid && estudianteForm.get('genero')?.touched"
+                  >
+                    <option value="" disabled>Seleccione género</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                  <div *ngIf="estudianteForm.get('genero')?.invalid && estudianteForm.get('genero')?.touched" class="mt-1 text-sm text-red-600">
+                    Por favor selecciona un género
+                  </div>
+                </div>
+              </div>
+
+              <!-- DNI y Estado -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="dni" class="block text-sm font-medium text-gray-700 mb-2">Número de DNI *</label>
+                  <input
+                    type="text"
+                    id="dni"
+                    formControlName="dni"
+                    placeholder="Ingrese el DNI"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('dni')?.invalid && estudianteForm.get('dni')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('dni')?.invalid && estudianteForm.get('dni')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+
+                <div>
+                  <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                  <select
+                    id="estado"
+                    formControlName="estado"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('estado')?.invalid && estudianteForm.get('estado')?.touched"
+                  >
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                  <div *ngIf="estudianteForm.get('estado')?.invalid && estudianteForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
+                    Por favor selecciona un estado
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dirección y Teléfono -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="direccion" class="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+                  <input
+                    type="text"
+                    id="direccion"
+                    formControlName="direccion"
+                    placeholder="Ingrese la dirección"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  >
+                </div>
+
+                <div>
+                  <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                  <input
+                    type="text"
+                    id="telefono"
+                    formControlName="telefono"
+                    placeholder="Ingrese el teléfono"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  >
+                </div>
+              </div>
+
+              <!-- Correo -->
+              <div>
+                <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                <input
+                  type="email"
+                  id="correo"
+                  formControlName="correo"
+                  placeholder="estudiante@ejemplo.com"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  [class.border-red-300]="estudianteForm.get('correo')?.invalid && estudianteForm.get('correo')?.touched"
+                >
+                <div *ngIf="estudianteForm.get('correo')?.errors?.['email'] && estudianteForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
+                  Ingresa un correo válido
+                </div>
+              </div>
+
+              <!-- Botones -->
+              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  (click)="resetForm(); activeTab = 'tabla'"
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="estudianteForm.invalid || loading"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
+                  {{ isEditing ? 'Actualizar Estudiante' : 'Crear Estudiante' }}
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
+
+    <!-- Panel: Avanzado -->
+    <div
+      *ngIf="activeTab === 'avanzado'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-avanzado'"
+    >
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">Configuración Avanzada</h3>
+            <p class="mt-1 text-sm text-gray-500">Configuraciones académicas y adicionales del estudiante</p>
+          </div>
+
+          <form [formGroup]="estudianteForm" (ngSubmit)="onSubmit()" class="p-6">
+            <div class="space-y-6">
+              <!-- ID Colegio y Información Académica -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="idcolegio" class="block text-sm font-medium text-gray-700 mb-2">ID Colegio *</label>
+                  <input
+                    type="number"
+                    id="idcolegio"
+                    formControlName="idcolegio"
+                    placeholder="ID del Colegio"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('idcolegio')?.invalid && estudianteForm.get('idcolegio')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('idcolegio')?.invalid && estudianteForm.get('idcolegio')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+
+                <div>
+                  <label for="nivel" class="block text-sm font-medium text-gray-700 mb-2">Nivel Educativo *</label>
+                  <select
+                    id="nivel"
+                    formControlName="nivel"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('nivel')?.invalid && estudianteForm.get('nivel')?.touched"
+                  >
+                    <option value="" disabled>Seleccione nivel</option>
+                    <option value="Inicial">Inicial</option>
+                    <option value="Primaria">Primaria</option>
+                    <option value="Secundaria">Secundaria</option>
+                  </select>
+                  <div *ngIf="estudianteForm.get('nivel')?.invalid && estudianteForm.get('nivel')?.touched" class="mt-1 text-sm text-red-600">
+                    Por favor selecciona un nivel
+                  </div>
+                </div>
+              </div>
+
+              <!-- Grado y Sección -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="grado" class="block text-sm font-medium text-gray-700 mb-2">Grado *</label>
+                  <input
+                    type="text"
+                    id="grado"
+                    formControlName="grado"
+                    placeholder="Ej: 1°, 2°, 3°"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('grado')?.invalid && estudianteForm.get('grado')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('grado')?.invalid && estudianteForm.get('grado')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+
+                <div>
+                  <label for="seccion" class="block text-sm font-medium text-gray-700 mb-2">Sección *</label>
+                  <input
+                    type="text"
+                    id="seccion"
+                    formControlName="seccion"
+                    placeholder="Ej: A, B, C"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    [class.border-red-300]="estudianteForm.get('seccion')?.invalid && estudianteForm.get('seccion')?.touched"
+                  >
+                  <div *ngIf="estudianteForm.get('seccion')?.invalid && estudianteForm.get('seccion')?.touched" class="mt-1 text-sm text-red-600">
+                    Este campo es requerido
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fecha de ingreso y Promedio -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="fechaIngreso" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Ingreso</label>
+                  <input
+                    type="date"
+                    id="fechaIngreso"
+                    formControlName="fechaIngreso"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  >
+                </div>
+
+                <div>
+                  <label for="promedio" class="block text-sm font-medium text-gray-700 mb-2">Promedio Académico</label>
+                  <input
+                    type="number"
+                    id="promedio"
+                    formControlName="promedio"
+                    step="0.01"
+                    min="0"
+                    max="20"
+                    placeholder="0.00"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  >
+                </div>
+              </div>
+
+              <!-- Observaciones -->
+              <div>
+                <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
+                <textarea
+                  id="observaciones"
+                  formControlName="observaciones"
+                  rows="4"
+                  placeholder="Ingrese observaciones adicionales sobre el estudiante"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                ></textarea>
+              </div>
+
+              <!-- Información del sistema -->
+              <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Información del Sistema</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Fecha de creación</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ todayES }}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Estado académico</dt>
+                    <dd class="mt-1">
+                      <span
+                        [class]="estudianteForm.get('estado')?.value === '1'
+                          ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'
+                          : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'"
+                      >
+                        {{ estudianteForm.get('estado')?.value === '1' ? 'Activo' : 'Inactivo' }}
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Nivel - Grado - Sección</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                      {{ estudianteForm.get('nivel')?.value || 'N/A' }} -
+                      {{ estudianteForm.get('grado')?.value || 'N/A' }} -
+                      {{ estudianteForm.get('seccion')?.value || 'N/A' }}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Promedio actual</dt>
+                    <dd class="mt-1">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {{ estudianteForm.get('promedio')?.value || '0.00' }}
+                      </span>
+                    </dd>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botones -->
+              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  (click)="resetForm(); activeTab = 'tabla'"
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="estudianteForm.invalid || loading"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
+                  {{ isEditing ? 'Actualizar Estudiante' : 'Crear Estudiante' }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
-
-
 </div>
 
-<!-- Fin del contenedor de Estudiantes -->
-
- <!--
-<<Campos básicos:>> 01
-ID (autogenerado)
-Nombres (requerido)
-Apellidos (requerido)
-Fecha de nacimiento
-Género (dropdown)
-DNI/Identificación (requerido)
-Foto/perfil
-Dirección
-Teléfono
-Correo electrónico (validado)
-Estado (Activo/Inactivo)
-<<Campos académicos:>> 02
-Colegio (relación)
-Nivel educativo
-Grado
-Sección
-Fecha de ingreso
-Promedio académico
-Observaciones
--->
+<!-- Loading overlay -->
+<div
+  *ngIf="loading"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  role="dialog"
+  aria-label="Cargando"
+>
+  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+      <div>
+        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+        <p class="text-sm text-gray-500">Por favor espera un momento</p>
+      </div>
+    </div>
+  </div>
+</div>

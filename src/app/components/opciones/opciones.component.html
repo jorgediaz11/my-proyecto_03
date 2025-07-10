@@ -50,6 +50,25 @@
         <!-- INICIA MENU ESP -->
         <div class="flex items-center lg:order-2">
 
+          <!-- BOTÓN TEMPORAL PARA DEBUG - MUY VISIBLE -->
+          <button
+            (click)="verificarLocalStorage()"
+            class="mx-2 px-4 py-2 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 text-sm">
+            🔍 DEBUG LOCAL
+          </button>
+
+          <button
+            (click)="probarLoginDirecto()"
+            class="mx-2 px-4 py-2 bg-purple-500 text-white font-bold rounded-lg hover:bg-purple-400 text-sm">
+            🧪 TEST LOGIN
+          </button>
+
+          <button
+            (click)="decodificarToken()"
+            class="mx-2 px-4 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-400 text-sm">
+            🔐 VER TOKEN
+          </button>
+
           <button
             type="button"
             data-drawer-toggle="drawer-navigation"
@@ -73,8 +92,8 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="assets/images/user_admin.png"
-              alt="user photo"
+              [src]="avatarUsuario"
+              [alt]="nombreUsuario + ' photo'"
             />
           </button>
 
@@ -85,11 +104,11 @@
             <div class="py-3 px-4 bg-gray-50 dark:bg-[#76B177]">
               <span
                 class="block text-sm font-semibold text-gray-900 dark:text-white"
-                >Jorgito Diaz</span
+                >{{ nombreUsuario }}</span
               >
               <span
                 class="block text-sm text-gray-900 truncate dark:text-white"
-                >Admin Pri </span
+                >{{ rolUsuario }}</span
               >
             </div>
             <ul
@@ -116,10 +135,12 @@
               aria-labelledby="dropdown"
             >
               <li>
-                <a
-                  href="/login"
-                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Cerrar sesión</a
+                <button
+                  (click)="cerrarSesion()"
+                  (keyup.enter)="cerrarSesion()"
+                  class="block w-full text-left py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                  tabindex="0"
+                  >Cerrar sesión</button
                 >
               </li>
             </ul>
@@ -137,10 +158,79 @@
       id="drawer-navigation"
     >
       <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        <ul>
+
+                    <!-- Usuario autenticado actual -->
+          <li class="px-3 py-2 mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-l-4 border-green-500">
+            <div class="flex items-center space-x-3">
+              <!-- Avatar pequeño -->
+              <div class="flex-shrink-0">
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                  {{ iniciales }}
+                </div>
+              </div>
+
+              <!-- Información del usuario -->
+              <div class="flex-1 min-w-0">
+                <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  <span [class]="statusColor">●</span> {{ statusText }}
+                </div>
+                <div class="font-medium text-gray-900 dark:text-white text-sm truncate">
+                  {{ nombreUsuario }}
+                </div>
+                <div class="text-xs text-gray-600 dark:text-gray-300">
+                  {{ rolUsuario }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones temporales para debug -->
+            <div class="mt-2 space-y-1">
+              <button
+                (click)="testSimple()"
+                class="w-full px-2 py-1 bg-pink-500 text-white text-xs rounded hover:bg-pink-600">
+                ✅ TEST SIMPLE
+              </button>
+              <button
+                (click)="simularDatosUsuario()"
+                class="w-full px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600">
+                🧪 Simular Usuario
+              </button>
+              <button
+                (click)="verificarLocalStorage()"
+                class="w-full px-2 py-1 bg-yellow-500 text-white text-xs rounded hover:bg-yellow-600">
+                🔍 Ver LocalStorage
+              </button>
+              <button
+                (click)="decodificarToken()"
+                class="w-full px-2 py-1 bg-orange-500 text-white text-xs rounded hover:bg-orange-600">
+                🔐 Ver Token
+              </button>
+              <button
+                (click)="limpiarDatos()"
+                class="w-full px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600">
+                🧹 Limpiar Datos
+              </button>
+              <button
+                (click)="verificarEstadoPostLogin()"
+                class="w-full px-2 py-1 bg-green-500 text-white text-xs rounded hover:bg-green-600">
+                🎯 Verificar Login
+              </button>
+              <button
+                (click)="cerrarSesionSilencioso()"
+                class="w-full px-2 py-1 bg-gray-500 text-white text-xs rounded hover:bg-gray-600">
+                🔇 Cerrar Silencioso
+              </button>
+            </div>
+          </li>
+          <!-- Fin de usuario autenticado -->
+
+        </ul>
 
         <ul
           class="pt-2 mt-2 space-y-2 border-t border-gray-200 dark:border-gray-700"
         >
+
           <li>
             <a
               href="/perfil-admin-pri"
@@ -160,7 +250,6 @@
               <span class="ml-3">Admin Pri</span>
             </a>
           </li>
-
           <li>
             <a
               href="perfil-admin-sec"
@@ -265,6 +354,31 @@
 
         </ul>
         <ul class="pt-2 mt-2 space-y-2 border-t border-gray-200 dark:border-gray-700"></ul>
+        <ul>
+          <!--Cerrar Sesion-->
+          <li>
+            <button
+              (click)="cerrarSesion()"
+              (keyup.enter)="cerrarSesion()"
+              type="button"
+              class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group cursor-pointer transition-colors"
+              title="Cerrar sesión y volver al login"
+            >
+              <svg
+                aria-hidden="true"
+                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span class="ml-3 whitespace-nowrap">Cerrar sesión</span>
+            </button>
+          </li>
+
+
+        </ul>
       </div>
 
     </aside>

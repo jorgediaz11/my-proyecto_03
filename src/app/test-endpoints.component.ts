@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ColegiosService } from './services/colegios.service';
 
 @Component({
   selector: 'app-test-endpoints',
@@ -21,6 +22,13 @@ import { HttpClient } from '@angular/common/http';
           style="padding: 12px; background: #3B82F6; color: white; border: none; border-radius: 6px; cursor: pointer;"
           [disabled]="loading">
           {{ loading ? 'Probando...' : '🔍 Probar Backend Base' }}
+        </button>
+
+        <button
+          (click)="testColegiosEndpoint()"
+          style="padding: 12px; background: #059669; color: white; border: none; border-radius: 6px; cursor: pointer;"
+          [disabled]="loading">
+          🏫 Probar Endpoint Colegios
         </button>
 
         <button
@@ -97,6 +105,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TestEndpointsComponent implements OnInit {
   private http = inject(HttpClient);
+  private colegiosService = inject(ColegiosService);
 
   loading = false;
   results = '';
@@ -129,6 +138,51 @@ export class TestEndpointsComponent implements OnInit {
           color: '#FEE2E2'
         };
         this.loading = false;
+      }
+    });
+  }
+
+  testColegiosEndpoint() {
+    this.loading = true;
+    this.addResult('🏫 === INICIANDO TEST DE COLEGIOS ===');
+    this.addResult('🔗 Endpoint: http://localhost:3000/api/colegios');
+
+    this.colegiosService.getColegios().subscribe({
+      next: (data) => {
+        this.addResult(`✅ CONEXIÓN EXITOSA al endpoint de colegios`);
+        this.addResult(`📊 Colegios encontrados: ${data.length}`);
+
+        if (data.length > 0) {
+          this.addResult(`📝 Ejemplo de colegio:`);
+          this.addResult(`   - ID: ${data[0].id}`);
+          this.addResult(`   - Nombre: ${data[0].nombre || 'Sin nombre'}`);
+          this.addResult(`   - Estado: ${data[0].estado ? 'Activo' : 'Inactivo'}`);
+        }
+
+        this.loading = false;
+        this.addResult('🏫 === TEST DE COLEGIOS COMPLETADO ===\\n');
+      },
+      error: (error) => {
+        this.addResult(`❌ ERROR en endpoint de colegios:`);
+
+        if (error.status === 0) {
+          this.addResult('   - No se puede conectar al servidor');
+          this.addResult('   - Verificar que el backend esté ejecutándose');
+        } else if (error.status === 404) {
+          this.addResult('   - Endpoint no encontrado (404)');
+          this.addResult('   - Verificar ruta /api/colegios en el backend');
+        } else if (error.status === 401) {
+          this.addResult('   - Error de autenticación (401)');
+          this.addResult('   - Token requerido o inválido');
+        } else if (error.status === 500) {
+          this.addResult('   - Error interno del servidor (500)');
+          this.addResult('   - Problema en backend o base de datos');
+        } else {
+          this.addResult(`   - Error ${error.status}: ${error.message || 'Error desconocido'}`);
+        }
+
+        this.loading = false;
+        this.addResult('🏫 === TEST DE COLEGIOS FALLIDO ===\\n');
       }
     });
   }

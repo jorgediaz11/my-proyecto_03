@@ -1,20 +1,42 @@
 {
-  "compilerOptions": {                    // Opciones de compilación para TypeScript 003
-    "target": "ES2022",                   // Especifica la versión de ECMAScript a la que se compilará el código
-    "module": "CommonJS",                 // Especifica el sistema de módulos a utilizar
-    "moduleResolution": "node",           // Resuelve módulos utilizando la estrategia de Node.js
-    "strict": true,                       // Habilita todas las comprobaciones estrictas
-    "esModuleInterop": true,              // Habilita la interoperabilidad con módulos CommonJS
-    "allowSyntheticDefaultImports": true, // Recomendado para trabajar con importaciones predeterminadas
-    "experimentalDecorators": true,       // Habilita el uso de decoradores
-    "outDir": "./dist/out-tsc",           // Directorio de salida para los archivos compilados
-    "lib": ["ES2022", "dom"]              // Especifica las bibliotecas que se incluirán en la compilación
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
   },
-  "include": [                            // Archivos y carpetas a incluir en la compilación
-    "src/**/*.ts"                         // Incluye todos los archivos TypeScript en la carpeta src y sus subcarpetas
-  ],
-  "exclude": [                            // Archivos y carpetas a excluir de la compilación
-    "src/main.server.ts",                 // Excluye el archivo main.server.ts de la compilación
-    "server.ts"                           // Excluye el archivo server.ts de la compilación
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "server.ts",
+    "**/*.server.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 }

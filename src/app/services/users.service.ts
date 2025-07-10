@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'; // Importar el decorador Injectable de Angular para definir un servicio
+import { Injectable, inject } from '@angular/core'; // Importar el decorador Injectable de Angular para definir un servicio
 import { HttpClient, HttpHeaders } from '@angular/common/http';  // Importar HttpClient y HttpHeaders de Angular para realizar solicitudes HTTP
 import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar respuestas asíncronas
 
@@ -38,10 +38,10 @@ export interface UpdateUserDto {
 })
 export class UsersService {
 
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'http://192.168.1.78:3000/users';
   // ¡Asegúrate de que esta URL sea correcta!
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   // Obtener headers con JWT token
   private getAuthHeaders(): HttpHeaders {
@@ -88,7 +88,7 @@ export class UsersService {
   }
 
   // DELETE /users/:id - Eliminar usuario
-  eliminarUsuario(id: number): Observable<any> {
+  eliminarUsuario(id: number): Observable<{ message: string }> {
     // const url = `${this.apiUrl}/${id}`;
     // return this.http.delete(url);
     return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, {

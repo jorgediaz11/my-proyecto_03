@@ -1,51 +1,112 @@
-<h2>Bienvenido al Muro - Perfil Estudiante</h2>
-<!-- <p>Este es el contenido predeterminado que se muestra al ingresar al perfil de administrador principal.</p> -->
-<!-- Contadores -->
-<!-- <div class="counters">
-  <div class="counter-item">
-    <h3>Colegios</h3>
-    <p>{{ totalColegios }}</p>
-  </div>
-  <div class="counter-item">
-    <h3>Profesores</h3>
-    <p>{{ totalProfesores }}</p>
-  </div>
-  <div class="counter-item">
-    <h3>Alumnos</h3>
-    <p>{{ totalAlumnos }}</p>
-  </div>
-  <div class="counter-item">
-    <h3>Cursos</h3>
-    <p>{{ totalCursos }}</p>
-  </div>
-</div> -->
-
-<!-- Fichas -->
-<div class="contenedor-grid">
-  <div class="contenedor-item">
-    <img src="../assets/images/cursos.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">CURSOS</a>
+<<div class="bg-gray-50 min-h-screen p-6">
+  <!-- Header personalizado -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      🎓 Bienvenido, {{ nombreEstudiante }}
+    </h1>
+    <p class="text-gray-600">Dashboard Estudiantil - Gestiona tus cursos y evaluaciones</p>
   </div>
 
-  <div class="contenedor-item">
-    <img src="../assets/images/niveles.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">NIVELES</a>
+  <!-- Contadores del estudiante -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-blue-600">{{ totalCursos }}</div>
+      <div class="text-sm text-gray-600">Mis Cursos</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-green-600">{{ cursosActivos }}</div>
+      <div class="text-sm text-gray-600">Cursos Activos</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-yellow-600">{{ progresoPromedio }}%</div>
+      <div class="text-sm text-gray-600">Progreso Promedio</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-red-600">{{ evaluacionesPendientes }}</div>
+      <div class="text-sm text-gray-600">Evaluaciones Pendientes</div>
+    </div>
   </div>
 
-  <div class="contenedor-item">
-    <img src="../assets/images/grados.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">GRADOS</a>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Sección: Mis Cursos -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">📚 Mis Cursos</h2>
+      <div class="space-y-4">
+        <div *ngFor="let curso of misCursos" class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-semibold text-gray-800">{{ curso.nombre }}</h3>
+            <span [class]="getProgresoColor(curso.progreso)" class="text-lg">
+              {{ getProgresoIcon(curso.progreso) }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">👨‍🏫 {{ curso.profesor }}</p>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs text-gray-500">Progreso:</span>
+            <span [class]="getProgresoColor(curso.progreso)" class="text-sm font-semibold">
+              {{ curso.progreso }}%
+            </span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+            <div
+              class="h-2 rounded-full"
+              [style.width.%]="curso.progreso"
+              [ngClass]="{
+                'bg-green-500': curso.progreso >= 70,
+                'bg-yellow-500': curso.progreso >= 40 && curso.progreso < 70,
+                'bg-red-500': curso.progreso < 40
+              }">
+            </div>
+          </div>
+          <div class="text-xs text-gray-500">
+            <p>📖 Última clase: {{ curso.ultimaClase }}</p>
+            <p>🕐 Próxima clase: {{ curso.proximaClase }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Próximas Evaluaciones -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">📝 Próximas Evaluaciones</h2>
+      <div class="space-y-4">
+        <div *ngFor="let evaluacion of proximasEvaluaciones" class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-semibold text-gray-800">{{ evaluacion.titulo }}</h3>
+            <span class="text-lg">{{ getTipoEvaluacionIcon(evaluacion.tipo) }}</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-1">📚 {{ evaluacion.curso }}</p>
+          <p class="text-sm text-gray-600 mb-2">📅 {{ formatearFecha(evaluacion.fecha) }}</p>
+          <div class="flex justify-between items-center">
+            <span class="text-xs px-2 py-1 rounded-full"
+                  [ngClass]="{
+                    'bg-yellow-100 text-yellow-800': evaluacion.estado === 'pendiente',
+                    'bg-blue-100 text-blue-800': evaluacion.estado === 'entregado',
+                    'bg-green-100 text-green-800': evaluacion.estado === 'calificado'
+                  }">
+              {{ evaluacion.estado.toUpperCase() }}
+            </span>
+            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
+              {{ evaluacion.tipo.toUpperCase() }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="contenedor-item">
-    <img src="../assets/images/secciones.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">SECCIONES</a>
-  </div>
-</div>
+  <!-- Gráficos -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <!-- Gráfico de Progreso por Curso -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Progreso por Curso</h3>
+      <canvas id="progressChart" class="w-full h-64"></canvas>
+    </div>
 
-<!-- Gráfica -->
-<div class="chart-container">
-  <h3>Progreso de Participantes</h3>
-  <canvas id="progressChart"></canvas>
+    <!-- Gráfico de Tipos de Evaluaciones -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">📋 Tipos de Evaluaciones Pendientes</h3>
+      <canvas id="evaluacionesChart" class="w-full h-64"></canvas>
+    </div>
+  </div>
 </div>
 <!-- Fin Gráfica -->

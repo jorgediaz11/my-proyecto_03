@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';  // Asegúrate de que el import sea correcto
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ interface Estudiante { // Define la interfaz Estudiante
   styleUrls: ['./estudiantes.component.css']
 })
 // export class EstudiantesComponent implements OnInit {
-export class EstudiantesComponent {
+export class EstudiantesComponent implements OnInit {
   estudiantes: Estudiante[] = [
     { id: 1, nombres: 'Juan', apellidos: 'Pérez García', nivel: 'Primaria', grado: '1°', seccion: 'A' },
     { id: 2, nombres: 'Ana', apellidos: 'López Torres', nivel: 'Primaria', grado: '1°', seccion: 'B' },
@@ -72,14 +72,35 @@ export class EstudiantesComponent {
 
   filteredEstudiantes: Estudiante[] = [];
   paginatedEstudiantes: Estudiante[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  searchTerm: string = '';
+  currentPage = 1;
+  itemsPerPage = 10;
+  searchTerm = '';
+
+  // ✅ PROPIEDADES PARA EL TEMPLATE
+  Math = Math;
+
   estudianteForm: FormGroup;
-  showForm: boolean = false;
+  showForm = false;
+
+  // ✅ Propiedades necesarias para la plantilla HTML estandarizada
+  loading = false;
+  activeTab = 'tabla';
+  searchEstudiante = '';
+  isEditing = false;
+  todayES = new Date().toLocaleDateString('es-ES');
+
+  // ✅ Propiedades adicionales para los formularios y perfiles
+  perfiles = [
+    { value: 'estudiante', label: 'Estudiante' },
+    { value: 'estudiante-avanzado', label: 'Estudiante Avanzado' }
+  ];
+
+  // Inyección de dependencias
+  private fb = inject(FormBuilder);
+  private dialog = inject(MatDialog);
 
   // Definición de las columnas para la tabla
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor() {
     this.estudianteForm = this.fb.group({
       usuario: ['', Validators.required],
       //perfil: [this.perfiles[0]?.value || 'Admin Pri', Validators.required],
@@ -223,10 +244,32 @@ ngOnInit(): void {
     });
   }
 
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
-
   selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
+  }
+
+  // ✅ Métodos adicionales necesarios para la plantilla estandarizada
+  onSubmit() {
+    if (this.estudianteForm.valid) {
+      this.loading = true;
+      // Simular proceso de guardado
+      setTimeout(() => {
+        console.log('Estudiante guardado:', this.estudianteForm.value);
+        this.loading = false;
+        this.activeTab = 'tabla';
+        this.resetFormSimple();
+      }, 1500);
+    }
+  }
+
+  resetFormSimple() {
+    this.estudianteForm.reset();
+    this.isEditing = false;
+  }
+
+  // ✅ Métodos para la funcionalidad de la tabla
+  trackByEstudianteId(index: number, estudiante: Estudiante): number {
+    return estudiante.id;
   }
 
 }

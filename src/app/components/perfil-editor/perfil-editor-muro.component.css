@@ -1,0 +1,245 @@
+/* Dashboard Editor - Gestión de Contenido LMS */
+
+.dashboard-editor {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Animaciones suaves */
+.dashboard-editor * {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Cards de estadísticas con hover effect */
+.dashboard-editor .bg-white:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Estados de materias */
+.estado-activa {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.estado-revision {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.estado-borrador {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* Progreso de materias */
+.progreso-bar {
+  transition: width 0.5s ease-in-out;
+}
+
+/* Botones de navegación */
+.nav-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.nav-button:hover::before {
+  left: 100%;
+}
+
+/* Iconos animados */
+@keyframes pulse-icon {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.dashboard-editor .text-2xl:hover,
+.dashboard-editor .text-3xl:hover {
+  animation: pulse-icon 0.6s ease-in-out;
+}
+
+/* Tabla responsive */
+.dashboard-editor table {
+  border-collapse: collapse;
+}
+
+.dashboard-editor table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Cards de recursos */
+.recurso-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.recurso-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.12);
+  border-color: #cbd5e1;
+}
+
+/* Badges de estado */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+/* Accesos rápidos */
+.acceso-rapido {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.acceso-rapido:hover {
+  border-color: #e2e8f0;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Efectos de carga */
+@keyframes skeleton {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: skeleton 1.5s infinite;
+}
+
+/* Charts container */
+.chart-container {
+  position: relative;
+  height: 256px;
+  width: 100%;
+}
+
+/* Scrollbar personalizado */
+.dashboard-editor ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dashboard-editor ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dashboard-editor ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dashboard-editor ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-editor {
+    padding: 1rem;
+  }
+
+  .dashboard-editor h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-editor .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-editor .overflow-x-auto {
+    font-size: 0.875rem;
+  }
+}
+
+/* Estados específicos para materias */
+.materia-matematica {
+  border-left: 4px solid #3b82f6;
+}
+
+.materia-comunicacion {
+  border-left: 4px solid #10b981;
+}
+
+.materia-ciencias {
+  border-left: 4px solid #8b5cf6;
+}
+
+.materia-historia {
+  border-left: 4px solid #f59e0b;
+}
+
+.materia-geografia {
+  border-left: 4px solid #06b6d4;
+}
+
+.materia-educacion-fisica {
+  border-left: 4px solid #ef4444;
+}
+
+/* Animación de entrada */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-editor > div {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Focus states para accesibilidad */
+.dashboard-editor button:focus,
+.dashboard-editor [tabindex]:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Indicadores de progreso */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dasharray 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}

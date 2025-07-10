@@ -11,8 +11,8 @@
         type="button"
         (click)="activeTab = 'tabla'"
         [class]="activeTab === 'tabla'
-          ? 'border-orange-500 text-orange-600 bg-orange-50'
-          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+          ? 'tab-active'
+          : 'tab-inactive'"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'tabla'"
@@ -26,8 +26,8 @@
         type="button"
         (click)="activeTab = 'nuevo'"
         [class]="activeTab === 'nuevo'
-          ? 'border-orange-500 text-orange-600 bg-orange-50'
-          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+          ? 'tab-active'
+          : 'tab-inactive'"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'nuevo'"
@@ -41,8 +41,8 @@
         type="button"
         (click)="activeTab = 'avanzado'"
         [class]="activeTab === 'avanzado'
-          ? 'border-orange-500 text-orange-600 bg-orange-50'
-          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+          ? 'tab-active'
+          : 'tab-inactive'"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'avanzado'"
@@ -80,7 +80,7 @@
                 <input
                   id="searchUser"
                   type="text"
-                  [(ngModel)]="searchUser"
+                  [(ngModel)]="searchTerm"
                   (input)="filterUsuarios()"
                   placeholder="Ingrese correo, nombre o apellido"
                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
@@ -91,7 +91,7 @@
             <button
               type="button"
               (click)="createUsuario()"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
             >
               <i class="fas fa-plus mr-2"></i>
               Nuevo Usuario
@@ -104,42 +104,42 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellido</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellido</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                <th scope="col" class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let usuario of paginatedUsuarios; trackBy: trackByUserId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ usuario.username }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ usuario.nombre }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ usuario.apellido }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ usuario.correo }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.username }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.nombre }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.apellido }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.email }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
                   <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {{ getRoleName(usuario.idrol) }}
+                    {{ getRoleName(usuario.idRol) }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-6 py-1.5 whitespace-nowrap">
                   <span
-                    [class]="usuario.estado === '1'
+                    [class]="usuario.estado
                       ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'
                       : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'"
                   >
-                    {{ usuario.estado === '1' ? 'Activo' : 'Inactivo' }}
+                    {{ usuario.estado ? 'Activo' : 'Inactivo' }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
                   <div class="flex justify-center space-x-2">
                     <button
                       type="button"
-                      (click)="viewUsuario(usuario.id)"
+                      (click)="viewUsuario(usuario.id!)"
                       class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
                       title="Ver detalles"
                     >
@@ -147,7 +147,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="editUsuario(usuario.id)"
+                      (click)="editUsuario(usuario.id!)"
                       class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
                       title="Editar"
                     >
@@ -155,7 +155,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="deleteUsuario(usuario.id)"
+                      (click)="deleteUsuario(usuario.id!)"
                       class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
                       title="Eliminar"
                     >
@@ -171,7 +171,7 @@
                   <div class="flex flex-col items-center">
                     <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
                     <p class="text-lg font-medium text-gray-900 mb-2">No hay usuarios</p>
-                    <p class="text-gray-500">{{ searchUser ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer usuario.' }}</p>
+                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer usuario.' }}</p>
                   </div>
                 </td>
               </tr>

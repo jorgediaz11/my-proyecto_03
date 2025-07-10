@@ -3,92 +3,213 @@
   <!-- Capa central con 3 pisos -->
   <div class="w-full max-w-4xl flex flex-col items-center">
 
-    <!-- Piso 1: Franja superior (mismo ancho que el piso 3) -->
+    <!-- Piso 1: Franja superior -->
     <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-t-lg flex items-center justify-end pr-4 text-white font-bold">
       Eureka LMS
     </div>
 
-    <!-- Piso 2: Contenido principal (login, línea, registro) -->
+    <!-- Piso 2: Contenido principal -->
     <div class="w-full bg-white flex flex-col md:flex-row shadow-lg">
-      <!-- Login -->
+      <!-- Formulario de recuperación -->
       <div class="w-full md:w-1/2 flex flex-col justify-center p-8">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           <img class="w-32 h-auto min-w-[120px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
         </a>
-        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Recuperar Accesos</h2>
 
-        <p class="mb-2 text-gray-600 text-center">Ingrese cirección de correo electrónico de recuperación</p>
-        <!-- Formumario de Registro -->
-        <form [formGroup]="recuperaForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
-          <!-- Correo -->
-          <div class="border-2 border-purple-500">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
-            <input type="email" id="email" formControlName="email" placeholder="Ingresa tu Correo [correo@dominio.com]"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required>
-            <div *ngIf="recuperaForm.get('email')?.touched && recuperaForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">
-              <span *ngIf="recuperaForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
-              <span *ngIf="recuperaForm.get('email')?.errors?.['email']">Ingresa un correo válido.</span>
+        <!-- Título dinámico según el estado -->
+        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">
+          <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">Recuperar Contraseña</span>
+          <span *ngIf="currentState === RecoveryState.EMAIL_SENT">Código de Verificación</span>
+          <span *ngIf="currentState === RecoveryState.TOKEN_VERIFICATION">Verificar Código</span>
+          <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">Nueva Contraseña</span>
+        </h2>
+
+        <!-- Descripción dinámico según el estado -->
+        <p class="mb-4 text-gray-600 text-center">
+          <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
+            Ingresa tu correo electrónico para recibir las instrucciones de recuperación
+          </span>
+          <span *ngIf="currentState === RecoveryState.EMAIL_SENT">
+            Revisa tu correo electrónico e ingresa el código de verificación
+          </span>
+          <span *ngIf="currentState === RecoveryState.TOKEN_VERIFICATION">
+            Ingresa el código de verificación que recibiste por correo
+          </span>
+          <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">
+            Ingresa tu nueva contraseña
+          </span>
+        </p>
+
+        <!-- Formulario de recuperación -->
+        <form [formGroup]="recuperaForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+          <!-- PASO 1: Solicitar email -->
+          <div *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
+            <div class="form-group">
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+                Correo Electrónico
+              </label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="correo@ejemplo.com"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                [class.border-red-500]="getFieldError('email')"
+                required>
+              <p *ngIf="getFieldError('email')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('email') }}
+              </p>
             </div>
           </div>
 
-          <!-- Mensajes de validación globales -->
-          <div *ngIf="validationMessage" class="text-red-600 text-center font-semibold mb-2">
-            {{ validationMessage }}
+          <!-- PASO 2: Ingresar código de verificación -->
+          <div *ngIf="currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION">
+            <div class="form-group">
+              <label for="token" class="block mb-2 text-sm font-medium text-gray-900">
+                Código de Verificación
+              </label>
+              <input
+                type="text"
+                id="token"
+                formControlName="token"
+                placeholder="Ingresa el código de verificación"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                [class.border-red-500]="getFieldError('token')"
+                required>
+              <p *ngIf="getFieldError('token')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('token') }}
+              </p>
+            </div>
+
+            <!-- Botón para reenviar código -->
+            <div class="text-center">
+              <button
+                type="button"
+                class="text-sm text-green-600 hover:text-green-700 underline"
+                (click)="restartProcess()"
+                [disabled]="loading">
+                ¿No recibiste el código? Reintentar
+              </button>
+            </div>
+          </div>
+
+          <!-- PASO 3: Nueva contraseña -->
+          <div *ngIf="currentState === RecoveryState.PASSWORD_RESET">
+            <div class="form-group">
+              <label for="password" class="block mb-2 text-sm font-medium text-gray-900">
+                Nueva Contraseña
+              </label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                placeholder="Ingresa tu nueva contraseña"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                [class.border-red-500]="getFieldError('password')"
+                required>
+              <p *ngIf="getFieldError('password')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('password') }}
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900">
+                Confirmar Contraseña
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                placeholder="Confirma tu nueva contraseña"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                [class.border-red-500]="getFieldError('confirmPassword')"
+                required>
+              <p *ngIf="getFieldError('confirmPassword')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('confirmPassword') }}
+              </p>
+            </div>
           </div>
 
           <!-- Botones de acción -->
-          <div class="flex gap-4">
+          <div class="flex gap-4 mt-6">
             <button
               type="button"
-              class="w-[30%] text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center"
-              (click)="onReset()">
+              class="w-[30%] text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50"
+              (click)="onReset()"
+              [disabled]="loading">
               Limpiar
             </button>
+
             <button
               type="submit"
-              class="w-[60%] text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center"
-              [disabled]="recuperaForm.invalid">
-              Enviar Solicitud
+              class="w-[60%] text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="!canSubmit">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+
+              <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
+                {{ loading ? 'Enviando...' : 'Enviar Solicitud' }}
+              </span>
+              <span *ngIf="currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION">
+                {{ loading ? 'Verificando...' : 'Verificar Código' }}
+              </span>
+              <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">
+                {{ loading ? 'Guardando...' : 'Cambiar Contraseña' }}
+              </span>
             </button>
           </div>
 
-          <p *ngIf="submitted && loginError" class="forgot-password">{{ loginError }}</p>
+          <!-- Mensaje de error general -->
+          <div *ngIf="recoveryError" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {{ recoveryError }}
+          </div>
 
-          </form>
+        </form>
 
       </div>
+
       <!-- Línea divisoria vertical -->
       <div class="hidden md:block w-px bg-gray-200"></div>
 
-        <!-- Registro y accesos -->
-        <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
-          <div class="flex flex-col items-center w-full">
-            <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
-            <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Recuperar Credenciales</h2>
-            <p class="mb-2 text-gray-600 text-center">Revisar el correo con el cual se registró.</p>
+      <!-- Información y enlaces -->
+      <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
+        <div class="flex flex-col items-center w-full">
+          <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
+          <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Recuperar Credenciales</h2>
+          <p class="mb-4 text-gray-600 text-center">
+            Si no tienes una cuenta, puedes crear una nueva o contactar al administrador.
+          </p>
+
+          <div class="flex flex-col w-full gap-2">
             <a routerLink="/login-registro"
-              class="w-full text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition mb-2 shadow">
-              Registrar Nuevo Usuario
+              class="w-full text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+              Crear Nueva Cuenta
             </a>
+
             <div class="flex w-full gap-2">
               <a routerLink="/opciones"
                 class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-                Ir a Opciones
+                Opciones
               </a>
               <a routerLink="/inicio"
                 class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-                Ir a Inicio
+                Inicio
               </a>
             </div>
+
+            <a routerLink="/login"
+              class="w-full text-center inline-block px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition shadow">
+              Regresar al Login
+            </a>
           </div>
         </div>
+      </div>
 
     </div>
 
-    <!-- Piso 3: Franja inferior (mismo ancho que el piso 1) -->
+    <!-- Piso 3: Franja inferior -->
     <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-b-lg flex items-center justify-center pr-4 text-white font-bold">
-      Eureka &#64;2025
+      ©2025 Plataforma Educativa
     </div>
   </div>
 

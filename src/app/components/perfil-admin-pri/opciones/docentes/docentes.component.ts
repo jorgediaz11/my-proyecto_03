@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';  // Asegúrate de que el import sea correcto
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { MatDialog } from '@angular/material/dialog';
 //import { UsuarioService, Usuario } from '../../../../services/usuario.service';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
@@ -18,8 +17,7 @@ interface Docente { // Define la interfaz Docente
   templateUrl: './docentes.component.html',
   styleUrls: ['./docentes.component.css']
 })
-// export class DocentesComponent implements OnInit {
-export class DocentesComponent {
+export class DocentesComponent implements OnInit {
   docentes: Docente[] = [
     { id: 1, nombres: 'Juan', apellidos: 'Pérez García', correo: 'juan.perez@colegio.com', telefono: '987654321' },
     { id: 2, nombres: 'Ana', apellidos: 'López Torres', correo: 'ana.lopez@colegio.com', telefono: '912345678' },
@@ -43,27 +41,43 @@ export class DocentesComponent {
     { id: 20, nombres: 'Valeria', apellidos: 'Paredes Soto', correo: 'valeria.paredes@colegio.com', telefono: '921234567' }
   ];
 
-
-
   filteredDocentes: Docente[] = [];
   paginatedDocentes: Docente[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  searchTerm: string = '';
-  docenteForm: FormGroup;
-  showForm: boolean = false;
+  currentPage = 1;
+  itemsPerPage = 10;
+  searchDocente = '';
+  activeTab = 'tabla';
+  showForm = false;
 
-  // Definición de las columnas para la tabla
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
-    this.docenteForm = this.fb.group({
-      usuario: ['', Validators.required],
-      //perfil: [this.perfiles[0]?.value || 'Admin Pri', Validators.required],
-      perfil: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]]
-    });
+  // ✅ PROPIEDADES PARA EL TEMPLATE
+  Math = Math;
+
+  // ✅ FORMULARIOS
+  usuarioForm!: FormGroup;
+  colegioForm!: FormGroup;
+  docenteForm!: FormGroup;
+
+  // ✅ ARRAYS DE OPCIONES
+  perfiles = [
+    { value: 'docente', label: 'Docente' },
+    { value: 'coordinador', label: 'Coordinador' },
+    { value: 'director', label: 'Director' }
+  ];
+
+  departamentos = ['Lima', 'Arequipa', 'Cusco', 'Trujillo', 'Piura'];
+  provincias = ['Lima', 'Callao', 'Huaral', 'Barranca', 'Cajatambo'];
+  distritos = ['San Juan de Lurigancho', 'San Martín de Porres', 'Villa El Salvador'];
+
+  // ✅ TRACKBY FUNCTION FOR PERFORMANCE
+  trackByDocenteId(index: number, docente: Docente): number {
+    return docente.id || index;
+  }
+
+  // ✅ MÉTODO PARA GUARDAR COLEGIO
+  saveColegio(): void {
+    if (this.colegioForm.valid) {
+      console.log('Guardando colegio:', this.colegioForm.value);
+    }
   }
 
   // Método para manejar el evento de clic en el botón de "Crear Docente"
@@ -80,7 +94,7 @@ export class DocentesComponent {
 
   filterDocentes(): void {
     this.filteredDocentes = this.docentes.filter(docente =>
-      docente.nombres.toLowerCase().includes(this.searchTerm.toLowerCase())
+      docente.nombres.toLowerCase().includes(this.searchDocente.toLowerCase())
     );
     this.currentPage = 1;
     this.updatePaginatedDocentes();
@@ -194,8 +208,6 @@ export class DocentesComponent {
       }
     });
   }
-
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
   selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;

@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
+// 📖 Interfaces para tipado completo
 export interface Editor {
   id?: number;
   nombres: string;
@@ -9,34 +11,320 @@ export interface Editor {
   correo: string;
   telefono?: string;
   editorial?: string;
-  // Agrega otros campos según tu modelo
+  documento?: string;
+  fechaNacimiento?: string;
+  direccion?: string;
+  idColegio?: number;
+  estado?: boolean;
+  fechaIngreso?: string;
+  especialidad?: string;
+  librosPublicados?: number;
+  experiencia?: number;
+  areas?: string[];
+  certificaciones?: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateEditorDto {
+  nombres: string;
+  apellidos: string;
+  correo: string;
+  telefono?: string;
+  editorial?: string;
+  documento?: string;
+  fechaNacimiento?: string;
+  direccion?: string;
+  idColegio: number;
+  estado?: boolean;
+  fechaIngreso?: string;
+  especialidad?: string;
+  librosPublicados?: number;
+  experiencia?: number;
+  areas?: string[];
+  certificaciones?: string[];
+}
+
+export interface UpdateEditorDto {
+  nombres?: string;
+  apellidos?: string;
+  correo?: string;
+  telefono?: string;
+  editorial?: string;
+  documento?: string;
+  fechaNacimiento?: string;
+  direccion?: string;
+  idColegio?: number;
+  estado?: boolean;
+  fechaIngreso?: string;
+  especialidad?: string;
+  librosPublicados?: number;
+  experiencia?: number;
+  areas?: string[];
+  certificaciones?: string[];
+}
+
+export interface PaginatedEditoresResponse {
+  data: Editor[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface EditorFilters {
+  nombres?: string;
+  apellidos?: string;
+  correo?: string;
+  editorial?: string;
+  especialidad?: string;
+  idColegio?: number;
+  estado?: boolean;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface EstadisticasEditores {
+  total: number;
+  activos: number;
+  inactivos: number;
+  porEditorial: Record<string, number>;
+  porEspecialidad: Record<string, number>;
+  porColegio: Record<string, number>;
+  promedioLibros: number;
+  experienciaPromedio: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditoresService {
-  private apiUrl = 'http://tu-servidor.com/api/editores'; // Cambia por tu endpoint real
+  private readonly apiUrl = 'http://192.168.1.78:3000/editores';
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  /**
+   * 📋 Obtener todos los editores con paginación y filtros
+   */
+  getEditores(filters: EditorFilters = {}): Observable<PaginatedEditoresResponse> {
+    let params = new HttpParams();
 
-  getEditores(): Observable<Editor[]> {
-    return this.http.get<Editor[]>(this.apiUrl);
+    // Aplicar filtros
+    if (filters.nombres) params = params.set('nombres', filters.nombres);
+    if (filters.apellidos) params = params.set('apellidos', filters.apellidos);
+    if (filters.correo) params = params.set('correo', filters.correo);
+    if (filters.editorial) params = params.set('editorial', filters.editorial);
+    if (filters.especialidad) params = params.set('especialidad', filters.especialidad);
+    if (filters.idColegio) params = params.set('idColegio', filters.idColegio.toString());
+    if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
+
+    // Paginación
+    params = params.set('page', (filters.page || 1).toString());
+    params = params.set('limit', (filters.limit || 10).toString());
+
+    // Ordenamiento
+    if (filters.sortBy) params = params.set('sortBy', filters.sortBy);
+    if (filters.sortOrder) params = params.set('sortOrder', filters.sortOrder);
+
+    return this.http.get<PaginatedEditoresResponse>(this.apiUrl, { params })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 
+  /**
+   * 👤 Obtener editor por ID
+   */
   getEditorPorId(id: number): Observable<Editor> {
-    return this.http.get<Editor>(`${this.apiUrl}/${id}`);
+    if (!id || id <= 0) {
+      return throwError(() => new Error('ID de editor inválido'));
+    }
+
+    return this.http.get<Editor>(`${this.apiUrl}/${id}`)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 
-  crearEditor(editor: Editor): Observable<Editor> {
-    return this.http.post<Editor>(this.apiUrl, editor);
+  /**
+   * ➕ Crear nuevo editor
+   */
+  crearEditor(editor: CreateEditorDto): Observable<Editor> {
+    if (!this.validateEditorData(editor)) {
+      return throwError(() => new Error('Datos de editor inválidos'));
+    }
+
+    return this.http.post<Editor>(this.apiUrl, editor)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
 
-  actualizarEditor(id: number, editor: Editor): Observable<Editor> {
-    return this.http.put<Editor>(`${this.apiUrl}/${id}`, editor);
+  /**
+   * ✏️ Actualizar editor existente
+   */
+  actualizarEditor(id: number, editor: UpdateEditorDto): Observable<Editor> {
+    if (!id || id <= 0) {
+      return throwError(() => new Error('ID de editor inválido'));
+    }
+
+    return this.http.put<Editor>(`${this.apiUrl}/${id}`, editor)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
 
-  eliminarEditor(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  /**
+   * 🗑️ Eliminar editor
+   */
+  eliminarEditor(id: number): Observable<{ message: string }> {
+    if (!id || id <= 0) {
+      return throwError(() => new Error('ID de editor inválido'));
+    }
+
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
+
+  /**
+   * 🔍 Buscar editores por texto
+   */
+  buscarEditores(query: string, limit = 10): Observable<Editor[]> {
+    if (!query || query.trim().length < 2) {
+      return throwError(() => new Error('Query de búsqueda debe tener al menos 2 caracteres'));
+    }
+
+    const params = new HttpParams()
+      .set('q', query.trim())
+      .set('limit', limit.toString());
+
+    return this.http.get<Editor[]>(`${this.apiUrl}/search`, { params })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * 📊 Obtener estadísticas de editores
+   */
+  getEstadisticasEditores(): Observable<EstadisticasEditores> {
+    return this.http.get<EstadisticasEditores>(`${this.apiUrl}/estadisticas`)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * 📋 Obtener editores por editorial
+   */
+  getEditoresPorEditorial(editorial: string): Observable<Editor[]> {
+    if (!editorial || editorial.trim().length === 0) {
+      return throwError(() => new Error('Editorial es requerida'));
+    }
+
+    const params = new HttpParams().set('editorial', editorial);
+
+    return this.http.get<Editor[]>(`${this.apiUrl}/editorial`, { params })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * 📋 Obtener editores por especialidad
+   */
+  getEditoresPorEspecialidad(especialidad: string): Observable<Editor[]> {
+    if (!especialidad || especialidad.trim().length === 0) {
+      return throwError(() => new Error('Especialidad es requerida'));
+    }
+
+    const params = new HttpParams().set('especialidad', especialidad);
+
+    return this.http.get<Editor[]>(`${this.apiUrl}/especialidad`, { params })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * 📝 Validar datos de editor
+   */
+  private validateEditorData(editor: CreateEditorDto | UpdateEditorDto): boolean {
+    if ('nombres' in editor && editor.nombres && editor.nombres.trim().length < 2) {
+      return false;
+    }
+    if ('apellidos' in editor && editor.apellidos && editor.apellidos.trim().length < 2) {
+      return false;
+    }
+    if ('correo' in editor && editor.correo && !this.isValidEmail(editor.correo)) {
+      return false;
+    }
+    if ('librosPublicados' in editor && editor.librosPublicados && editor.librosPublicados < 0) {
+      return false;
+    }
+    if ('experiencia' in editor && editor.experiencia && editor.experiencia < 0) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * 📧 Validar formato de email
+   */
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  /**
+   * 🚨 Manejo centralizado de errores
+   */
+  private handleError = (error: unknown) => {
+    console.error('Error en EditoresService:', error);
+
+    let errorMessage = 'Error desconocido';
+
+    if (error && typeof error === 'object' && 'error' in error) {
+      const httpError = error as { error?: { message?: string }; message?: string; status?: number; statusText?: string };
+      if (httpError.error?.message) {
+        errorMessage = httpError.error.message;
+      } else if (httpError.message) {
+        errorMessage = httpError.message;
+      } else if (httpError.status) {
+        switch (httpError.status) {
+          case 400:
+            errorMessage = 'Datos inválidos';
+            break;
+          case 401:
+            errorMessage = 'No autorizado';
+            break;
+          case 403:
+            errorMessage = 'Acceso prohibido';
+            break;
+          case 404:
+            errorMessage = 'Editor no encontrado';
+            break;
+          case 500:
+            errorMessage = 'Error interno del servidor';
+            break;
+          default:
+            errorMessage = `Error ${httpError.status}: ${httpError.statusText}`;
+        }
+      }
+    }
+
+    return throwError(() => new Error(errorMessage));
+  };
 }

@@ -1,112 +1,428 @@
-<h2>Perfil</h2>
-<!-- Este es el contenido de la pestaña de gestión de usuarios -->
-<div class="tabs">
-  <!-- Encabezados de las pestañas -->
-  <div class="tab-header">
-    <!-- <button class="tab-button active" (click)="selectTab('listado')">Perfil</button>
-    <button class="tab-button" (click)="selectTab('perfil')">Historial</button> -->
-    <button class="tab-button" [class.active]="activeTab === 'perfil'" (click)="selectTab('perfil')">Perfil</button>
-    <button class="tab-button" [class.active]="activeTab === 'listado'" (click)="selectTab('listado')">Historial</button>
+<!-- Perfil Component HTML -->
+<div class="perfil-container w-full max-w-full">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Perfil</h2>
+
+  <!-- ✅ PESTAÑAS OPTIMIZADAS CON TAILWIND CSS -->
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="flex space-x-8" aria-label="Tabs">
+
+      <!-- Pestaña 1: Perfil del Usuario -->
+      <button
+        type="button"
+        (click)="activeTab = 'perfil'"
+        [class]="activeTab === 'perfil'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'perfil'"
+      >
+        <i class="fas fa-user mr-2"></i>
+        Mi Perfil
+      </button>
+
+      <!-- Pestaña 2: Historial -->
+      <button
+        type="button"
+        (click)="activeTab = 'historial'"
+        [class]="activeTab === 'historial'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'historial'"
+      >
+        <i class="fas fa-history mr-2"></i>
+        Historial de Accesos
+      </button>
+
+      <!-- Pestaña 3: Configuración -->
+      <button
+        type="button"
+        (click)="activeTab = 'configuracion'"
+        [class]="activeTab === 'configuracion'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'configuracion'"
+      >
+        <i class="fas fa-cogs mr-2"></i>
+        Configuración
+      </button>
+
+    </nav>
   </div>
 
-  <!-- Contenido de las pestañas -->
+  <!-- ✅ CONTENIDO DE LAS PESTAÑAS -->
   <div class="tab-content">
 
-    <!-- Pestaña de Listado de Usuarios -->
-    <div class="tab-panel" [ngClass]="{ active: activeTab === 'perfil' }">
+    <!-- Panel: Mi Perfil -->
+    <div
+      *ngIf="activeTab === 'perfil'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-perfil'"
+    >
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">Información Personal</h3>
+            <p class="mt-1 text-sm text-gray-500">Actualiza tu información personal y configuraciones de cuenta</p>
+          </div>
 
-        <!-- Tab Perfil reorganizado con Tailwind -->
-        <div class="flex bg-white rounded-lg shadow p-6 gap-8">
-          <!-- Sección 1: Imagen y Rol -->
-          <div class="flex flex-col items-center justify-start min-w-[180px]">
-            <img [src]="perfilForm.value.foto" alt="Foto de perfil"
-                class="w-32 h-32 rounded-full mb-4 object-cover border border-gray-300 shadow" />
-            <span class="mt-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Administrador Pri</span>
-          </div>
-          <!-- Línea divisoria vertical -->
-          <div class="border-l border-gray-300 mx-6"></div>
-          <!-- Sección 2: Campos del perfil -->
-          <div class="flex-1">
-            <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()" class="grid grid-cols-1 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Nombres:</label>
-                <input formControlName="nombres" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Apellidos:</label>
-                <input formControlName="apellidos" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Correo:</label>
-                <input formControlName="correo" type="email" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Teléfono:</label>
-                <input formControlName="telefono" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Foto (URL):</label>
-                <input formControlName="foto" class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Contraseña:</label>
-                <div class="flex items-center">
-                  <input [type]="mostrarContrasena ? 'text' : 'password'" formControlName="contrasena"
-                        class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-                  <button type="button" (click)="mostrarContrasena = !mostrarContrasena"
-                          class="ml-2 text-xs text-blue-600 underline">Mostrar</button>
+          <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()" class="p-6">
+            <div class="space-y-6">
+              <!-- Imagen y información básica -->
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-6">
+                  <!-- Nombres y Apellidos -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
+                      <input
+                        type="text"
+                        id="nombres"
+                        formControlName="nombres"
+                        placeholder="Ingrese sus nombres"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="perfilForm.get('nombres')?.invalid && perfilForm.get('nombres')?.touched"
+                      >
+                      <div *ngIf="perfilForm.get('nombres')?.invalid && perfilForm.get('nombres')?.touched" class="mt-1 text-sm text-red-600">
+                        Este campo es requerido
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
+                      <input
+                        type="text"
+                        id="apellidos"
+                        formControlName="apellidos"
+                        placeholder="Ingrese sus apellidos"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="perfilForm.get('apellidos')?.invalid && perfilForm.get('apellidos')?.touched"
+                      >
+                      <div *ngIf="perfilForm.get('apellidos')?.invalid && perfilForm.get('apellidos')?.touched" class="mt-1 text-sm text-red-600">
+                        Este campo es requerido
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Correo y Teléfono -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
+                      <input
+                        type="email"
+                        id="correo"
+                        formControlName="correo"
+                        placeholder="usuario@ejemplo.com"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="perfilForm.get('correo')?.invalid && perfilForm.get('correo')?.touched"
+                      >
+                      <div *ngIf="perfilForm.get('correo')?.errors?.['required'] && perfilForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
+                        El correo es obligatorio
+                      </div>
+                      <div *ngIf="perfilForm.get('correo')?.errors?.['email'] && perfilForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
+                        Ingresa un correo válido
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                      <input
+                        type="text"
+                        id="telefono"
+                        formControlName="telefono"
+                        placeholder="Ingrese su teléfono"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Foto de perfil -->
+                <div class="flex items-center justify-center">
+                  <div class="text-center">
+                    <img
+                      [src]="perfilForm.value.foto || '/assets/images/user_admin.png'"
+                      alt="Foto de perfil"
+                      class="w-32 h-32 rounded-full border-4 border-gray-200 shadow-sm mx-auto object-cover"
+                    >
+                    <p class="mt-2 text-sm text-gray-500">Foto de perfil</p>
+                    <span class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                      Administrador Principal
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <!-- URL de la foto -->
               <div>
-                <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña:</label>
-                <div class="flex items-center">
-                  <input [type]="mostrarConfirmar ? 'text' : 'password'" formControlName="confirmarContrasena"
-                        class="mt-1 block w-full rounded border-gray-300 shadow-sm" />
-                  <button type="button" (click)="mostrarConfirmar = !mostrarConfirmar"
-                          class="ml-2 text-xs text-blue-600 underline">Mostrar</button>
+                <label for="foto" class="block text-sm font-medium text-gray-700 mb-2">URL de la Foto</label>
+                <input
+                  type="url"
+                  id="foto"
+                  formControlName="foto"
+                  placeholder="https://ejemplo.com/foto.jpg"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                >
+              </div>
+
+              <!-- Cambio de contraseña -->
+              <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Cambiar Contraseña</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label for="contrasena" class="block text-sm font-medium text-gray-700 mb-2">Nueva Contraseña</label>
+                    <div class="relative">
+                      <input
+                        [type]="mostrarContrasena ? 'text' : 'password'"
+                        id="contrasena"
+                        formControlName="contrasena"
+                        placeholder="Ingrese nueva contraseña"
+                        class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      >
+                      <button
+                        type="button"
+                        (click)="mostrarContrasena = !mostrarContrasena"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                        <i [class]="mostrarContrasena ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-gray-400"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="confirmarContrasena" class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                    <div class="relative">
+                      <input
+                        [type]="mostrarConfirmar ? 'text' : 'password'"
+                        id="confirmarContrasena"
+                        formControlName="confirmarContrasena"
+                        placeholder="Confirme la contraseña"
+                        class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      >
+                      <button
+                        type="button"
+                        (click)="mostrarConfirmar = !mostrarConfirmar"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                        <i [class]="mostrarConfirmar ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-gray-400"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Error de contraseñas no coinciden -->
+                <div *ngIf="perfilForm.errors?.['mismatch']" class="mt-4 rounded-md bg-red-50 p-4">
+                  <div class="flex">
+                    <i class="fas fa-exclamation-circle text-red-400 mr-3 mt-0.5"></i>
+                    <div class="text-sm text-red-700">
+                      Las contraseñas no coinciden
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div *ngIf="perfilForm.errors?.mismatch" class="text-red-600 text-sm">
-                Las contraseñas no coinciden.
+
+              <!-- Botones -->
+              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  (click)="resetForm()"
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                >
+                  Restablecer
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="perfilForm.invalid || loading"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
+                  Guardar Cambios
+                </button>
               </div>
-              <button type="submit" [disabled]="!perfilForm.valid"
-                      class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Guardar Cambios
-              </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-
+      </div>
     </div>
 
-    <!-- Pestaña de Agregar Usuario -->
-    <div class="tab-panel" [ngClass]="{ active: activeTab === 'listado' }">
-      <h3 class="text-lg font-semibold mb-4">Historial de Accesos</h3>
-      <div class="overflow-x-auto rounded-lg shadow">
-        <table class="table-auto bg-white w-full">
-          <thead>
-            <tr>
-              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Fecha</th>
-              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">Hora</th>
-              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">PC</th>
-              <th class="px-6 py-3 bg-[#4EAD4F] text-left text-xs font-bold text-white uppercase tracking-wider">IP</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let acceso of historialAccesos; let i = index"
-                [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
-                class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.fecha }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.hora }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.pc }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ acceso.ip }}</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- Panel: Historial de Accesos -->
+    <div
+      *ngIf="activeTab === 'historial'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-historial'"
+    >
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h3 class="text-lg font-medium text-gray-900">Historial de Accesos</h3>
+          <p class="mt-1 text-sm text-gray-500">Registro de tus últimos accesos al sistema</p>
+        </div>
+
+        <!-- Tabla de historial -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PC/Dispositivo</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección IP</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let acceso of historialAccesos; let i = index" class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ acceso.fecha }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ acceso.hora }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ acceso.pc }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ acceso.ip }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Exitoso
+                  </span>
+                </td>
+              </tr>
+
+              <!-- Estado vacío -->
+              <tr *ngIf="historialAccesos.length === 0">
+                <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <i class="fas fa-history text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-lg font-medium text-gray-900 mb-2">No hay registros</p>
+                    <p class="text-gray-500">Aún no se han registrado accesos al sistema.</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Configuración -->
+    <div
+      *ngIf="activeTab === 'configuracion'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-configuracion'"
+    >
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900">Configuración del Sistema</h3>
+            <p class="mt-1 text-sm text-gray-500">Configuraciones avanzadas y preferencias del usuario</p>
+          </div>
+
+          <div class="p-6">
+            <div class="space-y-6">
+              <!-- Información del sistema -->
+              <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Información del Sistema</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Rol del usuario</dt>
+                    <dd class="mt-1">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Administrador Principal
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Estado de la cuenta</dt>
+                    <dd class="mt-1">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Activa
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Último acceso</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ todayES }}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Sesión iniciada desde</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ todayES }}</dd>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Preferencias -->
+              <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h4 class="text-base font-medium text-gray-900 mb-4">Preferencias</h4>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <label for="notificacionesEmail" class="text-sm font-medium text-gray-700">Notificaciones por email</label>
+                      <p class="text-sm text-gray-500">Recibir notificaciones importantes por correo electrónico</p>
+                    </div>
+                    <div class="ml-4">
+                      <input id="notificacionesEmail" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <label for="modoOscuro" class="text-sm font-medium text-gray-700">Modo oscuro</label>
+                      <p class="text-sm text-gray-500">Activar tema oscuro para la interfaz</p>
+                    </div>
+                    <div class="ml-4">
+                      <input id="modoOscuro" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <label for="autoGuardar" class="text-sm font-medium text-gray-700">Auto-guardar</label>
+                      <p class="text-sm text-gray-500">Guardar automáticamente los cambios en formularios</p>
+                    </div>
+                    <div class="ml-4">
+                      <input id="autoGuardar" type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded" checked>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botones de configuración -->
+              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                >
+                  Restablecer Configuración
+                </button>
+                <button
+                  type="button"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                >
+                  Guardar Preferencias
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
-
 </div>
-<!-- Fin de la pestaña de Agregar Usuario -->
+
+<!-- Loading overlay -->
+<div
+  *ngIf="loading"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  role="dialog"
+  aria-label="Cargando"
+>
+  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+      <div>
+        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+        <p class="text-sm text-gray-500">Por favor espera un momento</p>
+      </div>
+    </div>
+  </div>
+</div>

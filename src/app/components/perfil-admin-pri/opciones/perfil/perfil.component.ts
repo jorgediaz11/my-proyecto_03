@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -16,8 +16,12 @@ export class PerfilComponent {
   };
 
   perfilForm: FormGroup;
-  mostrarContrasena: boolean = false;
-  mostrarConfirmar: boolean = false;
+  mostrarContrasena = false;
+  mostrarConfirmar = false;
+
+  // ✅ Propiedades necesarias para la plantilla HTML estandarizada
+  loading = false;
+  todayES: string = new Date().toLocaleDateString('es-ES');
 
   activeTab = 'perfil'; // Pestaña activa por defecto
 
@@ -28,7 +32,10 @@ export class PerfilComponent {
   ];
 
 
-  constructor(private fb: FormBuilder) {            // Constructor
+  // Inyección de dependencias
+  private fb = inject(FormBuilder);
+
+  constructor() {            // Constructor
     this.perfilForm = this.fb.group({
       nombres: [this.usuarioActivo.nombres, Validators.required],
       apellidos: [this.usuarioActivo.apellidos, Validators.required],
@@ -50,11 +57,25 @@ export class PerfilComponent {
       // Actualizar datos del usuario activo (simulado)
       Object.assign(this.usuarioActivo, this.perfilForm.value);
       alert('Datos actualizados correctamente');
+      console.log('Datos del perfil guardados:', this.perfilForm.value);
     }
     }
 
-  selectTab(tab: string) {
+  selectTab(tab: string): void {   // Método para cambiar de pestaña
     this.activeTab = tab;
+  }
+
+  // ✅ Métodos adicionales necesarios para la plantilla estandarizada
+  resetForm() {
+    this.perfilForm.reset();
+    // Restaurar valores originales
+    this.perfilForm.patchValue({
+      nombres: this.usuarioActivo.nombres,
+      apellidos: this.usuarioActivo.apellidos,
+      correo: this.usuarioActivo.correo,
+      telefono: this.usuarioActivo.telefono,
+      foto: this.usuarioActivo.foto
+    });
   }
 
 }

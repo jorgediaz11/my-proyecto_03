@@ -1,98 +1,488 @@
-/* Contenedor principal en diseño de 2x2 */
-.contenedor-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-  gap: 20px; /* Espaciado entre los elementos */
-  padding: 20px;
+/* ==================================================
+   PERFIL FAMILIA MURO COMPONENT - DASHBOARD ESTILOS
+   ================================================== */
+
+/* Variables CSS para consistencia del dashboard */
+:root {
+  --familia-primary: #4EAD4F;
+  --familia-primary-dark: #145c32;
+  --familia-secondary: #a855f7;
+  --familia-background: #f8fafc;
+  --familia-card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --familia-hover-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --familia-border-radius: 8px;
+  --familia-transition: all 0.2s ease-in-out;
+
+  /* Variables específicas del dashboard */
+  --excelente-bg: #dcfce7;
+  --excelente-text: #15803d;
+  --bueno-bg: #dbeafe;
+  --bueno-text: #1d4ed8;
+  --regular-bg: #fef3c7;
+  --regular-text: #d97706;
+  --necesita-mejora-bg: #fee2e2;
+  --necesita-mejora-text: #dc2626;
 }
 
-/* Estilo para cada elemento */
-.contenedor-item {
+/* Dashboard Familia - Seguimiento Académico LMS */
+
+.dashboard-familia {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Animaciones suaves */
+.dashboard-familia * {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Cards de estadísticas con hover effect */
+.dashboard-familia .bg-white:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--familia-hover-shadow);
+}
+
+/* Estados de comportamiento */
+.comportamiento-excelente {
+  background-color: var(--excelente-bg);
+  color: var(--excelente-text);
+}
+
+.comportamiento-bueno {
+  background-color: var(--bueno-bg);
+  color: var(--bueno-text);
+}
+
+.comportamiento-regular {
+  background-color: var(--regular-bg);
+  color: var(--regular-text);
+}
+
+.comportamiento-necesita-mejora {
+  background-color: var(--necesita-mejora-bg);
+  color: var(--necesita-mejora-text);
+}
+
+/* Calificaciones por color */
+.nota-excelente {
+  color: var(--excelente-text);
+  font-weight: bold;
+}
+
+.nota-buena {
+  color: var(--bueno-text);
+  font-weight: 600;
+}
+
+.nota-regular {
+  color: var(--regular-text);
+  font-weight: 600;
+}
+
+.nota-baja {
+  color: var(--necesita-mejora-text);
+  font-weight: bold;
+}
+
+/* Comunicaciones no leídas */
+.comunicacion-nueva {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-left: 4px solid #ef4444;
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-left-color: #ef4444;
+  }
+  50% {
+    border-left-color: #f87171;
+  }
+}
+
+/* Eventos próximos */
+.evento-urgente {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 2px solid #ef4444;
+}
+
+.evento-proximo {
+  background: linear-gradient(135deg, #fefbf2 0%, #fef3c7 100%);
+  border: 2px solid #f59e0b;
+}
+
+.evento-normal {
+  background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+  border: 2px solid #3b82f6;
+}
+
+/* Cards de estudiantes */
+.estudiante-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.estudiante-card:hover {
+  border-color: #a855f7;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(168, 85, 247, 0.2);
+}
+
+/* Promedio visual */
+.promedio-container {
+  position: relative;
+  display: inline-block;
+}
+
+.promedio-excelente::after {
+  content: '🌟';
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-size: 0.8em;
+}
+
+.promedio-bueno::after {
+  content: '👍';
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-size: 0.8em;
+}
+
+/* Badges personalizados */
+.badge-tipo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: capitalize;
+}
+
+.badge-reunion {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-examen {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-evento {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+
+.badge-entrega {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge-ceremonia {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+/* Notificaciones */
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc; /* Borde fino */
-  border-radius: 10px; /* Bordes semiredondeados */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de transición */
-  background-color: #F3FEF5;  /* Fondo claro */
+  justify-content: center;
+  animation: bounce-notification 2s infinite;
 }
 
-/* Efecto al pasar el mouse */
-.contenedor-item:hover {
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+@keyframes bounce-notification {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
 }
 
-/* Imagen */
-.contenedor-item img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover; /* Asegura que la imagen se ajuste al tamaño */
-  margin-right: 20px; /* Espaciado entre la imagen y el texto */
-  border-radius: 5px; /* Bordes ligeramente redondeados */
-}
-
-/* Título */
-.contenedor-title {
-  font-size: 1em;
-  font-weight: bold;
-  color: #333;
-  text-decoration: none; /* Sin subrayado */
-  transition: color 0.3s ease; /* Transición para el color */
-}
-
-/* Efecto al pasar el mouse sobre el título */
-.contenedor-title:hover {
-  color: #28a745; /* Color verde */
-}
-
-/* Contadores */
-.counters {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
-}
-
-.counter-item {
-  text-align: center;
-  background-color: #f8f9fa;  /* Color de fondo claro */
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.counter-item h3 {
-  margin: 0;
-  font-size: 1.2em;
-  color: #333;
-}
-
-.counter-item p {
-  margin: 5px 0 0;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #28a745; /* Color verde */
-}
-
-/* Gráfica */
+/* Gráficos container */
 .chart-container {
-  margin: 20px auto;
-  padding: 20px;
-  background-color: white; /* Fondo blanco */
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  position: relative;
+  height: 256px;
+  width: 100%;
 }
 
-.chart-container h3 {
+/* Tabla de calificaciones */
+.notas-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.notas-table th,
+.notas-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notas-table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Timeline de comunicaciones */
+.comunicacion-timeline {
+  position: relative;
+  padding-left: 20px;
+}
+
+.comunicacion-timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.comunicacion-item {
+  position: relative;
   margin-bottom: 20px;
-  font-size: 1.5em;
-  color: #333;
 }
 
-canvas {
-  max-width: 100%;
-  height: 400px; /* Define una altura específica */
-  display: block;
-  margin: 0 auto;
+.comunicacion-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b7280;
+}
+
+.comunicacion-item.nueva::before {
+  background: #ef4444;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Calendario de eventos */
+.evento-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.evento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.evento-importante {
+  border: 2px solid #ef4444;
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+}
+
+.evento-importante::before {
+  content: '⚠️';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2em;
+}
+
+/* Indicadores de días restantes */
+.dias-urgente {
+  color: #dc2626;
+  font-weight: bold;
+  animation: parpadeo 1s infinite;
+}
+
+.dias-proximo {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.dias-normal {
+  color: #059669;
+  font-weight: 500;
+}
+
+@keyframes parpadeo {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.5;
+  }
+}
+
+/* Efectos de navegación */
+.nav-familia {
+  background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-familia:hover {
+  background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Scrollbar personalizado */
+.dashboard-familia ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dashboard-familia ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dashboard-familia ::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 3px;
+}
+
+.dashboard-familia ::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-familia {
+    padding: 1rem;
+  }
+
+  .dashboard-familia h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-familia .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-buttons {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .evento-card,
+  .estudiante-card {
+    padding: 16px;
+  }
+}
+
+/* Estados de carga */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+/* Animación de entrada */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-familia > div {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Focus states para accesibilidad */
+.dashboard-familia button:focus,
+.dashboard-familia [tabindex]:focus {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Efectos especiales para familia */
+.familia-header {
+  background: linear-gradient(135deg, #fdf4ff 0%, #f3e8ff 50%, #e879f9 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.corazon-animado {
+  animation: latido 1.5s ease-in-out infinite;
+}
+
+@keyframes latido {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mensajes de felicitación */
+.mensaje-felicitacion {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-left: 4px solid #10b981;
+}
+
+.mensaje-alerta {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-left: 4px solid #ef4444;
+}
+
+.mensaje-info {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-left: 4px solid #3b82f6;
+}
+
+.mensaje-citacion {
+  background: linear-gradient(135deg, #fefbf2 0%, #fef3c7 100%);
+  border-left: 4px solid #f59e0b;
 }

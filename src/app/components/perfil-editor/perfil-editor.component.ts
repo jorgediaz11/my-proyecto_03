@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 
 interface MenuItem {
   label: string;
@@ -10,47 +12,118 @@ interface MenuItem {
 
 @Component({
 // standalone: true,
-  selector: 'perfil-editor',
+  selector: 'app-perfil-editor',
   templateUrl: './perfil-editor.component.html',
   styleUrl: './perfil-editor.component.css'
 })
-export class PerfilEditorComponent {
+export class PerfilEditorComponent implements OnInit, OnDestroy {
+
+  // ✅ Inyección de dependencias con inject()
+  private router = inject(Router);
+  private userStateService = inject(UserStateService);
+  private cdr = inject(ChangeDetectorRef);
+
+  // ✅ Propiedades para el usuario
+  usuarioActual: UsuarioAutenticado | null = null;
+  private userSubscription: Subscription = new Subscription();
+
+  // ✅ Propiedades de la interfaz
+  showUserMenu = false;
+  showSidebar = true;
+
   // Lógica específica del componente
   menuItems: MenuItem[] = [
     { label: 'Inicio', icon: 'home', route: '//perfil-editor', disabled: false },                   // Habilitado
-    { label: 'Clases', icon: 'chalkboard-teacher', route: '/', disabled: true },              // Deshabilitado
-    { label: 'Estudiantes', icon: 'user-graduate', route: '/', disabled: true },              // Deshabilitado
-    { label: 'Calificaciones', icon: 'clipboard-list', route: '/', disabled: true },          // Deshabilitado
+    { label: 'Material', icon: 'book-open', route: '/', disabled: true },                     // Deshabilitado
+    { label: 'Productos', icon: 'cube', route: '/', disabled: true },                         // Deshabilitado
+    { label: 'Recursos', icon: 'document-download', route: '/', disabled: true },             // Deshabilitado
     { label: 'Reportes', icon: 'chart-bar', route: '/', disabled: true },                     // Deshabilitado
     { label: 'Mensajería', icon: 'envelope', route: '/', disabled: true },                    // Deshabilitado
     { label: 'Cerrar sesión', icon: 'sign-out-alt', route: '/opciones' , disabled: false },   // Cerrar sesión
   ];
 
-  // isMenuOpen = true; // Controla el estado del menú (abierto/cerrado)
+  ngOnInit(): void {
+    console.log('🚀 PerfilEditorComponent iniciando...');
 
-  // toggleMenu() {
-  //   this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
-  // }
+    // ✅ Suscripción al usuario actual
+    this.userSubscription = this.userStateService.usuarioActual$.subscribe({
+      next: (usuario) => {
+        console.log('👤 Usuario recibido en PerfilEditor:', usuario);
+        this.usuarioActual = usuario;
+        this.cdr.detectChanges(); // Forzar detección de cambios
+      },
+      error: (error) => {
+        console.error('❌ Error en suscripción de usuario:', error);
+      }
+    });
 
-  constructor(private router: Router) {}
+    // ✅ Cargar usuario inicial si existe
+    const usuarioInicial = this.userStateService.getUsuarioActual();
+    if (usuarioInicial) {
+      console.log('👤 Usuario inicial encontrado:', usuarioInicial);
+      this.usuarioActual = usuarioInicial;
+    } else {
+      console.log('⚠️ No se encontró usuario inicial');
+    }
+  }
 
+  ngOnDestroy(): void {
+    console.log('🔄 PerfilEditorComponent destruyendo...');
+    this.userSubscription.unsubscribe();
+  }
+
+  // ✅ Getters para el template
+  get nombreUsuario(): string {
+    return this.usuarioActual?.nombre || 'Usuario';
+  }
+
+  get rolUsuario(): string {
+    return this.userStateService.getRoleName(this.usuarioActual?.idrol || 0);
+  }
+
+  get iniciales(): string {
+    if (!this.usuarioActual?.nombre) return 'U';
+
+    const nombres = this.usuarioActual.nombre.split(' ');
+    if (nombres.length >= 2) {
+      return (nombres[0].charAt(0) + nombres[1].charAt(0)).toUpperCase();
+    }
+    return nombres[0].charAt(0).toUpperCase();
+  }
+
+  get statusText(): string {
+    return this.usuarioActual?.estado === 'activo' ? 'ACTIVO' : 'INACTIVO';
+  }
+
+  get statusColor(): string {
+    return this.usuarioActual?.estado === 'activo' ? 'text-green-500' : 'text-red-500';
+  }
+
+  readonly avatarUrl = 'assets/images/default-avatar.png';
+
+  // ✅ Métodos de navegación
   irAlLogin() {
-    this.router.navigate(['/login']); // Cambié 'irAlLogin' a 'irAlLogin'
+    this.router.navigate(['/login']);
   }
 
   irAInicio() {
-    this.router.navigate(['/']);  // Cambié 'irAInicio' a 'irAInicio'
+    this.router.navigate(['/']);
   }
 
-  showUserMenu = false; // Cambié 'showUserMenu' a 'showUserMenu'
-  showSidebar = true;   // Cambié 'showSidebar' a 'showSidebar'
-
+  // ✅ Métodos de la interfaz
   toggleUserMenu() {
-    this.showUserMenu = !this.showUserMenu; // Cambié 'toggleUserMenu' a 'toggleUserMenu'
+    this.showUserMenu = !this.showUserMenu;
   }
 
   toggleSidebar() {
-    this.showSidebar = !this.showSidebar; // Cambié 'toggleSidebar' a 'toggleSidebar'
+    this.showSidebar = !this.showSidebar;
+  }
+
+  // ✅ Método para cerrar sesión
+  cerrarSesion(): void {
+    console.log('🚪 Cerrando sesión desde PerfilEditor...');
+    this.userStateService.limpiarUsuario();
+    this.router.navigate(['/login']);
   }
 
 

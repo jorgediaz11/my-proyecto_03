@@ -100,8 +100,8 @@
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="assets/images/user_admin.png"
-              alt="user photo"
+              [src]="avatarUsuario"
+              [alt]="nombreUsuario + ' photo'"
             />
           </button>
 
@@ -112,11 +112,11 @@
             <div class="py-3 px-4 bg-gray-50 dark:bg-[#76B177]">
               <span
                 class="block text-sm font-semibold text-gray-900 dark:text-white"
-                >Jorgito Diaz</span
+                >{{ nombreUsuario }}</span
               >
               <span
                 class="block text-sm text-gray-900 truncate dark:text-white"
-                >Admin principal </span
+                >{{ rolUsuario }}</span
               >
             </div>
             <ul
@@ -143,10 +143,13 @@
               aria-labelledby="dropdown"
             >
               <li>
-                <a
-                  href="/login"
-                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Cerrar sesión</a
+                <button
+                  (click)="cerrarSesion()"
+                  (keyup.enter)="cerrarSesion()"
+                  type="button"
+                  class="block w-full text-left py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                  tabindex="0"
+                  >Cerrar sesión</button
                 >
               </li>
             </ul>
@@ -193,8 +196,36 @@
             />
           </div>
         </form>
-        <ul class="space-y-2">
 
+
+        <ul>
+          <!-- Usuario autenticado actual -->
+          <li class="px-3 py-2 mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-l-4 border-green-500">
+            <div class="flex items-center space-x-3">
+              <!-- Avatar pequeño -->
+              <div class="flex-shrink-0">
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                  {{ iniciales }}
+                </div>
+              </div>
+              <!-- Información del usuario -->
+              <div class="flex-1 min-w-0">
+                <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  <span [class]="statusColor">●</span> {{ statusText }}
+                </div>
+                <div class="font-medium text-gray-900 dark:text-white text-sm truncate">
+                  {{ nombreUsuario }}
+                </div>
+                <div class="text-xs text-gray-600 dark:text-gray-300">
+                  {{ rolUsuario }}
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- Fin de usuario autenticado -->
+        </ul>
+
+        <ul class="space-y-2">
           <li>
             <a
               [routerLink]="['/perfil-admin-pri']"
@@ -452,9 +483,12 @@
 
           <!--Cerrar Sesion-->
           <li>
-            <a
-              href="/login"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+            <button
+              (click)="cerrarSesion()"
+              (keyup.enter)="cerrarSesion()"
+              type="button"
+              class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group cursor-pointer transition-colors"
+              title="Cerrar sesión y volver al login"
             >
               <svg
                 aria-hidden="true"
@@ -463,16 +497,10 @@
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <!-- <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path> -->
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6m-6 0a2 2 0 01-2-2v-2a2 2 0 012-2h6a2 2 0 012 2v2a2 2 0 01-2 2m-6 0v2a2 2 0 002 2h2a2 2 0 002-2v-2" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               <span class="ml-3 whitespace-nowrap">Cerrar sesión</span>
-              <!-- <span
-                class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800"
-              >
-              </span> -->
-            </a>
+            </button>
           </li>
 
         </ul>

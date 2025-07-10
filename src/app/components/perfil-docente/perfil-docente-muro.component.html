@@ -1,51 +1,144 @@
-<h2>Bienvenido al Muro - Perfil Docente 002</h2>
-<!-- <p>Este es el contenido predeterminado que se muestra al ingresar al perfil de administrador principal.</p> -->
-<!-- Contadores -->
-<div class="counters">
-  <div class="counter-item">
-    <h3>Colegios</h3>
-    <p>{{ totalColegios }}</p>
+<div class="bg-gray-50 min-h-screen p-6">
+  <!-- Header personalizado -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      👨‍🏫 Bienvenido, Prof. {{ nombreDocente }}
+    </h1>
+    <p class="text-gray-600">Dashboard Docente - Gestiona tus clases y estudiantes</p>
   </div>
-  <div class="counter-item">
-    <h3>Profesores</h3>
-    <p>{{ totalProfesores }}</p>
+
+  <!-- Contadores del docente -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-blue-600">{{ totalClases }}</div>
+      <div class="text-sm text-gray-600">Mis Clases</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-green-600">{{ clasesActivas }}</div>
+      <div class="text-sm text-gray-600">Clases Activas</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-purple-600">{{ totalEstudiantesAcargo }}</div>
+      <div class="text-sm text-gray-600">Total Estudiantes</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-yellow-600">{{ promedioAsistencia }}%</div>
+      <div class="text-sm text-gray-600">Asistencia Promedio</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+      <div class="text-2xl font-bold text-red-600">{{ estudiantesEnRiesgo }}</div>
+      <div class="text-sm text-gray-600">Estudiantes en Riesgo</div>
+    </div>
   </div>
-  <div class="counter-item">
-    <h3>Alumnos</h3>
-    <p>{{ totalAlumnos }}</p>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Sección: Mis Clases -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">📚 Mis Clases</h2>
+      <div class="space-y-4">
+        <div *ngFor="let clase of misClases" class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-semibold text-gray-800">{{ clase.nombre }}</h3>
+            <span class="text-lg">{{ getEstadoClaseIcon(clase.estado) }}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
+            <p>📖 {{ clase.materia }}</p>
+            <p>🎓 {{ clase.grado }} {{ clase.seccion }}</p>
+            <p>🏫 {{ clase.aula }}</p>
+            <p>⏰ {{ formatearHorario(clase.horario) }}</p>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-gray-600">Asistencia:</span>
+            <span [class]="getAsistenciaColor(getClasePorcentajeAsistencia(clase))" class="text-sm font-semibold">
+              {{ clase.estudiantesPresentes }}/{{ clase.totalEstudiantes }} ({{ getClasePorcentajeAsistencia(clase) }}%)
+            </span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+            <div
+              class="h-2 rounded-full"
+              [style.width.%]="getClasePorcentajeAsistencia(clase)"
+              [ngClass]="{
+                'bg-green-500': getClasePorcentajeAsistencia(clase) >= 90,
+                'bg-yellow-500': getClasePorcentajeAsistencia(clase) >= 80 && getClasePorcentajeAsistencia(clase) < 90,
+                'bg-red-500': getClasePorcentajeAsistencia(clase) < 80
+              }">
+            </div>
+          </div>
+          <div class="text-xs text-gray-500">
+            <p>🕐 Próxima clase: {{ clase.proximaClase }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Lista de Estudiantes -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">👥 Mis Estudiantes</h2>
+      <div class="space-y-3 max-h-96 overflow-y-auto">
+        <div *ngFor="let estudiante of misEstudiantes" class="border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <h4 class="font-semibold text-gray-800">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
+              <p class="text-sm text-gray-600">{{ estudiante.grado }} - {{ estudiante.clase }}</p>
+            </div>
+            <span class="text-lg">{{ getPromedioIcon(estudiante.promedio) }}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-sm mb-2">
+            <div>
+              <span class="text-gray-600">Promedio:</span>
+              <span [class]="getPromedioColor(estudiante.promedio)" class="font-semibold ml-1">
+                {{ estudiante.promedio }}
+              </span>
+            </div>
+            <div>
+              <span class="text-gray-600">Asistencia:</span>
+              <span [class]="getAsistenciaColor(estudiante.asistencia)" class="font-semibold ml-1">
+                {{ estudiante.asistencia }}%
+              </span>
+            </div>
+          </div>
+          <div *ngIf="estudiante.ultimaEvaluacion" class="text-xs text-gray-500 mb-1">
+            Última evaluación: {{ estudiante.ultimaEvaluacion }}
+          </div>
+          <div *ngIf="estudiante.comentarios" class="text-xs text-gray-600 bg-gray-100 p-2 rounded">
+            💬 {{ estudiante.comentarios }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="counter-item">
-    <h3>Cursos</h3>
-    <p>{{ totalCursos }}</p>
+
+  <!-- Sección: Estudiantes en Riesgo -->
+  <div class="bg-white rounded-lg shadow-md p-6 mt-6" *ngIf="getEstudiantesEnRiesgo().length > 0">
+    <h2 class="text-xl font-bold text-red-600 mb-4">⚠️ Estudiantes que Requieren Atención</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let estudiante of getEstudiantesEnRiesgo()" class="border-l-4 border-red-500 bg-red-50 p-4 rounded">
+        <h4 class="font-semibold text-gray-800">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
+        <p class="text-sm text-gray-600 mb-2">{{ estudiante.grado }}</p>
+        <div class="space-y-1 text-sm">
+          <div *ngIf="estudiante.promedio < 14">
+            <span class="text-red-600 font-semibold">⚠️ Promedio bajo:</span> {{ estudiante.promedio }}
+          </div>
+          <div *ngIf="estudiante.asistencia < 80">
+            <span class="text-red-600 font-semibold">⚠️ Asistencia baja:</span> {{ estudiante.asistencia }}%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <!-- Gráfico de Asistencia por Clase -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Asistencia por Clase</h3>
+      <canvas id="asistenciaChart" class="w-full h-64"></canvas>
+    </div>
+
+    <!-- Gráfico de Rendimiento de Estudiantes -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">📈 Distribución de Rendimiento</h3>
+      <canvas id="rendimientoChart" class="w-full h-64"></canvas>
+    </div>
   </div>
 </div>
-
-<!-- Fichas -->
-<div class="contenedor-grid">
-  <div class="contenedor-item">
-    <img src="../assets/images/cursos.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">CURSOS</a>
-  </div>
-
-  <div class="contenedor-item">
-    <img src="../assets/images/niveles.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">NIVELES</a>
-  </div>
-
-  <div class="contenedor-item">
-    <img src="../assets/images/grados.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">GRADOS</a>
-  </div>
-
-  <div class="contenedor-item">
-    <img src="../assets/images/secciones.png" alt="Logo" class="login-logo" />
-    <a class="contenedor-title">SECCIONES</a>
-  </div>
-</div>
-
-<!-- Gráfica -->
-<div class="chart-container">
-  <h3>Progreso de Participantes</h3>
-  <canvas id="progressChart"></canvas>
-</div>
-<!-- Fin Gráfica -->

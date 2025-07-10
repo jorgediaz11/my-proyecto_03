@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule para formul
 // ✅ INTERCEPTORS IMPORTS
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 
 // Inicio Principal
 import { InicioComponent } from './inicio/inicio.component';
@@ -35,7 +37,7 @@ import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/p
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
-//import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
+import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
 // Perfil Docente
 import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docente.component';
 import { PerfilDocenteMuroComponent } from './components/perfil-docente/perfil-docente-muro.component';
@@ -44,10 +46,10 @@ import { PerfilEstudianteComponent } from './components/perfil-estudiante/perfil
 import { PerfilEstudianteMuroComponent } from './components/perfil-estudiante/perfil-estudiante-muro.component';
 // Perfil Familia
 import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-familia.component';
-//import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-familia-muro.component';
+import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-familia-muro.component';
 // Perfil Editor
 import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.component';
-//import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component';
+import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component';
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component';
@@ -75,15 +77,15 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     PerfilComponent,
     AcademicoComponent,
     PerfilAdminSecComponent,
-    //PerfilAdminSecMuroComponent,
+    PerfilAdminSecMuroComponent,
     PerfilDocenteComponent,
     PerfilDocenteMuroComponent,
     PerfilEstudianteComponent,
     PerfilEstudianteMuroComponent,
     PerfilFamiliaComponent,
-    //PerfilFamiliaMuroComponent,
+    PerfilFamiliaMuroComponent,
     PerfilEditorComponent,
-    //PerfilEditorMuroComponent,
+    PerfilEditorMuroComponent,
     TestEndpointsComponent,
     //AcademicoComponent,
   ],
@@ -112,6 +114,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggingInterceptor,
+      multi: true
+    },
+    // ✅ INTERCEPTOR PARA MANEJO GLOBAL DE ERRORES
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    // ✅ INTERCEPTOR PARA LOADING GLOBAL
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true
     }
   ],

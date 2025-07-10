@@ -41,31 +41,94 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# 📝 ARCHIVOS DE DOCUMENTACIÓN DE DESARROLLO
-# Excluir documentación técnica generada durante el desarrollo
-AUTHENTICATION_STANDARDS.md
-CRUD_PASSWORD_FIX.md
-INTEGRATION_SUCCESS.md
-MIGRATION_GUIDE.md
-PASSWORD_SOLUTION_COMPLETE.md
-PASSWORD_VALIDATION_STRATEGY.md
-SECURITY_AUDIT_REPORT.md
-SECURITY_ISSUE_RESOLUTION.md
-SERVICES_STATUS.md
-STANDARD_SUMMARY.md
-TESTING_GUIDE.md
-VERIFICATION_COMPLETE.md
-GITHUB_UPLOAD_COMMANDS.md
+# ================================================================
+# 🚫 ARCHIVOS DE DOCUMENTACIÓN Y DESARROLLO (EXCLUIR DEL REPO)
+# ================================================================
 
-# 🔧 SCRIPTS DE DESARROLLO Y TESTING
-*.ps1
+# Archivos de documentación (todas las extensiones)
+*.md
+*.MD
+*.txt
+*.TXT
 *.sql
-SECURITY_TEST*.ps1
-github_upload_essential.sh
-GITIGNORE_DOCS_OPTIONAL.txt
-postgresql_rename_columns.sql
+*.SQL
 
-# 📋 MANTENER ARCHIVOS IMPORTANTES
-# README.md - Documentación principal del proyecto (NO excluir)
-# package.json - Dependencias (NO excluir)
-# angular.json - Configuración Angular (NO excluir)
+# Archivos de scripts y comandos
+*.ps1
+*.PS1
+*.sh
+*.SH
+*.cmd
+*.CMD
+*.bat
+*.BAT
+
+# Archivos de configuración temporal
+*.cm
+*.CM
+*.config
+*.CONFIG
+
+# ================================================================
+# 📝 EXCEPCIONES - MANTENER ARCHIVOS ESENCIALES DEL PROYECTO
+# ================================================================
+
+# Archivos README esenciales del proyecto
+!README.md
+!readme.md
+
+# Archivos de configuración esenciales (si los hay)
+!angular.json
+!package.json
+!tsconfig*.json
+
+# ================================================================
+# � ARCHIVOS ESPECÍFICOS DE DESARROLLO A EXCLUIR
+# ================================================================
+
+# Documentación técnica generada durante desarrollo
+AUTHENTICATION_STANDARDS.*
+CRUD_PASSWORD_FIX.*
+INTEGRATION_SUCCESS.*
+MIGRATION_GUIDE.*
+PASSWORD_SOLUTION_COMPLETE.*
+PASSWORD_VALIDATION_STRATEGY.*
+SECURITY_AUDIT_REPORT.*
+SECURITY_ISSUE_RESOLUTION.*
+SERVICES_STATUS.*
+STANDARD_SUMMARY.*
+TESTING_GUIDE.*
+VERIFICATION_COMPLETE.*
+GITHUB_UPLOAD_COMMANDS.*
+PREVENCION_NODE_TASKS.*
+TROUBLESHOOTING_FAMILIA_DASHBOARD.*
+IMMEDIATE_SOLUTION_FAMILIA_DASHBOARD.*
+
+# Scripts de desarrollo y testing
+SECURITY_TEST*
+github_upload_essential*
+GITIGNORE_DOCS_OPTIONAL*
+postgresql_rename_columns*
+
+# Archivos de respaldo y temporales
+*.backup
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# ================================================================
+# � ARCHIVOS DE LOGS Y REPORTES
+# ================================================================
+
+# Logs de desarrollo
+*.log
+*.LOG
+debug*.txt
+error*.txt
+test-results*
+
+# Reportes de análisis
+coverage-report*
+lint-report*
+audit-report*

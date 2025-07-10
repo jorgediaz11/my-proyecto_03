@@ -40,7 +40,8 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
     usuario: {
       required: 'El usuario es requerido',
       minlength: 'El usuario debe tener al menos 3 caracteres',
-      pattern: 'Solo se permiten letras, números y guiones'
+      pattern: 'Solo se permiten letras, números y guiones',
+      userExists: 'Este usuario ya está registrado'
     },
     nombres: {
       required: 'El nombre es requerido',
@@ -52,7 +53,8 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
     },
     email: {
       required: 'El correo electrónico es requerido',
-      email: 'Ingresa un correo electrónico válido'
+      email: 'Ingresa un correo electrónico válido',
+      userExists: 'Este correo ya está registrado'
     },
     password: {
       required: 'La contraseña es requerida',
@@ -110,10 +112,30 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
       this.formInitialized = true;
       console.log('Formulario de registro inicializado correctamente');
 
+      // Limpiar errores específicos cuando el usuario escriba
+      this.registroForm.get('usuario')?.valueChanges.subscribe(() => {
+        this.clearUserExistsError('usuario');
+      });
+
+      this.registroForm.get('email')?.valueChanges.subscribe(() => {
+        this.clearUserExistsError('email');
+      });
+
     } catch (error) {
       console.error('Error al inicializar formulario:', error);
       this.formInitialized = false;
       this.showError('Error al inicializar el formulario');
+    }
+  }
+
+  // ✅ LIMPIAR ERRORES DE USUARIO EXISTENTE
+  private clearUserExistsError(fieldName: string): void {
+    const field = this.registroForm.get(fieldName);
+    if (field && field.errors && field.errors['userExists']) {
+      const errors = { ...field.errors };
+      delete errors['userExists'];
+      const hasOtherErrors = Object.keys(errors).length > 0;
+      field.setErrors(hasOtherErrors ? errors : null);
     }
   }
 
@@ -168,7 +190,8 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.exists) {
             this.loading = false;
-            this.showError(`El ${response.field === 'username' ? 'usuario' : 'correo electrónico'} ya está registrado`);
+            const fieldDisplayName = response.field === 'username' ? 'usuario' : 'correo electrónico';
+            this.showError(`El ${fieldDisplayName} ya está registrado`);
 
             // Marcar el campo específico como inválido
             const fieldName = response.field === 'username' ? 'usuario' : 'email';
@@ -181,7 +204,17 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
         error: (error) => {
           this.loading = false;
           console.error('Error al verificar usuario existente:', error);
-          this.showError('Error al verificar el usuario. Inténtalo nuevamente.');
+
+          // Manejo de errores más específico
+          let errorMessage = 'Error al verificar el usuario. Inténtalo nuevamente.';
+
+          if (error.status === 500) {
+            errorMessage = 'Error interno del servidor. Contacta al administrador.';
+          } else if (error.status === 0) {
+            errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
+          }
+
+          this.showError(errorMessage);
         }
       });
   }
@@ -203,21 +236,35 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
           this.loading = false;
           console.log('Usuario registrado exitosamente:', response);
 
+          // Limpiar formulario tras éxito
+          this.onReset();
+
           this.showSuccess('¡Usuario registrado exitosamente!', () => {
-            this.router.navigate(['/login']);
+            // Navegación segura con reseteo de estado
+            this.router.navigate(['/login'], {
+              replaceUrl: true, // Reemplazar en el historial
+              state: { registroExitoso: true } // Pasar estado al login
+            });
           });
         },
         error: (error) => {
           this.loading = false;
           console.error('Error al registrar usuario:', error);
 
+          // Manejo de errores más específico
+          let errorMessage = 'Error al registrar el usuario. Inténtalo nuevamente.';
+
           if (error.status === 409) {
-            this.showError('El usuario o correo ya está registrado');
+            errorMessage = 'El usuario o correo ya está registrado';
           } else if (error.status === 400) {
-            this.showError('Datos inválidos. Verifica la información ingresada.');
-          } else {
-            this.showError('Error al registrar el usuario. Inténtalo nuevamente.');
+            errorMessage = 'Datos inválidos. Verifica la información ingresada.';
+          } else if (error.status === 500) {
+            errorMessage = 'Error interno del servidor. Contacta al administrador.';
+          } else if (error.status === 0) {
+            errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
           }
+
+          this.showError(errorMessage);
         }
       });
   }
@@ -237,17 +284,21 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
       icon: 'error',
       title: 'Error',
       text: message,
-      confirmButtonColor: '#dc3545'
+      confirmButtonColor: '#dc3545',
+      allowOutsideClick: false, // Evitar cerrar por click fuera
+      allowEscapeKey: false     // Evitar cerrar con ESC
     });
   }
 
-  // ✅ MOSTRAR MENSAJE DE ÉXITO CON SWEETALERT2
+  // ✅ MOSTRAR MENSAJE DE ÉXITO CON SWEETALERT2 Y NAVEGACIÓN SEGURA
   private showSuccess(message: string, callback?: () => void): void {
     Swal.fire({
       icon: 'success',
       title: '¡Éxito!',
       text: message,
-      confirmButtonColor: '#28a745'
+      confirmButtonColor: '#28a745',
+      allowOutsideClick: false, // Evitar cerrar por click fuera
+      allowEscapeKey: false     // Evitar cerrar con ESC
     }).then((result) => {
       if (result.isConfirmed && callback) {
         callback();
@@ -268,6 +319,11 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
     return this.registroForm.controls;
   }
 
+  // ✅ VERIFICAR SI EL FORMULARIO PUEDE SER ENVIADO
+  get canSubmit(): boolean {
+    return this.registroForm.valid && !this.loading;
+  }
+
   // ✅ MÉTODO PARA OBTENER MENSAJE DE ERROR ESPECÍFICO
   getFieldError(fieldName: string): string | null {
     const field = this.registroForm.get(fieldName);
@@ -282,6 +338,9 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
             return fieldMessages[errorType as keyof typeof fieldMessages];
           }
         }
+
+        // Si no se encuentra un mensaje específico, devolver un mensaje genérico
+        return 'Campo inválido';
       }
     }
     return null;

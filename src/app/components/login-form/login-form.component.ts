@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, LoginResponse } from '../../services/auth.service'; // ✅ IMPORTAR LoginResponse del servicio
+import { UserStateService } from '../../services/user-state.service';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -13,20 +14,8 @@ interface LoginRequest {
   password: string;
 }
 
-interface LoginResponse {
-  access_token: string;
-  user?: {
-    id_usuario: number;
-    username: string;
-    nombre: string;
-    apellido: string;
-    correo: string;
-    idrol: number;
-    idcolegio: number;
-    estado: string;
-  };
-  message?: string;
-}
+// ✅ REMOVER LoginResponse local - usar la del AuthService
+// interface LoginResponse { ... } ← ELIMINADA
 
 interface Usuario {
   id_usuario: number;
@@ -100,6 +89,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   // Inyección de dependencias usando inject()
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private userStateService = inject(UserStateService);
   private router = inject(Router);
 
   constructor() {
@@ -203,7 +193,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   // ✅ SUBMIT DEL FORMULARIO
   onSubmit(): void {
+    console.log('🚀 === INICIO DE LOGIN ===');
+
     if (!this.formInitialized || !this.loginForm) {
+      console.error('❌ Formulario no inicializado correctamente');
       this.showError('Formulario no inicializado correctamente');
       return;
     }
@@ -212,6 +205,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.loginError = null;
 
     if (this.loginForm.invalid) {
+      console.error('❌ Formulario inválido');
       this.markFormGroupTouched();
       this.showValidationError();
       return;
@@ -219,9 +213,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
     try {
       const loginData = this.prepareLoginData();
+      console.log('📤 Datos preparados para login:', { correo: loginData.correo, password: '***' });
       this.performLogin(loginData);
     } catch (error) {
-      console.error('Error en submit:', error);
+      console.error('❌ Error en submit:', error);
       this.showError('Error al procesar los datos');
     }
   }
@@ -237,6 +232,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   // ✅ EJECUTAR LOGIN
   private performLogin(loginData: LoginRequest): void {
+    console.log('🚀 Iniciando proceso de login...');
+    console.log('📤 Datos de login:', { correo: loginData.correo, password: '***' });
+
     this.loading = true;
     this.loginError = null;
 
@@ -244,12 +242,15 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response: LoginResponse) => {
+          console.log('✅ Respuesta de login recibida:', response);
           this.handleLoginSuccess(response);
         },
         error: (error: unknown) => {
+          console.error('❌ Error en login:', error);
           this.handleLoginError(error);
         },
         complete: () => {
+          console.log('🏁 Proceso de login completado');
           this.loading = false;
         }
       });
@@ -257,41 +258,57 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   // ✅ MANEJO DE LOGIN EXITOSO - VERSIÓN SEGURA
   private handleLoginSuccess(response: LoginResponse): void {
-    console.log('Login exitoso - token recibido'); // ⚠️ NO LOGEAR DATOS SENSIBLES
+    console.log('🎉 handleLoginSuccess ejecutándose...');
+    console.log('📦 Estructura de response:', Object.keys(response || {}));
+    console.log('🔑 Token existe:', !!response?.access_token);
+    console.log('👤 User existe:', !!response?.user);
+
+    if (response?.user) {
+      console.log('📋 Datos del usuario:', {
+        id: response.user.id_usuario,
+        username: response.user.username,
+        nombre: response.user.nombre,
+        apellido: response.user.apellido,
+        correo: response.user.email,
+        idrol: response.user.idRol,
+        idcolegio: response.user.idColegio,
+        estado: response.user.estado
+      });
+    }
 
     if (!response || !response.access_token) {
+      console.error('❌ Respuesta del servidor inválida');
       this.showError('Respuesta del servidor inválida');
       return;
     }
 
     try {
+      console.log('💾 Guardando token en localStorage...');
       localStorage.setItem('access_token', response.access_token);
 
       if (response.user) {
-        const userData: Usuario = {
-          id_usuario: response.user.id_usuario,
-          username: response.user.username,
-          nombre: response.user.nombre,
-          apellido: response.user.apellido,
-          correo: response.user.correo,
-          idrol: response.user.idrol,
-          idcolegio: response.user.idcolegio,
-          estado: response.user.estado
-        };
+        console.log('👤 Preparando datos de usuario...');
+        console.log('📦 Datos recibidos del servidor:', response.user);
 
-        localStorage.setItem('user_data', JSON.stringify(userData));
+        console.log('🔄 Llamando a UserStateService.setUsuarioActualDesdeServidor...');
+        // ✅ Usar el nuevo método que maneja la conversión automáticamente
+        this.userStateService.setUsuarioActualDesdeServidor(response.user);
+        console.log('✅ Usuario establecido en UserStateService desde servidor');
+      } else {
+        console.warn('⚠️ No hay datos de usuario en la respuesta');
       }
 
       this.showSuccess('¡Bienvenido! Iniciando sesión...');
       this.resetForm();
 
       // 🔒 NAVEGACIÓN SEGURA Y LIMPIA
+      console.log('🔀 Iniciando navegación en 1.5 segundos...');
       setTimeout(() => {
         this.navigateSecurely();
       }, 1500);
 
     } catch (error) {
-      console.error('Error al guardar datos de autenticación:', error);
+      console.error('❌ Error al guardar datos de autenticación:', error);
       this.showError('Error interno. Intenta nuevamente.');
     }
   }
@@ -495,24 +512,18 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   // ✅ NAVEGACIÓN A RECUPERAR CONTRASEÑA
   goToForgotPassword(): void {
-    Swal.fire({
-      title: 'Recuperar Contraseña',
-      text: 'Esta funcionalidad estará disponible próximamente',
-      icon: 'info',
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#4EAD4F'
-    });
+    if (this.loading) return;
+
+    console.log('🔄 Navegando a recuperar contraseña...');
+    this.router.navigate(['/login-recupera']);
   }
 
   // ✅ NAVEGACIÓN A REGISTRO
   goToRegister(): void {
-    Swal.fire({
-      title: 'Crear Cuenta',
-      text: 'Esta funcionalidad estará disponible próximamente',
-      icon: 'info',
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#4EAD4F'
-    });
+    if (this.loading) return;
+
+    console.log('🔄 Navegando a registro...');
+    this.router.navigate(['/login-registro']);
   }
 
   // ========================================================================
@@ -585,8 +596,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   // ✅ LIMPIAR DATOS DE AUTENTICACIÓN
   private clearAuthData(): void {
     try {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('user_data');
+      // ✅ Usar UserStateService para limpiar datos
+      this.userStateService.limpiarUsuario();
+      console.log('✅ Datos de autenticación limpiados usando UserStateService');
     } catch (error) {
       console.error('Error al limpiar datos de autenticación:', error);
     }
@@ -746,5 +758,144 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       console.error('Error en getFormProgress:', error);
       return 0;
     }
+  }
+
+  // ==========================================
+  // 🧪 MÉTODOS DE PRUEBA COMPLETA (TEMPORALES)
+  // ==========================================
+
+  /**
+   * 🧪 Prueba completa del flujo de login
+   * Este método simula todo el proceso de login y verifica que funcione correctamente
+   */
+  async pruebaCompletaLogin(): Promise<void> {
+    console.log('\n🧪 ===== INICIANDO PRUEBA COMPLETA DE LOGIN =====\n');
+
+    try {
+      // 1. Limpiar datos previos
+      console.log('🧹 PASO 1: Limpiando datos previos...');
+      this.userStateService.limpiarUsuario();
+
+      const estadoLimpio = {
+        token: localStorage.getItem('access_token'),
+        userData: localStorage.getItem('user_data'),
+        usuario: this.userStateService.getUsuarioActual()
+      };
+
+      console.log('📊 Estado después de limpiar:', estadoLimpio);
+
+      // 2. Configurar credenciales de prueba
+      console.log('\n📝 PASO 2: Configurando credenciales de prueba...');
+      const credencialesPrueba = {
+        correo: 'jorge.diaz.t@gmail.com',
+        password: 'Admin1109@2025'
+      };
+
+      console.log('📧 Email de prueba:', credencialesPrueba.correo);
+      console.log('🔑 Password configurado');
+
+      // 3. Llenar formulario
+      console.log('\n📋 PASO 3: Llenando formulario...');
+      this.loginForm.patchValue({
+        correo: credencialesPrueba.correo,
+        password: credencialesPrueba.password
+      });
+
+      console.log('✅ Formulario llenado');
+      console.log('📊 Estado del formulario:', {
+        valido: this.loginForm.valid,
+        correo: this.loginForm.get('correo')?.value,
+        passwordLleno: !!this.loginForm.get('password')?.value
+      });
+
+      // 4. Simular login
+      console.log('\n🚀 PASO 4: Ejecutando login...');
+
+      await new Promise<void>((resolve, reject) => {
+        this.authService.login(credencialesPrueba.correo, credencialesPrueba.password)
+          .subscribe({
+            next: (response) => {
+              console.log('\n✅ RESPUESTA DEL SERVIDOR RECIBIDA:');
+              console.log('📦 Estructura completa:', response);
+
+              if (response && response.access_token) {
+                console.log('🎉 LOGIN EXITOSO');
+                console.log('🔑 Token recibido:', !!response.access_token);
+                console.log('👤 Usuario recibido:', !!response.user);
+
+                if (response.user) {
+                  console.log('📋 Datos del usuario del servidor:', {
+                    id: response.user.id_usuario,
+                    username: response.user.username,
+                    nombre: response.user.nombre,
+                    apellido: response.user.apellido,
+                    email: response.user.email,
+                    idRol: response.user.idRol,
+                    idColegio: response.user.idColegio,
+                    estado: response.user.estado
+                  });
+                }
+
+                // 5. Verificar guardado
+                console.log('\n🔍 PASO 5: Verificando guardado de datos...');
+
+                setTimeout(() => {
+                  const estadoDespuesLogin = {
+                    token: localStorage.getItem('access_token'),
+                    userData: localStorage.getItem('user_data'),
+                    usuario: this.userStateService.getUsuarioActual()
+                  };
+
+                  console.log('📊 Estado después del login:', estadoDespuesLogin);
+
+                  console.log('\n📈 ANÁLISIS DE RESULTADOS:');
+                  console.log('✅ Token guardado:', !!estadoDespuesLogin.token);
+                  console.log('✅ User data guardado:', !!estadoDespuesLogin.userData);
+                  console.log('✅ Usuario en servicio:', !!estadoDespuesLogin.usuario);
+
+                  if (estadoDespuesLogin.usuario) {
+                    console.log('👤 Datos del usuario en servicio:', {
+                      nombre: estadoDespuesLogin.usuario.nombre,
+                      correo: estadoDespuesLogin.usuario.correo,
+                      rol: estadoDespuesLogin.usuario.idrol
+                    });
+                  }
+
+                  console.log('\n🎉 ===== PRUEBA COMPLETA FINALIZADA =====\n');
+                  alert('🎉 Prueba completa finalizada. Revisa la consola para ver los resultados detallados.');
+
+                  resolve();
+                }, 1000);
+
+              } else {
+                console.error('❌ Respuesta inválida del servidor');
+                reject(new Error('Respuesta inválida'));
+              }
+            },
+            error: (error) => {
+              console.error('\n❌ ERROR EN LOGIN:');
+              console.error('📋 Detalles del error:', error);
+              console.error('🔍 Mensaje:', error.message || 'Error desconocido');
+              console.error('📊 Status:', error.status || 'Sin status');
+
+              alert(`❌ Error en login: ${error.message || 'Error desconocido'}`);
+              reject(error);
+            }
+          });
+      });
+
+    } catch (error) {
+      console.error('\n💥 ERROR EN PRUEBA COMPLETA:');
+      console.error(error);
+      alert(`💥 Error en prueba: ${(error as Error).message}`);
+    }
+  }
+
+  /**
+   * 🧪 Botón de acceso rápido para la prueba
+   */
+  ejecutarPruebaCompleta(): void {
+    console.log('🎬 Iniciando prueba completa desde botón...');
+    this.pruebaCompletaLogin();
   }
 }

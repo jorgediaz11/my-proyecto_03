@@ -17,7 +17,7 @@ export class UsuariosComponent implements OnInit {
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
   itemsPerPage = 10;
-  searchUser = '';
+  searchTerm = '';
   showForm = false;
   isEditing = false;
   editingUserId?: number;
@@ -114,7 +114,7 @@ export class UsuariosComponent implements OnInit {
 
   // ✅ FILTRADO
   filterUsuarios(): void {
-    const searchTerm = this.searchUser.toLowerCase().trim();
+    const searchTerm = this.searchTerm.toLowerCase().trim();
 
     if (!searchTerm) {
       this.filteredUsuarios = [...this.usuarios];
@@ -257,6 +257,40 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  // ✅ CREAR USUARIO - LOGICA
+  private createUsuarioLogic(formData: CreateUserDto): void {
+    this.usersService.crearUsuario(formData as Users).subscribe({
+      next: () => {
+        this.cargarUsuarios();
+        this.resetForm();
+        this.activeTab = 'tabla';
+        this.showSuccess('Usuario creado correctamente');
+      },
+      error: (error: unknown) => {
+        this.loading = false;
+        console.error('Error al crear usuario:', error);
+        this.showError('Error al crear el usuario');
+      }
+    });
+  }
+
+  // ✅ ACTUALIZAR USUARIO - LOGICA
+  private updateUsuarioLogic(formData: UpdateUserDto & { password?: string }): void {
+    this.usersService.actualizarUsuario(this.editingUserId!, formData).subscribe({
+      next: () => {
+        this.cargarUsuarios();
+        this.resetForm();
+        this.activeTab = 'tabla';
+        this.showSuccess('Usuario actualizado correctamente');
+      },
+      error: (error: unknown) => {
+        this.loading = false;
+        console.error('Error al actualizar usuario:', error);
+        this.showError('Error al actualizar el usuario');
+      }
+    });
+  }
+
   // ✅ SUBMIT FORMULARIO
   onSubmit(): void {
     if (this.usuarioForm.invalid) {
@@ -270,34 +304,10 @@ export class UsuariosComponent implements OnInit {
 
     if (this.isEditing && this.editingUserId) {
       // Actualizar usuario existente
-      this.usersService.actualizarUsuario(this.editingUserId, formData as Partial<Users>).subscribe({
-        next: () => {
-          this.cargarUsuarios();
-          this.resetForm();
-          this.activeTab = 'tabla';
-          this.showSuccess('Usuario actualizado correctamente');
-        },
-        error: (error: unknown) => {
-          this.loading = false;
-          console.error('Error al actualizar usuario:', error);
-          this.showError('Error al actualizar el usuario');
-        }
-      });
+      this.updateUsuarioLogic(formData as Partial<Users>);
     } else {
       // Crear nuevo usuario
-      this.usersService.crearUsuario(formData as Users).subscribe({
-        next: () => {
-          this.cargarUsuarios();
-          this.resetForm();
-          this.activeTab = 'tabla';
-          this.showSuccess('Usuario creado correctamente');
-        },
-        error: (error: unknown) => {
-          this.loading = false;
-          console.error('Error al crear usuario:', error);
-          this.showError('Error al crear el usuario');
-        }
-      });
+      this.createUsuarioLogic(formData as CreateUserDto);
     }
   }
 
