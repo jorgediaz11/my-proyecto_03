@@ -29,7 +29,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://192.168.1.78:3000/users';
+  private apiUrl = 'http://localhost:3000/users';
 
   private http = inject(HttpClient);
 

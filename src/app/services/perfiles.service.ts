@@ -84,7 +84,7 @@ export interface PermisoDisponible {
   providedIn: 'root'
 })
 export class PerfilesService {
-  private readonly apiUrl = 'http://192.168.1.78:3000/perfiles';
+  private readonly apiUrl = 'http://localhost:3000/perfiles';
   private http = inject(HttpClient);
 
   /**

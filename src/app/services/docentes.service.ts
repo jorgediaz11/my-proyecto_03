@@ -94,7 +94,7 @@ export interface EstadisticasDocentes {
   providedIn: 'root'
 })
 export class DocentesService {
-  private readonly apiUrl = 'http://192.168.1.78:3000/docentes';
+  private readonly apiUrl = 'http://localhost:3000/docentes';
   private http = inject(HttpClient);
 
   /**

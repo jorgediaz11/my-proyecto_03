@@ -101,7 +101,7 @@ export interface EstadisticasEditores {
   providedIn: 'root'
 })
 export class EditoresService {
-  private readonly apiUrl = 'http://192.168.1.78:3000/editores';
+  private readonly apiUrl = 'http://localhost:3000/editores';
   private http = inject(HttpClient);
 
   /**

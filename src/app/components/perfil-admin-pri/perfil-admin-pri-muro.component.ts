@@ -70,10 +70,10 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
   distribucionUsuarios: DistribucionUsuarios = {
     estudiantes: 956,
     docentes: 187,
-    adminPri: 15,
-    adminSec: 30,
-    familia: 845,
-    editores: 12
+    adminPri: 45,
+    adminSec: 75,
+    familia: 120,
+    editores: 35
   };
 
   rendimientoSistema: RendimientoSistema = {
@@ -218,27 +218,15 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
             this.distribucionUsuarios.familia,
             this.distribucionUsuarios.editores
           ],
-          backgroundColor: [
-            '#28a745', // Verde - Estudiantes
-            '#17a2b8', // Azul - Docentes
-            '#dc3545', // Rojo - Admin Principal
-            '#fd7e14', // Naranja - Admin Secundario
-            '#6f42c1', // Morado - Familia
-            '#ffc107'  // Amarillo - Editores
-          ],
+          backgroundColor: ['#22c55e', '#3b82f6', '#ef4444', '#f97316', '#8b5cf6', '#eab308'],
           borderWidth: 2
         }]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'bottom'
-          },
-          title: {
-            display: true,
-            text: 'Distribución de Usuarios por Tipo'
-          }
+          legend: { position: 'bottom' },
+          title: { display: true, text: 'Distribución de Usuarios por Tipo' }
         }
       }
     });

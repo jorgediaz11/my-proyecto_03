@@ -61,7 +61,7 @@ export interface ColegioResponse {
 })
 export class ColegiosService {
   // ✅ CONFIGURACIÓN DE API
-  private readonly apiUrl = 'http://192.168.1.78:3000/colegios';
+  private readonly apiUrl = 'http://localhost:3000/colegios';
 
   // ✅ INYECCIÓN CON INJECT()
   private http = inject(HttpClient);

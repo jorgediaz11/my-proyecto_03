@@ -109,7 +109,7 @@ export interface EstadisticasEstudiantes {
   providedIn: 'root'
 })
 export class EstudiantesService {
-  private readonly apiUrl = 'http://192.168.1.78:3000/estudiantes';
+  private readonly apiUrl = 'http://localhost:3000/estudiantes';
   private http = inject(HttpClient);
 
   /**

@@ -38,7 +38,7 @@ export interface UpdateUserDto {
 })
 export class UsersService {
 
-  private apiUrl = 'http://192.168.1.78:3000/users';
+  private apiUrl = 'http://localhost:3000/users';
   // ¡Asegúrate de que esta URL sea correcta!
 
   private http = inject(HttpClient);

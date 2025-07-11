@@ -70,7 +70,7 @@ interface ResetPasswordResponse {
 // Importar el módulo de enrutamiento
 @Injectable({ providedIn: 'root' }) // Proveedor del servicio de autenticación en la raíz de la aplicación
 export class AuthService {
-  private apiUrl = 'http://192.168.1.78:3000/auth'; // ✅ CORREGIDO: URL base para auth - IP de red local
+  private apiUrl = 'http://localhost:3000/auth'; // ✅ CORREGIDO: URL base para auth - localhost
 
   // ✅ NUEVO: Usando inject() en lugar de constructor injection
   private http = inject(HttpClient);

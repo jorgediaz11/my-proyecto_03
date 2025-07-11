@@ -1,5 +1,5 @@
 <!-- Dashboard Administrador Secundario (Colegio) -->
-<div class="min-h-screen bg-gray-50 p-4">
+<div class="min-h-screen bg-gray-50">
 
   <!-- Header del Dashboard -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -126,7 +126,7 @@
   </div>
 
   <!-- Gráficos Principal -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
 
     <!-- Asistencia por Grado -->
     <div class="bg-white rounded-lg shadow-md p-6">
@@ -137,7 +137,7 @@
         </svg>
         Asistencia por Grado
       </h3>
-      <canvas id="asistenciaChart" class="w-full" style="height: 300px;"></canvas>
+      <canvas id="asistenciaChart" class="w-full h-64 md:h-72"></canvas>
     </div>
 
     <!-- Rendimiento Académico -->
@@ -149,7 +149,7 @@
         </svg>
         Rendimiento Académico
       </h3>
-      <canvas id="rendimientoChart" class="w-full" style="height: 300px;"></canvas>
+      <canvas id="rendimientoChart" class="w-full h-64 md:h-72"></canvas>
     </div>
 
     <!-- Distribución de Estudiantes -->
@@ -163,7 +163,7 @@
         </svg>
         Distribución por Nivel
       </h3>
-      <canvas id="distribucionChart" class="w-full" style="height: 300px;"></canvas>
+      <canvas id="distribucionChart" class="w-full h-64 md:h-72 border-4 border-blue-500"></canvas>
     </div>
 
     <!-- Actividad Diaria -->
@@ -175,7 +175,7 @@
         </svg>
         Actividad de Hoy
       </h3>
-      <canvas id="actividadChart" class="w-full" style="height: 300px;"></canvas>
+      <canvas id="actividadChart" class="w-full h-64 md:h-72"></canvas>
     </div>
   </div>
 
@@ -303,11 +303,9 @@
     </div>
   </div>
 
-<div class="chart-label">Primaria - Pie</div>
-
-  <div class="chart-large">
-    <canvas id="chartSecundariaPie"></canvas>
-    <div class="chart-label">Secundaria - Pie</div>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Secundaria - Distribución</h3>
+    <canvas id="chartSecundariaPie" class="w-full h-64 md:h-72"></canvas>
   </div>
 </div>
 <!-- Fin Gráfica -->

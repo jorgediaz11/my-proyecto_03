@@ -46,8 +46,9 @@ export class DocentesComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   searchDocente = '';
-  activeTab = 'tabla';
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
   showForm = false;
+  loading = false;
 
   // ✅ PROPIEDADES PARA EL TEMPLATE
   Math = Math;
@@ -207,6 +208,19 @@ export class DocentesComponent implements OnInit {
         console.log('Formulario limpiado');
       }
     });
+  }
+
+  // ✅ MÉTODOS AUXILIARES PARA PESTAÑAS
+  isTablaActive(): boolean {
+    return this.activeTab === 'tabla';
+  }
+
+  isNuevoActive(): boolean {
+    return this.activeTab === 'nuevo';
+  }
+
+  isAvanzadoActive(): boolean {
+    return this.activeTab === 'avanzado';
   }
 
   selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {

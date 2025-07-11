@@ -1,5 +1,7 @@
-// Reglas de Lógica 003-2 -- Importar el módulo de enrutamiento
+// 🔧 CONFIGURACIÓN DE DESARROLLO
 export const environment = {
-  production: false,        // Indica que es el entorno de desarrollo
-  apiUrl: 'http://192.168.1.78:3000/usuarios' // URL base de tu backend - IP de red local
+  production: false,
+  apiBaseUrl: 'http://localhost:3000',  // Para desarrollo local
+  apiVersion: 'v1',
+  appName: 'Sistema Educativo - DEV'
 };
