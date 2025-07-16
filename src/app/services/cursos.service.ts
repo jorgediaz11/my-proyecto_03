@@ -15,7 +15,7 @@ export interface Curso {
   area: string; // Ciencias, Letras, Arte, etc.
   esObligatorio?: boolean;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -31,7 +31,7 @@ export interface CreateCursoDto {
   area: string;
   esObligatorio?: boolean;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdateCursoDto {
@@ -45,15 +45,15 @@ export interface UpdateCursoDto {
   area?: string;
   esObligatorio?: boolean;
   estado?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CursosService {
-
-  private apiUrl = 'http://localhost:3000/cursos';
+  // API base URL Cursos
+  private apiUrl = 'http://localhost:3000/curso';
 
   private http = inject(HttpClient);
 
@@ -122,9 +122,9 @@ export class CursosService {
     });
   }
 
-  // GET /cursos/colegio/:idColegio - Obtener cursos por colegio
-  getCursosPorColegio(idColegio: number): Observable<Curso[]> {
-    return this.http.get<Curso[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /cursos/colegio/:id_colegio - Obtener cursos por colegio
+  getCursosPorColegio(id_colegio: number): Observable<Curso[]> {
+    return this.http.get<Curso[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -171,8 +171,8 @@ export class CursosService {
     });
   }
 
-  // GET /cursos/estadisticas/:idColegio - Obtener estadísticas de cursos
-  getEstadisticasCursos(idColegio: number): Observable<{
+  // GET /cursos/estadisticas/:id_colegio - Obtener estadísticas de cursos
+  getEstadisticasCursos(id_colegio: number): Observable<{
     totalCursos: number;
     cursosPorNivel: Record<string, number>;
     cursosPorArea: Record<string, number>;
@@ -187,7 +187,7 @@ export class CursosService {
       horasTotalesSemanales: number;
       cursosObligatorios: number;
       cursosElectivos: number;
-    }>(`${this.apiUrl}/estadisticas/${idColegio}`, {
+    }>(`${this.apiUrl}/estadisticas/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }

@@ -431,8 +431,8 @@ export class OpcionesComponent implements OnInit, OnDestroy {
       console.log('👤 Usuario completo:', usuario);
       console.log('📧 Correo:', usuario.correo);
       console.log('👤 Nombre completo:', `${usuario.nombre} ${usuario.apellido}`);
-      console.log('🎭 Rol ID:', usuario.idrol);
-      console.log('🏫 Colegio ID:', usuario.idcolegio);
+      console.log('🎭 Rol ID:', usuario.id_perfil);
+      console.log('🏫 Colegio ID:', usuario.id_colegio);
       console.log('✅ Estado:', usuario.estado);
     }
 
@@ -453,7 +453,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
       resumen += `DATOS DEL USUARIO:\n`;
       resumen += `• Nombre: ${usuario.nombre} ${usuario.apellido}\n`;
       resumen += `• Email: ${usuario.correo}\n`;
-      resumen += `• Rol ID: ${usuario.idrol}\n`;
+      resumen += `• Rol ID: ${usuario.id_perfil}\n`;
       resumen += `• Estado: ${usuario.estado}\n`;
     }
 

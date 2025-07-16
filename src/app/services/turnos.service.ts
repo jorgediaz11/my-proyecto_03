@@ -10,7 +10,7 @@ export interface Turno {
   horaInicio: string; // formato HH:mm
   horaFin: string; // formato HH:mm
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -21,7 +21,7 @@ export interface CreateTurnoDto {
   horaInicio: string;
   horaFin: string;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdateTurnoDto {
@@ -30,7 +30,7 @@ export interface UpdateTurnoDto {
   horaInicio?: string;
   horaFin?: string;
   estado?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
@@ -72,9 +72,9 @@ export class TurnosService {
     });
   }
 
-  // GET /turnos/colegio/:idColegio - Obtener turnos por colegio
-  getTurnosPorColegio(idColegio: number): Observable<Turno[]> {
-    return this.http.get<Turno[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /turnos/colegio/:id_colegio - Obtener turnos por colegio
+  getTurnosPorColegio(id_colegio: number): Observable<Turno[]> {
+    return this.http.get<Turno[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -108,15 +108,15 @@ export class TurnosService {
   }
 
   // GET /turnos/validar-horario - Validar que no haya conflictos de horario
-  validarHorario(horaInicio: string, horaFin: string, idColegio?: number): Observable<{
+  validarHorario(horaInicio: string, horaFin: string, id_colegio?: number): Observable<{
     valido: boolean;
     conflictos: Turno[];
   }> {
     const params = new URLSearchParams();
     params.append('horaInicio', horaInicio);
     params.append('horaFin', horaFin);
-    if (idColegio) {
-      params.append('idColegio', idColegio.toString());
+    if (id_colegio) {
+      params.append('id_colegio', id_colegio.toString());
     }
 
     return this.http.get<{ valido: boolean; conflictos: Turno[] }>(`${this.apiUrl}/validar-horario?${params}`, {

@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
  */
 export interface Usuario {
   id?: number;
-  idcolegio?: number;
-  idrol?: number;
+  id_colegio?: number;
+  id_perfil?: number;
   nombre: string;
   apellido: string;
   correo: string;

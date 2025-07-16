@@ -8,8 +8,8 @@ export interface UsuarioAutenticado {
   nombre: string;
   apellido: string;
   correo: string;       // ← Normalizado a 'correo'
-  idrol: number;        // ← Normalizado a 'idrol'
-  idcolegio: number;    // ← Normalizado a 'idcolegio'
+  id_perfil: number;        // ← Normalizado a 'id_perfil'
+  id_colegio: number;    // ← Normalizado a 'id_colegio'
   estado: string;       // ← Normalizado a string
 }
 
@@ -128,10 +128,10 @@ export class UserStateService {
 
     const perfil = {
       nombreCompleto: `${usuario.nombre} ${usuario.apellido}`.trim(),
-      rolNombre: this.getRoleName(usuario.idrol),
-      rolCorto: this.getRoleName(usuario.idrol, true),
+      rolNombre: this.getRoleName(usuario.id_perfil),
+      rolCorto: this.getRoleName(usuario.id_perfil, true),
       iniciales: this.getIniciales(usuario.nombre, usuario.apellido),
-      avatar: this.getAvatarUrl(usuario.idrol)
+      avatar: this.getAvatarUrl(usuario.id_perfil)
     };
 
     console.log('✅ getPerfilUsuario - perfil generado:', perfil);
@@ -141,8 +141,8 @@ export class UserStateService {
   /**
    * Obtener nombre del rol por ID
    */
-  getRoleName(idrol: number, isShort = false): string {
-    const perfil = this.perfiles.find(p => p.value === idrol);
+  getRoleName(id_perfil: number, isShort = false): string {
+    const perfil = this.perfiles.find(p => p.value === id_perfil);
     if (perfil) {
       return isShort ? perfil.shortLabel : perfil.label;
     }
@@ -161,7 +161,7 @@ export class UserStateService {
   /**
    * Obtener URL del avatar según el rol
    */
-  private getAvatarUrl(idrol: number): string {
+  private getAvatarUrl(id_perfil: number): string {
     const avatarMap = {
       1: 'assets/images/user_admin.png',      // Admin Principal
       2: 'assets/images/user_admin.png',      // Admin Colegio
@@ -171,7 +171,7 @@ export class UserStateService {
       6: 'assets/images/user_admin.png'       // Editor
     } as const;
 
-    return (avatarMap as Record<number, string>)[idrol] || 'assets/images/user_admin.png';
+    return (avatarMap as Record<number, string>)[id_perfil] || 'assets/images/user_admin.png';
   }
 
   /**
@@ -186,9 +186,9 @@ export class UserStateService {
   /**
    * Verificar si el usuario tiene un rol específico
    */
-  hasRole(idrol: number): boolean {
+  hasRole(id_perfil: number): boolean {
     const usuario = this.getUsuarioActual();
-    return usuario ? usuario.idrol === idrol : false;
+    return usuario ? usuario.id_perfil === id_perfil : false;
   }
 
   /**
@@ -243,8 +243,8 @@ export class UserStateService {
       nombre: 'Juan Carlos',
       apellido: 'Pérez González',
       correo: 'admin@test.com',
-      idrol: 1,
-      idcolegio: 1,
+      id_perfil: 1,
+      id_colegio: 1,
       estado: 'activo'
     };
 
@@ -270,8 +270,8 @@ export class UserStateService {
     nombre: string;
     apellido: string;
     email: string;
-    idRol: number;
-    idColegio: number;
+    id_perfil: number;
+    id_colegio: number;
     estado: boolean;
   }): void {
     console.log('📝 UserStateService: Recibiendo usuario del servidor...');
@@ -284,8 +284,8 @@ export class UserStateService {
       nombre: usuarioServidor.nombre,
       apellido: usuarioServidor.apellido,
       correo: usuarioServidor.email,           // email → correo
-      idrol: usuarioServidor.idRol,            // idRol → idrol
-      idcolegio: usuarioServidor.idColegio,    // idColegio → idcolegio
+      id_perfil: usuarioServidor.id_perfil,            // id_perfil → id_perfil
+      id_colegio: usuarioServidor.id_colegio,    // id_colegio → id_colegio
       estado: usuarioServidor.estado ? 'activo' : 'inactivo' // boolean → string
     };
 

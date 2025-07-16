@@ -80,7 +80,7 @@ export class PerfilDocenteComponent implements OnInit, OnDestroy {
   }
 
   get rolUsuario(): string {
-    return this.userStateService.getRoleName(this.usuarioActual?.idrol || 0);
+    return this.userStateService.getRoleName(this.usuarioActual?.id_perfil || 0);
   }
 
   get iniciales(): string {

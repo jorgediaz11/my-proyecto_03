@@ -15,7 +15,7 @@ export interface Estudiante {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   fechaIngreso?: string;
   nombrePadre?: string;
@@ -40,7 +40,7 @@ export interface CreateEstudianteDto {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio: number;
+  id_colegio: number;
   estado?: boolean;
   fechaIngreso?: string;
   nombrePadre?: string;
@@ -61,7 +61,7 @@ export interface UpdateEstudianteDto {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   fechaIngreso?: string;
   nombrePadre?: string;
@@ -86,7 +86,7 @@ export interface EstudianteFilters {
   correo?: string;
   grado?: string;
   seccion?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   page?: number;
   limit?: number;
@@ -124,7 +124,7 @@ export class EstudiantesService {
     if (filters.correo) params = params.set('correo', filters.correo);
     if (filters.grado) params = params.set('grado', filters.grado);
     if (filters.seccion) params = params.set('seccion', filters.seccion);
-    if (filters.idColegio) params = params.set('idColegio', filters.idColegio.toString());
+    if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
     if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
 
     // Paginación

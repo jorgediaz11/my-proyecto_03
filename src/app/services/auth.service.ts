@@ -12,8 +12,8 @@ export interface LoginResponse {
     nombre: string;
     apellido: string;
     email: string;        // ← Servidor usa 'email'
-    idRol: number;        // ← Servidor usa 'idRol'
-    idColegio: number;    // ← Servidor usa 'idColegio'
+    id_perfil: number;        // ← Servidor usa 'id_perfil'
+    id_colegio: number;    // ← Servidor usa 'id_colegio'
     estado: boolean;      // ← Servidor usa boolean
   };
   message?: string;
@@ -42,8 +42,8 @@ interface RegisterResponse {
     nombres: string;
     apellidos: string;
     email: string;
-    idrol: number;
-    idcolegio: number;
+    id_perfil: number;
+    id_colegio: number;
     estado: boolean;
   };
   message: string;
@@ -120,8 +120,8 @@ export class AuthService {
       apellido: registerData.apellidos,
       email: registerData.email,
       password: registerData.password,
-      idRol: 4, // Por defecto: Estudiante
-      idColegio: 1, // Por defecto
+      id_perfil: 4, // Por defecto: Estudiante
+      id_colegio: 1, // Por defecto
       estado: true
     });
   }

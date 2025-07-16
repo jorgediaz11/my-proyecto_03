@@ -13,7 +13,7 @@ export interface PeriodoAcademico {
   estado: boolean;
   trimestres?: number; // número de trimestres/bimestres
   vacaciones?: VacacionPeriodo[];
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -34,7 +34,7 @@ export interface CreatePeriodoAcademicoDto {
   esActual?: boolean;
   estado: boolean;
   trimestres?: number;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdatePeriodoAcademicoDto {
@@ -45,7 +45,7 @@ export interface UpdatePeriodoAcademicoDto {
   esActual?: boolean;
   estado?: boolean;
   trimestres?: number;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
@@ -94,9 +94,9 @@ export class PeriodosAcademicosService {
     });
   }
 
-  // GET /periodos-academicos/colegio/:idColegio - Obtener periodos por colegio
-  getPeriodosPorColegio(idColegio: number): Observable<PeriodoAcademico[]> {
-    return this.http.get<PeriodoAcademico[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /periodos-academicos/colegio/:id_colegio - Obtener periodos por colegio
+  getPeriodosPorColegio(id_colegio: number): Observable<PeriodoAcademico[]> {
+    return this.http.get<PeriodoAcademico[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -158,15 +158,15 @@ export class PeriodosAcademicosService {
   }
 
   // GET /periodos-academicos/validar-fechas - Validar que no haya conflictos de fechas
-  validarFechas(fechaInicio: string, fechaFin: string, idColegio?: number, excluirId?: number): Observable<{
+  validarFechas(fechaInicio: string, fechaFin: string, id_colegio?: number, excluirId?: number): Observable<{
     valido: boolean;
     conflictos: PeriodoAcademico[];
   }> {
     const params = new URLSearchParams();
     params.append('fechaInicio', fechaInicio);
     params.append('fechaFin', fechaFin);
-    if (idColegio) {
-      params.append('idColegio', idColegio.toString());
+    if (id_colegio) {
+      params.append('id_colegio', id_colegio.toString());
     }
     if (excluirId) {
       params.append('excluirId', excluirId.toString());

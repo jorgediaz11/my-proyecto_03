@@ -18,6 +18,7 @@ import { AcademicoComponent } from './components/perfil-admin-pri/opciones/acade
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component';
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
+import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component'; // Importar el nuevo componente
@@ -68,6 +69,7 @@ export const routes: Routes = [
       { path: 'reportes', component: ReportesComponent },   // Ruta para la sección de reportes
       { path: 'auditoria', component: AuditoriaComponent }, // Ruta para la sección de configuración
       { path: 'perfil', component: PerfilComponent },       // Ruta para la sección de reportes
+      { path: 'cursos', component: CursosComponent },       // Ruta para la sección de cursos
       // Otras rutas hijas
     ]
   },

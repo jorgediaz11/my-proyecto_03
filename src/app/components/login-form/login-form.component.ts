@@ -23,8 +23,8 @@ interface Usuario {
   nombre: string;
   apellido: string;
   correo: string;
-  idrol: number;
-  idcolegio: number;
+  id_perfil: number;
+  id_colegio: number;
   estado: string;
 }
 
@@ -270,8 +270,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         nombre: response.user.nombre,
         apellido: response.user.apellido,
         correo: response.user.email,
-        idrol: response.user.idRol,
-        idcolegio: response.user.idColegio,
+        id_perfil: response.user.id_perfil,
+        id_colegio: response.user.id_colegio,
         estado: response.user.estado
       });
     }
@@ -605,9 +605,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   // ✅ OBTENER NOMBRE DEL ROL
-  getRoleName(idrol: number): string {
+  getRoleName(id_perfil: number): string {
     try {
-      const perfil = this.perfiles.find(p => p.value === idrol);
+      const perfil = this.perfiles.find(p => p.value === id_perfil);
       return perfil ? perfil.label : 'Sin definir';
     } catch (error) {
       console.error('Error en getRoleName:', error);
@@ -830,8 +830,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                     nombre: response.user.nombre,
                     apellido: response.user.apellido,
                     email: response.user.email,
-                    idRol: response.user.idRol,
-                    idColegio: response.user.idColegio,
+                    id_perfil: response.user.id_perfil,
+                    id_colegio: response.user.id_colegio,
                     estado: response.user.estado
                   });
                 }
@@ -857,7 +857,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                     console.log('👤 Datos del usuario en servicio:', {
                       nombre: estadoDespuesLogin.usuario.nombre,
                       correo: estadoDespuesLogin.usuario.correo,
-                      rol: estadoDespuesLogin.usuario.idrol
+                      rol: estadoDespuesLogin.usuario.id_perfil
                     });
                   }
 

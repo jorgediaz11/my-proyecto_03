@@ -12,7 +12,7 @@ export interface Nivel {
   edadMinima?: number;
   edadMaxima?: number;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -25,7 +25,7 @@ export interface CreateNivelDto {
   edadMinima?: number;
   edadMaxima?: number;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdateNivelDto {
@@ -36,7 +36,7 @@ export interface UpdateNivelDto {
   edadMinima?: number;
   edadMaxima?: number;
   estado?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
@@ -78,9 +78,9 @@ export class NivelesService {
     });
   }
 
-  // GET /niveles/colegio/:idColegio - Obtener niveles por colegio
-  getNivelesPorColegio(idColegio: number): Observable<Nivel[]> {
-    return this.http.get<Nivel[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /niveles/colegio/:id_colegio - Obtener niveles por colegio
+  getNivelesPorColegio(id_colegio: number): Observable<Nivel[]> {
+    return this.http.get<Nivel[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }

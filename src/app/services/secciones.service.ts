@@ -15,7 +15,7 @@ export interface Seccion {
   aula?: string; // ubicación física
   turno?: string; // mañana, tarde
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -30,7 +30,7 @@ export interface CreateSeccionDto {
   aula?: string;
   turno?: string;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdateSeccionDto {
@@ -43,7 +43,7 @@ export interface UpdateSeccionDto {
   aula?: string;
   turno?: string;
   estado?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
@@ -106,9 +106,9 @@ export class SeccionesService {
     });
   }
 
-  // GET /secciones/colegio/:idColegio - Obtener secciones por colegio
-  getSeccionesPorColegio(idColegio: number): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /secciones/colegio/:id_colegio - Obtener secciones por colegio
+  getSeccionesPorColegio(id_colegio: number): Observable<Seccion[]> {
+    return this.http.get<Seccion[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -162,8 +162,8 @@ export class SeccionesService {
     });
   }
 
-  // GET /secciones/estadisticas/:idColegio - Obtener estadísticas de secciones
-  getEstadisticasSecciones(idColegio: number): Observable<{
+  // GET /secciones/estadisticas/:id_colegio - Obtener estadísticas de secciones
+  getEstadisticasSecciones(id_colegio: number): Observable<{
     totalSecciones: number;
     seccionesPorNivel: Record<string, number>;
     seccionesPorGrado: Record<string, number>;
@@ -178,7 +178,7 @@ export class SeccionesService {
       capacidadTotal: number;
       estudiantesTotal: number;
       porcentajeOcupacion: number;
-    }>(`${this.apiUrl}/estadisticas/${idColegio}`, {
+    }>(`${this.apiUrl}/estadisticas/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }

@@ -264,7 +264,7 @@
         <h4 class="font-semibold text-gray-700 mb-2">Gestión de Cursos</h4>
         <p class="text-sm text-gray-500 mb-3">{{ estadisticasSistema.totalCursos }} cursos activos</p>
         <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                disabled>
+                [routerLink]="['/perfil-admin-pri/cursos']">
           Gestionar
         </button>
       </div>

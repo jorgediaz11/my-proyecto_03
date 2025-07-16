@@ -70,8 +70,8 @@ export class UsuariosComponent implements OnInit {
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
-      idrol: [1, [Validators.required]],
-      idcolegio: [1, [Validators.required, Validators.min(1)]],
+      id_perfil: [1, [Validators.required]],
+      id_colegio: [1, [Validators.required, Validators.min(1)]],
       estado: ['1', [Validators.required]]
     }, {
       validators: this.passwordsMatch.bind(this)
@@ -183,8 +183,8 @@ export class UsuariosComponent implements OnInit {
           nombre: usuario.nombre,
           apellido: usuario.apellido,
           correo: usuario.email,
-          idrol: usuario.idRol,
-          idcolegio: usuario.idColegio || 1,
+          id_perfil: usuario.id_perfil,
+          id_colegio: usuario.id_colegio || 1,
           estado: usuario.estado ? '1' : '0',
           password: '',
           confirmPassword: ''
@@ -212,8 +212,8 @@ export class UsuariosComponent implements OnInit {
             <div><strong>Usuario:</strong> ${usuario.username}</div>
             <div><strong>Nombre:</strong> ${usuario.nombre} ${usuario.apellido}</div>
             <div><strong>Correo:</strong> ${usuario.email}</div>
-            <div><strong>Rol:</strong> ${this.getRoleName(usuario.idRol ?? 0)}</div>
-            <div><strong>Colegio ID:</strong> ${usuario.idColegio}</div>
+            <div><strong>Rol:</strong> ${this.getRoleName(usuario.id_perfil ?? 0)}</div>
+            <div><strong>Colegio ID:</strong> ${usuario.id_colegio}</div>
             <div><strong>Estado:</strong>
               <span class="${usuario.estado ? 'text-green-600' : 'text-red-600'}">
                 ${usuario.estado ? 'Activo' : 'Inactivo'}
@@ -323,8 +323,8 @@ export class UsuariosComponent implements OnInit {
         nombre: formValue.nombre.trim(),
         apellido: formValue.apellido.trim(),
         email: formValue.correo.toLowerCase().trim(),
-        idRol: Number(formValue.idrol),
-        idColegio: Number(formValue.idcolegio),
+        id_perfil: Number(formValue.id_perfil),
+        id_colegio: Number(formValue.id_colegio),
         estado: formValue.estado === '1'
       };
       return userData;
@@ -334,8 +334,8 @@ export class UsuariosComponent implements OnInit {
         nombre: formValue.nombre.trim(),
         apellido: formValue.apellido.trim(),
         email: formValue.correo.toLowerCase().trim(),
-        idRol: Number(formValue.idrol),
-        idColegio: Number(formValue.idcolegio),
+        id_perfil: Number(formValue.id_perfil),
+        id_colegio: Number(formValue.id_colegio),
         estado: formValue.estado === '1'
       };
 
@@ -354,8 +354,8 @@ export class UsuariosComponent implements OnInit {
   // ✅ RESET FORM
   resetForm(): void {
     this.usuarioForm.reset({
-      idrol: 1,
-      idcolegio: 1,
+      id_perfil: 1,
+      id_colegio: 1,
       estado: '1'
     });
     this.isEditing = false;
@@ -363,8 +363,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   // ✅ UTILIDADES
-  getRoleName(idrol: number): string {
-    const perfil = this.perfiles.find(p => p.value === idrol);
+  getRoleName(id_perfil: number): string {
+    const perfil = this.perfiles.find(p => p.value === id_perfil);
     return perfil ? perfil.label : 'Sin definir';
   }
 

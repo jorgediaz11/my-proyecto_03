@@ -12,7 +12,7 @@ export interface Grado {
   orden?: number; // orden dentro del nivel
   edadRecomendada?: number;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
 }
@@ -25,7 +25,7 @@ export interface CreateGradoDto {
   orden?: number;
   edadRecomendada?: number;
   estado: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdateGradoDto {
@@ -36,7 +36,7 @@ export interface UpdateGradoDto {
   orden?: number;
   edadRecomendada?: number;
   estado?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 @Injectable({
@@ -92,9 +92,9 @@ export class GradosService {
     });
   }
 
-  // GET /grados/colegio/:idColegio - Obtener grados por colegio
-  getGradosPorColegio(idColegio: number): Observable<Grado[]> {
-    return this.http.get<Grado[]>(`${this.apiUrl}/colegio/${idColegio}`, {
+  // GET /grados/colegio/:id_colegio - Obtener grados por colegio
+  getGradosPorColegio(id_colegio: number): Observable<Grado[]> {
+    return this.http.get<Grado[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
       headers: this.getAuthHeaders()
     });
   }

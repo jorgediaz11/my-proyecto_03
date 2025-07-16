@@ -35,6 +35,7 @@ import { ReportesComponent } from './components/perfil-admin-pri/opciones/report
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
+import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -75,6 +76,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     ReportesComponent,
     AuditoriaComponent,
     PerfilComponent,
+    CursosComponent,
     AcademicoComponent,
     PerfilAdminSecComponent,
     PerfilAdminSecMuroComponent,

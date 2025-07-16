@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar 
 // Interfaces para tipado
 export interface Users {
   id?: number;
-  idColegio : number;
-  idRol: number;
+  id_colegio : number;
+  id_perfil: number;
   nombre: string;
   apellido: string;
   email: string;
@@ -20,16 +20,16 @@ export interface CreateUserDto {
   nombre: string;
   apellido: string;
   email: string;
-  idRol: number;
-  idColegio: number;
+  id_perfil: number;
+  id_colegio: number;
   estado: boolean;
 }
 export interface UpdateUserDto {
   nombre?: string;
   apellido?: string;
   email?: string;
-  idRol?: number;
-  idColegio?: number;
+  id_perfil?: number;
+  id_colegio?: number;
   estado?: boolean;
 }
 

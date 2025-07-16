@@ -14,7 +14,7 @@ export interface Docente {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   fechaIngreso?: string;
   titulo?: string;
@@ -34,7 +34,7 @@ export interface CreateDocenteDto {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio: number;
+  id_colegio: number;
   estado?: boolean;
   fechaIngreso?: string;
   titulo?: string;
@@ -52,7 +52,7 @@ export interface UpdateDocenteDto {
   documento?: string;
   fechaNacimiento?: string;
   direccion?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   fechaIngreso?: string;
   titulo?: string;
@@ -74,7 +74,7 @@ export interface DocenteFilters {
   apellidos?: string;
   correo?: string;
   especialidad?: string;
-  idColegio?: number;
+  id_colegio?: number;
   estado?: boolean;
   page?: number;
   limit?: number;
@@ -108,7 +108,7 @@ export class DocentesService {
     if (filters.apellidos) params = params.set('apellidos', filters.apellidos);
     if (filters.correo) params = params.set('correo', filters.correo);
     if (filters.especialidad) params = params.set('especialidad', filters.especialidad);
-    if (filters.idColegio) params = params.set('idColegio', filters.idColegio.toString());
+    if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
     if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
 
     // Paginación

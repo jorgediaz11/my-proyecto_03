@@ -16,7 +16,7 @@ export interface Perfil {
   configuraciones?: Record<string, unknown>;
   estado?: boolean;
   esDefault?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -29,7 +29,7 @@ export interface CreatePerfilDto {
   configuraciones?: Record<string, unknown>;
   estado?: boolean;
   esDefault?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface UpdatePerfilDto {
@@ -40,7 +40,7 @@ export interface UpdatePerfilDto {
   configuraciones?: Record<string, unknown>;
   estado?: boolean;
   esDefault?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
 }
 
 export interface PaginatedPerfilesResponse {
@@ -56,7 +56,7 @@ export interface PerfilFilters {
   tipo?: 'administrador' | 'docente' | 'estudiante' | 'editor' | 'familia';
   estado?: boolean;
   esDefault?: boolean;
-  idColegio?: number;
+  id_colegio?: number;
   page?: number;
   limit?: number;
   sortBy?: string;
@@ -98,7 +98,7 @@ export class PerfilesService {
     if (filters.tipo) params = params.set('tipo', filters.tipo);
     if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
     if (filters.esDefault !== undefined) params = params.set('esDefault', filters.esDefault.toString());
-    if (filters.idColegio) params = params.set('idColegio', filters.idColegio.toString());
+    if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
 
     // Paginación
     params = params.set('page', (filters.page || 1).toString());

@@ -1,81 +1,85 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { PerfilService, Perfil } from '../../../../services/perfil.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
-export class PerfilComponent {
-  usuarioActivo = {
-    nombres: 'Juan',
-    apellidos: 'Pérez',
-    correo: 'juan.perez@gmail.com',
-    telefono: '987654321',
-    foto: 'https://randomuser.me/api/portraits/men/1.jpg'
-  };
-
-  perfilForm: FormGroup;
-  mostrarContrasena = false;
-  mostrarConfirmar = false;
-
-  // ✅ Propiedades necesarias para la plantilla HTML estandarizada
+export class PerfilComponent implements OnInit {
+  Math = Math;
+  perfiles: Perfil[] = [];
+  filteredPerfiles: Perfil[] = [];
+  paginatedPerfiles: Perfil[] = [];
+  currentPage = 1;
+  itemsPerPage = 10;
+  searchTerm = '';
+  showForm = false;
+  isEditing = false;
+  editingPerfilId?: number;
   loading = false;
-  todayES: string = new Date().toLocaleDateString('es-ES');
+  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
-  activeTab = 'perfil'; // Pestaña activa por defecto
-
-  historialAccesos = [
-    { fecha: '2024-06-01', hora: '08:15', pc: 'PC-01', ip: '192.168.1.10' },
-    { fecha: '2024-06-02', hora: '09:05', pc: 'PC-02', ip: '192.168.1.11' },
-    { fecha: '2024-06-03', hora: '07:55', pc: 'PC-03', ip: '192.168.1.12' }
-  ];
-
-
-  // Inyección de dependencias
+  perfilForm!: FormGroup;
   private fb = inject(FormBuilder);
+  private perfilService = inject(PerfilService);
 
-  constructor() {            // Constructor
-    this.perfilForm = this.fb.group({
-      nombres: [this.usuarioActivo.nombres, Validators.required],
-      apellidos: [this.usuarioActivo.apellidos, Validators.required],
-      correo: [this.usuarioActivo.correo, [Validators.required, Validators.email]],
-      telefono: [this.usuarioActivo.telefono, Validators.required],
-      foto: [this.usuarioActivo.foto],
-      contrasena: ['', [Validators.minLength(6)]],
-      confirmarContrasena: ['']
-    }, { validators: this.passwordsMatchValidator.bind(this) });
+  ngOnInit(): void {
+    this.initForm();
+    this.cargarPerfiles();
   }
 
-  passwordsMatchValidator(form: FormGroup) {
-    return form.get('contrasena')!.value === form.get('confirmarContrasena')!.value
-      ? null : { mismatch: true };
-  }
-
-  guardarCambios() {
-    if (this.perfilForm.valid) {
-      // Actualizar datos del usuario activo (simulado)
-      Object.assign(this.usuarioActivo, this.perfilForm.value);
-      alert('Datos actualizados correctamente');
-      console.log('Datos del perfil guardados:', this.perfilForm.value);
-    }
-    }
-
-  selectTab(tab: string): void {   // Método para cambiar de pestaña
-    this.activeTab = tab;
-  }
-
-  // ✅ Métodos adicionales necesarios para la plantilla estandarizada
-  resetForm() {
-    this.perfilForm.reset();
-    // Restaurar valores originales
-    this.perfilForm.patchValue({
-      nombres: this.usuarioActivo.nombres,
-      apellidos: this.usuarioActivo.apellidos,
-      correo: this.usuarioActivo.correo,
-      telefono: this.usuarioActivo.telefono,
-      foto: this.usuarioActivo.foto
+  cargarPerfiles(): void {
+    this.loading = true;
+    this.perfilService.getPerfiles().subscribe({
+      next: (data: Perfil[]) => {
+        this.perfiles = data;
+        this.filteredPerfiles = [...data];
+        this.updatePaginatedPerfiles();
+        this.loading = false;
+      },
+      error: (error: unknown) => {
+        this.loading = false;
+        console.error('Error al cargar perfiles:', error);
+      }
     });
   }
 
+  private initForm(): void {
+    this.perfilForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      descripcion: ['', [Validators.required, Validators.minLength(5)]],
+      estado: [true, [Validators.required]]
+    });
+  }
+
+  filterPerfiles(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredPerfiles = [...this.perfiles];
+    } else {
+      this.filteredPerfiles = this.perfiles.filter(perfil =>
+        perfil.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        perfil.descripcion.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+    this.currentPage = 1;
+    this.updatePaginatedPerfiles();
+  }
+
+  updatePaginatedPerfiles(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedPerfiles = this.filteredPerfiles.slice(startIndex, endIndex);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedPerfiles();
+  }
+
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+    this.activeTab = tab;
+  }
 }
