@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core'; // ✅ AGREGADO: inject para
 import { HttpClient } from '@angular/common/http';  // Importar HttpClient de Angular para realizar solicitudes HTTP
 import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar respuestas asíncronas
 import { tap, catchError } from 'rxjs/operators'; // ✅ AGREGADO: Operadores RxJS para debugging
+import { environment } from '../../environments/environment'; // ✅ Importar variable de entorno
 
 // ✅ ACTUALIZADO: Interface para la respuesta real del servidor
 export interface LoginResponse {
@@ -11,7 +12,7 @@ export interface LoginResponse {
     username: string;
     nombre: string;
     apellido: string;
-    email: string;        // ← Servidor usa 'email'
+    correo: string;        // ← Servidor usa 'correo'
     id_perfil: number;        // ← Servidor usa 'id_perfil'
     id_colegio: number;    // ← Servidor usa 'id_colegio'
     estado: boolean;      // ← Servidor usa boolean
@@ -30,7 +31,7 @@ interface RegisterRequest {
   username: string;
   nombres: string;
   apellidos: string;
-  email: string;
+  correo: string;
   password: string;
 }
 
@@ -41,7 +42,7 @@ interface RegisterResponse {
     username: string;
     nombres: string;
     apellidos: string;
-    email: string;
+    correo: string;
     id_perfil: number;
     id_colegio: number;
     estado: boolean;
@@ -70,7 +71,7 @@ interface ResetPasswordResponse {
 // Importar el módulo de enrutamiento
 @Injectable({ providedIn: 'root' }) // Proveedor del servicio de autenticación en la raíz de la aplicación
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth'; // ✅ CORREGIDO: URL base para auth - localhost
+  private apiUrl = environment.apiBaseUrl + '/auth'; // ✅ Usar variable de entorno para la URL base
 
   // ✅ NUEVO: Usando inject() en lugar de constructor injection
   private http = inject(HttpClient);
@@ -118,7 +119,7 @@ export class AuthService {
       username: registerData.username,
       nombre: registerData.nombres,
       apellido: registerData.apellidos,
-      email: registerData.email,
+      correo: registerData.correo,
       password: registerData.password,
       id_perfil: 4, // Por defecto: Estudiante
       id_colegio: 1, // Por defecto

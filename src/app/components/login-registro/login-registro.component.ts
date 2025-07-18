@@ -10,7 +10,7 @@ interface RegisterData {
   username: string;
   nombres: string;
   apellidos: string;
-  email: string;
+  correo: string;
   password: string;
 }
 
@@ -51,7 +51,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
       required: 'Los apellidos son requeridos',
       minlength: 'Los apellidos deben tener al menos 2 caracteres'
     },
-    email: {
+    correo: {
       required: 'El correo electrónico es requerido',
       email: 'Ingresa un correo electrónico válido',
       userExists: 'Este correo ya está registrado'
@@ -93,7 +93,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(2)
         ]],
-        email: ['', [
+        correo: ['', [
           Validators.required,
           Validators.email
         ]],
@@ -118,7 +118,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
       });
 
       this.registroForm.get('email')?.valueChanges.subscribe(() => {
-        this.clearUserExistsError('email');
+      this.clearUserExistsError('correo');
       });
 
     } catch (error) {
@@ -179,12 +179,12 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
     }
 
     const formData = this.registroForm.value;
-    console.log('Iniciando proceso de registro para:', formData.usuario, formData.email);
+    console.log('Iniciando proceso de registro para:', formData.usuario, formData.correo);
 
     this.loading = true;
 
     // Paso 1: Verificar si el usuario ya existe
-    this.authService.checkUserExists(formData.usuario, formData.email)
+    this.authService.checkUserExists(formData.usuario, formData.correo)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -194,7 +194,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
             this.showError(`El ${fieldDisplayName} ya está registrado`);
 
             // Marcar el campo específico como inválido
-            const fieldName = response.field === 'username' ? 'usuario' : 'email';
+            const fieldName = response.field === 'username' ? 'usuario' : 'correo';
             this.registroForm.get(fieldName)?.setErrors({ userExists: true });
           } else {
             // Paso 2: Si no existe, proceder con el registro
@@ -220,12 +220,12 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
   }
 
   // ✅ PROCEDER CON EL REGISTRO DESPUÉS DE VALIDAR QUE EL USUARIO NO EXISTE
-  private proceedWithRegistration(formData: { usuario: string; nombres: string; apellidos: string; email: string; password: string }): void {
+  private proceedWithRegistration(formData: { usuario: string; nombres: string; apellidos: string; correo: string; password: string }): void {
     const registerData: RegisterData = {
       username: formData.usuario,
       nombres: formData.nombres,
       apellidos: formData.apellidos,
-      email: formData.email,
+      correo: formData.correo,
       password: formData.password
     };
 

@@ -39,7 +39,7 @@ export class LoginRecuperaComponent implements OnInit, OnDestroy {
 
   // ✅ MENSAJES DE VALIDACIÓN
   readonly validationMessages = {
-    email: {
+    correo: {
       required: 'El correo electrónico es requerido',
       email: 'Ingresa un correo electrónico válido'
     },
@@ -71,7 +71,7 @@ export class LoginRecuperaComponent implements OnInit, OnDestroy {
   private initForm(): void {
     try {
       this.recuperaForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]]
+        correo: ['', [Validators.required, Validators.email]]
       });
 
       console.log('Formulario de recuperación inicializado correctamente');
@@ -111,12 +111,12 @@ export class LoginRecuperaComponent implements OnInit, OnDestroy {
 
   // ✅ PASO 1: SOLICITAR RECUPERACIÓN DE CONTRASEÑA
   private requestPasswordReset(): void {
-    const email = this.recuperaForm.get('email')?.value;
-    console.log('Solicitando recuperación de contraseña para:', email);
+    const correo = this.recuperaForm.get('correo')?.value;
+    console.log('Solicitando recuperación de contraseña para:', correo);
 
     this.loading = true;
 
-    this.authService.forgotPassword(email)
+    this.authService.forgotPassword(correo)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {

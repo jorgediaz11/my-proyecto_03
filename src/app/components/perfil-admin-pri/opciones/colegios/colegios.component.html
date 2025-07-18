@@ -69,33 +69,80 @@
         <div class="p-4 border-b border-gray-200">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchColegio" class="block text-sm font-medium text-gray-700 mb-2">
-                Buscar Colegio:
-              </label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+            <div class="flex flex-1 items-center gap-4">
+              <div class="max-w-md w-full">
+                <label for="searchColegio" class="block text-sm font-medium text-gray-700 mb-2">
+                  Buscar Colegio:
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input
+                    id="searchColegio"
+                    type="text"
+                    [(ngModel)]="searchTerm"
+                    (input)="filterColegios()"
+                    placeholder="Ingrese nombre, dirección o teléfono"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                  />
                 </div>
-                <input
-                  id="searchColegio"
-                  type="text"
-                  [(ngModel)]="searchTerm"
-                  (input)="filterColegios()"
-                  placeholder="Ingrese nombre, dirección o teléfono"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                />
+              </div>
+
+              <!-- Filtro Departamento -->
+              <div class="w-48">
+                <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
+                <select
+                  id="filtroDepartamento"
+                  [(ngModel)]="filtroDepartamento"
+                  (change)="filterColegios()"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                >
+                  <option value="">Todos los departamentos</option>
+                  <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+                </select>
+              </div>
+
+              <!-- Filtro Provincia -->
+              <div class="w-48">
+                <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
+                <select
+                  id="filtroProvincia"
+                  [(ngModel)]="filtroProvincia"
+                  (change)="filterColegios()"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                >
+                  <option value="">Todas las provincias</option>
+                  <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
+                </select>
+              </div>
+
+              <!-- Filtro Distrito -->
+              <div class="w-48">
+                <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
+                <select
+                  id="filtroDistrito"
+                  [(ngModel)]="filtroDistrito"
+                  (change)="filterColegios()"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                >
+                  <option value="">Todos los distritos</option>
+                  <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option>
+                </select>
               </div>
             </div>
+
             <!-- Botón Nuevo Colegio -->
-            <button
-              type="button"
-              (click)="activeTab = 'nuevo'"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
-            >
-              <i class="fas fa-plus mr-2"></i>
-              Nuevo Colegio
-            </button>
+            <div class="flex items-end">
+              <button
+                type="button"
+                (click)="activeTab = 'nuevo'"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+              >
+                <i class="fas fa-plus mr-2"></i>
+                Nuevo Colegio
+              </button>
+            </div>
           </div>
         </div>
 
@@ -155,6 +202,16 @@
                     >
                       <i class="fas fa-trash"></i>
                     </button>
+                    <!--Icono Vista Docentes-->
+                    <button
+                      type="button"
+                      (click)="viewDocentes(colegio.id!)"
+                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                      title="Docentes"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <!---->
                   </div>
                 </td>
               </tr>
@@ -354,6 +411,68 @@
                 </div>
               </div>
 
+              <!-- Aforo, Fundación y Estado -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <label for="aforo" class="block text-sm font-medium text-gray-700 mb-2">Población *</label>
+                  <input
+                    type="number"
+                    id="aforo"
+                    formControlName="aforo"
+                    placeholder="0"
+                    min="0"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    [class.border-red-300]="colegioForm.get('aforo')?.invalid && colegioForm.get('aforo')?.touched"
+                  >
+                  <div *ngIf="colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid" class="mt-1 text-sm text-red-600">
+                    <span *ngIf="colegioForm.get('aforo')?.errors?.['required']">El aforo es obligatorio</span>
+                    <span *ngIf="colegioForm.get('aforo')?.errors?.['pattern']">Solo se permiten números</span>
+                    <span *ngIf="colegioForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="fundacion" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Fundación</label>
+                  <input
+                    type="date"
+                    id="fundacion"
+                    formControlName="fundacion"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    [class.border-red-300]="colegioForm.get('fundacion')?.invalid && colegioForm.get('fundacion')?.touched"
+                  >
+                </div>
+
+                <div>
+                  <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                  <select
+                    id="estado"
+                    formControlName="estado"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    [class.border-red-300]="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched"
+                  >
+                    <option value="">Seleccione estado</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                  </select>
+                  <div *ngIf="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
+                    Por favor selecciona un estado
+                  </div>
+                </div>
+              </div>
+
+              <!-- Observaciones -->
+              <div>
+                <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
+                <textarea
+                  id="observaciones"
+                  formControlName="observaciones"
+                  rows="3"
+                  placeholder="Ingrese observaciones adicionales..."
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm resize-none"
+                  [class.border-red-300]="colegioForm.get('observaciones')?.invalid && colegioForm.get('observaciones')?.touched"
+                ></textarea>
+              </div>
+
               <!-- Botones -->
               <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                 <button
@@ -486,68 +605,6 @@
                     Selecciona al menos un turno
                   </div>
                 </div>
-              </div>
-
-              <!-- Aforo, Fundación y Estado -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label for="aforo" class="block text-sm font-medium text-gray-700 mb-2">Aforo Máximo *</label>
-                  <input
-                    type="number"
-                    id="aforo"
-                    formControlName="aforo"
-                    placeholder="0"
-                    min="0"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('aforo')?.invalid && colegioForm.get('aforo')?.touched"
-                  >
-                  <div *ngIf="colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid" class="mt-1 text-sm text-red-600">
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['required']">El aforo es obligatorio</span>
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['pattern']">Solo se permiten números</span>
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0</span>
-                  </div>
-                </div>
-
-                <div>
-                  <label for="fundacion" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Fundación</label>
-                  <input
-                    type="date"
-                    id="fundacion"
-                    formControlName="fundacion"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('fundacion')?.invalid && colegioForm.get('fundacion')?.touched"
-                  >
-                </div>
-
-                <div>
-                  <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                  <select
-                    id="estado"
-                    formControlName="estado"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched"
-                  >
-                    <option value="">Seleccione estado</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                  </select>
-                  <div *ngIf="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
-                    Por favor selecciona un estado
-                  </div>
-                </div>
-              </div>
-
-              <!-- Observaciones -->
-              <div>
-                <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
-                <textarea
-                  id="observaciones"
-                  formControlName="observaciones"
-                  rows="3"
-                  placeholder="Ingrese observaciones adicionales..."
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm resize-none"
-                  [class.border-red-300]="colegioForm.get('observaciones')?.invalid && colegioForm.get('observaciones')?.touched"
-                ></textarea>
               </div>
 
               <!-- Información del sistema -->

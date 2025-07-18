@@ -6,7 +6,7 @@
     <!-- Piso 1: Franja superior (mismo ancho que el piso 3) -->
     <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-t-lg flex items-center justify-end pr-4 text-white font-bold">
       Eureka LMS
-    </div>
+    </div> <!-- ✅ cierre agregado aquí -->
 
     <!-- Piso 2: Contenido principal (login, línea, registro) -->
     <div class="w-full bg-white flex flex-col md:flex-row shadow-lg">
@@ -19,20 +19,82 @@
 
         <!-- Formumario de Registro -->
         <form (ngSubmit)="onSubmit()" [formGroup]="registroForm">
-          <!-- <h2>Crear una cuenta</h2> -->
-          <div class="form-group">
-            <label for="usuario">Usuario:</label>
-            <input
-              id="usuario"
-              formControlName="usuario"
-              type="text"
-              placeholder="Ingresa tu usuario"
-              [class.error]="getFieldError('usuario')"
-            />
-            <p *ngIf="getFieldError('usuario')" class="error-message">
-              {{ getFieldError('usuario') }}
-            </p>
+          <!-- Selección de perfil en la misma línea -->
+          <div class="flex gap-4">
+            <div class="form-group w-full">
+              <label for="id_perfil">Perfil:</label>
+              <select
+                id="id_perfil"
+                formControlName="id_perfil"
+                class="form-select"
+                [class.error]="getFieldError('id_perfil')"
+              >
+                <option value="2">Estudiante</option>
+                <option value="3">Docente</option>
+              </select>
+              <p *ngIf="getFieldError('id_perfil')" class="error-message">
+                {{ getFieldError('id_perfil') }}
+              </p>
+            </div>
           </div>
+          <!-- Campos dinámicos según perfil -->
+          <ng-container *ngIf="registroForm.get('id_perfil')?.value === '2'; else docenteFields">
+            <div class="form-group">
+              <label for="nrodni">Nro DNI:</label>
+              <input
+                id="nrodni"
+                formControlName="nrodni"
+                type="text"
+                placeholder="Número de DNI"
+                [class.error]="getFieldError('nrodni')"
+              />
+              <p *ngIf="getFieldError('nrodni')" class="error-message">
+                {{ getFieldError('nrodni') }}
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="correo">Correo Electrónico:</label>
+              <input
+                id="correo"
+                formControlName="correo"
+                type="email"
+                placeholder="Ingresa tu correo"
+                [class.error]="getFieldError('correo')"
+              />
+              <p *ngIf="getFieldError('correo')" class="error-message">
+                {{ getFieldError('correo') }}
+              </p>
+            </div>
+          </ng-container>
+          <ng-template #docenteFields>
+            <div class="form-group">
+              <label for="correo">Correo Electrónico:</label>
+              <input
+                id="correo"
+                formControlName="correo"
+                type="email"
+                placeholder="Ingresa tu correo"
+                [class.error]="getFieldError('correo')"
+              />
+              <p *ngIf="getFieldError('correo')" class="error-message">
+                {{ getFieldError('correo') }}
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="nrodni">Nro DNI:</label>
+              <input
+                id="nrodni"
+                formControlName="nrodni"
+                type="text"
+                placeholder="Número de DNI"
+                [class.error]="getFieldError('nrodni')"
+              />
+              <p *ngIf="getFieldError('nrodni')" class="error-message">
+                {{ getFieldError('nrodni') }}
+              </p>
+            </div>
+          </ng-template>
+          <!-- <h2>Crear una cuenta</h2> -->
 
           <!-- Nombres y Apellidos en la misma línea -->
           <div class="flex gap-4">
@@ -65,16 +127,40 @@
           </div>
 
           <div class="form-group">
-            <label for="email">Correo Electrónico:</label>
+            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
             <input
-              id="email"
-              formControlName="email"
-              type="email"
-              placeholder="Ingresa tu correo"
-              [class.error]="getFieldError('email')"
+              id="fecha_nacimiento"
+              formControlName="fecha_nacimiento"
+              type="date"
+              placeholder="Fecha de nacimiento"
+              [class.error]="getFieldError('fecha_nacimiento')"
             />
-            <p *ngIf="getFieldError('email')" class="error-message">
-              {{ getFieldError('email') }}
+            <p *ngIf="getFieldError('fecha_nacimiento')" class="error-message">
+              {{ getFieldError('fecha_nacimiento') }}
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="id_colegio">Colegio:</label>
+            <select
+              id="id_colegio"
+              formControlName="id_colegio"
+              class="form-select"
+              [class.error]="getFieldError('id_colegio')"
+            >
+              <option value="" disabled selected>Seleccione un colegio</option>
+              <option value="01">REY DAVID</option>
+              <option value="02">HIPOLITO UNANUE SEDE LAS BRISAS</option>
+              <option value="03">ANGLICANA SANTISIMA TRINIDAD</option>
+              <option value="04">BRITANIC SCHOOL</option>
+              <option value="05">CARITAS GRACIOSAS DE DIOS</option>
+              <option value="06">COLLAGE</option>
+              <option value="07">CRISTO JESUS</option>
+              <option value="08">CRISTO REY</option>
+              <option value="09">DEJALO SER</option>
+              <option value="10">EL MUNDO DE LOS GENIECITOS</option>
+            </select>
+            <p *ngIf="getFieldError('id_colegio')" class="error-message">
+              {{ getFieldError('id_colegio') }}
             </p>
           </div>
 

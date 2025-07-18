@@ -4,6 +4,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment'; // ✅ Usar variable de entorno
 
 /**
  * @deprecated Este servicio está obsoleto. Use UsersService en su lugar.
@@ -29,7 +30,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = environment.apiBaseUrl + '/users'; // ✅ Usar variable de entorno
 
   private http = inject(HttpClient);
 

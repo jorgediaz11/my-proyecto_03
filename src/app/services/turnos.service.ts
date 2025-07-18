@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // ⏰ Interfaces para tipado de Turnos
 export interface Turno {
@@ -38,7 +39,7 @@ export interface UpdateTurnoDto {
 })
 export class TurnosService {
 
-  private apiUrl = 'http://localhost:3000/turnos';
+  private apiUrl = environment.apiBaseUrl + '/turnos';
 
   private http = inject(HttpClient);
 

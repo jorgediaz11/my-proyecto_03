@@ -86,6 +86,63 @@
                 />
               </div>
             </div>
+
+            <!-- Filtro Departamento -->
+            <div class="w-48">
+              <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
+              <select
+                id="filtroDepartamento"
+                [(ngModel)]="filtroDepartamento"
+                (change)="filterEstudiantes()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">Todos los departamentos</option>
+<!--                 <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+ -->              </select>
+            </div>
+
+            <!-- Filtro Provincia -->
+            <div class="w-48">
+              <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
+              <select
+                id="filtroProvincia"
+                [(ngModel)]="filtroProvincia"
+                (change)="filterEstudiantes()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">Todas las provincias</option>
+                <!-- <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option> -->
+              </select>
+            </div>
+
+            <!-- Filtro Distrito -->
+            <div class="w-48">
+              <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
+              <select
+                id="filtroDistrito"
+                [(ngModel)]="filtroDistrito"
+                (change)="filterEstudiantes()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">Todos los distritos</option>
+                <!-- <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option> -->
+              </select>
+            </div>
+
+            <!-- Filtro Colegio -->
+            <div class="w-48">
+              <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
+              <select
+                id="filtroColegio"
+                [(ngModel)]="filtroColegio"
+                (change)="filterEstudiantes()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">Todos los colegios</option>
+                <!-- <option *ngFor="let col of colegios" [value]="col.id">{{ col.nombre }}</option> -->
+              </select>
+            </div>
+
             <!-- Botón Nuevo Estudiante -->
             <button
               type="button"

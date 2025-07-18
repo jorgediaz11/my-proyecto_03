@@ -88,6 +88,9 @@
             },
             "development": {
               "buildTarget": "Ejercicio1:build:development"
+            },
+            "local": {
+              "buildTarget": "Ejercicio1:build:local"
             }
           },
           "defaultConfiguration": "development"

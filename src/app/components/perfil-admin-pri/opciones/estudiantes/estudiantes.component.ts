@@ -75,6 +75,10 @@ export class EstudiantesComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   searchTerm = '';
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
+  filtroColegio = '';
 
   // ✅ PROPIEDADES PARA EL TEMPLATE
   Math = Math;
@@ -270,6 +274,15 @@ ngOnInit(): void {
   // ✅ Métodos para la funcionalidad de la tabla
   trackByEstudianteId(index: number, estudiante: Estudiante): number {
     return estudiante.id;
+  }
+
+  private resetFilters(): void {
+    this.searchTerm = '';
+    this.filtroDepartamento = '';
+    this.filtroProvincia = '';
+    this.filtroDistrito = '';
+    this.filtroColegio = '';
+    //this.carga
   }
 
 }

@@ -452,7 +452,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
     if (usuario) {
       resumen += `DATOS DEL USUARIO:\n`;
       resumen += `• Nombre: ${usuario.nombre} ${usuario.apellido}\n`;
-      resumen += `• Email: ${usuario.correo}\n`;
+      resumen += `• Correo: ${usuario.correo}\n`;
       resumen += `• Rol ID: ${usuario.id_perfil}\n`;
       resumen += `• Estado: ${usuario.estado}\n`;
     }

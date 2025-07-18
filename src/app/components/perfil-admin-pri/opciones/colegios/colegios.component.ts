@@ -21,6 +21,9 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   itemsPerPage = 10;
   searchTerm = '';
   showForm = false;
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
   isEditing = false;
   editingColegioId?: number;
   loading = false;
@@ -371,7 +374,40 @@ export class ColegiosComponent implements OnInit, OnDestroy {
           <p><strong>Ubicación:</strong> ${colegio.distrito}, ${colegio.provincia}, ${colegio.departamento}</p>
           <p><strong>Niveles:</strong> ${colegio.nivelesEducativos.join(', ')}</p>
           <p><strong>Turnos:</strong> ${colegio.turnos.join(', ')}</p>
-          <p><strong>Aforo Máximo:</strong> ${colegio.aforoMaximo}</p>
+          <p><strong>Población:</strong> ${colegio.aforoMaximo}</p>
+          <p><strong>Fecha de Fundación:</strong> ${new Date(colegio.fechaFundacion).toLocaleDateString('es-ES')}</p>
+          <p><strong>Estado:</strong> ${colegio.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+  }
+
+// ✅ VER DOCENTES DEL COLEGIO
+  viewDocentes(id: number): void {
+    const colegio = this.colegios.find(c => c.id === id);
+    if (!colegio) {
+      this.handleError('Colegio no encontrado');
+      return;
+    }
+
+    Swal.fire({
+      title: `Docentes del Colegio`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombre:</strong> ${colegio.nombre}</p>
+          <p><strong>Código Modular:</strong> ${colegio.codigoModular}</p>
+          <p><strong>Dirección:</strong> ${colegio.direccion}</p>
+          <p><strong>Teléfono:</strong> ${colegio.telefono}</p>
+          <p><strong>Correo:</strong> ${colegio.correo}</p>
+          <p><strong>Website:</strong> ${colegio.website || 'No especificado'}</p>
+          <p><strong>Director:</strong> ${colegio.director || 'No especificado'}</p>
+          <p><strong>Ubicación:</strong> ${colegio.distrito}, ${colegio.provincia}, ${colegio.departamento}</p>
+          <p><strong>Niveles:</strong> ${colegio.nivelesEducativos.join(', ')}</p>
+          <p><strong>Turnos:</strong> ${colegio.turnos.join(', ')}</p>
+          <p><strong>Población:</strong> ${colegio.aforoMaximo}</p>
           <p><strong>Fecha de Fundación:</strong> ${new Date(colegio.fechaFundacion).toLocaleDateString('es-ES')}</p>
           <p><strong>Estado:</strong> ${colegio.estado ? 'Activo' : 'Inactivo'}</p>
         </div>
@@ -681,4 +717,18 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  private handleEmptyState(): void {
+    // Implementación para manejar el estado vacío si es necesario
+    this.showEmptyState();
+  }
+
+  private resetFilters(): void {
+    this.searchTerm = '';
+    this.filtroDepartamento = '';
+    this.filtroProvincia = '';
+    this.filtroDistrito = '';
+    this.cargarColegios();
+  }
+
 }

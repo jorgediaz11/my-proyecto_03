@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // 📚 Interfaces para tipado de Niveles Educativos
 export interface Nivel {
@@ -44,7 +45,7 @@ export interface UpdateNivelDto {
 })
 export class NivelesService {
 
-  private apiUrl = 'http://localhost:3000/niveles';
+  private apiUrl = environment.apiBaseUrl + '/niveles';
 
   private http = inject(HttpClient);
 

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Perfil {
   id_perfil: number;
@@ -25,7 +26,7 @@ export interface UpdatePerfilDto {
   providedIn: 'root'
 })
 export class PerfilService {
-  private apiUrl = 'http://localhost:3000/perfiles';
+  private apiUrl = environment.apiBaseUrl + '/perfiles';
   private http = inject(HttpClient);
 
   private getAuthHeaders(): HttpHeaders {

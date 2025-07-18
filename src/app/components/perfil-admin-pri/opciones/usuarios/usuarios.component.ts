@@ -18,6 +18,8 @@ export class UsuariosComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   searchTerm = '';
+  filtroPerfil = '';
+  filtroColegio = '';
   showForm = false;
   isEditing = false;
   editingUserId?: number;
@@ -123,7 +125,7 @@ export class UsuariosComponent implements OnInit {
         usuario.username?.toLowerCase().includes(searchTerm) ||
         usuario.nombre?.toLowerCase().includes(searchTerm) ||
         usuario.apellido?.toLowerCase().includes(searchTerm) ||
-        usuario.email?.toLowerCase().includes(searchTerm)
+        usuario.correo?.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -182,7 +184,7 @@ export class UsuariosComponent implements OnInit {
           username: usuario.username,
           nombre: usuario.nombre,
           apellido: usuario.apellido,
-          correo: usuario.email,
+          correo: usuario.correo,
           id_perfil: usuario.id_perfil,
           id_colegio: usuario.id_colegio || 1,
           estado: usuario.estado ? '1' : '0',
@@ -211,7 +213,7 @@ export class UsuariosComponent implements OnInit {
             <div><strong>ID:</strong> ${usuario.id}</div>
             <div><strong>Usuario:</strong> ${usuario.username}</div>
             <div><strong>Nombre:</strong> ${usuario.nombre} ${usuario.apellido}</div>
-            <div><strong>Correo:</strong> ${usuario.email}</div>
+            <div><strong>Correo:</strong> ${usuario.correo}</div>
             <div><strong>Rol:</strong> ${this.getRoleName(usuario.id_perfil ?? 0)}</div>
             <div><strong>Colegio ID:</strong> ${usuario.id_colegio}</div>
             <div><strong>Estado:</strong>
@@ -322,7 +324,7 @@ export class UsuariosComponent implements OnInit {
         password: formValue.password.trim(), // Obligatorio para nuevo usuario
         nombre: formValue.nombre.trim(),
         apellido: formValue.apellido.trim(),
-        email: formValue.correo.toLowerCase().trim(),
+        correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),
         id_colegio: Number(formValue.id_colegio),
         estado: formValue.estado === '1'
@@ -333,7 +335,7 @@ export class UsuariosComponent implements OnInit {
       const userData: UpdateUserDto & { password?: string } = {
         nombre: formValue.nombre.trim(),
         apellido: formValue.apellido.trim(),
-        email: formValue.correo.toLowerCase().trim(),
+        correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),
         id_colegio: Number(formValue.id_colegio),
         estado: formValue.estado === '1'
@@ -398,5 +400,12 @@ export class UsuariosComponent implements OnInit {
       toast: true,
       position: 'top-end'
     });
+  }
+
+  private resetFilters(): void {
+    this.searchTerm = '';
+    this.filtroPerfil = '';
+    this.filtroColegio = '';
+    this.cargarUsuarios();
   }
 }

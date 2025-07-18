@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // 📖 Interfaces para tipado de Cursos/Materias
 export interface Curso {
@@ -53,7 +54,7 @@ export interface UpdateCursoDto {
 })
 export class CursosService {
   // API base URL Cursos
-  private apiUrl = 'http://localhost:3000/curso';
+  private apiUrl = environment.apiBaseUrl + '/curso';
 
   private http = inject(HttpClient);
 

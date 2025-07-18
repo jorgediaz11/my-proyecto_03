@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // 📅 Interfaces para tipado de Años Académicos/Periodos
 export interface PeriodoAcademico {
@@ -53,7 +54,7 @@ export interface UpdatePeriodoAcademicoDto {
 })
 export class PeriodosAcademicosService {
 
-  private apiUrl = 'http://localhost:3000/periodos-academicos';
+  private apiUrl = environment.apiBaseUrl + '/periodos-academicos';
 
   private http = inject(HttpClient);
 

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core'; // Importar el decorador Injectable de Angular para definir un servicio
 import { HttpClient, HttpHeaders } from '@angular/common/http';  // Importar HttpClient y HttpHeaders de Angular para realizar solicitudes HTTP
 import { Observable } from 'rxjs';  // Importar Observable de RxJS para manejar respuestas asíncronas
+import { environment } from '../../environments/environment'; // Importar el entorno de configuración
 
 // Interfaces para tipado
 export interface Users {
@@ -9,7 +10,7 @@ export interface Users {
   id_perfil: number;
   nombre: string;
   apellido: string;
-  email: string;
+  correo: string;
   estado: boolean;
   username: string;
   password?: string;
@@ -19,7 +20,7 @@ export interface CreateUserDto {
   password: string;
   nombre: string;
   apellido: string;
-  email: string;
+  correo: string;
   id_perfil: number;
   id_colegio: number;
   estado: boolean;
@@ -27,7 +28,7 @@ export interface CreateUserDto {
 export interface UpdateUserDto {
   nombre?: string;
   apellido?: string;
-  email?: string;
+  correo?: string;
   id_perfil?: number;
   id_colegio?: number;
   estado?: boolean;
@@ -38,7 +39,7 @@ export interface UpdateUserDto {
 })
 export class UsersService {
 
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = environment.apiBaseUrl + '/users';
   // ¡Asegúrate de que esta URL sea correcta!
 
   private http = inject(HttpClient);

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // 📝 Interfaces para tipado de Secciones
 export interface Seccion {
@@ -51,7 +52,7 @@ export interface UpdateSeccionDto {
 })
 export class SeccionesService {
 
-  private apiUrl = 'http://localhost:3000/secciones';
+  private apiUrl = environment.apiBaseUrl + '/secciones';
 
   private http = inject(HttpClient);
 

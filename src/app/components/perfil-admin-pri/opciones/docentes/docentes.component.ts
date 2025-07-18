@@ -49,6 +49,11 @@ export class DocentesComponent implements OnInit {
   activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
   showForm = false;
   loading = false;
+  searchTerm = '';
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
+  filtroColegio = '';
 
   // ✅ PROPIEDADES PARA EL TEMPLATE
   Math = Math;
@@ -225,6 +230,15 @@ export class DocentesComponent implements OnInit {
 
   selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
     this.activeTab = tab;
+  }
+
+  private resetFilters(): void {
+    this.searchTerm = '';
+    this.filtroDepartamento = '';
+    this.filtroProvincia = '';
+    this.filtroDistrito = '';
+    this.filtroColegio = '';
+    //this.carga
   }
 
 }

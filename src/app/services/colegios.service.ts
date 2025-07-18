@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // ✅ INTERFACE COMPLETA PARA COLEGIO
 export interface Colegio {
@@ -61,7 +62,7 @@ export interface ColegioResponse {
 })
 export class ColegiosService {
   // ✅ CONFIGURACIÓN DE API
-  private readonly apiUrl = 'http://localhost:3000/colegios';
+  private readonly apiUrl = environment.apiBaseUrl + '/colegios';
 
   // ✅ INYECCIÓN CON INJECT()
   private http = inject(HttpClient);

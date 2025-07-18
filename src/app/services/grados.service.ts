@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // 🎯 Interfaces para tipado de Grados
 export interface Grado {
@@ -44,7 +45,7 @@ export interface UpdateGradoDto {
 })
 export class GradosService {
 
-  private apiUrl = 'http://localhost:3000/grados';
+  private apiUrl = environment.apiBaseUrl + '/grados';
 
   private http = inject(HttpClient);
 

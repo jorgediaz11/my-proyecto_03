@@ -5,6 +5,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 // 🔧 Interfaces para tipado completo
 export interface Perfil {
@@ -84,7 +85,7 @@ export interface PermisoDisponible {
   providedIn: 'root'
 })
 export class PerfilesService {
-  private readonly apiUrl = 'http://localhost:3000/perfiles';
+  private readonly apiUrl = environment.apiBaseUrl + '/perfiles';
   private http = inject(HttpClient);
 
   /**

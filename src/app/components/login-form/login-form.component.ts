@@ -269,7 +269,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         username: response.user.username,
         nombre: response.user.nombre,
         apellido: response.user.apellido,
-        correo: response.user.email,
+        correo: response.user.correo,
         id_perfil: response.user.id_perfil,
         id_colegio: response.user.id_colegio,
         estado: response.user.estado
@@ -829,7 +829,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                     username: response.user.username,
                     nombre: response.user.nombre,
                     apellido: response.user.apellido,
-                    email: response.user.email,
+                    correo: response.user.correo,
                     id_perfil: response.user.id_perfil,
                     id_colegio: response.user.id_colegio,
                     estado: response.user.estado

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 // 🎓 Interfaces para tipado completo
 export interface Estudiante {
@@ -109,7 +110,7 @@ export interface EstadisticasEstudiantes {
   providedIn: 'root'
 })
 export class EstudiantesService {
-  private readonly apiUrl = 'http://localhost:3000/estudiantes';
+  private readonly apiUrl = environment.apiBaseUrl + '/estudiantes';
   private http = inject(HttpClient);
 
   /**

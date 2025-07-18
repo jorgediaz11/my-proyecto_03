@@ -269,7 +269,7 @@ export class UserStateService {
     username: string;
     nombre: string;
     apellido: string;
-    email: string;
+    correo: string;
     id_perfil: number;
     id_colegio: number;
     estado: boolean;
@@ -283,7 +283,7 @@ export class UserStateService {
       username: usuarioServidor.username,
       nombre: usuarioServidor.nombre,
       apellido: usuarioServidor.apellido,
-      correo: usuarioServidor.email,           // email → correo
+      correo: usuarioServidor.correo,           // email → correo
       id_perfil: usuarioServidor.id_perfil,            // id_perfil → id_perfil
       id_colegio: usuarioServidor.id_colegio,    // id_colegio → id_colegio
       estado: usuarioServidor.estado ? 'activo' : 'inactivo' // boolean → string
