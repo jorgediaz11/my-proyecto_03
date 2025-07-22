@@ -3,8 +3,7 @@
 
 // ✅ Servicios de autenticación y usuarios
 export * from './auth.service';
-export * from './users.service';
-export * from './usuario.service';
+export * from './usuarios.service';
 export * from './user-state.service';
 
 // 🏫 Servicios institucionales

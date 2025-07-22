@@ -1,0 +1,40 @@
+<div class="modal-activar-libros-outer">
+  <div class="modal-activar-libros-inner">
+    <!-- HEADER -->
+    <div class="login-header flex items-center justify-between mb-4">
+      <h1 class="login-title text-3xl font-bold text-gray-800">Activar Libro</h1>
+
+    </div>
+
+    <div class="flex flex-row items-start justify-between mb-4 w-full gap-4">
+      <div class="w-1/2 p-2 border-2 border-dashed border-blue-500 rounded-md flex items-start">
+        <h3 class="login-subtitle text-base text-gray-600 flex items-center">
+          Ingresa el código de activación que aparece en la contraportada o instructivo del libro.
+        </h3>
+      </div>
+      <div class="w-1/2 flex items-start justify-center p-2 border-2 border-dashed border-green-500 rounded-md">
+        <img src="assets/images/activarlibro.png" alt="Activar libro" class="w-full h-full max-h-40 max-w-40" loading="lazy" />
+      </div>
+    </div>
+
+    <form (ngSubmit)="activarLibro()" #formLibro="ngForm" class="flex flex-col items-center flex-1 w-full">
+      <div class="form-group w-full mb-4">
+        <input
+          id="codigoLibro"
+          name="codigoLibro"
+          type="text"
+          class="form-input text-2xl w-full border rounded px-4 py-3 text-center"
+          [(ngModel)]="codigoLibro"
+          required
+          placeholder="Código de activación"
+        />
+      </div>
+      <button type="submit" [disabled]="formLibro.invalid" class="px-8 py-3 bg-orange-600 text-white font-bold rounded-lg shadow hover:bg-orange-700 transition-colors text-lg w-full">
+        {{ textoBoton }}
+      </button>
+    </form>
+    <button type="button" (click)="cerrarVentana()" class="mt-4 px-6 py-2 bg-gray-400 text-white font-bold rounded-lg shadow hover:bg-gray-600 transition-colors w-full">
+      Cerrar ventana
+    </button>
+  </div>
+</div>

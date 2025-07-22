@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, PerfilUsuario } from '../../services/user-state.service';
@@ -7,7 +9,9 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
 @Component({
   selector: 'app-opciones',
   templateUrl: './opciones.component.html',
-  styleUrls: ['./opciones.component.css']
+  styleUrls: ['./opciones.component.css'],
+  standalone: true,
+  imports: [CommonModule, ActivarLibrosComponent]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
 
@@ -462,4 +466,23 @@ export class OpcionesComponent implements OnInit, OnDestroy {
 
     console.log('\n🎯 === FIN DE VERIFICACIÓN ===\n');
   }
+
+  mostrarModalActivarLibro = false;
+  codigoLibro = '';
+
+  onActivarLibro() {
+    this.mostrarModalActivarLibro = true;
+  }
+
+  cerrarModalActivarLibro() {
+    this.mostrarModalActivarLibro = false;
+    this.codigoLibro = '';
+  }
+
+  activarLibro() {
+    // Aquí va la lógica para activar el libro (puedes llamar a un servicio, etc.)
+    alert('Libro activado: ' + this.codigoLibro);
+    this.cerrarModalActivarLibro();
+  }
+
 }

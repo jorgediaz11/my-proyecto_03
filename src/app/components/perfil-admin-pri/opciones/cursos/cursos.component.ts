@@ -19,6 +19,9 @@ export class CursosComponent implements OnInit {
   showForm = false;
   loading = false;
 
+  tipoCurso = 'ambos';
+  tipo?: 'interno' | 'externo'; // <--- agrega esto
+
   // Formularios
   cursoForm!: FormGroup;
 
@@ -107,4 +110,19 @@ export class CursosComponent implements OnInit {
   getPagesArray(): number[] {
     return Array(this.getTotalPages()).fill(0);
   }
+
+  onTipoCursoChange() {
+    this.currentPage = 1;
+    this.filtrarPorTipoCurso();
+  }
+
+  filtrarPorTipoCurso() {
+    if (this.tipoCurso === 'ambos') {
+      this.filteredCursos = this.cursos.slice();
+    } else {
+      this.filteredCursos = this.cursos.filter(curso => curso.tipo === this.tipoCurso);
+    }
+    this.setPaginatedCursos();
+  }
+
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +22,13 @@ interface Estudiante { // Define la interfaz Estudiante
 })
 // export class EstudiantesComponent implements OnInit {
 export class EstudiantesComponent implements OnInit {
+  // === UBIGEO Y COLEGIOS ===
+  departamentos: Departamento[] = [];
+  provincias: Provincia[] = [];
+  distritos: Distrito[] = [];
+  colegios: Colegio[] = [];
+  private ubigeoService = inject(UbigeoService);
+  private colegiosService = inject(ColegiosService);
   estudiantes: Estudiante[] = [
     { id: 1, nombres: 'Juan', apellidos: 'Pérez García', nivel: 'Primaria', grado: '1°', seccion: 'A' },
     { id: 2, nombres: 'Ana', apellidos: 'López Torres', nivel: 'Primaria', grado: '1°', seccion: 'B' },
@@ -120,6 +129,8 @@ export class EstudiantesComponent implements OnInit {
 
   // Método para manejar el evento de clic en el botón de "Crear Estudiante"
 ngOnInit(): void {
+    this.cargarDepartamentos();
+    this.cargarColegios();
   this.filteredEstudiantes = [...this.estudiantes];
   this.updatePaginatedEstudiantes();
 }
@@ -131,11 +142,68 @@ ngOnInit(): void {
   }
 
   filterEstudiantes(): void {
-    this.filteredEstudiantes = this.estudiantes.filter(estudiante =>
-      estudiante.nombres.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    // Solo filtrar por nombre/apellido
+    let lista = this.estudiantes;
+    if (this.searchEstudiante) {
+      lista = lista.filter(estudiante =>
+        estudiante.nombres.toLowerCase().includes(this.searchEstudiante.toLowerCase()) ||
+        estudiante.apellidos.toLowerCase().includes(this.searchEstudiante.toLowerCase())
+      );
+    }
+    this.filteredEstudiantes = lista;
     this.currentPage = 1;
     this.updatePaginatedEstudiantes();
+  }
+
+  cargarDepartamentos(): void {
+    this.ubigeoService.getDepartamentos().subscribe(deps => {
+      this.departamentos = deps;
+      this.filtroDepartamento = '';
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    });
+  }
+
+  onDepartamentoChange(): void {
+    const dep = this.departamentos.find(d => d.departamento === this.filtroDepartamento);
+    if (dep) {
+      const idDep = dep.id_ubigeo.substring(0, 2);
+      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
+        this.provincias = provs;
+        this.filtroProvincia = '';
+        this.distritos = [];
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    }
+    this.filterEstudiantes();
+  }
+
+  onProvinciaChange(): void {
+    const prov = this.provincias.find(p => p.provincia === this.filtroProvincia);
+    if (prov) {
+      const idProv = prov.id_ubigeo.substring(0, 4);
+      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
+        this.distritos = dists;
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.distritos = [];
+      this.filtroDistrito = '';
+    }
+    this.filterEstudiantes();
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegios().subscribe(data => {
+      this.colegios = data;
+    });
   }
 
   createEstudiante(): void {

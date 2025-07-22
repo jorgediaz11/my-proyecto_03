@@ -94,11 +94,11 @@
               <select
                 id="filtroDepartamento"
                 [(ngModel)]="filtroDepartamento"
-                (change)="filterDocentes()"
+                (change)="onDepartamentoChange()"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todos los departamentos</option>
-                <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+                <option value="">[Seleccionar]</option>
+                <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
               </select>
             </div>
 
@@ -108,11 +108,11 @@
               <select
                 id="filtroProvincia"
                 [(ngModel)]="filtroProvincia"
-                (change)="filterDocentes()"
+                (change)="onProvinciaChange()"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todas las provincias</option>
-                <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
+                <option value="">[Seleccionar]</option>
+                <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
               </select>
             </div>
 
@@ -125,8 +125,8 @@
                 (change)="filterDocentes()"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todos los distritos</option>
-                <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option>
+                <option value="">[Seleccionar]</option>
+                <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
               </select>
             </div>
 

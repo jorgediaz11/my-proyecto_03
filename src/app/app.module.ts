@@ -24,6 +24,7 @@ import { LoginRegistroComponent } from './components/login-registro/login-regist
 import { LoginRecuperaComponent } from './components/login-recupera/login-recupera.component'; // Importar el componente de recuperación de contraseña
 // Menu TMP Opciones
 import { OpcionesComponent } from './components/opciones/opciones.component';
+// import { ActivarLibrosComponent } from './components/activar-libros/activar-libros.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 import { PerfilAdminPriMuroComponent } from './components/perfil-admin-pri/perfil-admin-pri-muro.component'; // Importa el componente de muro del perfil administrador
@@ -36,6 +37,8 @@ import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/audit
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
+import { ClasesColComponent } from './components/perfil-admin-pri/opciones/clases-col/clases-col.component';
+
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -66,7 +69,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     LoginFormComponent,
     LoginRegistroComponent,
     LoginRecuperaComponent,
-    OpcionesComponent,
+    //OpcionesComponent, // Standalone component, imported below
+    // ActivarLibrosComponent, // Ahora standalone, no va en declarations
     PerfilAdminPriComponent,
     PerfilAdminPriMuroComponent,
     UsuariosComponent,
@@ -89,6 +93,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     PerfilEditorComponent,
     PerfilEditorMuroComponent,
     TestEndpointsComponent,
+    ClasesColComponent,
     //AcademicoComponent,
   ],
   imports: [
@@ -104,6 +109,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     MatTabsModule,            // Importa MatTabsModule aquí
     ReactiveFormsModule,      // Importa ReactiveFormsModule aquí BackEnd
     HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
+    //OpcionesComponent,        // Ya está en declarations
+    OpcionesComponent,         // Standalone component, import here
   ],
   providers: [
     provideAnimations(),  // Proveedor para animaciones

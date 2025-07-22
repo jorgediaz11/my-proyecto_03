@@ -154,7 +154,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let usuario of paginatedUsuarios; trackBy: trackByUserId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id_usuario }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.username }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.nombre }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.apellido }}</td>
@@ -177,7 +177,7 @@
                   <div class="flex justify-center space-x-2">
                     <button
                       type="button"
-                      (click)="viewUsuario(usuario.id!)"
+                      (click)="viewUsuario(usuario.id_usuario!)"
                       class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
                       title="Ver detalles"
                     >
@@ -185,7 +185,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="editUsuario(usuario.id!)"
+                      (click)="editUsuario(usuario.id_usuario!)"
                       class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
                       title="Editar"
                     >
@@ -193,7 +193,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="deleteUsuario(usuario.id!)"
+                      (click)="deleteUsuario(usuario.id_usuario!)"
                       class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
                       title="Eliminar"
                     >

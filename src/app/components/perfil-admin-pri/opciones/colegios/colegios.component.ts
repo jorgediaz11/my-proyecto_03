@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -40,7 +41,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
 
   // ✅ TRACKBY FUNCTION FOR PERFORMANCE
   trackByColegioId(index: number, colegio: Colegio): number {
-    return colegio.id || index;
+    return colegio.id_colegio || index;
   }
 
   // ✅ FECHA EN ESPAÑOL PARA EL TEMPLATE
@@ -65,12 +66,10 @@ export class ColegiosComponent implements OnInit, OnDestroy {
     { value: 'Noche', label: 'Noche' }
   ];
 
-  readonly departamentos = [
-    { value: 'Lima', label: 'Lima' },
-    { value: 'Arequipa', label: 'Arequipa' },
-    { value: 'Cusco', label: 'Cusco' },
-    { value: 'Callao', label: 'Callao' }
-  ];
+  departamentos: Departamento[] = [];
+  provincias: Provincia[] = [];
+  distritos: Distrito[] = [];
+  private ubigeoService = inject(UbigeoService);
 
   // ✅ INYECCIÓN DE DEPENDENCIAS CON INJECT()
   private colegiosService = inject(ColegiosService);
@@ -82,8 +81,53 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.cargarDepartamentos();
     this.cargarColegios();
     this.testEndpointConnection();
+  }
+  cargarDepartamentos(): void {
+    this.ubigeoService.getDepartamentos().subscribe(deps => {
+      this.departamentos = deps;
+      this.filtroDepartamento = '';
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    });
+  }
+
+  onDepartamentoChange(): void {
+    const dep = this.departamentos.find(d => d.departamento === this.filtroDepartamento);
+    if (dep) {
+      const idDep = dep.id_ubigeo.substring(0, 2);
+      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
+        this.provincias = provs;
+        this.filtroProvincia = '';
+        this.distritos = [];
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    }
+    this.filterColegios();
+  }
+
+  onProvinciaChange(): void {
+    const prov = this.provincias.find(p => p.provincia === this.filtroProvincia);
+    if (prov) {
+      const idProv = prov.id_ubigeo.substring(0, 4);
+      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
+        this.distritos = dists;
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.distritos = [];
+      this.filtroDistrito = '';
+    }
+    this.filterColegios();
   }
 
   ngOnDestroy(): void {
@@ -241,7 +285,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
     if (this.isEditing && this.editingColegioId) {
       // Actualizar colegio existente
       const updateData: UpdateColegioDto = {
-        id: this.editingColegioId,
+        id_colegio: this.editingColegioId,
         ...formData
       };
 
@@ -283,15 +327,15 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ EDITAR COLEGIO
-  editColegio(id: number): void {
-    const colegio = this.colegios.find(c => c.id === id);
+  editColegio(id_colegio: number): void {
+    const colegio = this.colegios.find(c => c.id_colegio === id_colegio);
     if (!colegio) {
       this.handleError('Colegio no encontrado');
       return;
     }
 
     this.isEditing = true;
-    this.editingColegioId = id;
+    this.editingColegioId = id_colegio;
     this.activeTab = 'nuevo';
 
     this.colegioForm.patchValue({
@@ -314,8 +358,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ ELIMINAR COLEGIO
-  deleteColegio(id: number): void {
-    const colegio = this.colegios.find(c => c.id === id);
+  deleteColegio(id_colegio: number): void {
+    const colegio = this.colegios.find(c => c.id_colegio === id_colegio);
     if (!colegio) {
       this.handleError('Colegio no encontrado');
       return;
@@ -334,7 +378,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loading = true;
-        this.colegiosService.eliminarColegio(id)
+             this.colegiosService.eliminarColegio(id_colegio)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
@@ -353,8 +397,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ VER DETALLES DEL COLEGIO
-  viewColegio(id: number): void {
-    const colegio = this.colegios.find(c => c.id === id);
+  viewColegio(id_colegio: number): void {
+    const colegio = this.colegios.find(c => c.id_colegio === id_colegio);
     if (!colegio) {
       this.handleError('Colegio no encontrado');
       return;
@@ -386,8 +430,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
 // ✅ VER DOCENTES DEL COLEGIO
-  viewDocentes(id: number): void {
-    const colegio = this.colegios.find(c => c.id === id);
+  viewDocentes(id_colegio: number): void {
+    const colegio = this.colegios.find(c => c.id_colegio === id_colegio);
     if (!colegio) {
       this.handleError('Colegio no encontrado');
       return;
@@ -499,24 +543,24 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ MÉTODOS FALTANTES REQUERIDOS POR EL HTML
-  onViewColegioKey(event: KeyboardEvent, id: number): void {
+  onViewColegioKey(event: KeyboardEvent, id_colegio: number): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      this.viewColegio(id);
+      this.viewColegio(id_colegio);
     }
   }
 
-  onEditColegioKey(event: KeyboardEvent, id: number): void {
+  onEditColegioKey(event: KeyboardEvent, id_colegio: number): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      this.editColegio(id);
+      this.editColegio(id_colegio);
     }
   }
 
-  onDeleteColegioKey(event: KeyboardEvent, id: number): void {
+  onDeleteColegioKey(event: KeyboardEvent, id_colegio: number): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      this.deleteColegio(id);
+      this.deleteColegio(id_colegio);
     }
   }
 
@@ -534,13 +578,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ PROPIEDADES ADICIONALES PARA EL TEMPLATE HTML
-  get provincias(): string[] {
-    return ['Lima', 'Arequipa', 'Cusco', 'Callao']; // Simplificado
-  }
-
-  get distritos(): string[] {
-    return ['San Isidro', 'Miraflores', 'Surco', 'San Borja']; // Simplificado
-  }  // ✅ MOSTRAR ESTADO VACÍO
+  // Las provincias y distritos ahora son arrays cargados dinámicamente
   private showEmptyState(): void {
     this.colegios = [];
     this.filteredColegios = [];
@@ -639,7 +677,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
 
     const testColegios: Colegio[] = [
       {
-        id: 1,
+        id_colegio: 1,
         nombre: 'Colegio San Remo (PRUEBA)',
         codigoModular: '1234567',
         direccion: 'Av. Principal 123, Lima',
@@ -657,7 +695,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         estado: true
       },
       {
-        id: 2,
+        id_colegio: 2,
         nombre: 'Colegio Los Andes (PRUEBA)',
         codigoModular: '7654321',
         direccion: 'Jr. Los Pinos 456, Lima',

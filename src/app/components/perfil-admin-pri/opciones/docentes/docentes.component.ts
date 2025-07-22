@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 import { FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 //import { UsuarioService, Usuario } from '../../../../services/usuario.service';
@@ -50,9 +51,7 @@ export class DocentesComponent implements OnInit {
   showForm = false;
   loading = false;
   searchTerm = '';
-  filtroDepartamento = '';
-  filtroProvincia = '';
-  filtroDistrito = '';
+  // (Ya definidos más abajo, no duplicar)
   filtroColegio = '';
 
   // ✅ PROPIEDADES PARA EL TEMPLATE
@@ -70,9 +69,60 @@ export class DocentesComponent implements OnInit {
     { value: 'director', label: 'Director' }
   ];
 
-  departamentos = ['Lima', 'Arequipa', 'Cusco', 'Trujillo', 'Piura'];
-  provincias = ['Lima', 'Callao', 'Huaral', 'Barranca', 'Cajatambo'];
-  distritos = ['San Juan de Lurigancho', 'San Martín de Porres', 'Villa El Salvador'];
+  departamentos: Departamento[] = [];
+  provincias: Provincia[] = [];
+  distritos: Distrito[] = [];
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
+
+  private ubigeoService = inject(UbigeoService);
+  // ngOnInit ya está implementado arriba, eliminar duplicado
+
+  cargarDepartamentos(): void {
+    this.ubigeoService.getDepartamentos().subscribe(deps => {
+      this.departamentos = deps;
+      this.filtroDepartamento = '';
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    });
+  }
+
+  onDepartamentoChange(): void {
+    const dep = this.departamentos.find(d => d.departamento === this.filtroDepartamento);
+    if (dep) {
+      const idDep = dep.id_ubigeo.substring(0, 2);
+      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
+        this.provincias = provs;
+        this.filtroProvincia = '';
+        this.distritos = [];
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    }
+    this.filterDocentes();
+  }
+
+  onProvinciaChange(): void {
+    const prov = this.provincias.find(p => p.provincia === this.filtroProvincia);
+    if (prov) {
+      const idProv = prov.id_ubigeo.substring(0, 4);
+      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
+        this.distritos = dists;
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.distritos = [];
+      this.filtroDistrito = '';
+    }
+    this.filterDocentes();
+  }
 
   // ✅ TRACKBY FUNCTION FOR PERFORMANCE
   trackByDocenteId(index: number, docente: Docente): number {
@@ -88,6 +138,7 @@ export class DocentesComponent implements OnInit {
 
   // Método para manejar el evento de clic en el botón de "Crear Docente"
   ngOnInit(): void {
+    this.cargarDepartamentos();
     this.filteredDocentes = [...this.docentes];
     this.updatePaginatedDocentes();
   }

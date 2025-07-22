@@ -154,7 +154,7 @@ export class TestEndpointsComponent implements OnInit {
 
         if (data.length > 0) {
           this.addResult(`📝 Ejemplo de colegio:`);
-          this.addResult(`   - ID: ${data[0].id}`);
+          this.addResult(`   - ID: ${data[0].id_colegio}`);
           this.addResult(`   - Nombre: ${data[0].nombre || 'Sin nombre'}`);
           this.addResult(`   - Estado: ${data[0].estado ? 'Activo' : 'Inactivo'}`);
         }

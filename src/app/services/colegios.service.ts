@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 // ✅ INTERFACE COMPLETA PARA COLEGIO
 export interface Colegio {
-  id?: number;
+  id_colegio?: number;
   nombre: string;
   codigoModular: string;
   direccion: string;
@@ -47,7 +47,7 @@ export interface CreateColegioDto {
 }
 
 export interface UpdateColegioDto extends Partial<CreateColegioDto> {
-  id: number;
+  id_colegio: number;
 }
 
 // ✅ INTERFACE PARA RESPUESTAS
@@ -74,9 +74,9 @@ export class ColegiosService {
   }
 
   // ✅ OBTENER COLEGIO POR ID
-  getColegioPorId(id: number): Observable<Colegio> {
-    console.log('ColegiosService.getColegioPorId llamado con ID:', id);
-    return this.http.get<Colegio>(`${this.apiUrl}/${id}`);
+  getColegioPorId(id_colegio: number): Observable<Colegio> {
+    console.log('ColegiosService.getColegioPorId llamado con ID:', id_colegio);
+    return this.http.get<Colegio>(`${this.apiUrl}/${id_colegio}`);
   }
 
   // ✅ CREAR NUEVO COLEGIO
@@ -86,15 +86,15 @@ export class ColegiosService {
   }
 
   // ✅ ACTUALIZAR COLEGIO
-  actualizarColegio(id: number, colegio: UpdateColegioDto): Observable<Colegio> {
-    console.log('ColegiosService.actualizarColegio llamado con ID:', id, 'datos:', colegio);
-    return this.http.put<Colegio>(`${this.apiUrl}/${id}`, colegio);
+  actualizarColegio(id_colegio: number, colegio: UpdateColegioDto): Observable<Colegio> {
+    console.log('ColegiosService.actualizarColegio llamado con ID:', id_colegio, 'datos:', colegio);
+    return this.http.put<Colegio>(`${this.apiUrl}/${id_colegio}`, colegio);
   }
 
   // ✅ ELIMINAR COLEGIO
-  eliminarColegio(id: number): Observable<{ message: string }> {
-    console.log('ColegiosService.eliminarColegio llamado con ID:', id);
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+  eliminarColegio(id_colegio: number): Observable<{ message: string }> {
+    console.log('ColegiosService.eliminarColegio llamado con ID:', id_colegio);
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id_colegio}`);
   }
 
   // ✅ VERIFICAR SI CÓDIGO MODULAR EXISTE

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { UsersService, Users, CreateUserDto, UpdateUserDto } from '../../../../services/users.service';
+import { UsersService, Users, CreateUserDto, UpdateUserDto } from '../../../../services/usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -167,12 +167,12 @@ export class UsuariosComponent implements OnInit {
   }
 
   // ✅ EDITAR USUARIO
-  editUsuario(id: number): void {
+  editUsuario(id_usuario: number): void {
     this.loading = true;
-    this.usersService.getUserById(id).subscribe({
+    this.usersService.getUserById(id_usuario).subscribe({
       next: (usuario: Users) => {
         this.isEditing = true;
-        this.editingUserId = id;
+        this.editingUserId = id_usuario;
         this.activeTab = 'nuevo';
 
         this.usuarioForm.get('password')?.clearValidators();
@@ -203,14 +203,14 @@ export class UsuariosComponent implements OnInit {
   }
 
   // ✅ VER USUARIO
-  viewUsuario(id: number): void {
-    const usuario = this.usuarios.find(u => u.id === id);
+  viewUsuario(id_usuario: number): void {
+    const usuario = this.usuarios.find(u => u.id_usuario === id_usuario);
     if (usuario) {
       Swal.fire({
         title: 'Detalles del Usuario',
         html: `
           <div class="text-left space-y-3">
-            <div><strong>ID:</strong> ${usuario.id}</div>
+            <div><strong>ID:</strong> ${usuario.id_usuario}</div>
             <div><strong>Usuario:</strong> ${usuario.username}</div>
             <div><strong>Nombre:</strong> ${usuario.nombre} ${usuario.apellido}</div>
             <div><strong>Correo:</strong> ${usuario.correo}</div>
@@ -231,7 +231,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   // ✅ ELIMINAR USUARIO
-  deleteUsuario(id: number): void {
+  deleteUsuario(id_usuario: number): void {
     Swal.fire({
       title: '¿Eliminar Usuario?',
       text: 'Esta acción no se puede deshacer',
@@ -244,7 +244,7 @@ export class UsuariosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loading = true;
-        this.usersService.eliminarUsuario(id).subscribe({
+        this.usersService.eliminarUsuario(id_usuario).subscribe({
           next: () => {
             this.cargarUsuarios();
             this.showSuccess('Usuario eliminado correctamente');
@@ -371,7 +371,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   trackByUserId(index: number, usuario: Users): number | undefined {
-    return usuario.id;
+    return usuario.id_usuario;
   }
 
   private markFormGroupTouched(): void {

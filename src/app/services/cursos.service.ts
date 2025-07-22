@@ -19,6 +19,7 @@ export interface Curso {
   id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
+  tipo?: string;//'interno' | 'externo'; // <--- agregado para filtro
 }
 
 export interface CreateCursoDto {

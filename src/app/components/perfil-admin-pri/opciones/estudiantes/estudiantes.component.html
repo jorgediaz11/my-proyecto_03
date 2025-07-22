@@ -93,12 +93,12 @@
               <select
                 id="filtroDepartamento"
                 [(ngModel)]="filtroDepartamento"
-                (change)="filterEstudiantes()"
+                (change)="onDepartamentoChange()"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todos los departamentos</option>
-<!--                 <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
- -->              </select>
+                <option value="">[Seleccionar departamento]</option>
+                <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
+              </select>
             </div>
 
             <!-- Filtro Provincia -->
@@ -107,12 +107,14 @@
               <select
                 id="filtroProvincia"
                 [(ngModel)]="filtroProvincia"
-                (change)="filterEstudiantes()"
+                (change)="onProvinciaChange()"
+                [disabled]="!filtroDepartamento || provincias.length === 0"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todas las provincias</option>
-                <!-- <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option> -->
+                <option value="">[Seleccionar provincia]</option>
+                <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
               </select>
+              <div *ngIf="filtroDepartamento && provincias.length === 0" class="text-xs text-gray-500 mt-1">No hay provincias disponibles.</div>
             </div>
 
             <!-- Filtro Distrito -->
@@ -124,8 +126,8 @@
                 (change)="filterEstudiantes()"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
-                <option value="">Todos los distritos</option>
-                <!-- <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option> -->
+                <option value="">[Seleccionar distrito]</option>
+                <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
               </select>
             </div>
 
@@ -139,7 +141,7 @@
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
                 <option value="">Todos los colegios</option>
-                <!-- <option *ngFor="let col of colegios" [value]="col.id">{{ col.nombre }}</option> -->
+                <option *ngFor="let col of colegios" [value]="col.id_colegio">{{ col.nombre }}</option>
               </select>
             </div>
 
