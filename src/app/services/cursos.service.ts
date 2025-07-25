@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 // 📖 Interfaces para tipado de Cursos/Materias
 export interface Curso {
-  id?: number;
+  id_curso?: number;
   nombre: string; // Matemática, Comunicación, Ciencias, etc.
   descripcion?: string;
   codigo?: string; // MAT, COM, CTA, etc.
@@ -76,8 +76,8 @@ export class CursosService {
   }
 
   // GET /cursos/:id - Obtener curso por ID
-  getCursoById(id: number): Observable<Curso> {
-    return this.http.get<Curso>(`${this.apiUrl}/${id}`, {
+  getCursoById(id_curso: number): Observable<Curso> {
+    return this.http.get<Curso>(`${this.apiUrl}/${id_curso}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -146,22 +146,22 @@ export class CursosService {
   }
 
   // PUT /cursos/:id - Actualizar curso
-  actualizarCurso(id: number, curso: UpdateCursoDto): Observable<Curso> {
-    return this.http.put<Curso>(`${this.apiUrl}/${id}`, curso, {
+  actualizarCurso(id_curso: number, curso: UpdateCursoDto): Observable<Curso> {
+    return this.http.put<Curso>(`${this.apiUrl}/${id_curso}`, curso, {
       headers: this.getAuthHeaders()
     });
   }
 
   // DELETE /cursos/:id - Eliminar curso
-  eliminarCurso(id: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, {
+  eliminarCurso(id_curso: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id_curso}`, {
       headers: this.getAuthHeaders()
     });
   }
 
   // PATCH /cursos/:id/estado - Cambiar estado del curso
-  cambiarEstado(id: number, estado: boolean): Observable<Curso> {
-    return this.http.patch<Curso>(`${this.apiUrl}/${id}/estado`, { estado }, {
+  cambiarEstado(id_curso: number, estado: boolean): Observable<Curso> {
+    return this.http.patch<Curso>(`${this.apiUrl}/${id_curso}/estado`, { estado }, {
       headers: this.getAuthHeaders()
     });
   }

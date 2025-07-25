@@ -125,4 +125,53 @@ export class CursosComponent implements OnInit {
     this.setPaginatedCursos();
   }
 
+  viewCurso(id_curso: number): void {
+    const curso = this.cursos.find(c => c.id_curso === id_curso);
+    if (curso) {
+      Swal.fire({
+        title: 'Detalles del Curso',
+        html: `
+          <strong>Nombre:</strong> ${curso.nombre}<br>
+          <strong>Código:</strong> ${curso.codigo}<br>
+          <strong>Nivel:</strong> ${curso.nivel}<br>
+          <strong>Área:</strong> ${curso.area}<br>
+          <strong>Grado:</strong> ${curso.grado}<br>
+          <strong>Horas Semanales:</strong> ${curso.horasSemanales}<br>
+          <strong>Créditos:</strong> ${curso.creditos}<br>
+          <strong>Obligatorio:</strong> ${curso.esObligatorio ? 'Sí' : 'No'}<br>
+          <strong>Estado:</strong> ${curso.estado ? 'Activo' : 'Inactivo'}<br>
+          <strong>Descripción:</strong> ${curso.descripcion || '-'}
+        `,
+        icon: 'info'
+      });
+    }
+  }
+
+  editCurso(id_curso: number): void {
+    Swal.fire('Editar', 'Funcionalidad de edición de curso (por implementar)', 'info');
+  }
+
+  deleteCurso(id_curso: number): void {
+    Swal.fire({
+      title: '¿Eliminar Curso?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire('Eliminado', 'El curso ha sido eliminado.', 'success');
+      }
+    });
+  }
+
+  viewContenido(id_curso: number): void {
+    Swal.fire({
+      title: 'Contenido del Curso',
+      html: '<p>Próximamente se mostrará el contenido del curso.</p>',
+      icon: 'info'
+    });
+  }
+
 }

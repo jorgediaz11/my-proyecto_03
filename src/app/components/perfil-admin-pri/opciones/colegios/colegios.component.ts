@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ColegiosService, Colegio, CreateColegioDto, UpdateColegioDto } from '../../../../services/colegios.service';
+import { DocentesService, Docente } from '../../../../services/docentes.service';
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
@@ -12,6 +13,8 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrls: ['./colegios.component.css']
 })
 export class ColegiosComponent implements OnInit, OnDestroy {
+  // Servicio de docentes
+  private docentesService = inject(DocentesService);
   // ✅ PROPIEDADES ESENCIALES
   colegios: Colegio[] = [];
   filteredColegios: Colegio[] = [];
@@ -437,28 +440,60 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Mostrar loading mientras se obtienen los docentes
     Swal.fire({
-      title: `Docentes del Colegio`,
-      html: `
-        <div class="text-left">
-          <p><strong>Nombre:</strong> ${colegio.nombre}</p>
-          <p><strong>Código Modular:</strong> ${colegio.codigoModular}</p>
-          <p><strong>Dirección:</strong> ${colegio.direccion}</p>
-          <p><strong>Teléfono:</strong> ${colegio.telefono}</p>
-          <p><strong>Correo:</strong> ${colegio.correo}</p>
-          <p><strong>Website:</strong> ${colegio.website || 'No especificado'}</p>
-          <p><strong>Director:</strong> ${colegio.director || 'No especificado'}</p>
-          <p><strong>Ubicación:</strong> ${colegio.distrito}, ${colegio.provincia}, ${colegio.departamento}</p>
-          <p><strong>Niveles:</strong> ${colegio.nivelesEducativos.join(', ')}</p>
-          <p><strong>Turnos:</strong> ${colegio.turnos.join(', ')}</p>
-          <p><strong>Población:</strong> ${colegio.aforoMaximo}</p>
-          <p><strong>Fecha de Fundación:</strong> ${new Date(colegio.fechaFundacion).toLocaleDateString('es-ES')}</p>
-          <p><strong>Estado:</strong> ${colegio.estado ? 'Activo' : 'Inactivo'}</p>
-        </div>
-      `,
-      icon: 'info',
-      confirmButtonText: 'Cerrar',
-      width: '600px'
+      title: 'Cargando docentes...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.docentesService.getDocentes({ id_colegio, limit: 100 }).subscribe({
+      next: (response) => {
+        const docentes = response.data;
+        let html = '';
+        if (docentes.length === 0) {
+          html = '<p>No hay docentes registrados para este colegio.</p>';
+        } else {
+          html = `
+            <div style="overflow-x:auto; max-height:350px;">
+              <table class="table table-bordered table-sm" style="width:100%; font-size:14px;">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nombres y Apellidos</th>
+                    <th>Nivel</th>
+                    <th>Grado</th>
+                    <th>Sección</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${docentes.map((d: Docente & { nivel?: string; grado?: string; seccion?: string }, i: number) => `
+                    <tr>
+                      <td>${d.id_docente ?? (i+1)}</td>
+                      <td>${d.nombres} ${d.apellidos}</td>
+                      <td>${d.nivel ?? '-'}</td>
+                      <td>${d.grado ?? '-'}</td>
+                      <td>${d.seccion ?? '-'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+        Swal.fire({
+          title: `Docentes del Colegio` + (colegio.nombre ? `: ${colegio.nombre}` : ''),
+          html,
+          icon: 'info',
+          confirmButtonText: 'Cerrar',
+          width: '700px'
+        });
+      },
+      error: () => {
+        this.handleError('No se pudieron obtener los docentes del colegio.');
+      }
     });
   }
 

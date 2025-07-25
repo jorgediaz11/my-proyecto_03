@@ -171,7 +171,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let docente of paginatedDocentes; trackBy: trackByDocenteId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ docente.id }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ docente.id_docente }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ docente.nombres }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ docente.apellidos }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ docente.correo }}</td>
@@ -180,7 +180,7 @@
                   <div class="flex justify-center space-x-2">
                     <button
                       type="button"
-                      (click)="viewDocente(docente.id)"
+                      (click)="viewDocente(docente.id_docente!)"
                       class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
                       title="Ver detalles"
                     >
@@ -188,7 +188,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="editDocente(docente.id)"
+                      (click)="editDocente(docente.id_docente!)"
                       class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
                       title="Editar"
                     >
@@ -196,12 +196,25 @@
                     </button>
                     <button
                       type="button"
-                      (click)="deleteDocente(docente.id)"
+                      (click)="deleteDocente(docente.id_docente!)"
                       class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
                       title="Eliminar"
                     >
                       <i class="fas fa-trash"></i>
                     </button>
+
+                    <!--Icono Vista Docentes-->
+                    <button
+                      type="button"
+                      (click)="viewClases(docente.id_docente!)"
+                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                      title="Clases"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <!---->
+
+
                   </div>
                 </td>
               </tr>

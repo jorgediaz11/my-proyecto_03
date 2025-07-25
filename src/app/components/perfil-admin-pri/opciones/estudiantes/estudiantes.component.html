@@ -173,7 +173,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let estudiante of paginatedEstudiantes; trackBy: trackByEstudianteId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ estudiante.id }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ estudiante.id_estudiante }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.nombres }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.apellidos }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.nivel }}</td>
@@ -183,7 +183,7 @@
                   <div class="flex justify-center space-x-2">
                     <button
                       type="button"
-                      (click)="viewEstudiante(estudiante.id)"
+                      (click)="viewEstudiante(estudiante.id_estudiante)"
                       class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
                       title="Ver detalles"
                     >
@@ -191,7 +191,7 @@
                     </button>
                     <button
                       type="button"
-                      (click)="editEstudiante(estudiante.id)"
+                      (click)="editEstudiante(estudiante.id_estudiante)"
                       class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
                       title="Editar"
                     >
@@ -199,12 +199,22 @@
                     </button>
                     <button
                       type="button"
-                      (click)="deleteEstudiante(estudiante.id)"
+                      (click)="deleteEstudiante(estudiante.id_estudiante)"
                       class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
                       title="Eliminar"
                     >
                       <i class="fas fa-trash"></i>
                     </button>
+
+                    <button
+                      type="button"
+                      (click)="viewCursos(estudiante.id_estudiante)"
+                      class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                      title="Ver Cursos"
+                    >
+                      <i class="fas fa-book"></i>
+                    </button>
+
                   </div>
                 </td>
               </tr>

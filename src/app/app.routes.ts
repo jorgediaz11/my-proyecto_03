@@ -12,6 +12,7 @@ import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-ad
 import { PerfilAdminPriMuroComponent } from './components/perfil-admin-pri/perfil-admin-pri-muro.component'; // Importar el nuevo componente
 import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
+import { ClasesColComponent } from './components/perfil-admin-pri/opciones/clases-col/clases-col.component';
 import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
@@ -64,6 +65,7 @@ export const routes: Routes = [
       { path: 'usuarios', component: UsuariosComponent },   // Ruta para la sección de usuarios
       { path: 'colegios', component: ColegiosComponent },   // Ruta para la sección de colegios
       { path: 'docentes', component: DocentesComponent },   // Ruta para la sección de docentes
+      { path: 'clases', component: ClasesColComponent },    // Ruta para la sección de clases
       { path: 'estudiantes', component: EstudiantesComponent }, // Ruta para la sección de estudiantes
       { path: 'academico', component: AcademicoComponent }, // Ruta para la sección académica
       { path: 'reportes', component: ReportesComponent },   // Ruta para la sección de reportes

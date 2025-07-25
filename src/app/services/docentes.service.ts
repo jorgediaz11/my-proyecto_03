@@ -6,7 +6,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 // 📚 Interfaces para tipado completo
 export interface Docente {
-  id?: number;
+  id_docente?: number;
   nombres: string;
   apellidos: string;
   correo: string;
@@ -130,12 +130,12 @@ export class DocentesService {
   /**
    * 👤 Obtener docente por ID
    */
-  getDocentePorId(id: number): Observable<Docente> {
-    if (!id || id <= 0) {
+  getDocentePorId(id_docente: number): Observable<Docente> {
+    if (!id_docente || id_docente <= 0) {
       return throwError(() => new Error('ID de docente inválido'));
     }
 
-    return this.http.get<Docente>(`${this.apiUrl}/${id}`)
+    return this.http.get<Docente>(`${this.apiUrl}/${id_docente}`)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -160,12 +160,12 @@ export class DocentesService {
   /**
    * ✏️ Actualizar docente existente
    */
-  actualizarDocente(id: number, docente: UpdateDocenteDto): Observable<Docente> {
-    if (!id || id <= 0) {
+  actualizarDocente(id_docente: number, docente: UpdateDocenteDto): Observable<Docente> {
+    if (!id_docente || id_docente <= 0) {
       return throwError(() => new Error('ID de docente inválido'));
     }
 
-    return this.http.put<Docente>(`${this.apiUrl}/${id}`, docente)
+    return this.http.put<Docente>(`${this.apiUrl}/${id_docente}`, docente)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -175,12 +175,12 @@ export class DocentesService {
   /**
    * 🗑️ Eliminar docente
    */
-  eliminarDocente(id: number): Observable<{ message: string }> {
-    if (!id || id <= 0) {
+  eliminarDocente(id_docente: number): Observable<{ message: string }> {
+    if (!id_docente || id_docente <= 0) {
       return throwError(() => new Error('ID de docente inválido'));
     }
 
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`)
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id_docente}`)
       .pipe(
         retry(1),
         catchError(this.handleError)

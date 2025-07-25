@@ -77,6 +77,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     ColegiosComponent,
     DocentesComponent,
     EstudiantesComponent,
+    ClasesColComponent,
     ReportesComponent,
     AuditoriaComponent,
     PerfilComponent,

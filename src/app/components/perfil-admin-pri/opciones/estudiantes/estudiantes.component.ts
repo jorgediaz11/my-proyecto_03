@@ -7,9 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 // import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 interface Estudiante { // Define la interfaz Estudiante
-  id: number;
+  id_estudiante: number;
   nombres: string;
   apellidos: string;
+  id_curso: string;
   nivel: string;
   grado: string;
   seccion: string;
@@ -30,52 +31,52 @@ export class EstudiantesComponent implements OnInit {
   private ubigeoService = inject(UbigeoService);
   private colegiosService = inject(ColegiosService);
   estudiantes: Estudiante[] = [
-    { id: 1, nombres: 'Juan', apellidos: 'Pérez García', nivel: 'Primaria', grado: '1°', seccion: 'A' },
-    { id: 2, nombres: 'Ana', apellidos: 'López Torres', nivel: 'Primaria', grado: '1°', seccion: 'B' },
-    { id: 3, nombres: 'Carlos', apellidos: 'Ruiz Díaz', nivel: 'Primaria', grado: '2°', seccion: 'A' },
-    { id: 4, nombres: 'Lucía', apellidos: 'Torres Vega', nivel: 'Primaria', grado: '2°', seccion: 'B' },
-    { id: 5, nombres: 'Pedro', apellidos: 'Gómez Ríos', nivel: 'Primaria', grado: '3°', seccion: 'A' },
-    { id: 6, nombres: 'María', apellidos: 'Sánchez León', nivel: 'Primaria', grado: '3°', seccion: 'B' },
-    { id: 7, nombres: 'Luis', apellidos: 'Fernández Soto', nivel: 'Primaria', grado: '4°', seccion: 'A' },
-    { id: 8, nombres: 'Elena', apellidos: 'Ramírez Cruz', nivel: 'Primaria', grado: '4°', seccion: 'B' },
-    { id: 9, nombres: 'Miguel', apellidos: 'Castro Peña', nivel: 'Primaria', grado: '5°', seccion: 'A' },
-    { id: 10, nombres: 'Patricia', apellidos: 'Vargas Silva', nivel: 'Primaria', grado: '5°', seccion: 'B' },
-    { id: 11, nombres: 'Jorge', apellidos: 'Morales Paredes', nivel: 'Primaria', grado: '6°', seccion: 'A' },
-    { id: 12, nombres: 'Rosa', apellidos: 'Herrera Salas', nivel: 'Primaria', grado: '6°', seccion: 'B' },
-    { id: 13, nombres: 'Alberto', apellidos: 'Mendoza Rojas', nivel: 'Secundaria', grado: '1°', seccion: 'A' },
-    { id: 14, nombres: 'Carmen', apellidos: 'Flores Medina', nivel: 'Secundaria', grado: '1°', seccion: 'B' },
-    { id: 15, nombres: 'Ricardo', apellidos: 'Ortega Ramos', nivel: 'Secundaria', grado: '2°', seccion: 'A' },
-    { id: 16, nombres: 'Sofía', apellidos: 'Guerrero Díaz', nivel: 'Secundaria', grado: '2°', seccion: 'B' },
-    { id: 17, nombres: 'Gabriel', apellidos: 'Reyes Campos', nivel: 'Secundaria', grado: '3°', seccion: 'A' },
-    { id: 18, nombres: 'Paula', apellidos: 'Chávez Luna', nivel: 'Secundaria', grado: '3°', seccion: 'B' },
-    { id: 19, nombres: 'Andrés', apellidos: 'Silva Torres', nivel: 'Secundaria', grado: '4°', seccion: 'A' },
-    { id: 20, nombres: 'Valeria', apellidos: 'Paredes Soto', nivel: 'Secundaria', grado: '4°', seccion: 'B' },
-    { id: 21, nombres: 'Martín', apellidos: 'Ríos Guzmán', nivel: 'Secundaria', grado: '5°', seccion: 'A' },
-    { id: 22, nombres: 'Natalia', apellidos: 'Vega Salas', nivel: 'Secundaria', grado: '5°', seccion: 'B' },
-    { id: 23, nombres: 'Diego', apellidos: 'Campos León', nivel: 'Secundaria', grado: '6°', seccion: 'A' },
-    { id: 24, nombres: 'Camila', apellidos: 'Mora Rojas', nivel: 'Secundaria', grado: '6°', seccion: 'B' },
-    { id: 25, nombres: 'Esteban', apellidos: 'Paz Torres', nivel: 'Primaria', grado: '1°', seccion: 'C' },
-    { id: 26, nombres: 'Daniela', apellidos: 'Soto Díaz', nivel: 'Primaria', grado: '2°', seccion: 'C' },
-    { id: 27, nombres: 'Tomás', apellidos: 'León Silva', nivel: 'Primaria', grado: '3°', seccion: 'C' },
-    { id: 28, nombres: 'Mónica', apellidos: 'García Paredes', nivel: 'Primaria', grado: '4°', seccion: 'C' },
-    { id: 29, nombres: 'Felipe', apellidos: 'Ramos Medina', nivel: 'Primaria', grado: '5°', seccion: 'C' },
-    { id: 30, nombres: 'Lorena', apellidos: 'Salas Guzmán', nivel: 'Primaria', grado: '6°', seccion: 'C' },
-    { id: 31, nombres: 'Hugo', apellidos: 'Mendoza Flores', nivel: 'Secundaria', grado: '1°', seccion: 'C' },
-    { id: 32, nombres: 'Sandra', apellidos: 'Ortega Luna', nivel: 'Secundaria', grado: '2°', seccion: 'C' },
-    { id: 33, nombres: 'Pablo', apellidos: 'Guerrero Campos', nivel: 'Secundaria', grado: '3°', seccion: 'C' },
-    { id: 34, nombres: 'Alicia', apellidos: 'Reyes Ramos', nivel: 'Secundaria', grado: '4°', seccion: 'C' },
-    { id: 35, nombres: 'Oscar', apellidos: 'Chávez León', nivel: 'Secundaria', grado: '5°', seccion: 'C' },
-    { id: 36, nombres: 'Marina', apellidos: 'Silva Torres', nivel: 'Secundaria', grado: '6°', seccion: 'C' },
-    { id: 37, nombres: 'Iván', apellidos: 'Paredes Soto', nivel: 'Primaria', grado: '1°', seccion: 'D' },
-    { id: 38, nombres: 'Julia', apellidos: 'Ríos Guzmán', nivel: 'Primaria', grado: '2°', seccion: 'D' },
-    { id: 39, nombres: 'Emilio', apellidos: 'Vega Salas', nivel: 'Primaria', grado: '3°', seccion: 'D' },
-    { id: 40, nombres: 'Teresa', apellidos: 'Campos León', nivel: 'Primaria', grado: '4°', seccion: 'D' },
-    { id: 41, nombres: 'Samuel', apellidos: 'Mora Rojas', nivel: 'Primaria', grado: '5°', seccion: 'D' },
-    { id: 42, nombres: 'Verónica', apellidos: 'Paz Torres', nivel: 'Primaria', grado: '6°', seccion: 'D' },
-    { id: 43, nombres: 'Raúl', apellidos: 'Soto Díaz', nivel: 'Secundaria', grado: '1°', seccion: 'D' },
-    { id: 44, nombres: 'Silvia', apellidos: 'León Silva', nivel: 'Secundaria', grado: '2°', seccion: 'D' },
-    { id: 45, nombres: 'Mario', apellidos: 'García Paredes', nivel: 'Secundaria', grado: '3°', seccion: 'D' },
-    { id: 46, nombres: 'Patricia', apellidos: 'Ramos Medina', nivel: 'Secundaria', grado: '4°', seccion: 'D' }
+    { id_estudiante: 1, nombres: 'Juan', apellidos: 'Pérez García', nivel: 'Primaria', grado: '1°', seccion: 'A', id_curso: 'PRI-1-A' },
+    { id_estudiante: 2, nombres: 'Ana', apellidos: 'López Torres', nivel: 'Primaria', grado: '1°', seccion: 'B', id_curso: 'PRI-1-B' },
+    { id_estudiante: 3, nombres: 'Carlos', apellidos: 'Ruiz Díaz', nivel: 'Primaria', grado: '2°', seccion: 'A', id_curso: 'PRI-2-A' },
+    { id_estudiante: 4, nombres: 'Lucía', apellidos: 'Torres Vega', nivel: 'Primaria', grado: '2°', seccion: 'B', id_curso: 'PRI-2-B' },
+    { id_estudiante: 5, nombres: 'Pedro', apellidos: 'Gómez Ríos', nivel: 'Primaria', grado: '3°', seccion: 'A', id_curso: 'PRI-3-A' },
+    { id_estudiante: 6, nombres: 'María', apellidos: 'Sánchez León', nivel: 'Primaria', grado: '3°', seccion: 'B', id_curso: 'PRI-3-B' },
+    { id_estudiante: 7, nombres: 'Luis', apellidos: 'Fernández Soto', nivel: 'Primaria', grado: '4°', seccion: 'A', id_curso: 'PRI-4-A' },
+    { id_estudiante: 8, nombres: 'Elena', apellidos: 'Ramírez Cruz', nivel: 'Primaria', grado: '4°', seccion: 'B', id_curso: 'PRI-4-B' },
+    { id_estudiante: 9, nombres: 'Miguel', apellidos: 'Castro Peña', nivel: 'Primaria', grado: '5°', seccion: 'A', id_curso: 'PRI-5-A' },
+    { id_estudiante: 10, nombres: 'Patricia', apellidos: 'Vargas Silva', nivel: 'Primaria', grado: '5°', seccion: 'B', id_curso: 'PRI-5-B' },
+    { id_estudiante: 11, nombres: 'Jorge', apellidos: 'Morales Paredes', nivel: 'Primaria', grado: '6°', seccion: 'A', id_curso: 'PRI-6-A' },
+    { id_estudiante: 12, nombres: 'Rosa', apellidos: 'Herrera Salas', nivel: 'Primaria', grado: '6°', seccion: 'B', id_curso: 'PRI-6-B' },
+    { id_estudiante: 13, nombres: 'Alberto', apellidos: 'Mendoza Rojas', nivel: 'Secundaria', grado: '1°', seccion: 'A', id_curso: 'SEC-1-A' },
+    { id_estudiante: 14, nombres: 'Carmen', apellidos: 'Flores Medina', nivel: 'Secundaria', grado: '1°', seccion: 'B', id_curso: 'SEC-1-B' },
+    { id_estudiante: 15, nombres: 'Ricardo', apellidos: 'Ortega Ramos', nivel: 'Secundaria', grado: '2°', seccion: 'A', id_curso: 'SEC-2-A' },
+    { id_estudiante: 16, nombres: 'Sofía', apellidos: 'Guerrero Díaz', nivel: 'Secundaria', grado: '2°', seccion: 'B', id_curso: 'SEC-2-B' },
+    { id_estudiante: 17, nombres: 'Gabriel', apellidos: 'Reyes Campos', nivel: 'Secundaria', grado: '3°', seccion: 'A', id_curso: 'SEC-3-A' },
+    { id_estudiante: 18, nombres: 'Paula', apellidos: 'Chávez Luna', nivel: 'Secundaria', grado: '3°', seccion: 'B', id_curso: 'SEC-3-B' },
+    { id_estudiante: 19, nombres: 'Andrés', apellidos: 'Silva Torres', nivel: 'Secundaria', grado: '4°', seccion: 'A', id_curso: 'SEC-4-A' },
+    { id_estudiante: 20, nombres: 'Valeria', apellidos: 'Paredes Soto', nivel: 'Secundaria', grado: '4°', seccion: 'B', id_curso: 'SEC-4-B' },
+    { id_estudiante: 21, nombres: 'Martín', apellidos: 'Ríos Guzmán', nivel: 'Secundaria', grado: '5°', seccion: 'A', id_curso: 'SEC-5-A' },
+    { id_estudiante: 22, nombres: 'Natalia', apellidos: 'Vega Salas', nivel: 'Secundaria', grado: '5°', seccion: 'B', id_curso: 'SEC-5-B' },
+    { id_estudiante: 23, nombres: 'Diego', apellidos: 'Campos León', nivel: 'Secundaria', grado: '6°', seccion: 'A', id_curso: 'SEC-6-A' },
+    { id_estudiante: 24, nombres: 'Camila', apellidos: 'Mora Rojas', nivel: 'Secundaria', grado: '6°', seccion: 'B', id_curso: 'SEC-6-B' },
+    { id_estudiante: 25, nombres: 'Esteban', apellidos: 'Paz Torres', nivel: 'Primaria', grado: '1°', seccion: 'C', id_curso: 'PRI-1-C' },
+    { id_estudiante: 26, nombres: 'Daniela', apellidos: 'Soto Díaz', nivel: 'Primaria', grado: '2°', seccion: 'C', id_curso: 'PRI-2-C' },
+    { id_estudiante: 27, nombres: 'Tomás', apellidos: 'León Silva', nivel: 'Primaria', grado: '3°', seccion: 'C', id_curso: 'PRI-3-C' },
+    { id_estudiante: 28, nombres: 'Mónica', apellidos: 'García Paredes', nivel: 'Primaria', grado: '4°', seccion: 'C', id_curso: 'PRI-4-C' },
+    { id_estudiante: 29, nombres: 'Felipe', apellidos: 'Ramos Medina', nivel: 'Primaria', grado: '5°', seccion: 'C', id_curso: 'PRI-5-C' },
+    { id_estudiante: 30, nombres: 'Lorena', apellidos: 'Salas Guzmán', nivel: 'Primaria', grado: '6°', seccion: 'C', id_curso: 'PRI-6-C' },
+    { id_estudiante: 31, nombres: 'Hugo', apellidos: 'Mendoza Flores', nivel: 'Secundaria', grado: '1°', seccion: 'C', id_curso: 'SEC-1-C' },
+    { id_estudiante: 32, nombres: 'Sandra', apellidos: 'Ortega Luna', nivel: 'Secundaria', grado: '2°', seccion: 'C', id_curso: 'SEC-2-C' },
+    { id_estudiante: 33, nombres: 'Pablo', apellidos: 'Guerrero Campos', nivel: 'Secundaria', grado: '3°', seccion: 'C', id_curso: 'SEC-3-C' },
+    { id_estudiante: 34, nombres: 'Alicia', apellidos: 'Reyes Ramos', nivel: 'Secundaria', grado: '4°', seccion: 'C', id_curso: 'SEC-4-C' },
+    { id_estudiante: 35, nombres: 'Oscar', apellidos: 'Chávez León', nivel: 'Secundaria', grado: '5°', seccion: 'C', id_curso: 'SEC-5-C' },
+    { id_estudiante: 36, nombres: 'Marina', apellidos: 'Silva Torres', nivel: 'Secundaria', grado: '6°', seccion: 'C', id_curso: 'SEC-6-C' },
+    { id_estudiante: 37, nombres: 'Iván', apellidos: 'Paredes Soto', nivel: 'Primaria', grado: '1°', seccion: 'D', id_curso: 'PRI-1-D' },
+    { id_estudiante: 38, nombres: 'Julia', apellidos: 'Ríos Guzmán', nivel: 'Primaria', grado: '2°', seccion: 'D', id_curso: 'PRI-2-D' },
+    { id_estudiante: 39, nombres: 'Emilio', apellidos: 'Vega Salas', nivel: 'Primaria', grado: '3°', seccion: 'D', id_curso: 'PRI-3-D' },
+    { id_estudiante: 40, nombres: 'Teresa', apellidos: 'Campos León', nivel: 'Primaria', grado: '4°', seccion: 'D', id_curso: 'PRI-4-D' },
+    { id_estudiante: 41, nombres: 'Samuel', apellidos: 'Mora Rojas', nivel: 'Primaria', grado: '5°', seccion: 'D', id_curso: 'PRI-5-D' },
+    { id_estudiante: 42, nombres: 'Verónica', apellidos: 'Paz Torres', nivel: 'Primaria', grado: '6°', seccion: 'D', id_curso: 'PRI-6-D' },
+    { id_estudiante: 43, nombres: 'Raúl', apellidos: 'Soto Díaz', nivel: 'Secundaria', grado: '1°', seccion: 'D', id_curso: 'SEC-1-D' },
+    { id_estudiante: 44, nombres: 'Silvia', apellidos: 'León Silva', nivel: 'Secundaria', grado: '2°', seccion: 'D', id_curso: 'SEC-2-D' },
+    { id_estudiante: 45, nombres: 'Mario', apellidos: 'García Paredes', nivel: 'Secundaria', grado: '3°', seccion: 'D', id_curso: 'SEC-3-D' },
+    { id_estudiante: 46, nombres: 'Patricia', apellidos: 'Ramos Medina', nivel: 'Secundaria', grado: '4°', seccion: 'D', id_curso: 'SEC-4-D' }
   ];
 
 
@@ -213,7 +214,7 @@ ngOnInit(): void {
   saveEstudiante(): void {
     if (this.estudianteForm.valid) {
       const newestudiante: Estudiante = {
-        id: this.estudiantes.length + 1,
+        id_estudiante: this.estudiantes.length + 1,
         ...this.estudianteForm.value
       };
       this.estudiantes.push(newestudiante);
@@ -243,44 +244,44 @@ ngOnInit(): void {
     this.updatePaginatedEstudiantes();
   }
 
-  editEstudiante(id: number): void {
+  editEstudiante(id_estudiante: number): void {
     Swal.fire({
       title: 'Editar Estudiante',
-      text: `El estudiante con ID ${id} será modificado.`,
+      text: `El estudiante con ID ${id_estudiante} será modificado.`,
       icon: 'info',
       confirmButtonText: 'Aceptar',
     }).then(() => {
-      console.log(`Editar estudiante con ID: ${id}`);
+      console.log(`Editar estudiante con ID: ${id_estudiante}`);
     });
   }
 
-  deleteEstudiante(id: number): void {
+  deleteEstudiante(id_estudiante: number): void {
     Swal.fire({
       title: 'Eliminar estudiante',
-      text: `¿Estás seguro de que deseas eliminar el estudiante con ID ${id}?`,
+      text: `¿Estás seguro de que deseas eliminar el estudiante con ID ${id_estudiante}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
     }).then(result => {
       if (result.isConfirmed) {
-        this.estudiantes = this.estudiantes.filter(estudiante => estudiante.id !== id);
+        this.estudiantes = this.estudiantes.filter(estudiante => estudiante.id_estudiante !== id_estudiante);
         this.filteredEstudiantes = [...this.estudiantes];
         this.updatePaginatedEstudiantes();
-        console.log(`estudiante con ID ${id} eliminado.`);
+        console.log(`estudiante con ID ${id_estudiante} eliminado.`);
       } else {
         console.log('Eliminación cancelada.');
       }
     });
   }
 
-  viewEstudiante(id: number): void {
-    const estudiante = this.estudiantes.find(c => c.id === id);
+  viewEstudiante(id_estudiante: number): void {
+    const estudiante = this.estudiantes.find(c => c.id_estudiante === id_estudiante);
     if (estudiante) {
       Swal.fire({
         title: `Detalles del estudiante`,
         html: `
-          <p><strong>ID:</strong> ${estudiante.id}</p>
+          <p><strong>ID:</strong> ${estudiante.id_estudiante}</p>
           <p><strong>Nombres:</strong> ${estudiante.nombres}</p>
           <p><strong>Apellidos:</strong> ${estudiante.apellidos}</p>
           <p><strong>Nivel:</strong> ${estudiante.nivel}</p>
@@ -291,7 +292,7 @@ ngOnInit(): void {
         confirmButtonText: 'Cerrar',
       });
     } else {
-      console.log(`estudiante con ID ${id} no encontrado.`);
+      console.log(`estudiante con ID ${id_estudiante} no encontrado.`);
     }
   }
 
@@ -341,7 +342,7 @@ ngOnInit(): void {
 
   // ✅ Métodos para la funcionalidad de la tabla
   trackByEstudianteId(index: number, estudiante: Estudiante): number {
-    return estudiante.id;
+    return estudiante.id_estudiante;
   }
 
   private resetFilters(): void {
@@ -352,6 +353,61 @@ ngOnInit(): void {
     this.filtroColegio = '';
     //this.carga
   }
+
+
+  viewCursos(id_estudiante: number): void {
+  const estudiante = this.estudiantes.find(e => e.id_estudiante === id_estudiante);
+
+  if (estudiante) {
+    const cursos = [
+      {
+        id: estudiante.id_curso,
+        nombre: 'Nombre de curso no disponible',
+        nivel: estudiante.nivel,
+        grado: estudiante.grado,
+        seccion: estudiante.seccion
+      }
+    ];
+
+    const tablaCursos = `
+      <table style="width:100%;text-align:left;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style='border-bottom:1px solid #ccc;padding:4px;'>Código</th>
+            <th style='border-bottom:1px solid #ccc;padding:4px;'>Nombre Curso</th>
+            <th style='border-bottom:1px solid #ccc;padding:4px;'>Nivel</th>
+            <th style='border-bottom:1px solid #ccc;padding:4px;'>Grado</th>
+            <th style='border-bottom:1px solid #ccc;padding:4px;'>Sección</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${cursos.map(c => `
+            <tr>
+              <td style='padding:4px;'>${c.id}</td>
+              <td style='padding:4px;'>${c.nombre}</td>
+              <td style='padding:4px;'>${c.nivel}</td>
+              <td style='padding:4px;'>${c.grado}</td>
+              <td style='padding:4px;'>${c.seccion}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    Swal.fire({
+      title: 'Cursos del Estudiante',
+      html: tablaCursos,
+      width: 600,
+      icon: 'info'
+    });
+  } else {
+    Swal.fire({
+      title: 'No encontrado',
+      text: 'No se encontró el estudiante seleccionado.',
+      icon: 'warning'
+    });
+  }
+}
 
 }
 

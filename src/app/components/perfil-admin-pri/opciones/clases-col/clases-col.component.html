@@ -123,7 +123,7 @@
                 <select
                   id="filtroDistrito"
                   [(ngModel)]="filtroDistrito"
-                  (change)="filterColegios()"
+                  (change)="filterClases()"
                   class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                 >
                   <option value="">[Seleccionar]</option>
@@ -255,9 +255,9 @@
                   Mostrando
                   <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
                   a
-                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredColegios.length) }}</span>
+                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredClases.length) }}</span>
                   de
-                  <span class="font-medium">{{ filteredColegios.length }}</span>
+                  <span class="font-medium">{{ filteredClases.length }}</span>
                   resultados
                 </p>
               </div>
@@ -281,7 +281,7 @@
       </div>
     </div>
 
-    <!-- Panel: Nuevo Colegio -->
+    <!-- Panel: Nueva Clase -->
     <div
       *ngIf="activeTab === 'nuevo'"
       role="tabpanel"
@@ -292,30 +292,30 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
           <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-medium text-gray-900">
-              {{ isEditing ? 'Editar Colegio' : 'Nuevo Colegio' }}
+              {{ isEditing ? 'Editar Clase' : 'Nueva Clase' }}
             </h3>
             <p class="mt-1 text-sm text-gray-500">
-              {{ isEditing ? 'Modifica la información del colegio' : 'Completa la información para crear un nuevo colegio' }}
+              {{ isEditing ? 'Modifica la información de la clase' : 'Completa la información para crear una nueva clase' }}
             </p>
           </div>
 
-          <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()" class="p-6">
+          <form [formGroup]="claseForm" (ngSubmit)="saveClase()" class="p-6">
             <div class="space-y-6">
               <!-- Nombre y Logo -->
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
-                  <!-- Nombre del Colegio -->
+                  <!-- Nombre de la Clase -->
                   <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre del Colegio *</label>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre de la Clase *</label>
                     <input
                       type="text"
                       id="nombre"
                       formControlName="nombre"
-                      placeholder="Ingrese el nombre del colegio"
+                      placeholder="Ingrese el nombre de la clase"
                       class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                      [class.border-red-300]="colegioForm.get('nombre')?.invalid && colegioForm.get('nombre')?.touched"
+                      [class.border-red-300]="claseForm.get('nombre')?.invalid && claseForm.get('nombre')?.touched"
                     >
-                    <div *ngIf="colegioForm.get('nombre')?.invalid && colegioForm.get('nombre')?.touched" class="mt-1 text-sm text-red-600">
+                    <div *ngIf="claseForm.get('nombre')?.invalid && claseForm.get('nombre')?.touched" class="mt-1 text-sm text-red-600">
                       Este campo es requerido
                     </div>
                   </div>
@@ -329,20 +329,20 @@
                       formControlName="direccion"
                       placeholder="Ingrese la dirección completa"
                       class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                      [class.border-red-300]="colegioForm.get('direccion')?.invalid && colegioForm.get('direccion')?.touched"
+                      [class.border-red-300]="claseForm.get('direccion')?.invalid && claseForm.get('direccion')?.touched"
                     >
-                    <div *ngIf="colegioForm.get('direccion')?.invalid && colegioForm.get('direccion')?.touched" class="mt-1 text-sm text-red-600">
+                    <div *ngIf="claseForm.get('direccion')?.invalid && claseForm.get('direccion')?.touched" class="mt-1 text-sm text-red-600">
                       Este campo es requerido
                     </div>
                   </div>
                 </div>
 
-                <!-- Logo del colegio -->
+                <!-- Logo de la clase -->
                 <div class="flex items-center justify-center">
                   <div class="text-center">
                     <img
                       src="/assets/images/logo-sanremo.png"
-                      alt="Logo del colegio"
+                      alt="Logo de la clase"
                       class="w-32 h-20 object-contain border-4 border-gray-200 shadow-sm mx-auto rounded"
                     >
                     <p class="mt-2 text-sm text-gray-500">Logo actual</p>
@@ -369,9 +369,9 @@
                     formControlName="telefono"
                     placeholder="123-456-7890"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('telefono')?.invalid && colegioForm.get('telefono')?.touched"
+                    [class.border-red-300]="claseForm.get('telefono')?.invalid && claseForm.get('telefono')?.touched"
                   >
-                  <div *ngIf="colegioForm.get('telefono')?.invalid && colegioForm.get('telefono')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('telefono')?.invalid && claseForm.get('telefono')?.touched" class="mt-1 text-sm text-red-600">
                     Este campo es requerido
                   </div>
                 </div>
@@ -382,14 +382,14 @@
                     type="email"
                     id="correo"
                     formControlName="correo"
-                    placeholder="colegio@ejemplo.com"
+                    placeholder="clase@ejemplo.com"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('correo')?.invalid && colegioForm.get('correo')?.touched"
+                    [class.border-red-300]="claseForm.get('correo')?.invalid && claseForm.get('correo')?.touched"
                   >
-                  <div *ngIf="colegioForm.get('correo')?.errors?.['required'] && colegioForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('correo')?.errors?.['required'] && claseForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
                     El correo es obligatorio
                   </div>
-                  <div *ngIf="colegioForm.get('correo')?.errors?.['email'] && colegioForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('correo')?.errors?.['email'] && claseForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
                     Ingresa un correo válido
                   </div>
                 </div>
@@ -404,9 +404,9 @@
                   formControlName="website"
                   placeholder="https://www.dominio.com"
                   class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                  [class.border-red-300]="colegioForm.get('website')?.invalid && colegioForm.get('website')?.touched"
+                  [class.border-red-300]="claseForm.get('website')?.invalid && claseForm.get('website')?.touched"
                 >
-                <div *ngIf="colegioForm.get('website')?.errors?.['pattern'] && colegioForm.get('website')?.touched" class="mt-1 text-sm text-red-600">
+                <div *ngIf="claseForm.get('website')?.errors?.['pattern'] && claseForm.get('website')?.touched" class="mt-1 text-sm text-red-600">
                   Ingresa una URL válida
                 </div>
               </div>
@@ -422,12 +422,12 @@
                     placeholder="0"
                     min="0"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('aforo')?.invalid && colegioForm.get('aforo')?.touched"
+                    [class.border-red-300]="claseForm.get('aforo')?.invalid && claseForm.get('aforo')?.touched"
                   >
-                  <div *ngIf="colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid" class="mt-1 text-sm text-red-600">
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['required']">El aforo es obligatorio</span>
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['pattern']">Solo se permiten números</span>
-                    <span *ngIf="colegioForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0</span>
+                  <div *ngIf="claseForm.get('aforo')?.touched && claseForm.get('aforo')?.invalid" class="mt-1 text-sm text-red-600">
+                    <span *ngIf="claseForm.get('aforo')?.errors?.['required']">El aforo es obligatorio</span>
+                    <span *ngIf="claseForm.get('aforo')?.errors?.['pattern']">Solo se permiten números</span>
+                    <span *ngIf="claseForm.get('aforo')?.errors?.['min']">Debe ser mayor o igual a 0</span>
                   </div>
                 </div>
 
@@ -438,7 +438,7 @@
                     id="fundacion"
                     formControlName="fundacion"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('fundacion')?.invalid && colegioForm.get('fundacion')?.touched"
+                    [class.border-red-300]="claseForm.get('fundacion')?.invalid && claseForm.get('fundacion')?.touched"
                   >
                 </div>
 
@@ -448,13 +448,13 @@
                     id="estado"
                     formControlName="estado"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched"
+                    [class.border-red-300]="claseForm.get('estado')?.invalid && claseForm.get('estado')?.touched"
                   >
                     <option value="">Seleccione estado</option>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                   </select>
-                  <div *ngIf="colegioForm.get('estado')?.invalid && colegioForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('estado')?.invalid && claseForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
                     Por favor selecciona un estado
                   </div>
                 </div>
@@ -469,7 +469,7 @@
                   rows="3"
                   placeholder="Ingrese observaciones adicionales..."
                   class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm resize-none"
-                  [class.border-red-300]="colegioForm.get('observaciones')?.invalid && colegioForm.get('observaciones')?.touched"
+                  [class.border-red-300]="claseForm.get('observaciones')?.invalid && claseForm.get('observaciones')?.touched"
                 ></textarea>
               </div>
 
@@ -484,11 +484,11 @@
                 </button>
                 <button
                   type="submit"
-                  [disabled]="colegioForm.invalid || loading"
+                  [disabled]="claseForm.invalid || loading"
                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                 >
                   <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
-                  {{ isEditing ? 'Actualizar Colegio' : 'Crear Colegio' }}
+                  {{ isEditing ? 'Actualizar Clase' : 'Crear Clase' }}
                 </button>
               </div>
             </div>
@@ -511,7 +511,7 @@
             <p class="mt-1 text-sm text-gray-500">Configuraciones adicionales del colegio</p>
           </div>
 
-          <form [formGroup]="colegioForm" (ngSubmit)="saveColegio()" class="p-6">
+          <form [formGroup]="claseForm" (ngSubmit)="saveClase()" class="p-6">
             <div class="space-y-6">
               <!-- Ubicación: Departamento, Provincia y Distrito -->
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -521,12 +521,12 @@
                     id="departamento"
                     formControlName="departamento"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('departamento')?.invalid && colegioForm.get('departamento')?.touched"
+                    [class.border-red-300]="claseForm.get('departamento')?.invalid && claseForm.get('departamento')?.touched"
                   >
                     <option value="">Seleccione departamento</option>
                     <option *ngFor="let dep of departamentos" [value]="dep">{{dep}}</option>
                   </select>
-                  <div *ngIf="colegioForm.get('departamento')?.invalid && colegioForm.get('departamento')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('departamento')?.invalid && claseForm.get('departamento')?.touched" class="mt-1 text-sm text-red-600">
                     Este campo es requerido
                   </div>
                 </div>
@@ -537,12 +537,12 @@
                     id="provincia"
                     formControlName="provincia"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('provincia')?.invalid && colegioForm.get('provincia')?.touched"
+                    [class.border-red-300]="claseForm.get('provincia')?.invalid && claseForm.get('provincia')?.touched"
                   >
                     <option value="">Seleccione provincia</option>
                     <option *ngFor="let prov of provincias" [value]="prov">{{prov}}</option>
                   </select>
-                  <div *ngIf="colegioForm.get('provincia')?.invalid && colegioForm.get('provincia')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('provincia')?.invalid && claseForm.get('provincia')?.touched" class="mt-1 text-sm text-red-600">
                     Este campo es requerido
                   </div>
                 </div>
@@ -553,12 +553,12 @@
                     id="distrito"
                     formControlName="distrito"
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    [class.border-red-300]="colegioForm.get('distrito')?.invalid && colegioForm.get('distrito')?.touched"
+                    [class.border-red-300]="claseForm.get('distrito')?.invalid && claseForm.get('distrito')?.touched"
                   >
                     <option value="">Seleccione distrito</option>
                     <option *ngFor="let dist of distritos" [value]="dist">{{dist}}</option>
                   </select>
-                  <div *ngIf="colegioForm.get('distrito')?.invalid && colegioForm.get('distrito')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('distrito')?.invalid && claseForm.get('distrito')?.touched" class="mt-1 text-sm text-red-600">
                     Este campo es requerido
                   </div>
                 </div>
@@ -574,14 +574,14 @@
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     multiple
                     size="3"
-                    [class.border-red-300]="colegioForm.get('niveles')?.invalid && colegioForm.get('niveles')?.touched"
+                    [class.border-red-300]="claseForm.get('niveles')?.invalid && claseForm.get('niveles')?.touched"
                   >
                     <option value="Inicial">Inicial</option>
                     <option value="Primaria">Primaria</option>
                     <option value="Secundaria">Secundaria</option>
                   </select>
                   <p class="mt-1 text-xs text-gray-500">Ctrl+Click para seleccionar varios</p>
-                  <div *ngIf="colegioForm.get('niveles')?.invalid && colegioForm.get('niveles')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('niveles')?.invalid && claseForm.get('niveles')?.touched" class="mt-1 text-sm text-red-600">
                     Selecciona al menos un nivel
                   </div>
                 </div>
@@ -594,14 +594,14 @@
                     class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     multiple
                     size="3"
-                    [class.border-red-300]="colegioForm.get('turnos')?.invalid && colegioForm.get('turnos')?.touched"
+                    [class.border-red-300]="claseForm.get('turnos')?.invalid && claseForm.get('turnos')?.touched"
                   >
                     <option value="Mañana">Mañana</option>
                     <option value="Tarde">Tarde</option>
                     <option value="Noche">Noche</option>
                   </select>
                   <p class="mt-1 text-xs text-gray-500">Ctrl+Click para seleccionar varios</p>
-                  <div *ngIf="colegioForm.get('turnos')?.invalid && colegioForm.get('turnos')?.touched" class="mt-1 text-sm text-red-600">
+                  <div *ngIf="claseForm.get('turnos')?.invalid && claseForm.get('turnos')?.touched" class="mt-1 text-sm text-red-600">
                     Selecciona al menos un turno
                   </div>
                 </div>
@@ -623,11 +623,11 @@
                     <dt class="text-sm font-medium text-gray-500">Estado del colegio</dt>
                     <dd class="mt-1">
                       <span
-                        [class]="colegioForm.get('estado')?.value === 'Activo'
+                        [class]="claseForm.get('estado')?.value === 'Activo'
                           ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'
                           : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'"
                       >
-                        {{ colegioForm.get('estado')?.value || 'No definido' }}
+                        {{ claseForm.get('estado')?.value || 'No definido' }}
                       </span>
                     </dd>
                   </div>
@@ -635,7 +635,7 @@
                     <dt class="text-sm font-medium text-gray-500">Niveles educativos</dt>
                     <dd class="mt-1">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ colegioForm.get('niveles')?.value?.join(', ') || 'No definidos' }}
+                        {{ claseForm.get('niveles')?.value?.join(', ') || 'No definidos' }}
                       </span>
                     </dd>
                   </div>
@@ -653,11 +653,11 @@
                 </button>
                 <button
                   type="submit"
-                  [disabled]="colegioForm.invalid || loading"
+                  [disabled]="claseForm.invalid || loading"
                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                 >
                   <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
-                  {{ isEditing ? 'Actualizar Colegio' : 'Crear Colegio' }}
+                  {{ isEditing ? 'Actualizar Clase' : 'Crear Clase' }}
                 </button>
               </div>
             </div>
