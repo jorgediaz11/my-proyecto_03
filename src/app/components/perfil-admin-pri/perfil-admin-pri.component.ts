@@ -140,7 +140,7 @@ export class PerfilAdminPriComponent implements OnInit, OnDestroy {
   }
 
   get rolUsuario(): string {
-    const rol = this.perfilUsuario?.rolCorto || 'Sin rol';
+    const rol = this.perfilUsuario?.rolCorto || 'Sin Perfil';
     console.log('🏷️ Getter rolUsuario llamado:', rol);
     return rol;
   }

@@ -1,6 +1,7 @@
 // 🔧 Archivo de barril para servicios
 // Exporta todos los servicios del sistema educativo
 
+
 // ✅ Servicios de autenticación y usuarios
 export * from './auth.service';
 export * from './usuarios.service';
@@ -14,6 +15,7 @@ export * from './perfiles.service';
 export * from './docentes.service';
 export * from './estudiantes.service';
 export * from './editores.service';
+export * from './familia.service';
 
 // 📚 Servicios académicos básicos
 export * from './niveles.service';
@@ -22,6 +24,10 @@ export * from './secciones.service';
 export * from './cursos.service';
 export * from './turnos.service';
 export * from './periodos-academicos.service';
+export * from './unidades.service';
+
+// 🌎 Servicios de ubicación
+export * from './ubigeo.service';
 
 // 🔧 Servicios de utilidad
 export * from './loading.service';

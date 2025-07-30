@@ -73,7 +73,7 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
     adminPri: 45,
     adminSec: 75,
     familia: 120,
-    editores: 35
+    editores: 3
   };
 
   rendimientoSistema: RendimientoSistema = {

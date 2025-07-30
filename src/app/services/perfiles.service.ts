@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 
 // 🔧 Interfaces para tipado completo
 export interface Perfil {
-  id?: number;
+  id_perfil?: number;
   nombre: string;
   descripcion?: string;
   tipo: 'administrador' | 'docente' | 'estudiante' | 'editor' | 'familia';
@@ -74,7 +74,7 @@ export interface EstadisticasPerfiles {
 }
 
 export interface PermisoDisponible {
-  id: string;
+  id_perfil: string;
   nombre: string;
   descripcion: string;
   categoria: string;

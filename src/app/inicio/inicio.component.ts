@@ -18,7 +18,7 @@ export class InicioComponent {
     { label: 'Niveles', route: '/niveles' },      // Enlace a la página "Niveles"
     { label: 'Catálogo', route: '/catalogo' },    // Enlace al catálogo
     { label: 'Noticias', route: '/noticias' },    // Enlace a la página de noticias
-    { label: 'Acceso', route: '/login' },         // Enlace al login
+    { label: 'Acceso', route: '/login' },         // Enlace al login - puede ser un botón de acceso
     { label: 'Contáctenos', route: '/contacto' }  // Enlace a la página de contacto
   ];
   // Propiedades para el título y detalle del menú

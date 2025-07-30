@@ -67,7 +67,7 @@ export class UsuariosComponent implements OnInit {
   private initForm(): void {
     this.usuarioForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      nombres: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -123,7 +123,7 @@ export class UsuariosComponent implements OnInit {
     } else {
       this.filteredUsuarios = this.usuarios.filter(usuario =>
         usuario.username?.toLowerCase().includes(searchTerm) ||
-        usuario.nombre?.toLowerCase().includes(searchTerm) ||
+        usuario.nombres?.toLowerCase().includes(searchTerm) ||
         usuario.apellido?.toLowerCase().includes(searchTerm) ||
         usuario.correo?.toLowerCase().includes(searchTerm)
       );
@@ -182,7 +182,7 @@ export class UsuariosComponent implements OnInit {
 
         this.usuarioForm.patchValue({
           username: usuario.username,
-          nombre: usuario.nombre,
+          nombres: usuario.nombres,
           apellido: usuario.apellido,
           correo: usuario.correo,
           id_perfil: usuario.id_perfil,
@@ -212,7 +212,7 @@ export class UsuariosComponent implements OnInit {
           <div class="text-left space-y-3">
             <div><strong>ID:</strong> ${usuario.id_usuario}</div>
             <div><strong>Usuario:</strong> ${usuario.username}</div>
-            <div><strong>Nombre:</strong> ${usuario.nombre} ${usuario.apellido}</div>
+            <div><strong>Nombre:</strong> ${usuario.nombres} ${usuario.apellido}</div>
             <div><strong>Correo:</strong> ${usuario.correo}</div>
             <div><strong>Rol:</strong> ${this.getRoleName(usuario.id_perfil ?? 0)}</div>
             <div><strong>Colegio ID:</strong> ${usuario.id_colegio}</div>
@@ -322,7 +322,7 @@ export class UsuariosComponent implements OnInit {
       const userData: CreateUserDto = {
         username: formValue.username.trim(),
         password: formValue.password.trim(), // Obligatorio para nuevo usuario
-        nombre: formValue.nombre.trim(),
+        nombres: formValue.nombres.trim(),
         apellido: formValue.apellido.trim(),
         correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),
@@ -333,7 +333,7 @@ export class UsuariosComponent implements OnInit {
     } else {
       // Actualizar usuario: solo incluir campos que pueden cambiar
       const userData: UpdateUserDto & { password?: string } = {
-        nombre: formValue.nombre.trim(),
+        nombres: formValue.nombres.trim(),
         apellido: formValue.apellido.trim(),
         correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),

@@ -148,20 +148,20 @@ export class CursosComponent implements OnInit {
   }
 
   editCurso(id_curso: number): void {
-    Swal.fire('Editar', 'Funcionalidad de edición de curso (por implementar)', 'info');
+    Swal.fire('Editar', `Funcionalidad de edición de curso (por implementar).\nID del curso: ${id_curso}`, 'info');
   }
 
   deleteCurso(id_curso: number): void {
     Swal.fire({
       title: '¿Eliminar Curso?',
-      text: 'Esta acción no se puede deshacer.',
+      text: `Esta acción no se puede deshacer.\nID del curso: ${id_curso}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
     }).then(result => {
       if (result.isConfirmed) {
-        Swal.fire('Eliminado', 'El curso ha sido eliminado.', 'success');
+        Swal.fire('Eliminado', `El curso ha sido eliminado.\nID del curso: ${id_curso}`, 'success');
       }
     });
   }
@@ -169,7 +169,7 @@ export class CursosComponent implements OnInit {
   viewContenido(id_curso: number): void {
     Swal.fire({
       title: 'Contenido del Curso',
-      html: '<p>Próximamente se mostrará el contenido del curso.</p>',
+      html: `<p>Próximamente se mostrará el contenido del curso:</p>${id_curso}`,
       icon: 'info'
     });
   }

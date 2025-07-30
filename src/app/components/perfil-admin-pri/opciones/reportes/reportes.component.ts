@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 
 interface Estudiante {
   nombre: string;
@@ -9,11 +10,11 @@ interface Estudiante {
 }
 
 @Component({
-  selector: 'reportes',
+  selector: 'app-reportes',
   templateUrl: './reportes.component.html',
   styleUrls: ['./reportes.component.css']
 })
-export class ReportesComponent {
+export class ReportesComponent implements OnInit {
   estudiantes: Estudiante[] = [
     { nombre: 'Juan Pérez', colegio: 'Colegio Central', nivel: 'Primaria', curso: 'Matemáticas', notas: 15 },
     { nombre: 'Ana López', colegio: 'Colegio Central', nivel: 'Primaria', curso: 'Comunicación', notas: 18 },
@@ -71,6 +72,62 @@ export class ReportesComponent {
 
   pageSize = 8;
   currentPage = 1;
+
+  // Filtros y datos de ubicación
+  departamentos: Departamento[] = [];
+  provincias: Provincia[] = [];
+  distritos: Distrito[] = [];
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
+  private ubigeoService = inject(UbigeoService);
+
+  ngOnInit(): void {
+    this.cargarDepartamentos();
+  }
+
+  cargarDepartamentos(): void {
+    this.ubigeoService.getDepartamentos().subscribe(deps => {
+      this.departamentos = deps;
+      this.filtroDepartamento = '';
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    });
+  }
+
+  onDepartamentoChange(): void {
+    const dep = this.departamentos.find(d => d.departamento === this.filtroDepartamento);
+    if (dep) {
+      const idDep = dep.id_ubigeo;
+      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
+        this.provincias = provs;
+        this.filtroProvincia = '';
+        this.distritos = [];
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.provincias = [];
+      this.distritos = [];
+      this.filtroProvincia = '';
+      this.filtroDistrito = '';
+    }
+  }
+
+  onProvinciaChange(): void {
+    const prov = this.provincias.find(p => p.provincia === this.filtroProvincia);
+    if (prov) {
+      const idProv = prov.id_ubigeo;
+      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
+        this.distritos = dists;
+        this.filtroDistrito = '';
+      });
+    } else {
+      this.distritos = [];
+      this.filtroDistrito = '';
+    }
+  }
 
   get totalPages(): number {
     return Math.ceil(this.estudiantes.length / this.pageSize);

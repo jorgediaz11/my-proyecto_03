@@ -19,7 +19,7 @@ export interface Colegio {
   distrito: string;
   nivelesEducativos: string[];
   turnos: string[];
-  aforoMaximo: number;
+  poblacion: number;
   fechaFundacion: string;
   estado: boolean;
   fechaCreacion?: string;
@@ -41,7 +41,7 @@ export interface CreateColegioDto {
   distrito: string;
   nivelesEducativos: string[];
   turnos: string[];
-  aforoMaximo: number;
+  poblacion: number;
   fechaFundacion: string;
   estado: boolean;
 }

@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 // ⏰ Interfaces para tipado de Turnos
 export interface Turno {
-  id?: number;
+  id_turno?: number;
   nombre: string; // Mañana, Tarde, Noche
   descripcion?: string;
   horaInicio: string; // formato HH:mm

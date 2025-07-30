@@ -8,7 +8,7 @@ export interface Users {
   id_usuario?: number;
   id_colegio : number;
   id_perfil: number;
-  nombre: string;
+  nombres: string;
   apellido: string;
   correo: string;
   estado: boolean;
@@ -18,7 +18,7 @@ export interface Users {
 export interface CreateUserDto {
   username: string;
   password: string;
-  nombre: string;
+  nombres: string;
   apellido: string;
   correo: string;
   id_perfil: number;
@@ -26,7 +26,7 @@ export interface CreateUserDto {
   estado: boolean;
 }
 export interface UpdateUserDto {
-  nombre?: string;
+  nombres?: string;
   apellido?: string;
   correo?: string;
   id_perfil?: number;

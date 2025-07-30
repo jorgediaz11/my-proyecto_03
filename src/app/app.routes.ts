@@ -20,6 +20,13 @@ import { ReportesComponent } from './components/perfil-admin-pri/opciones/report
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
+import { NivelesComponent } from './components/perfil-admin-pri/opciones/niveles/niveles.component';
+import { GradosComponent } from './components/perfil-admin-pri/opciones/grados/grados.component';
+import { SeccionesComponent } from './components/perfil-admin-pri/opciones/secciones/secciones.component';
+import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupofam/grupofam.component';
+import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
+import { MaterialComponent } from './components/perfil-admin-pri/opciones/material/material.component';
+import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component'; // Importar el nuevo componente
@@ -72,12 +79,17 @@ export const routes: Routes = [
       { path: 'auditoria', component: AuditoriaComponent }, // Ruta para la sección de configuración
       { path: 'perfil', component: PerfilComponent },       // Ruta para la sección de reportes
       { path: 'cursos', component: CursosComponent },       // Ruta para la sección de cursos
-      // Otras rutas hijas
+      { path: 'niveles', component: NivelesComponent },       // Ruta para la sección de niveles
+      { path: 'grados', component: GradosComponent },       // Ruta para la sección de grados
+      { path: 'secciones', component: SeccionesComponent },   // Ruta para la sección de secciones
+      { path: 'unidades', component: UnidadesComponent },     // Ruta para la sección de unidades
+      { path: 'tipomaterial', component: TipoMaterialComponent }, // Ruta para la sección de tipo de material
+      { path: 'material', component: MaterialComponent },     // Ruta para la sección de material
+      { path: 'grupofam', component: GrupofamComponent },     // Ruta para la sección de grupo familiar
     ]
   },
-
 // Ruta para el perfil de admin sec
-  { path: 'perfil-admin-sec',                                 // Ruta para el perfil de admin sec
+  { path: 'perfil-admin-sec',
     component: PerfilAdminSecComponent,                     // Componente del perfil de admin sec
     children: [
       { path: '', component: PerfilAdminSecMuroComponent }    // Ruta predeterminada

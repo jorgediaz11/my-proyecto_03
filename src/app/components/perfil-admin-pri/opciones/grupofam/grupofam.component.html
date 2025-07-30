@@ -1,0 +1,303 @@
+<!-- Familias Component HTML -->
+<div class="estudiantes-container w-full max-w-full">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Familias</h2>
+
+  <!-- ✅ PESTAÑAS OPTIMIZADAS CON TAILWIND CSS -->
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="flex space-x-8" aria-label="Tabs">
+
+      <!-- Pestaña 1: Tabla de Familias -->
+      <button
+        type="button"
+        (click)="activeTab = 'tabla'"
+        [class]="activeTab === 'tabla'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'tabla'"
+      >
+        <i class="fas fa-table mr-2"></i>
+        Tabla de Familias
+      </button>
+
+      <!-- Pestaña 2: Nuevo Familia -->
+      <button
+        type="button"
+        (click)="activeTab = 'nuevo'"
+        [class]="activeTab === 'nuevo'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'nuevo'"
+      >
+        <i class="fas fa-user-plus mr-2"></i>
+        Nuevo Familia
+      </button>
+
+      <!-- Pestaña 3: Avanzado -->
+      <button
+        type="button"
+        (click)="activeTab = 'avanzado'"
+        [class]="activeTab === 'avanzado'
+          ? 'tab-active'
+          : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'avanzado'"
+      >
+        <i class="fas fa-cogs mr-2"></i>
+        Configuración Avanzada
+      </button>
+
+    </nav>
+  </div>
+
+  <div class="tab-content">
+
+    <!-- Panel: Tabla de Familias -->
+    <div
+      *ngIf="activeTab === 'tabla'"
+      role="tabpanel"
+      class="tab-panel animate-fadeIn"
+      [attr.aria-labelledby]="'tab-tabla'"
+    >
+      <!-- Encabezado con filtro y botón -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+        <div class="p-4 border-b border-gray-200">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <!-- Filtro de búsqueda -->
+            <div class="flex-1 max-w-md">
+              <label for="searchFamilia" class="block text-sm font-medium text-gray-700 mb-2">
+                Buscar Familia:
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <input
+                  id="searchFamilia"
+                  type="text"
+                  placeholder="Ingrese nombre, apellido o grado"
+                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- Filtro Departamento -->
+            <div class="w-48">
+              <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
+              <select
+                id="filtroDepartamento"
+                [(ngModel)]="filtroDepartamento"
+                (change)="onDepartamentoChange()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">[Seleccionar departamento]</option>
+                <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
+              </select>
+            </div>
+
+            <!-- Filtro Provincia -->
+            <div class="w-48">
+              <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
+              <select
+                id="filtroProvincia"
+                [(ngModel)]="filtroProvincia"
+                (change)="onProvinciaChange()"
+                [disabled]="!filtroDepartamento || provincias.length === 0"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">[Seleccionar provincia]</option>
+                <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
+              </select>
+              <div *ngIf="filtroDepartamento && provincias.length === 0" class="text-xs text-gray-500 mt-1">No hay provincias disponibles.</div>
+            </div>
+
+            <!-- Filtro Distrito -->
+            <div class="w-48">
+              <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
+              <select
+                id="filtroDistrito"
+                [(ngModel)]="filtroDistrito"
+                (change)="filterFamilias()"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">[Seleccionar distrito]</option>
+                <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
+              </select>
+            </div>
+
+            <!-- Filtro Colegio -->
+            <div class="w-48">
+              <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
+              <select
+                id="filtroColegio"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              >
+                <option value="">Todos los colegios</option>
+                <option >/option>
+              </select>
+            </div>
+
+            <!-- Botón Nuevo Familia -->
+            <button
+              type="button"
+              (click)="createFamilia()"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+            >
+              <i class="fas fa-plus mr-2"></i>
+              Nuevo Familia
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de estudiantes -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombres</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellidos</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nivel</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grado</th>
+                <th scope="col" class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sección</th>
+                <th scope="col" class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let estudiante of paginatedFamilias; trackBy: trackByFamiliaId" class="hover:bg-gray-50 transition-colors duration-150">
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ estudiante.id_familia }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.nombres }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.apellido }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.id_colegio }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ estudiante.estado ? 'Activo' : 'Inactivo' }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
+                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
+                  <div class="flex justify-center space-x-2">
+                    <button
+                      type="button"
+                      (click)="viewFamilia(estudiante.id_familia)"
+                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                      title="Ver detalles"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      type="button"
+                      (click)="editFamilia(estudiante.id_familia)"
+                      class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                      title="Editar"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button
+                      type="button"
+                      (click)="deleteFamilia(estudiante.id_familia)"
+                      class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                      title="Eliminar"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      (click)="viewFamilia(estudiante.id_familia)"
+                      class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                      title="Ver Cursos"
+                    >
+                      <i class="fas fa-book"></i>
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Estado vacío -->
+              <tr *ngIf="paginatedFamilias.length === 0">
+                <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <i class="fas fa-graduation-cap text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-lg font-medium text-gray-900 mb-2">No hay estudiantes</p>
+                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer estudiante.' }}</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="getTotalPages().length > 1">
+          <div class="flex items-center justify-between">
+            <div class="flex-1 flex justify-between sm:hidden">
+              <button
+                (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Anterior
+              </button>
+              <button
+                (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage === getTotalPages().length"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Siguiente
+              </button>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm text-gray-700">
+                  Mostrando
+                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                  a
+                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredFamilias.length) }}</span>
+                  de
+                  <span class="font-medium">{{ filteredFamilias.length }}</span>
+                  resultados
+                </p>
+              </div>
+              <div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                  <button
+                    *ngFor="let page of getTotalPages(); let i = index"
+                    (click)="changePage(i + 1)"
+                    [class]="currentPage === i + 1
+                      ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
+                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
+                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                  >
+                    {{ i + 1 }}
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div
+  *ngIf="loading"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  role="dialog"
+  aria-label="Cargando"
+>
+  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+      <div>
+        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+        <p class="text-sm text-gray-500">Por favor espera un momento</p>
+      </div>
+    </div>
+  </div>
+</div>

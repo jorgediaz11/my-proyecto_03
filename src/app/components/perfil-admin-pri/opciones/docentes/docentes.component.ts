@@ -1,150 +1,95 @@
 
-import { Component, OnInit, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import Swal from 'sweetalert2';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
-import { Docente } from 'src/app/services/docentes.service';
-
-// Interfaz para clase (mock)
-interface ClaseDocente {
-  id_docente: number;
-  nombre: string;
-  grado: string;
-  seccion: string;
-  materia: string;
-  horario: string;
-  aula: string;
-  estado: 'activa' | 'completada' | 'programada';
-}
-
-// ...importaciones y definición de Docente y del componente DocentesComponent...
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import Swal from 'sweetalert2';
+import { Docente, DocentesService, CreateDocenteDto, UpdateDocenteDto } from 'src/app/services/docentes.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-docentes',
   templateUrl: './docentes.component.html',
   styleUrls: ['./docentes.component.css']
 })
-export class DocentesComponent implements OnInit {
-  // ...existing code...
-
-  viewClases(docenteId: number): void {
-    const docente = this.docentes.find(d => d.id_docente === docenteId);
-    if (!docente) {
-      Swal.fire({ icon: 'error', title: 'Error', text: 'Docente no encontrado' });
-      return;
-    }
-
-    // Datos mock de clases (en un caso real, se obtendrían de un servicio)
-    const clases: ClaseDocente[] = [
-      { id_docente: 1, nombre: 'Matemáticas 5A', grado: '5to', seccion: 'A', materia: 'Matemáticas', horario: 'Lun-Mie-Vie 08:00-09:30', aula: 'Aula 201', estado: 'activa' },
-      { id_docente: 2, nombre: 'Álgebra 4B', grado: '4to', seccion: 'B', materia: 'Álgebra', horario: 'Mar-Jue 10:00-11:30', aula: 'Aula 203', estado: 'completada' },
-      { id_docente: 3, nombre: 'Geometría 3C', grado: '3ro', seccion: 'C', materia: 'Geometría', horario: 'Lun-Vie 14:00-15:30', aula: 'Aula 205', estado: 'programada' }
-    ];
-
-    let html = '';
-    if (clases.length === 0) {
-      html = '<p>No hay clases registradas para este docente.</p>';
-    } else {
-      html = `
-        <div style="overflow-x:auto; max-height:350px;">
-          <table class="table table-bordered table-sm" style="width:100%; font-size:14px;">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Grado</th>
-                <th>Sección</th>
-                <th>Materia</th>
-                <th>Horario</th>
-                <th>Aula</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${clases.map(c => `
-                <tr>
-                  <td>${c.id_docente}</td>
-                  <td>${c.nombre}</td>
-                  <td>${c.grado}</td>
-                  <td>${c.seccion}</td>
-                  <td>${c.materia}</td>
-                  <td>${c.horario}</td>
-                  <td>${c.aula}</td>
-                  <td>${c.estado.charAt(0).toUpperCase() + c.estado.slice(1)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-    Swal.fire({
-      title: `Clases de ${docente.nombres} ${docente.apellidos}`,
-      html,
-      icon: 'info',
-      confirmButtonText: 'Cerrar',
-      width: '800px'
-    });
-  }
-  docentes: Docente[] = [
-    { id_docente: 1, nombres: 'Juan', apellidos: 'Pérez García', correo: 'juan.perez@colegio.com', telefono: '987654321' },
-    { id_docente: 2, nombres: 'Ana', apellidos: 'López Torres', correo: 'ana.lopez@colegio.com', telefono: '912345678' },
-    { id_docente: 3, nombres: 'Carlos', apellidos: 'Ruiz Díaz', correo: 'carlos.ruiz@colegio.com', telefono: '934567890' },
-    { id_docente: 4, nombres: 'Lucía', apellidos: 'Torres Vega', correo: 'lucia.torres@colegio.com', telefono: '945678901' },
-    { id_docente: 5, nombres: 'Pedro', apellidos: 'Gómez Ríos', correo: 'pedro.gomez@colegio.com', telefono: '956789012' },
-    { id_docente: 6, nombres: 'María', apellidos: 'Sánchez León', correo: 'maria.sanchez@colegio.com', telefono: '967890123' },
-    { id_docente: 7, nombres: 'Luis', apellidos: 'Fernández Soto', correo: 'luis.fernandez@colegio.com', telefono: '978901234' },
-    { id_docente: 8, nombres: 'Elena', apellidos: 'Ramírez Cruz', correo: 'elena.ramirez@colegio.com', telefono: '989012345' },
-    { id_docente: 9, nombres: 'Miguel', apellidos: 'Castro Peña', correo: 'miguel.castro@colegio.com', telefono: '900123456' },
-    { id_docente: 10, nombres: 'Patricia', apellidos: 'Vargas Silva', correo: 'patricia.vargas@colegio.com', telefono: '911234567' },
-    { id_docente: 11, nombres: 'Jorge', apellidos: 'Morales Paredes', correo: 'jorge.morales@colegio.com', telefono: '922345678' },
-    { id_docente: 12, nombres: 'Rosa', apellidos: 'Herrera Salas', correo: 'rosa.herrera@colegio.com', telefono: '933456789' },
-    { id_docente: 13, nombres: 'Alberto', apellidos: 'Mendoza Rojas', correo: 'alberto.mendoza@colegio.com', telefono: '944567890' },
-    { id_docente: 14, nombres: 'Carmen', apellidos: 'Flores Medina', correo: 'carmen.flores@colegio.com', telefono: '955678901' },
-    { id_docente: 15, nombres: 'Ricardo', apellidos: 'Ortega Ramos', correo: 'ricardo.ortega@colegio.com', telefono: '966789012' },
-    { id_docente: 16, nombres: 'Sofía', apellidos: 'Guerrero Díaz', correo: 'sofia.guerrero@colegio.com', telefono: '977890123' },
-    { id_docente: 17, nombres: 'Gabriel', apellidos: 'Reyes Campos', correo: 'gabriel.reyes@colegio.com', telefono: '988901234' },
-    { id_docente: 18, nombres: 'Paula', apellidos: 'Chávez Luna', correo: 'paula.chavez@colegio.com', telefono: '999012345' },
-    { id_docente: 19, nombres: 'Andrés', apellidos: 'Silva Torres', correo: 'andres.silva@colegio.com', telefono: '910123456' },
-    { id_docente: 20, nombres: 'Valeria', apellidos: 'Paredes Soto', correo: 'valeria.paredes@colegio.com', telefono: '921234567' }
-  ];
-
+export class DocentesComponent implements OnInit, OnDestroy {
+  // Servicio de docentes
+  private docentesService = inject(DocentesService);
+  // ✅ PROPIEDADES ESENCIALES
+  docentes: Docente[] = [];
   filteredDocentes: Docente[] = [];
   paginatedDocentes: Docente[] = [];
+
+  // ✅ CONTROL DE ESTADO
   currentPage = 1;
   itemsPerPage = 10;
-  searchDocente = '';
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
-  showForm = false;
-  loading = false;
   searchTerm = '';
-  // (Ya definidos más abajo, no duplicar)
-  filtroColegio = '';
+  showForm = false;
+  filtroDepartamento = '';
+  filtroProvincia = '';
+  filtroDistrito = '';
+  isEditing = false;
+  editingDocenteId?: number;
+  loading = false;
+  activeTab = 'tabla';
+
+  // ✅ FORMULARIO REACTIVO
+  docenteForm!: FormGroup;
+
+  // ✅ PARA CLEANUP DE SUBSCRIPCIONES
+  private destroy$ = new Subject<void>();
 
   // ✅ PROPIEDADES PARA EL TEMPLATE
   Math = Math;
 
-  // ✅ FORMULARIOS
-  usuarioForm!: FormGroup;
-  colegioForm!: FormGroup;
-  docenteForm!: FormGroup;
+  // ✅ TRACKBY FUNCTION FOR PERFORMANCE
+  trackByDocenteId(index: number, docente: Docente): number {
+    return docente.id_docente || index;
+  }
 
-  // ✅ ARRAYS DE OPCIONES
-  perfiles = [
-    { value: 'docente', label: 'Docente' },
-    { value: 'coordinador', label: 'Coordinador' },
-    { value: 'director', label: 'Director' }
+  // ✅ FECHA EN ESPAÑOL PARA EL TEMPLATE
+  get todayES(): string {
+    return new Date().toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  // ✅ CONFIGURACIÓN DE OPCIONES
+  // Si los docentes tienen niveles educativos o turnos asociados, se mantienen.
+  // Si son propiedades del colegio donde enseñan, estas propiedades deberían venir del contexto del colegio,
+  // o el docente debería tener un id_colegio para buscar esa info.
+  readonly nivelesEducativos = [
+    { value: 'Inicial', label: 'Inicial' },
+    { value: 'Primaria', label: 'Primaria' },
+    { value: 'Secundaria', label: 'Secundaria' }
+  ];
+
+  readonly turnos = [
+    { value: 'Mañana', label: 'Mañana' },
+    { value: 'Tarde', label: 'Tarde' },
+    { value: 'Noche', label: 'Noche' }
   ];
 
   departamentos: Departamento[] = [];
   provincias: Provincia[] = [];
   distritos: Distrito[] = [];
-  filtroDepartamento = '';
-  filtroProvincia = '';
-  filtroDistrito = '';
-
   private ubigeoService = inject(UbigeoService);
-  // ngOnInit ya está implementado arriba, eliminar duplicado
+
+  // ✅ INYECCIÓN DE DEPENDENCIAS CON INJECT()
+  private authService = inject(AuthService);
+  private fb = inject(FormBuilder);
+
+  constructor() {
+    this.initForm();
+  }
+
+  ngOnInit(): void {
+    this.cargarDepartamentos();
+    this.cargarDocentes();
+    this.testEndpointConnection();
+  }
 
   cargarDepartamentos(): void {
     this.ubigeoService.getDepartamentos().subscribe(deps => {
@@ -173,7 +118,7 @@ export class DocentesComponent implements OnInit {
       this.filtroProvincia = '';
       this.filtroDistrito = '';
     }
-    this.filterDocentes();
+    this.filterColegios();
   }
 
   onProvinciaChange(): void {
@@ -188,166 +133,596 @@ export class DocentesComponent implements OnInit {
       this.distritos = [];
       this.filtroDistrito = '';
     }
-    this.filterDocentes();
+    this.filterColegios();
   }
 
-  // ✅ TRACKBY FUNCTION FOR PERFORMANCE
-  trackByDocenteId(index: number, docente: Docente): number {
-    return docente.id_docente || index;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  // ✅ MÉTODO PARA GUARDAR COLEGIO
-  saveColegio(): void {
-    if (this.colegioForm.valid) {
-      console.log('Guardando colegio:', this.colegioForm.value);
+  // ✅ INICIALIZACIÓN DEL FORMULARIO
+  private initForm(): void {
+    this.docenteForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]], // Asumiendo que el docente tiene apellido
+      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]], // DNI para docentes
+      telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
+      correo: ['', [Validators.required, Validators.email]],
+      direccion: ['', [Validators.required, Validators.minLength(10)]],
+      departamento: ['', [Validators.required]],
+      provincia: ['', [Validators.required]],
+      distrito: ['', [Validators.required]],
+      // Campos específicos para docente
+      titulo: ['', [Validators.required]], // Título del docente
+      especialidad: ['', [Validators.required]], // Especialidad del docente
+      fechaContratacion: ['', [Validators.required]], // Fecha de contratación
+      estado: [true, [Validators.required]]
+    });
+  }
+
+  // ✅ VALIDADOR PERSONALIZADO (ejemplo, ajustar según necesidad)
+  private dniValidator(control: AbstractControl) {
+    const dni = control.get('dni')?.value;
+    if (!dni) {
+      return null;
     }
+    if (!/^\d{8}$/.test(dni)) {
+      return { dniInvalid: true };
+    }
+    return null;
   }
 
-  // Método para manejar el evento de clic en el botón de "Crear Docente"
-  ngOnInit(): void {
-    this.cargarDepartamentos();
-    this.filteredDocentes = [...this.docentes];
+
+  // ✅ CARGA DE DOCENTES
+  cargarDocentes(): void {
+    console.log('🔄 Iniciando carga de docentes...');
+    console.log('🔗 Endpoint configurado:', 'http://localhost:3000/docentes'); // Ajustar endpoint
+    console.log('🔧 Interceptors que se ejecutarán automáticamente:');
+    console.log('   1. 🔑 AuthInterceptor → Agrega token JWT');
+    console.log('   2. 📝 LoggingInterceptor → Registra request');
+    console.log('   3. ⏳ LoadingInterceptor → Muestra spinner');
+    console.log('   4. 🚨 ErrorInterceptor → Maneja errores (si ocurren)');
+
+    this.loading = true;
+
+    console.log('📡 Llamando this.docentesService.getDocentes()...');
+    this.docentesService.getDocentes()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          console.log('✅ INTERCEPTORS COMPLETADOS - Datos recibidos del endpoint:');
+          console.log('📊 Cantidad de docentes:', data.length);
+          console.log('🔍 Datos completos recibidos:', data);
+
+          this.docentes = data;
+          this.filteredDocentes = [...data];
+          this.updatePaginatedDocentes();
+          this.loading = false;
+
+          if (data.length === 0) {
+            console.warn('⚠️ No se encontraron docentes en la base de datos');
+            console.log('💡 Asegúrate de que el backend esté activo y tenga datos');
+            this.showEmptyState();
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          console.error('❌ ERROR AL CONECTAR CON EL ENDPOINT:', error);
+          console.error('🔍 Detalles del error:', {
+            status: error.status,
+            message: error.message,
+            url: error.url
+          });
+
+          // Mostrar error específico
+          this.handleError(`Error al cargar docentes: ${error.message}`);
+          this.showEmptyState();
+        }
+      });
+  }
+
+  // ✅ FILTRADO DE COLEGIOS
+  filterColegios(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredDocentes = [...this.docentes];
+    } else {
+      this.filteredDocentes = this.docentes.filter(docente =>
+        docente.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        docente.apellido.toLowerCase().includes(this.searchTerm.toLowerCase()) //||
+        //(docente.dni && docente.dni.includes(this.searchTerm)) // Asumiendo que DNI es string y existe
+      );
+    }
+    this.currentPage = 1;
     this.updatePaginatedDocentes();
   }
 
+  // ✅ ACTUALIZACIÓN DE PAGINACIÓN
   updatePaginatedDocentes(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedDocentes = this.filteredDocentes.slice(startIndex, endIndex);
   }
 
-  filterDocentes(): void {
-    this.filteredDocentes = this.docentes.filter(docente =>
-      docente.nombres.toLowerCase().includes(this.searchDocente.toLowerCase())
-    );
-    this.currentPage = 1;
-    this.updatePaginatedDocentes();
-  }
-
-  createDocente(): void {
-    this.showForm = true;
-  }
-
-  saveDocente(): void {
-    if (this.docenteForm.valid) {
-      const newdocente: Docente = {
-        id: this.docentes.length + 1,
-        ...this.docenteForm.value
-      };
-      this.docentes.push(newdocente);
-      this.filteredDocentes = [...this.docentes];
-      this.updatePaginatedDocentes();
-      this.docenteForm.reset();
-      this.showForm = false;
-
-      Swal.fire({
-        title: 'Guardado',
-        text: 'El nuevo docente ha sido guardado exitosamente.',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-      });
-    } else {
-      console.log('Formulario inválido');
-    }
-  }
-
-  cancelCreate(): void {
-    this.docenteForm.reset();
-    this.showForm = false;
-  }
-
+  // ✅ CAMBIO DE PÁGINA
   changePage(page: number): void {
     this.currentPage = page;
     this.updatePaginatedDocentes();
   }
 
-  editDocente(id_docente: number): void {
-    Swal.fire({
-      title: 'Editar Docente',
-      text: `El docente con ID ${id_docente} será modificado.`,
-      icon: 'info',
-      confirmButtonText: 'Aceptar',
-    }).then(() => {
-      console.log(`Editar docente con ID: ${id_docente}`);
+  // ✅ CAMBIO DE PESTAÑA
+  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+    this.activeTab = tab;
+    if (tab === 'tabla') {
+      this.cancelEdit();
+    }
+  }
+
+  // ✅ CREAR NUEVO DOCENTE
+  createDocente(): void {
+    this.activeTab = 'nuevo';
+    this.isEditing = false;
+    this.editingDocenteId = undefined;
+    this.docenteForm.reset();
+    this.docenteForm.patchValue({
+      estado: true
+      // Si tienes campos de array como nivelesEducativos o turnos en docente, inicialízalos aquí
+      // nivelesEducativos: [],
+      // turnos: []
     });
   }
 
+  // ✅ GUARDAR DOCENTE
+  saveDocente(): void {
+    if (this.docenteForm.invalid) {
+      this.markFormGroupTouched();
+      this.handleError('Por favor corrige los errores en el formulario');
+      return;
+    }
+
+    this.loading = true;
+    const formData = this.docenteForm.value;
+
+    if (this.isEditing && this.editingDocenteId) {
+      // Actualizar docente existente
+      const updateData: UpdateDocenteDto = {
+        id_docente: this.editingDocenteId,
+        ...formData
+      };
+
+      this.docentesService.actualizarDocente(this.editingDocenteId, updateData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Docente actualizado exitosamente');
+            this.cargarDocentes();
+            this.cancelEdit();
+          },
+          error: (error) => {
+            this.loading = false;
+            this.handleError('Error al actualizar el docente');
+            console.error('Error:', error);
+          }
+        });
+    } else {
+      // Crear nuevo docente
+      const createData: CreateDocenteDto = formData;
+
+      this.docentesService.crearDocente(createData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Docente creado exitosamente');
+            this.cargarDocentes();
+            this.cancelEdit();
+          },
+          error: (error) => {
+            this.loading = false;
+            this.handleError('Error al crear el docente');
+            console.error('Error:', error);
+          }
+        });
+    }
+  }
+
+  // ✅ EDITAR DOCENTE
+  editDocente(id_docente: number): void {
+    const docente = this.docentes.find(d => d.id_docente === id_docente);
+    if (!docente) {
+      this.handleError('Docente no encontrado');
+      return;
+    }
+
+    this.isEditing = true;
+    this.editingDocenteId = id_docente;
+    this.activeTab = 'nuevo';
+
+    this.docenteForm.patchValue({
+      nombre: docente.nombres, // Asumiendo que el campo es 'nombres' en la interfaz Docente
+      apellido: docente.apellido, // Asumiendo que el campo es 'apellido' en la interfaz Docente
+      //dni: docente.dni,
+      telefono: docente.telefono,
+      correo: docente.correo,
+      direccion: docente.direccion,
+      //departamento: docente.departamento,
+      //provincia: docente.provincia,
+      //distrito: docente.distrito,
+      titulo: docente.titulo, // Campo específico de docente
+      especialidad: docente.especialidad, // Campo específico de docente
+      //fechaContratacion: docente.fechaContratacion, // Campo específico de docente
+      estado: docente.estado
+      // Ajustar si docente tiene nivelesEducativos o turnos directamente
+      // nivelesEducativos: docente.nivelesEducativos || [],
+      // turnos: docente.turnos || []
+    });
+  }
+
+  // ✅ ELIMINAR DOCENTE
   deleteDocente(id_docente: number): void {
+    const docente = this.docentes.find(d => d.id_docente === id_docente);
+    if (!docente) {
+      this.handleError('Docente no encontrado');
+      return;
+    }
+
     Swal.fire({
-      title: 'Eliminar docente',
-      text: `¿Estás seguro de que deseas eliminar el docente con ID ${id_docente}?`,
+      title: '¿Eliminar Docente?',
+      text: `¿Estás seguro de que deseas eliminar a "${docente.nombres} ${docente.apellido}"?`,
       icon: 'warning',
       showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-    }).then(result => {
+      allowOutsideClick: false
+    }).then((result) => {
       if (result.isConfirmed) {
-        this.docentes = this.docentes.filter(docente => docente.id_docente !== id_docente);
-        this.filteredDocentes = [...this.docentes];
-        this.updatePaginatedDocentes();
-        console.log(`docente con ID ${id_docente} eliminado.`);
-      } else {
-        console.log('Eliminación cancelada.');
+        this.loading = true;
+        this.docentesService.eliminarDocente(id_docente)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              this.loading = false;
+              this.handleSuccess('Docente eliminado exitosamente');
+              this.cargarDocentes();
+            },
+            error: (error) => {
+              this.loading = false;
+              this.handleError('Error al eliminar el docente');
+              console.error('Error:', error);
+            }
+          });
       }
     });
   }
 
+  // ✅ VER DETALLES DEL DOCENTE
   viewDocente(id_docente: number): void {
-    const docente = this.docentes.find(c => c.id_docente === id_docente);
-    if (docente) {
-      Swal.fire({
-        title: `Detalles del docente`,
-        html: `
-          <p><strong>ID:</strong> ${docente.id_docente}</p>
-          <p><strong>Nombre:</strong> ${docente.nombres}</p>
-          <p><strong>Apellidos:</strong> ${docente.apellidos}</p>
-          <p><strong>Correo:</strong> ${docente.correo}</p>
-          <p><strong>Teléfono:</strong> ${docente.telefono}</p>
-        `,
-        icon: 'info',
-        confirmButtonText: 'Cerrar',
-      });
-    } else {
-      console.log(`docente con ID ${id_docente} no encontrado.`);
+    const docente = this.docentes.find(d => d.id_docente === id_docente);
+    if (!docente) {
+      this.handleError('Docente no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Docente`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${docente.nombres}</p>
+          <p><strong>Apellidos:</strong> ${docente.apellido}</p>
+          <p><strong>DNI:</strong> </p>
+          <p><strong>Dirección:</strong> ${docente.direccion}</p>
+          <p><strong>Teléfono:</strong> ${docente.telefono}</p>
+          <p><strong>Correo:</strong> ${docente.correo}</p>
+          <p><strong>Ubicación:</strong> </p>
+          <p><strong>Título:</strong> ${docente.titulo || 'No especificado'}</p>
+          <p><strong>Especialidad:</strong> ${docente.especialidad || 'No especificado'}</p>
+          <p><strong>Fecha Contratación:</strong> </p>
+          <p><strong>Estado:</strong> ${docente.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
   }
 
+  // ✅ CANCELAR EDICIÓN
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.editingDocenteId = undefined;
+    this.docenteForm.reset();
+    this.docenteForm.patchValue({
+      estado: true
+      // Limpiar campos de array si aplican
+      // nivelesEducativos: [],
+      // turnos: []
+    });
+    this.activeTab = 'tabla';
+  }
+
+  // ✅ LIMPIAR FORMULARIO
+  resetForm(): void {
+    Swal.fire({
+      title: '¿Limpiar Formulario?',
+      text: '¿Estás seguro de que deseas limpiar todos los campos?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#6c757d',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'Sí, limpiar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.docenteForm.reset();
+        this.docenteForm.patchValue({
+          estado: true
+          // Limpiar campos de array si aplican
+          // nivelesEducativos: [],
+          // turnos: []
+        });
+      }
+    });
+  }
+
+  // ✅ MARCAR TODOS LOS CAMPOS COMO TOUCHED
+  private markFormGroupTouched(): void {
+    Object.keys(this.docenteForm.controls).forEach(key => {
+      const control = this.docenteForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
+  // ✅ PAGINACIÓN - TOTAL DE PÁGINAS
   getTotalPages(): number[] {
     const totalPages = Math.ceil(this.filteredDocentes.length / this.itemsPerPage);
     return Array(totalPages).fill(0).map((_, index) => index + 1);
   }
 
-  resetForm(): void {
-    Swal.fire({
-      title: 'Limpiar Formulario',
-      text: '¿Estás seguro de que deseas limpiar todos los campos?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, limpiar',
-      cancelButtonText: 'Cancelar',
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.docenteForm.reset();
-        console.log('Formulario limpiado');
+  // ✅ GETTER PARA FORMULARIO
+  get f() {
+    return this.docenteForm.controls;
+  }
+
+  // ✅ VERIFICAR SI EL FORMULARIO PUEDE SER ENVIADO
+  get canSubmit(): boolean {
+    return this.docenteForm.valid && !this.loading;
+  }
+
+  // ✅ MÉTODOS FALTANTES REQUERIDOS POR EL HTML
+  onViewDocenteKey(event: KeyboardEvent, id_docente: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.viewDocente(id_docente);
+    }
+  }
+
+  onEditDocenteKey(event: KeyboardEvent, id_docente: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.editDocente(id_docente);
+    }
+  }
+
+  onDeleteDocenteKey(event: KeyboardEvent, id_docente: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.deleteDocente(id_docente);
+    }
+  }
+
+  onPhotoChange(event: Event): void { // Renombrado de onLogoChange a onPhotoChange para docentes
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+      console.log('Foto seleccionada:', file.name);
+      // Aquí implementarías la lógica para subir la foto del docente
+    }
+  }
+
+  cancelCreate(): void {
+    this.cancelEdit();
+  }
+
+  // ✅ PROPIEDADES ADICIONALES PARA EL TEMPLATE HTML
+  private showEmptyState(): void {
+    this.docentes = [];
+    this.filteredDocentes = [];
+    this.paginatedDocentes = [];
+
+    console.log('📋 Estado vacío configurado');
+    console.log('💡 Para cargar datos reales:');
+    console.log('   1. Asegúrate de que el backend esté corriendo en http://localhost:3000');
+    console.log('   2. Verifica que el endpoint /docentes esté disponible'); // Ajustar endpoint
+    console.log('   3. Revisa que haya datos en la base de datos');
+  }
+
+  // ✅ MÉTODO PARA PROBAR LA CONEXIÓN CON EL ENDPOINT
+  testEndpointConnection(): void {
+    console.log('🧪 TESTING ENDPOINT CONNECTION...');
+    console.log('🔗 URL del endpoint:', 'http://localhost:3000/docentes'); // Ajustar endpoint
+    console.log('🔧 Interceptors activos:', ['AuthInterceptor', 'LoggingInterceptor', 'ErrorInterceptor', 'LoadingInterceptor']);
+
+    // Verificar si el servicio está inyectado correctamente
+    if (this.docentesService) {
+      console.log('✅ DocentesService inyectado correctamente');
+    } else {
+      console.error('❌ DocentesService NO está inyectado');
+    }
+
+    console.log('📡 La carga de datos se realizará automáticamente en cargarDocentes()');
+    console.log('🚫 Ya NO se cargan datos de prueba automáticamente');
+  }
+
+  // ✅ MÉTODO PARA PROBAR LA CONEXIÓN DIRECTA CON EL ENDPOINT
+  testConnection(): void {
+    console.log('🧪 PROBANDO CONEXIÓN DIRECTA CON EL ENDPOINT...');
+    console.log('🔗 URL:', 'http://localhost:3000/docentes'); // Ajustar endpoint
+
+    this.loading = true;
+    this.docentesService.getDocentes() // Usar el servicio de docentes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.loading = false;
+          console.log('✅ CONEXIÓN EXITOSA!');
+          console.log('📊 Respuesta completa:', response);
+          console.log('📋 Tipo de respuesta:', typeof response);
+          console.log('🔍 Es array?', Array.isArray(response));
+
+          if (Array.isArray(response)) {
+            console.log('📊 Cantidad de elementos:', response.length);
+            response.forEach((item, index) => {
+              console.log(`👨‍🏫 Docente ${index + 1}:`, item); // Icono y texto ajustado
+            });
+          }
+
+          // Forzar actualización de datos
+          this.docentes = response;
+          this.filteredDocentes = [...response];
+          this.updatePaginatedDocentes();
+        },
+        error: (error) => {
+          this.loading = false;
+          console.error('❌ ERROR EN CONEXIÓN:');
+          console.error('🔍 Status:', error.status);
+          console.error('🔍 Message:', error.message);
+          console.error('🔍 URL:', error.url);
+          console.error('🔍 Error completo:', error);
+
+          this.handleError(`Error de conexión: ${error.message || 'Error desconocido'}`);
+        }
+      });
+  }
+
+  // ✅ VERIFICAR AUTENTICACIÓN Y PROBAR ENDPOINT
+  checkAuthAndTestEndpoint(): void {
+    console.log('🔐 VERIFICANDO AUTENTICACIÓN...');
+
+    // Verificar token en localStorage
+    const token = localStorage.getItem('access_token');
+    console.log('🔑 Token en localStorage:', token ? 'EXISTE' : 'NO EXISTE');
+
+    if (!token) {
+      console.error('❌ NO HAY TOKEN DE AUTENTICACIÓN');
+      this.handleError('No hay token de autenticación. Por favor, inicia sesión nuevamente.');
+      return;
+    }
+
+    console.log('✅ Token encontrado, probando endpoint...');
+    this.testConnection();
+  }
+
+  // ⚠️ DATOS DE PRUEBA TEMPORALES (SOLO PARA DESARROLLO)
+  // Este método ya NO se ejecuta automáticamente
+  // Solo se usa para propósitos de desarrollo si es necesario
+  loadTestData(): void {
+    console.warn('⚠️ CARGANDO DATOS DE PRUEBA - SOLO PARA DESARROLLO');
+    console.warn('🚫 Este método NO debe usarse en producción');
+    console.warn('📝 Los datos reales deben venir del endpoint: http://localhost:3000/docentes'); // Ajustar endpoint
+
+    const testDocentes: Docente[] = [
+      {
+        id_docente: 1,
+        nombres: 'Ana María',
+        apellido: 'Pérez García',
+        //dni: '12345678',
+        direccion: 'Calle Falsa 123, Miraflores',
+        telefono: '912345678',
+        correo: 'ana.perez@example.com',
+        //departamento: 'Lima',
+        //provincia: 'Lima',
+        //distrito: 'Miraflores',
+        titulo: 'Lic. en Educación Primaria',
+        especialidad: 'Matemáticas',
+        //fechaContratacion: new Date('2020-03-01'),
+        estado: true
+      },
+      {
+        id_docente: 2,
+        nombres: 'Juan Carlos',
+        apellido: 'López Fernández',
+        //dni: '87654321',
+        direccion: 'Av. Siempre Viva 456, San Isidro',
+        telefono: '987654321',
+        correo: 'juan.lopez@example.com',
+        //departamento: 'Lima',
+        //provincia: 'Lima',
+        //distrito: 'San Isidro',
+        titulo: 'Prof. en Educación Secundaria',
+        especialidad: 'Comunicación',
+        //fechaContratacion: new Date('2018-08-15'),
+        estado: true
       }
-    });
+    ];
+
+    console.log('📊 Aplicando datos de prueba:', testDocentes);
+    this.docentes = testDocentes;
+    this.filteredDocentes = [...testDocentes];
+    this.updatePaginatedDocentes();
   }
 
-  // ✅ MÉTODOS AUXILIARES PARA PESTAÑAS
-  isTablaActive(): boolean {
-    return this.activeTab === 'tabla';
+  // ✅ MÉTODO PARA FORZAR CARGA DE DATOS DE PRUEBA (SOLO DESARROLLO)
+  forceLoadTestData(): void {
+    console.log('🔧 FORZANDO CARGA DE DATOS DE PRUEBA...');
+    this.loadTestData();
   }
 
-  isNuevoActive(): boolean {
-    return this.activeTab === 'nuevo';
+  // ✅ MÉTODO PARA SIMULAR LOGIN Y OBTENER TOKEN (SOLO PARA PRUEBAS)
+  simulateLogin(): void {
+    console.log('🔐 SIMULANDO LOGIN PARA OBTENER TOKEN...');
+
+    // Datos de prueba (ajustar según tu backend)
+    const loginData = {
+      username: 'admin',
+      password: 'admin123'
+    };
+
+    this.authService.login(loginData.username, loginData.password)
+      .subscribe({
+        next: (response: { access_token: string; user?: unknown }) => {
+          console.log('✅ LOGIN EXITOSO:', response);
+
+          if (response.access_token) {
+            localStorage.setItem('access_token', response.access_token);
+            console.log('🔑 Token guardado en localStorage');
+
+            // Ahora probar el endpoint
+            this.testConnection();
+          }
+        },
+        error: (error: { message: string }) => {
+          console.error('❌ ERROR EN LOGIN:', error);
+          this.handleError('Error en login. Verifica las credenciales.');
+        }
+      });
   }
 
-  isAvanzadoActive(): boolean {
-    return this.activeTab === 'avanzado';
-  }
-
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado') {
-    this.activeTab = tab;
+  private handleEmptyState(): void {
+    // Implementación para manejar el estado vacío si es necesario
+    this.showEmptyState();
   }
 
   private resetFilters(): void {
@@ -355,57 +730,6 @@ export class DocentesComponent implements OnInit {
     this.filtroDepartamento = '';
     this.filtroProvincia = '';
     this.filtroDistrito = '';
-    this.filtroColegio = '';
-    //this.carga
+    this.cargarDocentes();
   }
-
 }
-
-// Services
-// export class UsuariosComponent implements OnInit {
-//   usuarios: Usuario[] = [];
-//   mensajeError: string = ''; // Para mostrar mensajes de error en el template
-
-//   constructor(private usuarioService: UsuarioService) { }
-
-//   ngOnInit(): void {
-//     this.cargarUsuarios();
-//   }
-
-//   cargarUsuarios(): void {
-//     this.usuarioService.getUsuarios().subscribe(
-//       (data: Usuario[]) => {
-//         this.usuarios = data;
-//         this.mensajeError = ''; // Limpia cualquier mensaje de error anterior
-//       },
-//       (error) => {
-//         console.error('Error al cargar los usuarios:', error);
-//         this.mensajeError = 'Error al cargar la lista de usuarios. Por favor, inténtalo de nuevo más tarde.';
-//         // Aquí podrías implementar una lógica más sofisticada para manejar diferentes tipos de errores
-//       }
-//     );
-//   }
-
-//   // Aquí irían los métodos para crear, editar, eliminar usuarios, etc.
-// }
-
-// <<Campos básicos:>>
-// ID (autogenerado)
-// Nombres (requerido)
-// Apellidos (requerido)
-// DNI/Identificación (requerido)
-// Fecha de nacimiento
-// Género (dropdown)
-// Foto/perfil
-// Dirección
-// Teléfono
-// Correo electrónico (validado)
-// Estado (Activo/Inactivo)
-// <<Campos profesionales:>>
-// Especialidad (dropdown)
-// Grados académicos
-// Años de experiencia
-// Cursos asignados (relación múltiple)
-// Horario disponible
-// Tipo de contrato
-// Fecha de contratación

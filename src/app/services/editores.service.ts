@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 
 // 📖 Interfaces para tipado completo
 export interface Editor {
-  id?: number;
+  id_editor?: number;
   nombres: string;
   apellidos: string;
   correo: string;

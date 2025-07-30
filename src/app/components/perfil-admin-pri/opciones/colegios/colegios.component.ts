@@ -354,7 +354,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       distrito: colegio.distrito,
       nivelesEducativos: colegio.nivelesEducativos,
       turnos: colegio.turnos,
-      aforoMaximo: colegio.aforoMaximo,
+      aforoMaximo: colegio.poblacion,
       fechaFundacion: colegio.fechaFundacion,
       estado: colegio.estado
     });
@@ -421,7 +421,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
           <p><strong>Ubicación:</strong> ${colegio.distrito}, ${colegio.provincia}, ${colegio.departamento}</p>
           <p><strong>Niveles:</strong> ${colegio.nivelesEducativos.join(', ')}</p>
           <p><strong>Turnos:</strong> ${colegio.turnos.join(', ')}</p>
-          <p><strong>Población:</strong> ${colegio.aforoMaximo}</p>
+          <p><strong>Población:</strong> ${colegio.poblacion}</p>
           <p><strong>Fecha de Fundación:</strong> ${new Date(colegio.fechaFundacion).toLocaleDateString('es-ES')}</p>
           <p><strong>Estado:</strong> ${colegio.estado ? 'Activo' : 'Inactivo'}</p>
         </div>
@@ -449,9 +449,9 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.docentesService.getDocentes({ id_colegio, limit: 100 }).subscribe({
+    this.docentesService.getDocentes().subscribe({
       next: (response) => {
-        const docentes = response.data;
+        const docentes = response;
         let html = '';
         if (docentes.length === 0) {
           html = '<p>No hay docentes registrados para este colegio.</p>';
@@ -472,7 +472,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
                   ${docentes.map((d: Docente & { nivel?: string; grado?: string; seccion?: string }, i: number) => `
                     <tr>
                       <td>${d.id_docente ?? (i+1)}</td>
-                      <td>${d.nombres} ${d.apellidos}</td>
+                      <td>${d.nombres} ${d.apellido}</td>
                       <td>${d.nivel ?? '-'}</td>
                       <td>${d.grado ?? '-'}</td>
                       <td>${d.seccion ?? '-'}</td>
@@ -725,7 +725,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         distrito: 'San Isidro',
         nivelesEducativos: ['Inicial', 'Primaria', 'Secundaria'],
         turnos: ['Mañana', 'Tarde'],
-        aforoMaximo: 1000,
+        poblacion: 1000,
         fechaFundacion: '2020-01-01',
         estado: true
       },
@@ -743,7 +743,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         distrito: 'Miraflores',
         nivelesEducativos: ['Primaria', 'Secundaria'],
         turnos: ['Mañana'],
-        aforoMaximo: 800,
+        poblacion: 800,
         fechaFundacion: '2015-03-15',
         estado: true
       }

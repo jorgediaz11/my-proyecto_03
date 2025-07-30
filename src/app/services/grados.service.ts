@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 // 🎯 Interfaces para tipado de Grados
 export interface Grado {
-  id?: number;
+  id_grado?: number;
   nombre: string; // 1°, 2°, 3°, 4°, 5°, 6°
   descripcion?: string;
   nivel: string; // Inicial, Primaria, Secundaria
@@ -45,7 +45,7 @@ export interface UpdateGradoDto {
 })
 export class GradosService {
 
-  private apiUrl = environment.apiBaseUrl + '/grados';
+  private apiUrl = environment.apiBaseUrl + '/grado';
 
   private http = inject(HttpClient);
 

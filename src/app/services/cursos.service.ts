@@ -55,7 +55,7 @@ export interface UpdateCursoDto {
 })
 export class CursosService {
   // API base URL Cursos
-  private apiUrl = environment.apiBaseUrl + '/curso';
+  private apiUrl = environment.apiBaseUrl + '/cursos';
 
   private http = inject(HttpClient);
 

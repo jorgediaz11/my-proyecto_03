@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface Perfil {
-  id_perfil: number;
+  id: number;
   nombre: string;
   descripcion: string;
   estado: boolean;

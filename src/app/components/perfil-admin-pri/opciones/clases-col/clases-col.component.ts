@@ -3,18 +3,22 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { ClasesColService, ClaseCol as ClaseColApi, CreateClaseColDto, UpdateClaseColDto } from 'src/app/services/clases-col.service';
 
-// Interfaz para Clase
+
+// Interfaz local para visualización (puedes ajustarla si necesitas mostrar más campos)
 export interface ClaseCol {
-  id_clase?: number;
-  nombre: string;
-  grado: string;
-  seccion: string;
-  turno: string;
+  id_clases?: number;
   id_colegio: number;
-  departamento: string;
-  provincia: string;
-  distrito: string;
+  id_docente: number;
+  id_nivel: number;
+  id_grado: number;
+  id_seccion: number;
+  id_curso: number;
+  //nombre: string; // Agregado para evitar error de propiedad
+  //grado?: string; // Agregado para evitar error de propiedad
+  //seccion?: string; // Agregado para evitar error de propiedad
+  observaciones?: string | null;
   estado: boolean;
 }
 
@@ -56,6 +60,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   distritos: Distrito[] = [];
   private ubigeoService = inject(UbigeoService);
   private fb = inject(FormBuilder);
+  private clasesColService = inject(ClasesColService);
 
   // PROPIEDADES PARA EL TEMPLATE
   Math = Math;
@@ -78,7 +83,30 @@ export class ClasesColComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarDepartamentos();
-    // Aquí podrías cargar las clases si tienes un servicio
+    this.cargarClasesCol();
+  }
+
+  cargarClasesCol(): void {
+    this.loading = true;
+    this.clasesColService.getClasesCol().subscribe({
+      next: (data: ClaseColApi[]) => {
+        this.clases = data.map(item => ({
+          ...item,
+          //nombre: item.nombre ?? '', // Asegura que 'nombre' siempre esté presente
+          //grado: item.grado ?? '',
+          //seccion: item.seccion ?? '',
+          observaciones: item.observaciones ?? null,
+          estado: item.estado ?? true
+        }));
+        this.filteredClases = [...this.clases];
+        this.updatePaginatedClases();
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.handleError('Error al cargar clases');
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -133,7 +161,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
 
   // TRACKBY FUNCTION
   trackByClaseId(index: number, clase: ClaseCol): number {
-    return clase.id_clase || index;
+    return clase.id_clases || index;
   }
 
   // FECHA EN ESPAÑOL
@@ -148,10 +176,10 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   // INICIALIZACIÓN DEL FORMULARIO
   private initForm(): void {
     this.claseForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      grado: ['', [Validators.required]],
-      seccion: ['', [Validators.required]],
-      turno: ['', [Validators.required]],
+      //nombre: ['', [Validators.required, Validators.minLength(3)]],
+      //grado: ['', [Validators.required]],
+      //seccion: ['', [Validators.required]],
+      //turno: ['', [Validators.required]],
       id_colegio: [null, [Validators.required]],
       departamento: ['', [Validators.required]],
       provincia: ['', [Validators.required]],
@@ -163,17 +191,18 @@ export class ClasesColComponent implements OnInit, OnDestroy {
 
   // FILTRADO DE CLASES
   filterClases(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredClases = [...this.clases];
-    } else {
-      this.filteredClases = this.clases.filter(clase =>
-        clase.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        clase.grado.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        clase.seccion.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-    this.currentPage = 1;
-    this.updatePaginatedClases();
+    // if (!this.searchTerm.trim()) {
+    //   this.filteredClases = [...this.clases];
+    // } else {
+    //   this.filteredClases = this.clases.filter(clase =>
+    //     // Asegúrate de que las propiedades existen en tu modelo o ajusta según corresponda
+    //     (clase as any).nombre?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+    //     (clase as any).grado?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+    //     (clase as any).seccion?.toLowerCase().includes(this.searchTerm.toLowerCase())
+    //   );
+    // }
+    // this.currentPage = 1;
+    // this.updatePaginatedClases();
   }
 
   // ACTUALIZACIÓN DE PAGINACIÓN
@@ -216,56 +245,72 @@ export class ClasesColComponent implements OnInit, OnDestroy {
       return;
     }
     this.loading = true;
+    const formData = this.claseForm.value;
     if (this.isEditing && this.editingClaseId) {
       // Actualizar clase existente
-      // Aquí iría la lógica de actualización
-      this.loading = false;
-      this.handleSuccess('Clase actualizada exitosamente');
-      this.cancelEdit();
+      const updateData: UpdateClaseColDto = { ...formData };
+      this.clasesColService.actualizarClaseCol(this.editingClaseId, updateData).subscribe({
+        next: () => {
+          this.handleSuccess('Clase actualizada exitosamente');
+          this.cargarClasesCol();
+          this.cancelEdit();
+        },
+        error: () => {
+          this.loading = false;
+          this.handleError('Error al actualizar la clase');
+        }
+      });
     } else {
       // Crear nueva clase
-      // Aquí iría la lógica de creación
-      this.loading = false;
-      this.handleSuccess('Clase creada exitosamente');
-      this.cancelEdit();
+      const createData: CreateClaseColDto = { ...formData };
+      this.clasesColService.crearClaseCol(createData).subscribe({
+        next: () => {
+          this.handleSuccess('Clase creada exitosamente');
+          this.cargarClasesCol();
+          this.cancelEdit();
+        },
+        error: () => {
+          this.loading = false;
+          this.handleError('Error al crear la clase');
+        }
+      });
     }
   }
 
   // EDITAR CLASE
-  editClase(id_clase: number): void {
-    const clase = this.clases.find(c => c.id_clase === id_clase);
+  editClase(id_clases: number): void {
+    const clase = this.clases.find(c => c.id_clases === id_clases);
     if (!clase) {
       this.handleError('Clase no encontrada');
       return;
     }
     this.isEditing = true;
-    this.editingClaseId = id_clase;
+    this.editingClaseId = id_clases;
     this.activeTab = 'nuevo';
     this.claseForm.patchValue(clase);
   }
 
   // ELIMINAR CLASE
-  deleteClase(id_clase: number): void {
-    const clase = this.clases.find(c => c.id_clase === id_clase);
-    if (!clase) {
-      this.handleError('Clase no encontrada');
-      return;
-    }
-    // Aquí iría la lógica de eliminación
-    this.handleSuccess('Clase eliminada exitosamente');
-    // Eliminar de la lista local
-    this.clases = this.clases.filter(c => c.id_clase !== id_clase);
-    this.filterClases();
+  deleteClase(id_clases: number): void {
+    if (!confirm('¿Estás seguro de que deseas eliminar esta clase?')) return;
+    this.clasesColService.eliminarClaseCol(id_clases).subscribe({
+      next: () => {
+        this.handleSuccess('Clase eliminada exitosamente');
+        this.cargarClasesCol();
+      },
+      error: () => {
+        this.handleError('Error al eliminar la clase');
+      }
+    });
   }
 
   // VER DETALLES DE LA CLASE
-  viewClase(id_clase: number): void {
-    const clase = this.clases.find(c => c.id_clase === id_clase);
+  viewClase(id_clases: number): void {
+    const clase = this.clases.find(c => c.id_clases === id_clases);
     if (!clase) {
       this.handleError('Clase no encontrada');
       return;
     }
-    // Aquí podrías mostrar un modal con los detalles
     alert(`Detalles de la clase: ${JSON.stringify(clase, null, 2)}`);
   }
 
@@ -335,5 +380,10 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   // MÉTODOS DE VISTA (NO IMPLEMENTADOS)
   viewDocentes(id_clase: number): void {
     alert('Ver docentes de la clase: ' + id_clase);
+  }
+
+  // MÉTODO DE FILTRO DE COLEGIOS (placeholder, sin lógica)
+  filterDocentes(): void {
+    // Aquí se implementará el filtrado de docentes por colegio si se requiere
   }
 }

@@ -4,73 +4,72 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+// Interfaz para docente según el endpoint proporcionado
+export interface EstudianteDirecto {
+  id_docente: number;
+  nombres: string;
+  apellido: string;
+  correo: string;
+  estado: boolean;
+  id_perfil: number;
+  id_colegio: number;
+  telefono?: string | null;
+  direccion?: string | null;
+  fecha_nacimiento?: string | null;
+  docente_titulo?: string | null;
+  foto_perfil?: string | null;
+  ultimo_acceso?: string | null;
+}
+// Interfaz de respuesta similar a ColegioResponse
+export interface EstudianteResponse {
+  estudiantes: Estudiante[];
+  total: number;
+  message: string;
+}
 // 🎓 Interfaces para tipado completo
 export interface Estudiante {
-  id?: number;
-  nombres: string;
-  apellidos: string;
-  correo: string;
-  telefono?: string;
-  grado?: string;
-  seccion?: string;
-  documento?: string;
-  fechaNacimiento?: string;
-  direccion?: string;
-  id_colegio?: number;
-  estado?: boolean;
-  fechaIngreso?: string;
-  nombrePadre?: string;
-  nombreMadre?: string;
-  telefonoPadre?: string;
-  telefonoMadre?: string;
-  correoFamiliar?: string;
-  numeroMatricula?: string;
-  promedio?: number;
-  asistencia?: number;
-  createdAt?: string;
-  updatedAt?: string;
+id_estudiante: number;
+nombres: string;
+apellido: string;
+correo: string;
+estado: boolean;
+id_perfil: number;
+id_colegio: number;
+telefono: string | null;
+direccion: string | null;
+fecha_nacimiento: string;
+foto_perfil: string | null;
+ultimo_acceso: string | null;
 }
 
 export interface CreateEstudianteDto {
-  nombres: string;
-  apellidos: string;
-  correo: string;
-  telefono?: string;
-  grado?: string;
-  seccion?: string;
-  documento?: string;
-  fechaNacimiento?: string;
-  direccion?: string;
-  id_colegio: number;
-  estado?: boolean;
-  fechaIngreso?: string;
-  nombrePadre?: string;
-  nombreMadre?: string;
-  telefonoPadre?: string;
-  telefonoMadre?: string;
-  correoFamiliar?: string;
-  numeroMatricula?: string;
+id_estudiante?: number;
+nombres: string;
+apellido: string;
+correo: string;
+estado: boolean;
+id_perfil: number;
+id_colegio: number;
+telefono?: string | null;
+direccion?: string | null;
+fecha_nacimiento: string;
+foto_perfil?: string | null;
+ultimo_acceso?: string | null;
 }
 
 export interface UpdateEstudianteDto {
-  nombres?: string;
-  apellidos?: string;
-  correo?: string;
-  telefono?: string;
-  grado?: string;
-  seccion?: string;
-  documento?: string;
-  fechaNacimiento?: string;
-  direccion?: string;
-  id_colegio?: number;
-  estado?: boolean;
-  fechaIngreso?: string;
-  nombrePadre?: string;
-  nombreMadre?: string;
-  telefonoPadre?: string;
-  telefonoMadre?: string;
-  correoFamiliar?: string;
-  numeroMatricula?: string;
+id_estudiante?: number;
+nombres?: string;
+apellido?: string;
+correo?: string;
+estado?: boolean;
+id_perfil?: number;
+id_colegio?: number;
+telefono?: string | null;
+direccion?: string | null;
+fecha_nacimiento?: string;
+foto_perfil?: string | null;
+ultimo_acceso?: string | null;
 }
 
 export interface PaginatedEstudiantesResponse {
@@ -110,38 +109,24 @@ export interface EstadisticasEstudiantes {
   providedIn: 'root'
 })
 export class EstudiantesService {
-  private readonly apiUrl = environment.apiBaseUrl + '/estudiantes';
-  private http = inject(HttpClient);
+  getEstudiantesDirecto() {
+    throw new Error('Method not implemented.');
+  }
 
   /**
    * 📋 Obtener todos los estudiantes con paginación y filtros
    */
-  getEstudiantes(filters: EstudianteFilters = {}): Observable<PaginatedEstudiantesResponse> {
-    let params = new HttpParams();
-
-    // Aplicar filtros
-    if (filters.nombres) params = params.set('nombres', filters.nombres);
-    if (filters.apellidos) params = params.set('apellidos', filters.apellidos);
-    if (filters.correo) params = params.set('correo', filters.correo);
-    if (filters.grado) params = params.set('grado', filters.grado);
-    if (filters.seccion) params = params.set('seccion', filters.seccion);
-    if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
-    if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
-
-    // Paginación
-    params = params.set('page', (filters.page || 1).toString());
-    params = params.set('limit', (filters.limit || 10).toString());
-
-    // Ordenamiento
-    if (filters.sortBy) params = params.set('sortBy', filters.sortBy);
-    if (filters.sortOrder) params = params.set('sortOrder', filters.sortOrder);
-
-    return this.http.get<PaginatedEstudiantesResponse>(this.apiUrl, { params })
+  getEstudiantes(): Observable<Estudiante[]> {
+    console.log('DocentesService.getDocentes llamado');
+        return this.http.get<Estudiante[]>(this.apiUrl)
       .pipe(
         retry(2),
         catchError(this.handleError)
       );
   }
+
+  private readonly apiUrl = environment.apiBaseUrl + '/estudiantes';
+  private http = inject(HttpClient);
 
   /**
    * 👤 Obtener estudiante por ID
@@ -274,13 +259,10 @@ export class EstudiantesService {
     if ('nombres' in estudiante && estudiante.nombres && estudiante.nombres.trim().length < 2) {
       return false;
     }
-    if ('apellidos' in estudiante && estudiante.apellidos && estudiante.apellidos.trim().length < 2) {
+    if ('apellidos' in estudiante && estudiante.apellido && estudiante.apellido.trim().length < 2) {
       return false;
     }
     if ('correo' in estudiante && estudiante.correo && !this.isValidEmail(estudiante.correo)) {
-      return false;
-    }
-    if ('correoFamiliar' in estudiante && estudiante.correoFamiliar && !this.isValidEmail(estudiante.correoFamiliar)) {
       return false;
     }
     return true;

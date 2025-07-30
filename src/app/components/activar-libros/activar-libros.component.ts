@@ -20,10 +20,10 @@ export class ActivarLibrosComponent {
   }
 
   activarLibro() {
-    // Simulación de activación de hasta 3 códigos
+    // Simulación de activación de hasta 4 códigos
     alert('Código enviado: ' + this.codigoLibro);
     this.codigoLibro = '';
-    if (this.codigosActivados < 3) {
+    if (this.codigosActivados < 4) {
       this.codigosActivados++;
     }
   }

@@ -2,23 +2,20 @@
 
 <!-- Filtros combinables -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-  <select class="border rounded px-3 py-2">
-    <option selected disabled>Departamento</option>
-    <option>Lima</option>
-    <option>Arequipa</option>
-    <option>...</option>
+  <!-- Departamento -->
+  <select class="border rounded px-3 py-2" [(ngModel)]="filtroDepartamento" (change)="onDepartamentoChange()">
+    <option value="" disabled selected>Departamento</option>
+    <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
   </select>
-  <select class="border rounded px-3 py-2">
-    <option selected disabled>Provincia</option>
-    <option>Lima</option>
-    <option>Huaral</option>
-    <option>...</option>
+  <!-- Provincia -->
+  <select class="border rounded px-3 py-2" [(ngModel)]="filtroProvincia" (change)="onProvinciaChange()" [disabled]="!provincias.length">
+    <option value="" disabled selected>Provincia</option>
+    <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
   </select>
-  <select class="border rounded px-3 py-2">
-    <option selected disabled>Distrito</option>
-    <option>Ate</option>
-    <option>San Juan de Lurigancho</option>
-    <option>...</option>
+  <!-- Distrito -->
+  <select class="border rounded px-3 py-2" [(ngModel)]="filtroDistrito" [disabled]="!distritos.length">
+    <option value="" disabled selected>Distrito</option>
+    <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
   </select>
   <!-- <select class="border rounded px-3 py-2">
     <option selected disabled>Zona</option>

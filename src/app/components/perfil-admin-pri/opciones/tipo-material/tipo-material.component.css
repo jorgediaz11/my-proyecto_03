@@ -1,0 +1,20 @@
+.perfil-container {
+  padding: 1rem;
+}
+.tab-active {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: #f0fdf4;
+}
+.tab-inactive {
+  border-color: transparent;
+  color: #555;
+  background: #fff;
+}
+.tab-panel {
+  animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

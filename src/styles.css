@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos para el contenedor principal 002 */
+/* Estilos para el contenedor principal 002b */
 app-root {
   width: 100%;  /* Ancho del Contenedor Principal */
   /*max-width: 1200px;  /*Ancho del Contenedor Principal*/

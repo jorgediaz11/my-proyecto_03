@@ -12,10 +12,10 @@ export interface LoginResponse {
     username: string;
     nombre: string;
     apellido: string;
-    correo: string;        // ← Servidor usa 'correo'
-    id_perfil: number;        // ← Servidor usa 'id_perfil'
-    id_colegio: number;    // ← Servidor usa 'id_colegio'
-    estado: boolean;      // ← Servidor usa boolean
+    correo: string;     // ← Servidor usa 'correo'
+    id_perfil: number;  // ← Servidor usa 'id_perfil'
+    id_colegio: number; // ← Servidor usa 'id_colegio'
+    estado: boolean;    // ← Servidor usa boolean
   };
   message?: string;
 }

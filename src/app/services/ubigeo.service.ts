@@ -12,7 +12,7 @@ export interface Provincia {
   provincia: string;
 }
 export interface Distrito {
-  id_ubigeo: string;
+  id_ubigeo: string;  // Identificador único del distrito
   distrito: string;
 }
 

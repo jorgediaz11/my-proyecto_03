@@ -1,0 +1,7 @@
+/* Estilos básicos para el componente de unidades */
+:host {
+  display: block;
+}
+h2 {
+  color: #2563eb;
+}

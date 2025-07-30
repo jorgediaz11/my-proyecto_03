@@ -38,7 +38,13 @@ import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/p
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
 import { ClasesColComponent } from './components/perfil-admin-pri/opciones/clases-col/clases-col.component';
-
+import { NivelesComponent } from './components/perfil-admin-pri/opciones/niveles/niveles.component';
+import { GradosComponent } from './components/perfil-admin-pri/opciones/grados/grados.component';
+import { SeccionesComponent } from './components/perfil-admin-pri/opciones/secciones/secciones.component';
+import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupofam/grupofam.component';
+import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
+import { MaterialComponent } from './components/perfil-admin-pri/opciones/material/material.component';
+import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -78,10 +84,17 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     DocentesComponent,
     EstudiantesComponent,
     ClasesColComponent,
+    GrupofamComponent,
+    UnidadesComponent,
     ReportesComponent,
     AuditoriaComponent,
     PerfilComponent,
+    MaterialComponent,
+    TipoMaterialComponent,
     CursosComponent,
+    NivelesComponent,
+    GradosComponent,
+    SeccionesComponent,
     AcademicoComponent,
     PerfilAdminSecComponent,
     PerfilAdminSecMuroComponent,

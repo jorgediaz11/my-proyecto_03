@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class LoadingService {
   private loadingCountSubject = new BehaviorSubject<number>(0);
-  private loadingCount = 0;
+  private loadingCount = 0; // ✅ Contador de requests activos
 
   // ✅ Observable para que los componentes puedan suscribirse
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);

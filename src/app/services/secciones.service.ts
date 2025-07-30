@@ -1,50 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-// 📝 Interfaces para tipado de Secciones
+// Modelo simple alineado al backend
 export interface Seccion {
-  id?: number;
-  nombre: string; // A, B, C, D, Única
-  descripcion?: string;
-  grado: string; // 1°, 2°, 3°, etc.
-  idGrado?: number;
-  nivel: string; // Inicial, Primaria, Secundaria
-  capacidadMaxima?: number;
-  estudiantesActuales?: number;
-  aula?: string; // ubicación física
-  turno?: string; // mañana, tarde
-  estado: boolean;
-  id_colegio?: number;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
-}
-
-export interface CreateSeccionDto {
+  id_seccion: number;
   nombre: string;
-  descripcion?: string;
-  grado: string;
-  idGrado?: number;
-  nivel: string;
-  capacidadMaxima?: number;
-  aula?: string;
-  turno?: string;
   estado: boolean;
-  id_colegio?: number;
-}
-
-export interface UpdateSeccionDto {
-  nombre?: string;
-  descripcion?: string;
-  grado?: string;
-  idGrado?: number;
-  nivel?: string;
-  capacidadMaxima?: number;
-  aula?: string;
-  turno?: string;
-  estado?: boolean;
-  id_colegio?: number;
 }
 
 @Injectable({
@@ -52,135 +15,29 @@ export interface UpdateSeccionDto {
 })
 export class SeccionesService {
 
-  private apiUrl = environment.apiBaseUrl + '/secciones';
-
+  private apiUrl = environment.apiBaseUrl + '/seccion';
   private http = inject(HttpClient);
 
-  // Obtener headers con JWT token
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('access_token');
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
-  // GET /secciones - Listar todas las secciones
+  // GET /seccion - Listar todas las secciones
   getSecciones(): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(this.apiUrl, {
-      headers: this.getAuthHeaders()
-    });
+    return this.http.get<Seccion[]>(this.apiUrl);
   }
 
-  // GET /secciones/:id - Obtener sección por ID
-  getSeccionById(id: number): Observable<Seccion> {
-    return this.http.get<Seccion>(`${this.apiUrl}/${id}`, {
-      headers: this.getAuthHeaders()
-    });
+  // GET /seccion/:id - Obtener sección por ID
+  getSeccionById(id_seccion: number): Observable<Seccion> {
+    return this.http.get<Seccion>(`${this.apiUrl}/${id_seccion}`);
   }
 
-  // GET /secciones/activas - Obtener solo secciones activas
-  getSeccionesActivas(): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/activas`, {
-      headers: this.getAuthHeaders()
-    });
+  // POST /seccion - Crear nueva sección
+  crearSeccion(seccion: { nombre: string; estado: boolean }): Observable<Seccion> {
+    return this.http.post<Seccion>(this.apiUrl, seccion);
   }
 
-  // GET /secciones/grado/:grado - Obtener secciones por grado
-  getSeccionesPorGrado(grado: string): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/grado/${grado}`, {
-      headers: this.getAuthHeaders()
-    });
+  actualizarSeccion(id_seccion: number, seccion: { nombre: string; estado: boolean }): Observable<Seccion> {
+    return this.http.put<Seccion>(`${this.apiUrl}/${id_seccion}`, seccion);
   }
 
-  // GET /secciones/grado-id/:idGrado - Obtener secciones por ID de grado
-  getSeccionesPorIdGrado(idGrado: number): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/grado-id/${idGrado}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // GET /secciones/nivel/:nivel - Obtener secciones por nivel
-  getSeccionesPorNivel(nivel: string): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/nivel/${nivel}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // GET /secciones/colegio/:id_colegio - Obtener secciones por colegio
-  getSeccionesPorColegio(id_colegio: number): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/colegio/${id_colegio}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // GET /secciones/turno/:turno - Obtener secciones por turno
-  getSeccionesPorTurno(turno: string): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/turno/${turno}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // GET /secciones/disponibles - Obtener secciones con cupos disponibles
-  getSeccionesDisponibles(): Observable<Seccion[]> {
-    return this.http.get<Seccion[]>(`${this.apiUrl}/disponibles`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // POST /secciones - Crear nueva sección
-  crearSeccion(seccion: CreateSeccionDto): Observable<Seccion> {
-    return this.http.post<Seccion>(this.apiUrl, seccion, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // PUT /secciones/:id - Actualizar sección
-  actualizarSeccion(id: number, seccion: UpdateSeccionDto): Observable<Seccion> {
-    return this.http.put<Seccion>(`${this.apiUrl}/${id}`, seccion, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // DELETE /secciones/:id - Eliminar sección
-  eliminarSeccion(id: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // PATCH /secciones/:id/estado - Cambiar estado de la sección
-  cambiarEstado(id: number, estado: boolean): Observable<Seccion> {
-    return this.http.patch<Seccion>(`${this.apiUrl}/${id}/estado`, { estado }, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // PATCH /secciones/:id/capacidad - Actualizar capacidad de la sección
-  actualizarCapacidad(id: number, capacidadMaxima: number): Observable<Seccion> {
-    return this.http.patch<Seccion>(`${this.apiUrl}/${id}/capacidad`, { capacidadMaxima }, {
-      headers: this.getAuthHeaders()
-    });
-  }
-
-  // GET /secciones/estadisticas/:id_colegio - Obtener estadísticas de secciones
-  getEstadisticasSecciones(id_colegio: number): Observable<{
-    totalSecciones: number;
-    seccionesPorNivel: Record<string, number>;
-    seccionesPorGrado: Record<string, number>;
-    capacidadTotal: number;
-    estudiantesTotal: number;
-    porcentajeOcupacion: number;
-  }> {
-    return this.http.get<{
-      totalSecciones: number;
-      seccionesPorNivel: Record<string, number>;
-      seccionesPorGrado: Record<string, number>;
-      capacidadTotal: number;
-      estudiantesTotal: number;
-      porcentajeOcupacion: number;
-    }>(`${this.apiUrl}/estadisticas/${id_colegio}`, {
-      headers: this.getAuthHeaders()
-    });
+  eliminarSeccion(id_seccion: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id_seccion}`);
   }
 }

@@ -576,9 +576,9 @@
                     size="3"
                     [class.border-red-300]="colegioForm.get('niveles')?.invalid && colegioForm.get('niveles')?.touched"
                   >
-                    <option value="Inicial">Inicial</option>
-                    <option value="Primaria">Primaria</option>
-                    <option value="Secundaria">Secundaria</option>
+                    <option value="01">Inicial</option>
+                    <option value="02">Primaria</option>
+                    <option value="03">Secundaria</option>
                   </select>
                   <p class="mt-1 text-xs text-gray-500">Ctrl+Click para seleccionar varios</p>
                   <div *ngIf="colegioForm.get('niveles')?.invalid && colegioForm.get('niveles')?.touched" class="mt-1 text-sm text-red-600">
@@ -596,9 +596,9 @@
                     size="3"
                     [class.border-red-300]="colegioForm.get('turnos')?.invalid && colegioForm.get('turnos')?.touched"
                   >
-                    <option value="Mañana">Mañana</option>
-                    <option value="Tarde">Tarde</option>
-                    <option value="Noche">Noche</option>
+                    <option value="01">Mañana</option>
+                    <option value="02">Tarde</option>
+                    <option value="03">Noche</option>
                   </select>
                   <p class="mt-1 text-xs text-gray-500">Ctrl+Click para seleccionar varios</p>
                   <div *ngIf="colegioForm.get('turnos')?.invalid && colegioForm.get('turnos')?.touched" class="mt-1 text-sm text-red-600">

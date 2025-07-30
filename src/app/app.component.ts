@@ -17,5 +17,5 @@ export class AppComponent {
   public loading$ = this.loadingService.loading$;
 
   // Lógica específica del componente
-  title = 'My Proyecto 02: Back + Front';             // Título de la aplicación
+  title = 'My Proyecto 02: Back + Front'; // Título de la aplicación
 }

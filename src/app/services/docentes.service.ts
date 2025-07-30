@@ -4,11 +4,34 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError, retry } from 'rxjs/operators';
 
+// Interfaz para docente según el endpoint proporcionado
+export interface DocenteDirecto {
+  id_docente: number;
+  nombres: string;
+  apellido: string;
+  correo: string;
+  estado: boolean;
+  id_perfil: number;
+  id_colegio: number;
+  telefono?: string | null;
+  direccion?: string | null;
+  fecha_nacimiento?: string | null;
+  docente_titulo?: string | null;
+  foto_perfil?: string | null;
+  ultimo_acceso?: string | null;
+}
+// Interfaz de respuesta similar a ColegioResponse
+export interface DocenteResponse {
+  docentes: Docente[];
+  total: number;
+  message: string;
+}
+
 // 📚 Interfaces para tipado completo
 export interface Docente {
   id_docente?: number;
   nombres: string;
-  apellidos: string;
+  apellido: string;
   correo: string;
   telefono?: string;
   especialidad?: string;
@@ -28,7 +51,7 @@ export interface Docente {
 
 export interface CreateDocenteDto {
   nombres: string;
-  apellidos: string;
+  apellido: string;
   correo: string;
   telefono?: string;
   especialidad?: string;
@@ -46,7 +69,7 @@ export interface CreateDocenteDto {
 
 export interface UpdateDocenteDto {
   nombres?: string;
-  apellidos?: string;
+  apellido?: string;
   correo?: string;
   telefono?: string;
   especialidad?: string;
@@ -72,7 +95,7 @@ export interface PaginatedDocentesResponse {
 
 export interface DocenteFilters {
   nombres?: string;
-  apellidos?: string;
+  apellido?: string;
   correo?: string;
   especialidad?: string;
   id_colegio?: number;
@@ -95,37 +118,23 @@ export interface EstadisticasDocentes {
   providedIn: 'root'
 })
 export class DocentesService {
-  private readonly apiUrl = environment.apiBaseUrl + '/docentes';
-  private http = inject(HttpClient);
-
+  getDocentesDirecto() {
+    throw new Error('Method not implemented.');
+  }
   /**
-   * 📋 Obtener todos los docentes con paginación y filtros
+   * 📋 Obtener todos los docentes (patrón igual a ColegiosService)
    */
-  getDocentes(filters: DocenteFilters = {}): Observable<PaginatedDocentesResponse> {
-    let params = new HttpParams();
-
-    // Aplicar filtros
-    if (filters.nombres) params = params.set('nombres', filters.nombres);
-    if (filters.apellidos) params = params.set('apellidos', filters.apellidos);
-    if (filters.correo) params = params.set('correo', filters.correo);
-    if (filters.especialidad) params = params.set('especialidad', filters.especialidad);
-    if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
-    if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());
-
-    // Paginación
-    params = params.set('page', (filters.page || 1).toString());
-    params = params.set('limit', (filters.limit || 10).toString());
-
-    // Ordenamiento
-    if (filters.sortBy) params = params.set('sortBy', filters.sortBy);
-    if (filters.sortOrder) params = params.set('sortOrder', filters.sortOrder);
-
-    return this.http.get<PaginatedDocentesResponse>(this.apiUrl, { params })
+  getDocentes(): Observable<Docente[]> {
+    console.log('DocentesService.getDocentes llamado');
+    return this.http.get<Docente[]>(this.apiUrl)
       .pipe(
         retry(2),
         catchError(this.handleError)
       );
   }
+  private readonly apiUrl = environment.apiBaseUrl + '/docentes';
+  private http = inject(HttpClient);
+
 
   /**
    * 👤 Obtener docente por ID
@@ -224,7 +233,7 @@ export class DocentesService {
     if ('nombres' in docente && docente.nombres && docente.nombres.trim().length < 2) {
       return false;
     }
-    if ('apellidos' in docente && docente.apellidos && docente.apellidos.trim().length < 2) {
+    if ('apellido' in docente && docente.apellido && docente.apellido.trim().length < 2) {
       return false;
     }
     if ('correo' in docente && docente.correo && !this.isValidEmail(docente.correo)) {
