@@ -1,32 +1,36 @@
-<section class="bg-gray-50 dark:bg-gray-600 min-h-screen flex flex-col justify-center items-center">
+<section class="registro-container min-h-screen flex flex-col justify-center items-center bg-[#f0f9ff]">
 
   <!-- Capa central con 3 pisos -->
-  <div class="w-full max-w-4xl flex flex-col items-center">
+  <div class="w-full max-w-7xl flex flex-col items-center relative">
 
-    <!-- Piso 1: Franja superior (mismo ancho que el piso 3) -->
-    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-t-lg flex items-center justify-end pr-4 text-white font-bold">
-      Eureka LMS
-    </div> <!-- ✅ cierre agregado aquí -->
+    <!-- Contenido principal: solo el formulario, mismo estilo que registro -->
+    <div class="registro-card">
+      <div class="registro-header">
+        <div class="logo-container">
+          <img src="assets/images/login-logo.png"
+               alt="Logo del Sistema Educativo"
+               class="logo-icon"
+               loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+          <i class="fas fa-graduation-cap logo-icon"
+             aria-hidden="true"
+             style="display: none;"></i>
+        </div>
+        <h1 class="registro-title">Crear nueva cuenta</h1>
+        <p class="registro-subtitle">Regístrate en la Plataforma ERK</p>
+      </div>
 
-    <!-- Piso 2: Contenido principal (login, línea, registro) -->
-    <div class="w-full bg-white flex flex-col md:flex-row shadow-lg">
-      <!-- Login -->
-      <div class="w-full md:w-1/2 flex flex-col justify-center p-8">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-32 h-auto min-w-[120px] min-h-[40px]" src="assets/images/login-logo.png" alt="logo">
-        </a>
-        <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">Crear nueva cuenta</h2>
 
         <!-- Formumario de Registro -->
         <form (ngSubmit)="onSubmit()" [formGroup]="registroForm">
           <!-- Selección de perfil en la misma línea -->
           <div class="flex gap-4">
             <div class="form-group w-full">
-              <label for="id_perfil">Perfil:</label>
+              <label for="id_perfil" class="form-label">Perfil:</label>
               <select
                 id="id_perfil"
                 formControlName="id_perfil"
-                class="form-select"
+                class="form-input"
                 [class.error]="getFieldError('id_perfil')"
               >
                 <option value="2">Estudiante</option>
@@ -40,12 +44,13 @@
           <!-- Campos dinámicos según perfil -->
           <ng-container *ngIf="registroForm.get('id_perfil')?.value === '2'; else docenteFields">
             <div class="form-group">
-              <label for="nrodni">Nro DNI:</label>
+              <label for="nrodni" class="form-label">Nro DNI:</label>
               <input
                 id="nrodni"
                 formControlName="nrodni"
                 type="text"
                 placeholder="Número de DNI"
+                class="form-input"
                 [class.error]="getFieldError('nrodni')"
               />
               <p *ngIf="getFieldError('nrodni')" class="error-message">
@@ -53,12 +58,13 @@
               </p>
             </div>
             <div class="form-group">
-              <label for="correo">Correo Electrónico:</label>
+              <label for="correo" class="form-label">Correo Electrónico:</label>
               <input
                 id="correo"
                 formControlName="correo"
                 type="email"
                 placeholder="Ingresa tu correo"
+                class="form-input"
                 [class.error]="getFieldError('correo')"
               />
               <p *ngIf="getFieldError('correo')" class="error-message">
@@ -68,12 +74,13 @@
           </ng-container>
           <ng-template #docenteFields>
             <div class="form-group">
-              <label for="correo">Correo Electrónico:</label>
+              <label for="correo" class="form-label">Correo Electrónico:</label>
               <input
                 id="correo"
                 formControlName="correo"
                 type="email"
                 placeholder="Ingresa tu correo"
+                class="form-input"
                 [class.error]="getFieldError('correo')"
               />
               <p *ngIf="getFieldError('correo')" class="error-message">
@@ -81,12 +88,13 @@
               </p>
             </div>
             <div class="form-group">
-              <label for="nrodni">Nro DNI:</label>
+              <label for="nrodni" class="form-label">Nro DNI:</label>
               <input
                 id="nrodni"
                 formControlName="nrodni"
                 type="text"
                 placeholder="Número de DNI"
+                class="form-input"
                 [class.error]="getFieldError('nrodni')"
               />
               <p *ngIf="getFieldError('nrodni')" class="error-message">
@@ -99,12 +107,13 @@
           <!-- Nombres y Apellidos en la misma línea -->
           <div class="flex gap-4">
             <div class="form-group w-1/2">
-              <label for="nombres">Nombres:</label>
+              <label for="nombres" class="form-label">Nombres:</label>
               <input
                 id="nombres"
                 formControlName="nombres"
                 type="text"
                 placeholder="Ingresar Nombres"
+                class="form-input"
                 [class.error]="getFieldError('nombres')"
               />
               <p *ngIf="getFieldError('nombres')" class="error-message">
@@ -112,12 +121,13 @@
               </p>
             </div>
             <div class="form-group w-1/2">
-              <label for="apellidos">Apellidos:</label>
+              <label for="apellidos" class="form-label">Apellidos:</label>
               <input
                 id="apellidos"
                 formControlName="apellidos"
                 type="text"
                 placeholder="Ingresar Apellidos"
+                class="form-input"
                 [class.error]="getFieldError('apellidos')"
               />
               <p *ngIf="getFieldError('apellidos')" class="error-message">
@@ -127,12 +137,13 @@
           </div>
 
           <div class="form-group">
-            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
             <input
               id="fecha_nacimiento"
               formControlName="fecha_nacimiento"
               type="date"
               placeholder="Fecha de nacimiento"
+              class="form-input"
               [class.error]="getFieldError('fecha_nacimiento')"
             />
             <p *ngIf="getFieldError('fecha_nacimiento')" class="error-message">
@@ -140,24 +151,17 @@
             </p>
           </div>
           <div class="form-group">
-            <label for="id_colegio">Colegio:</label>
+            <label for="id_colegio" class="form-label">Colegio:</label>
             <select
               id="id_colegio"
               formControlName="id_colegio"
-              class="form-select"
+              class="form-input"
               [class.error]="getFieldError('id_colegio')"
             >
               <option value="" disabled selected>Seleccione un colegio</option>
-              <option value="01">REY DAVID</option>
-              <option value="02">HIPOLITO UNANUE SEDE LAS BRISAS</option>
-              <option value="03">ANGLICANA SANTISIMA TRINIDAD</option>
-              <option value="04">BRITANIC SCHOOL</option>
-              <option value="05">CARITAS GRACIOSAS DE DIOS</option>
-              <option value="06">COLLAGE</option>
-              <option value="07">CRISTO JESUS</option>
-              <option value="08">CRISTO REY</option>
-              <option value="09">DEJALO SER</option>
-              <option value="10">EL MUNDO DE LOS GENIECITOS</option>
+              <option *ngFor="let colegio of colegios" [value]="colegio.id_colegio">
+                {{ colegio.nombre }}
+              </option>
             </select>
             <p *ngIf="getFieldError('id_colegio')" class="error-message">
               {{ getFieldError('id_colegio') }}
@@ -167,12 +171,13 @@
           <!-- Contraseñas en la misma línea -->
           <div class="flex gap-4">
             <div class="form-group w-1/2">
-              <label for="password">Ingrese Contraseña:</label>
+              <label for="password" class="form-label">Ingrese Contraseña:</label>
               <input
                 id="password"
                 formControlName="password"
                 type="password"
                 placeholder="Crea una contraseña"
+                class="form-input"
                 [class.error]="getFieldError('password')"
               />
               <p *ngIf="getFieldError('password')" class="error-message">
@@ -180,12 +185,13 @@
               </p>
             </div>
             <div class="form-group w-1/2">
-              <label for="password2">Repetir Contraseña:</label>
+              <label for="password2" class="form-label">Repetir Contraseña:</label>
               <input
                 id="password2"
                 formControlName="password2"
                 type="password"
                 placeholder="Confirma tu contraseña"
+                class="form-input"
                 [class.error]="getFieldError('password2')"
               />
               <p *ngIf="getFieldError('password2')" class="error-message">
@@ -221,40 +227,36 @@
         </form>
 
       </div>
-      <!-- Línea divisoria -->
-      <div class="w-px bg-gray-200 hidden md:block"></div>
 
-      <!-- Registro y accesos -->
-      <div class="w-full md:w-1/2 flex flex-col justify-between items-center p-8 bg-white gap-4">
-        <div class="flex flex-col items-center w-full">
-          <img src="assets/images/lead-perfiles.png" alt="Imagen referencial" class="mb-6 w-80 h-70 object-contain">
-          <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">¿Nuevo usuario?</h2>
-          <p class="mb-2 text-gray-600 text-center mb-4">Crea tu cuenta, se recomienda usar el correo del colegio como referencia.</p>
-          <div class="flex w-full gap-4">
-            <a routerLink="/opciones"
-              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-              Ir a Opciones
-            </a>
-            <a routerLink="/inicio"
-              class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
-              Ir a Inicio
-            </a>
-          </div>
-          <div class="w-full mt-2">
-            <a routerLink="/login"
-              class="block text-center px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow w-full">
-              Regresar al Login
-            </a>
-          </div>
+      <!-- Panel flotante de navegación y textos -->
+      <div *ngIf="showFloatingPanel" class="login-registro-floating-panel fixed bottom-8 right-8 bg-white/90 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 z-50">
+        <button (click)="showFloatingPanel=false" aria-label="Cerrar" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-xl font-bold focus:outline-none">&times;</button>
+        <h2 class="text-lg font-bold text-gray-700 mb-2">Accesos rápidos</h2>
+        <div class="flex w-full gap-4 mb-2">
+          <a routerLink="/opciones"
+            class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+            Ir a Opciones
+          </a>
+          <a routerLink="/inicio"
+            class="w-1/2 text-center inline-block px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow">
+            Ir a Inicio
+          </a>
+        </div>
+        <a routerLink="/login"
+          class="block text-center px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow w-full">
+          Regresar al Login
+        </a>
+        <div class="mt-4 text-center">
+          <p class="footer-text text-xs text-gray-500">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            Sistema de Gestión Educativa &copy; 2025
+          </p>
+          <p class="footer-subtitle text-xs text-gray-400">
+            Plataforma segura para la gestión educativa
+          </p>
         </div>
       </div>
 
-    </div>
-
-    <!-- Piso 3: Franja inferior (mismo ancho que el piso 1) -->
-    <div class="w-full h-6 md:h-10 bg-green-600 dark:bg-gray-800 rounded-b-lg flex items-center justify-center pr-4 text-white font-bold">
-      ©2025 Plataforma Educativa
-    </div>
-  </div>
+</div>
 
 </section>

@@ -8,8 +8,8 @@ export interface UsuarioAutenticado {
   nombre: string;
   apellido: string;
   correo: string;       // ← Normalizado a 'correo'
-  id_perfil: number;        // ← Normalizado a 'id_perfil'
-  id_colegio: number;    // ← Normalizado a 'id_colegio'
+  id_perfil: number;    // ← Normalizado a 'id_perfil'
+  id_colegio: number;   // ← Normalizado a 'id_colegio'
   estado: string;       // ← Normalizado a string
 }
 
@@ -277,15 +277,15 @@ export class UserStateService {
     console.log('📝 UserStateService: Recibiendo usuario del servidor...');
     console.log('🔄 Usuario del servidor:', usuarioServidor);
 
-    // Convertir al formato interno
+    // Convertir al formato interno, aceptando ambos nombres de campo
     const usuarioNormalizado: UsuarioAutenticado = {
       id_usuario: usuarioServidor.id_usuario,
       username: usuarioServidor.username,
-      nombre: usuarioServidor.nombre,
-      apellido: usuarioServidor.apellido,
-      correo: usuarioServidor.correo,           // email → correo
-      id_perfil: usuarioServidor.id_perfil,            // id_perfil → id_perfil
-      id_colegio: usuarioServidor.id_colegio,    // id_colegio → id_colegio
+      nombre: (usuarioServidor.nombre || (usuarioServidor as any).nombres || ''),
+      apellido: (usuarioServidor.apellido || (usuarioServidor as any).apellidos || ''),
+      correo: usuarioServidor.correo,         // email → correo
+      id_perfil: usuarioServidor.id_perfil,   // id_perfil → id_perfil
+      id_colegio: usuarioServidor.id_colegio, // id_colegio → id_colegio
       estado: usuarioServidor.estado ? 'activo' : 'inactivo' // boolean → string
     };
 

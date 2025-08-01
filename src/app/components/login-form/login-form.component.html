@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="login-container min-h-screen flex flex-col justify-center items-center bg-[#f0f9ff]">
   <!-- LOADING OVERLAY -->
   <div *ngIf="loading" class="loading-overlay" role="dialog" aria-modal="true" aria-labelledby="loading-title">
     <div class="loading-content">
@@ -40,7 +40,7 @@
       <div class="form-group">
         <label for="correo" class="form-label">
           <i class="fas fa-envelope label-icon" aria-hidden="true"></i>
-          Correo Electrónico / Usuario / Nro DNI / Celular
+          Correo Electrónico / Usuario / Nro DNI
           <span class="required-asterisk" aria-label="Campo requerido">*</span>
         </label>
 
@@ -240,7 +240,7 @@
       </div>
 
       <!-- 🧪 BOTÓN DE PRUEBA COMPLETA (TEMPORAL PARA DEBUGGING) -->
-      <div class="debug-section" style="margin-top: 20px; padding: 15px; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px;">
+      <!-- <div class="debug-section" style="margin-top: 20px; padding: 15px; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px;">
         <h4 style="color: #0369a1; margin: 0 0 10px 0; font-size: 14px;">
           🧪 Pruebas de Login
         </h4>
@@ -257,7 +257,7 @@
         <p style="margin: 8px 0 0 0; font-size: 12px; color: #64748b;">
           Ejecuta una prueba automatizada completa del flujo de login con credenciales reales
         </p>
-      </div>
+      </div> -->
     </form>
 
     <!-- TEMPLATE DE CARGA DE FORMULARIO -->
@@ -285,69 +285,4 @@
     </div>
   </div>
 
-  <!-- PANEL DE INFORMACIÓN LATERAL -->
-  <div class="info-panel" *ngIf="!loading" [@slideIn]>
-    <div class="info-content">
-      <div class="info-header">
-        <img src="assets/images/login-logo.png"
-             alt="Logo del Sistema"
-             class="info-icon"
-             loading="lazy"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-        <i class="fas fa-graduation-cap info-icon"
-           aria-hidden="true"
-           style="display: none;"></i>
-        <h3>Bienvenido al Sistema</h3>
-      </div>
-
-      <p class="info-description">
-        Plataforma integral de gestión educativa con herramientas avanzadas para la administración escolar.
-      </p>
-
-      <ul class="feature-list" role="list">
-        <li class="feature-item" role="listitem">
-          <i class="fas fa-users feature-icon" aria-hidden="true"></i>
-          <div class="feature-text">
-            <strong>Gestión de Usuarios</strong>
-            <span>Administra estudiantes, docentes y personal</span>
-          </div>
-        </li>
-        <li class="feature-item" role="listitem">
-          <i class="fas fa-school feature-icon" aria-hidden="true"></i>
-          <div class="feature-text">
-            <strong>Administración Escolar</strong>
-            <span>Control completo de la institución</span>
-          </div>
-        </li>
-        <li class="feature-item" role="listitem">
-          <i class="fas fa-chart-line feature-icon" aria-hidden="true"></i>
-          <div class="feature-text">
-            <strong>Reportes y Analytics</strong>
-            <span>Estadísticas y métricas en tiempo real</span>
-          </div>
-        </li>
-        <li class="feature-item" role="listitem">
-          <i class="fas fa-cogs feature-icon" aria-hidden="true"></i>
-          <div class="feature-text">
-            <strong>Configuración Avanzada</strong>
-            <span>Personalización completa del sistema</span>
-          </div>
-        </li>
-      </ul>
-
-      <div class="info-footer">
-        <div class="version-info">
-          <i class="fas fa-code-branch" aria-hidden="true"></i>
-          <span>Versión 3.0.1</span>
-        </div>
-        <div class="support-info">
-          <i class="fas fa-headset" aria-hidden="true"></i>
-          <span>Soporte 24/7</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OVERLAY DE FONDO -->
-  <div class="background-overlay" aria-hidden="true"></div>
 </div>

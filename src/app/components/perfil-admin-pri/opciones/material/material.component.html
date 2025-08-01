@@ -28,15 +28,24 @@
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div class="p-4 border-b border-gray-200">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchMaterial" class="block text-sm font-medium text-gray-700 mb-2">Buscar Material:</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+            <!-- Filtro de búsqueda y selector de tipo de material -->
+            <div class="flex flex-col sm:flex-row gap-2 flex-1">
+              <div class="flex-1">
+                <label for="searchMaterial" class="block text-sm font-medium text-gray-700 mb-2">Buscar Material:</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input id="searchMaterial" type="text" [(ngModel)]="searchTerm" (input)="filterMaterial()" placeholder="Ingrese nombre"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
                 </div>
-                <input id="searchMaterial" type="text" [(ngModel)]="searchTerm" (input)="filterMaterial()" placeholder="Ingrese nombre"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+              </div>
+              <div class="flex-1 min-w-[180px]">
+                <label for="tipoMaterialSelector" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Tipo de Material:</label>
+                <select id="tipoMaterialSelector" [(ngModel)]="selectedTipoMaterial" (change)="filterMaterial()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                  <option [ngValue]="null">Todos los tipos</option>
+                  <option *ngFor="let tipo of tiposMaterial" [ngValue]="tipo.id_tipo_material">{{ tipo.nombre }}</option>
+                </select>
               </div>
             </div>
             <!-- Botón Nuevo Material -->
@@ -53,14 +62,20 @@
               <tr>
                 <th class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                 <th class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ruta Archivo</th>
+                <th class="px-6 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tamaño (bytes)</th>
                 <th class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                 <th class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let material of paginatedMateriales" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ material.id_material }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ getMaterialId(material) }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ material.nombre }}</td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-blue-700 underline">
+                  <a [href]="material.rutaArchivo" target="_blank">{{ material.rutaArchivo }}</a>
+                </td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ material.tamanoBytes }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
                   <span [ngClass]="material.estado ? 'text-green-600' : 'text-red-600'">
                     {{ material.estado ? 'Activo' : 'Inactivo' }}

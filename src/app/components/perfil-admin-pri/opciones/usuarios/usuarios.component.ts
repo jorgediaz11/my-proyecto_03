@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UsersService, Users, CreateUserDto, UpdateUserDto } from '../../../../services/usuarios.service';
+import { ColegiosService, Colegio } from '../../../../services/colegios.service';
+import { PerfilService, Perfil } from '../../../../services/perfil.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -42,25 +44,36 @@ export class UsuariosComponent implements OnInit {
   }
 
   // ✅ CONFIGURACIÓN DE ROLES
-  readonly perfiles = [
-    { value: 1, label: 'Administrador Principal' },
-    { value: 2, label: 'Administrador Colegio' },
-    { value: 3, label: 'Docente' },
-    { value: 4, label: 'Estudiante' },
-    { value: 5, label: 'Familia' },
-    { value: 6, label: 'Editor' }
-  ];
+  perfiles: Perfil[] = [];
 
   // ✅ INYECCIÓN DE DEPENDENCIAS CON INJECT()
   private usersService = inject(UsersService);
   private fb = inject(FormBuilder);
+  private colegiosService = inject(ColegiosService);
+  private perfilService = inject(PerfilService);
+
+  // ✅ COLEGIOS
+  colegios: Colegio[] = [];
 
   constructor() {
     this.initForm();
   }
 
   ngOnInit(): void {
+    this.cargarColegios();
+    this.cargarPerfiles();
     this.cargarUsuarios();
+  }
+
+  cargarPerfiles(): void {
+    this.perfilService.getPerfiles().subscribe({
+      next: (perfiles: Perfil[]) => {
+        this.perfiles = perfiles.filter(p => p.estado); // solo activos
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar perfiles:', error);
+      }
+    });
   }
 
   // ✅ INICIALIZACIÓN DEL FORMULARIO
@@ -106,10 +119,31 @@ export class UsuariosComponent implements OnInit {
         this.updatePagination();
         this.loading = false;
       },
-      error: (error: unknown) => {
+      error: (error: any) => {
         this.loading = false;
+        // Mostrar detalles del error en consola y en el alert
         console.error('Error al cargar usuarios:', error);
-        this.showError('Error al cargar los usuarios');
+        let msg = 'Error al cargar los usuarios';
+        if (error && error.status) {
+          msg += `\nStatus: ${error.status}`;
+        }
+        if (error && error.error && error.error.message) {
+          msg += `\nMensaje: ${error.error.message}`;
+        } else if (error && error.message) {
+          msg += `\nMensaje: ${error.message}`;
+        }
+        this.showError(msg);
+      }
+    });
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (colegios: Colegio[]) => {
+        this.colegios = colegios || [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar colegios:', error);
       }
     });
   }
@@ -117,18 +151,25 @@ export class UsuariosComponent implements OnInit {
   // ✅ FILTRADO
   filterUsuarios(): void {
     const searchTerm = this.searchTerm.toLowerCase().trim();
-
-    if (!searchTerm) {
-      this.filteredUsuarios = [...this.usuarios];
-    } else {
-      this.filteredUsuarios = this.usuarios.filter(usuario =>
+    let filtered = [...this.usuarios];
+    // Filtro por búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter(usuario =>
         usuario.username?.toLowerCase().includes(searchTerm) ||
         usuario.nombres?.toLowerCase().includes(searchTerm) ||
         usuario.apellido?.toLowerCase().includes(searchTerm) ||
         usuario.correo?.toLowerCase().includes(searchTerm)
       );
     }
-
+    // Filtro por perfil
+    if (this.filtroPerfil) {
+      filtered = filtered.filter(usuario => usuario.id_perfil === Number(this.filtroPerfil));
+    }
+    // Filtro por colegio
+    if (this.filtroColegio) {
+      filtered = filtered.filter(usuario => usuario.id_colegio === Number(this.filtroColegio));
+    }
+    this.filteredUsuarios = filtered;
     this.currentPage = 1;
     this.updatePagination();
   }
@@ -366,8 +407,8 @@ export class UsuariosComponent implements OnInit {
 
   // ✅ UTILIDADES
   getRoleName(id_perfil: number): string {
-    const perfil = this.perfiles.find(p => p.value === id_perfil);
-    return perfil ? perfil.label : 'Sin definir';
+    const perfil = this.perfiles.find(p => p.id === id_perfil);
+    return perfil ? perfil.nombre : 'Sin definir';
   }
 
   trackByUserId(index: number, usuario: Users): number | undefined {

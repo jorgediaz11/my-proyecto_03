@@ -28,6 +28,7 @@ export class LoginRecuperaComponent implements OnInit, OnDestroy {
   loading = false;
   recoveryError: string | null = null;
   resetToken: string | null = null;
+  showFloatingPanel = true; // Agregar la propiedad para controlar la visibilidad del panel flotante
 
   // ✅ PARA CLEANUP DE SUBSCRIPCIONES
   private destroy$ = new Subject<void>();

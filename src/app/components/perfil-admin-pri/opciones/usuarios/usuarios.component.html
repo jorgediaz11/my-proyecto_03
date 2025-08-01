@@ -98,7 +98,7 @@
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
                 <option value="">Todos los perfiles</option>
-                <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{ perfil.label }}</option>
+                <option *ngFor="let perfil of perfiles" [value]="perfil.id">{{ perfil.nombre }}</option>
               </select>
             </div>
 
@@ -112,18 +112,7 @@
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
               >
                 <option value="">Todos los colegios</option>
-                <option value="01">REY DAVID</option>
-                <option value="02">HIPOLITO UNANUE SEDE LAS BRISAS</option>
-                <option value="03">ANGLICANA SANTISIMA TRINIDAD</option>
-                <option value="04">BRITANIC SCHOOL</option>
-                <option value="05">CARITAS GRACIOSAS DE DIOS</option>
-                <option value="06">COLLAGE</option>
-                <option value="07">CRISTO JESUS</option>
-                <option value="08">CRISTO REY</option>
-                <option value="09">DEJALO SER</option>
-                <option value="10">EL MUNDO DE LOS GENIECITOS</option>
-                <option value="11">CRISTO JESUS 02</option>
-                <option value="12">CRISTO REY 02</option>
+                <option *ngFor="let colegio of colegios" [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
               </select>
             </div>
 
@@ -316,7 +305,7 @@
                   [class.border-red-300]="usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched"
                 >
                   <option value="" disabled>Seleccione un perfil</option>
-                  <option *ngFor="let perfil of perfiles" [value]="perfil.value">{{ perfil.label }}</option>
+                  <option *ngFor="let perfil of perfiles" [value]="perfil.id">{{ perfil.nombre }}</option>
                 </select>
                 <div *ngIf="usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched" class="mt-1 text-sm text-red-600">
                   Por favor selecciona un perfil
@@ -333,16 +322,7 @@
                   [class.border-red-300]="usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched"
                 >
                   <option value="" disabled>Seleccione un colegio</option>
-                  <option value="01">REY DAVID</option>
-                  <option value="02">HIPOLITO UNANUE SEDE LAS BRISAS</option>
-                  <option value="03">ANGLICANA SANTISIMA TRINIDAD</option>
-                  <option value="04">BRITANIC SCHOOL</option>
-                  <option value="05">CARITAS GRACIOSAS DE DIOS</option>
-                  <option value="06">COLLAGE</option>
-                  <option value="07">CRISTO JESUS</option>
-                  <option value="08">CRISTO REY</option>
-                  <option value="09">DEJALO SER</option>
-                  <option value="10">EL MUNDO DE LOS GENIECITOS</option>
+                  <option *ngFor="let colegio of colegios" [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
                 </select>
                 <div *ngIf="usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched" class="mt-1 text-sm text-red-600">
                   Por favor selecciona un colegio

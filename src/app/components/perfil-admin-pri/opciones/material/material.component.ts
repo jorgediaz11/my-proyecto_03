@@ -1,6 +1,8 @@
+
 import { Component, OnInit, inject } from '@angular/core';
 import { MaterialService, Material } from '../../../../services/material.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TipoMaterialService, TipoMaterial } from '../../../../services/tipo-material.service';
 
 @Component({
   selector: 'app-material',
@@ -22,13 +24,36 @@ export class MaterialComponent implements OnInit {
   loading = false;
   activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
+  // Tipos de material para el selector
+  tiposMaterial: TipoMaterial[] = [];
+  selectedTipoMaterial: number | null = null;
+
   materialForm!: FormGroup;
   private fb = inject(FormBuilder);
   private materialService = inject(MaterialService);
+  private tipoMaterialService = inject(TipoMaterialService);
+
+
+  // Devuelve el id del material, sea id_material o id
+  getMaterialId(material: any): number | string {
+    return material.id_material !== undefined ? material.id_material : material.id;
+  }
 
   ngOnInit(): void {
     this.initForm();
     this.cargarMateriales();
+    this.cargarTiposMaterial();
+  }
+
+  cargarTiposMaterial(): void {
+    this.tipoMaterialService.getTipoMateriales().subscribe({
+      next: (tipos: TipoMaterial[]) => {
+        this.tiposMaterial = tipos.filter(t => t.estado);
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar tipos de material:', error);
+      }
+    });
   }
 
   cargarMateriales(): void {
@@ -97,14 +122,19 @@ export class MaterialComponent implements OnInit {
   }
 
   filterMaterial(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredMateriales = [...this.materiales];
-    } else {
-      this.filteredMateriales = this.materiales.filter(material =>
-        material.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) //||
-        //(material.nivel && String(material.nivel).includes(this.searchTerm))
+    let materialesFiltrados = [...this.materiales];
+    if (this.searchTerm.trim()) {
+      materialesFiltrados = materialesFiltrados.filter(material =>
+        material.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    if (this.selectedTipoMaterial) {
+      materialesFiltrados = materialesFiltrados.filter(material => {
+        // Puede venir como idTipoMaterial o id_tipo_material
+        return (material.idTipoMaterial || (material as any).id_tipo_material) == this.selectedTipoMaterial;
+      });
+    }
+    this.filteredMateriales = materialesFiltrados;
     this.currentPage = 1;
     this.updatePaginatedMateriales();
   }

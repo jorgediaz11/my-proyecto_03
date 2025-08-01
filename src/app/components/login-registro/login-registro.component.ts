@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ColegiosService, Colegio } from '../../services/colegios.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -20,8 +21,10 @@ interface RegisterData {
   styleUrls: ['./login-registro.component.css']
 })
 export class LoginRegistroComponent implements OnInit, OnDestroy {
+  showFloatingPanel = true;
   // ✅ PROPIEDADES PRINCIPALES
   registroForm!: FormGroup;
+  colegios: Colegio[] = [];
   private formInitialized = false;
   submitted = false;
   loading = false;
@@ -34,6 +37,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private colegiosService = inject(ColegiosService);
 
   // ✅ MENSAJES DE VALIDACIÓN
   readonly validationMessages = {
@@ -69,6 +73,20 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
+    this.cargarColegios();
+  }
+
+  // ✅ CARGAR COLEGIOS CLIENTES DESDE EL SERVICIO
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes()
+      .subscribe({
+        next: (data) => {
+          this.colegios = data;
+        },
+        error: (err) => {
+          console.error('Error al cargar colegios clientes:', err);
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -96,6 +114,9 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
         correo: ['', [
           Validators.required,
           Validators.email
+        ]],
+        id_colegio: ['', [
+          Validators.required
         ]],
         password: ['', [
           Validators.required,

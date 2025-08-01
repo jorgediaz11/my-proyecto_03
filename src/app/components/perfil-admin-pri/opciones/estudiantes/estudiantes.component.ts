@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -14,10 +15,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class EstudiantesComponent implements OnInit, OnDestroy {
   // Servicio de estudiantes
   private estudiantesService = inject(EstudiantesService);
+  private colegiosService = inject(ColegiosService);
   // ✅ PROPIEDADES ESENCIALES
   estudiantes: Estudiante[] = [];
   filteredEstudiantes: Estudiante[] = [];
   paginatedEstudiantes: Estudiante[] = [];
+
+  colegios: Colegio[] = [];
+  filtroColegio: string = '';
 
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
@@ -86,6 +91,18 @@ export class EstudiantesComponent implements OnInit, OnDestroy {
     this.cargarDepartamentos();
     this.cargarEstudiantes();
     this.testEndpointConnection();
+    this.cargarColegios();
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (data) => {
+        this.colegios = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar colegios clientes:', err);
+      }
+    });
   }
 
   cargarDepartamentos(): void {
@@ -219,15 +236,17 @@ export class EstudiantesComponent implements OnInit, OnDestroy {
 
   // ✅ FILTRADO DE ESTUDIANTES
   filterEstudiantes(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredEstudiantes = [...this.estudiantes];
-    } else {
-      this.filteredEstudiantes = this.estudiantes.filter(estudiante =>
+    let filtered = [...this.estudiantes];
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(estudiante =>
         estudiante.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        estudiante.apellido.toLowerCase().includes(this.searchTerm.toLowerCase()) //||
-        //(estudiante.dni && estudiante.dni.includes(this.searchTerm))
+        estudiante.apellido.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    if (this.filtroColegio) {
+      filtered = filtered.filter(estudiante => String(estudiante.id_colegio) === this.filtroColegio);
+    }
+    this.filteredEstudiantes = filtered;
     this.currentPage = 1;
     this.updatePaginatedEstudiantes();
   }

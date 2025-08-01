@@ -20,7 +20,7 @@ body {
   justify-content: center;      /* Centra horizontalmente */
   align-items: center;          /* Centra horizontalmente */
   height: 100vh;                /* Centra verticalmente */
-  background-color: #f4f4f9;  /* Color de fondo */
+  background-color: #fff;  /* Fondo blanco por defecto */
 }
 
 html, body {

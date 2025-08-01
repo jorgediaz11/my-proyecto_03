@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -14,10 +15,13 @@ import { AuthService } from 'src/app/services/auth.service';
 export class GrupofamComponent implements OnInit, OnDestroy {
   // Servicio de familias
   private familiaService = inject(FamilasService);
+  private colegiosService = inject(ColegiosService);
   // ✅ PROPIEDADES ESENCIALES
   familias: Familia[] = [];
   filteredFamilias: Familia[] = [];
   paginatedFamilias: Familia[] = [];
+  colegios: Colegio[] = [];
+  filtroColegio: string = '';
   // Ejemplo de cómo consumir familia_estudiantes:
   getEstudiantesDeFamilia(familia: Familia): number[] {
     return familia.familia_estudiantes;
@@ -91,6 +95,18 @@ export class GrupofamComponent implements OnInit, OnDestroy {
     this.cargarDepartamentos();
     this.cargarFamilias();
     this.testEndpointConnection();
+    this.cargarColegios();
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (data) => {
+        this.colegios = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar colegios clientes:', err);
+      }
+    });
   }
 
   cargarDepartamentos(): void {
@@ -224,15 +240,17 @@ export class GrupofamComponent implements OnInit, OnDestroy {
 
   // ✅ FILTRADO DE FAMILIAS
   filterFamilias(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredFamilias = [...this.familias];
-    } else {
-      this.filteredFamilias = this.familias.filter(familia =>
+    let filtered = [...this.familias];
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(familia =>
         familia.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        familia.apellido.toLowerCase().includes(this.searchTerm.toLowerCase()) //||
-        //(familia.dni && familia.dni.includes(this.searchTerm))
+        familia.apellido.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    if (this.filtroColegio) {
+      filtered = filtered.filter(familia => String(familia.id_colegio) === this.filtroColegio);
+    }
+    this.filteredFamilias = filtered;
     this.currentPage = 1;
     this.updatePaginatedFamilias();
   }

@@ -4,6 +4,7 @@ import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ClasesColService, ClaseCol as ClaseColApi, CreateClaseColDto, UpdateClaseColDto } from 'src/app/services/clases-col.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 
 
 // Interfaz local para visualización (puedes ajustarla si necesitas mostrar más campos)
@@ -61,6 +62,10 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   private ubigeoService = inject(UbigeoService);
   private fb = inject(FormBuilder);
   private clasesColService = inject(ClasesColService);
+  private colegiosService = inject(ColegiosService);
+
+  colegios: Colegio[] = [];
+  filtroColegio: string = '';
 
   // PROPIEDADES PARA EL TEMPLATE
   Math = Math;
@@ -84,6 +89,18 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargarDepartamentos();
     this.cargarClasesCol();
+    this.cargarColegios();
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (data) => {
+        this.colegios = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar colegios clientes:', err);
+      }
+    });
   }
 
   cargarClasesCol(): void {
@@ -191,18 +208,13 @@ export class ClasesColComponent implements OnInit, OnDestroy {
 
   // FILTRADO DE CLASES
   filterClases(): void {
-    // if (!this.searchTerm.trim()) {
-    //   this.filteredClases = [...this.clases];
-    // } else {
-    //   this.filteredClases = this.clases.filter(clase =>
-    //     // Asegúrate de que las propiedades existen en tu modelo o ajusta según corresponda
-    //     (clase as any).nombre?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-    //     (clase as any).grado?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-    //     (clase as any).seccion?.toLowerCase().includes(this.searchTerm.toLowerCase())
-    //   );
-    // }
-    // this.currentPage = 1;
-    // this.updatePaginatedClases();
+    let filtered = [...this.clases];
+    if (this.filtroColegio) {
+      filtered = filtered.filter(clase => String(clase.id_colegio) === this.filtroColegio);
+    }
+    this.filteredClases = filtered;
+    this.currentPage = 1;
+    this.updatePaginatedClases();
   }
 
   // ACTUALIZACIÓN DE PAGINACIÓN

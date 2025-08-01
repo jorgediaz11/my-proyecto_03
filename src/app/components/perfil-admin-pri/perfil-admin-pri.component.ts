@@ -134,7 +134,10 @@ export class PerfilAdminPriComponent implements OnInit, OnDestroy {
 
   // ✅ Getter para facilitar el uso en el template
   get nombreUsuario(): string {
-    const nombre = this.perfilUsuario?.nombreCompleto || 'Usuario';
+    let nombre = this.perfilUsuario?.nombreCompleto;
+    if (!nombre || nombre.trim() === '' || nombre.toLowerCase().includes('undefined')) {
+      nombre = 'Usuario sin nombre';
+    }
     console.log('👤 Getter nombreUsuario llamado:', nombre);
     return nombre;
   }

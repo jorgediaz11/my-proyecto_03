@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
-import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
 import { UserStateService, PerfilUsuario } from '../../services/user-state.service';
 
 // Importar el módulo de enrutamiento

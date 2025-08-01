@@ -16,7 +16,7 @@ export class ActivarLibrosComponent {
   codigosActivados = 0;
 
   get textoBoton() {
-    return this.codigosActivados === 0 ? 'Activar Código' : 'Siguiente Código';
+    return this.codigosActivados === 0 ? 'Activar' : 'Siguiente';
   }
 
   activarLibro() {

@@ -227,15 +227,25 @@ export class ColegiosComponent implements OnInit, OnDestroy {
 
   // ✅ FILTRADO DE COLEGIOS
   filterColegios(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredColegios = [...this.colegios];
-    } else {
-      this.filteredColegios = this.colegios.filter(colegio =>
+    let filtered = [...this.colegios];
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(colegio =>
         colegio.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         colegio.codigoModular.includes(this.searchTerm) ||
         colegio.direccion.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    // Filtrar por distrito usando id_ubigeo
+    if (this.filtroDistrito) {
+      // Buscar el id_ubigeo del distrito seleccionado
+      const distritoObj = this.distritos.find(d => d.distrito === this.filtroDistrito);
+      if (distritoObj && distritoObj.id_ubigeo) {
+        filtered = filtered.filter(colegio =>
+          colegio.id_ubigeo && colegio.id_ubigeo.startsWith(distritoObj.id_ubigeo)
+        );
+      }
+    }
+    this.filteredColegios = filtered;
     this.currentPage = 1;
     this.updatePaginatedColegios();
   }
@@ -723,6 +733,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         departamento: 'Lima',
         provincia: 'Lima',
         distrito: 'San Isidro',
+        id_ubigeo: '150131', // Lima - San Isidro (ejemplo)
         nivelesEducativos: ['Inicial', 'Primaria', 'Secundaria'],
         turnos: ['Mañana', 'Tarde'],
         poblacion: 1000,
@@ -741,6 +752,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
         departamento: 'Lima',
         provincia: 'Lima',
         distrito: 'Miraflores',
+        id_ubigeo: '150122', // Lima - Miraflores (ejemplo)
         nivelesEducativos: ['Primaria', 'Secundaria'],
         turnos: ['Mañana'],
         poblacion: 800,

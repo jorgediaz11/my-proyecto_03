@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { GradosService, Grado } from '../../../../services/grados.service';
+import { NivelesService, Nivel } from '../../../../services/niveles.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -21,13 +22,30 @@ export class GradosComponent implements OnInit {
   loading = false;
   activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
 
+  // Niveles para el selector
+  niveles: Nivel[] = [];
+  selectedNivel: number | null = null;
+
   gradoForm!: FormGroup;
   private fb = inject(FormBuilder);
   private gradosService = inject(GradosService);
+  private nivelesService = inject(NivelesService);
 
   ngOnInit(): void {
     this.initForm();
     this.cargarGrados();
+    this.cargarNiveles();
+  }
+
+  cargarNiveles(): void {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles: Nivel[]) => {
+        this.niveles = niveles.filter(n => n.estado);
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar niveles:', error);
+      }
+    });
   }
 
   cargarGrados(): void {
@@ -55,17 +73,36 @@ export class GradosComponent implements OnInit {
   }
 
   filterGrados(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredGrados = [...this.grados];
-    } else {
-      this.filteredGrados = this.grados.filter(grado =>
-        grado.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        (grado.nivel && String(grado.nivel).includes(this.searchTerm))
-      );
+    let gradosFiltrados = [...this.grados];
+    // Filtro por término de búsqueda
+    if (this.searchTerm.trim()) {
+      gradosFiltrados = gradosFiltrados.filter(grado => {
+        let nivelNombre = '';
+        if (grado.nivel && typeof grado.nivel === 'object' && 'nombre' in grado.nivel) {
+          nivelNombre = (grado.nivel as { nombre: string }).nombre;
+        } else {
+          nivelNombre = String(grado.nivel);
+        }
+        return grado.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          (nivelNombre && nivelNombre.toLowerCase().includes(this.searchTerm.toLowerCase()));
+      });
     }
+    // Filtro por nivel seleccionado
+    if (this.selectedNivel) {
+      gradosFiltrados = gradosFiltrados.filter(grado => {
+        if (grado.nivel && typeof grado.nivel === 'object' && 'id_nivel' in grado.nivel) {
+          return String((grado.nivel as { id_nivel: number }).id_nivel) === String(this.selectedNivel);
+        } else {
+          return String(grado.nivel) === String(this.selectedNivel);
+        }
+      });
+    }
+    this.filteredGrados = gradosFiltrados;
     this.currentPage = 1;
     this.updatePaginatedGrados();
   }
+
+  // (Eliminado duplicado de getNivelNombre)
 
   updatePaginatedGrados(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -76,6 +113,15 @@ export class GradosComponent implements OnInit {
   onPageChange(page: number): void {
     this.currentPage = page;
     this.updatePaginatedGrados();
+  }
+
+  // Método para mostrar el nombre del nivel en la tabla
+  getNivelNombre(nivel: any): string {
+    if (nivel && typeof nivel === 'object' && 'nombre' in nivel) {
+      return nivel.nombre;
+    }
+    const found = this.niveles.find(n => String(n.id_nivel) === String(nivel));
+    return found ? found.nombre : String(nivel);
   }
 
   selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {

@@ -17,6 +17,7 @@ export interface Colegio {
   departamento: string;
   provincia: string;
   distrito: string;
+  id_ubigeo: string;
   nivelesEducativos: string[];
   turnos: string[];
   poblacion: number;
@@ -71,6 +72,11 @@ export class ColegiosService {
   getColegios(): Observable<Colegio[]> {
     console.log('ColegiosService.getColegios llamado');
     return this.http.get<Colegio[]>(this.apiUrl);
+  }
+
+  // ✅ OBTENER SOLO COLEGIOS CLIENTES
+  getColegiosClientes(): Observable<Colegio[]> {
+    return this.http.get<Colegio[]>(this.apiUrl + '/clientes');
   }
 
   // ✅ OBTENER COLEGIO POR ID

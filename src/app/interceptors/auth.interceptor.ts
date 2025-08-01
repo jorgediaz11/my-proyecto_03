@@ -9,8 +9,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   // ✅ Endpoints que NO requieren autenticación
   private publicEndpoints = [
-    '/auth/signin',
-    '/auth/signup',
+    '/auth/signin', // Ajusta según tu endpoint de inicio de sesión
+    '/auth/signup', // <-- Permitir acceso sin token al endpoint real de registro
     '/auth/login',
     '/auth/register',
     '/auth/check-user',
@@ -18,7 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
     '/auth/verify-reset-token',
     '/auth/reset-password',
     '/api/health',
-    '/api/ping'
+    '/api/ping',
+    '/colegios/clientes', // Permitir acceso sin token
+    '/register',          // Ajusta si tu endpoint de registro es diferente
+    '/login-registro'     // Permitir acceso sin token al formulario de registro del frontend
   ];
 
   // ✅ Endpoints que requieren headers específicos
@@ -31,10 +34,16 @@ export class AuthInterceptor implements HttpInterceptor {
   ];
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // ✅ Verificar si es un endpoint público
-    const isPublicEndpoint = this.publicEndpoints.some(endpoint =>
-      req.url.includes(endpoint)
-    );
+    // 🔍 Log de la URL de cada request para depuración
+    console.log('[AuthInterceptor] Request URL:', req.url);
+
+    // ✅ Verificar si es un endpoint público (match flexible: startsWith, sin distinción de mayúsculas/minúsculas)
+    const urlLower = req.url.toLowerCase();
+    const isPublicEndpoint = this.publicEndpoints.some(endpoint => {
+      const endpointLower = endpoint.toLowerCase();
+      // Match si la URL contiene o empieza con el endpoint (para rutas absolutas y relativas)
+      return urlLower.includes(endpointLower) || urlLower.startsWith(endpointLower);
+    });
 
     if (isPublicEndpoint) {
       console.log('🔓 Public endpoint, skipping auth:', req.url);

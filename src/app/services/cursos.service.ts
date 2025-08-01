@@ -8,18 +8,26 @@ export interface Curso {
   id_curso?: number;
   nombre: string; // Matemática, Comunicación, Ciencias, etc.
   descripcion?: string;
-  codigo?: string; // MAT, COM, CTA, etc.
-  nivel: string; // Inicial, Primaria, Secundaria
-  grado?: string; // 1°, 2°, 3°, etc.
+  codigo_libro?: string | null;
+  nivel?: string; // Inicial, Primaria, Secundaria
+  grado: {
+    id_grado: number;
+    nombre: string;
+    estado: boolean;
+  };
   horasSemanales?: number;
   creditos?: number;
-  area: string; // Ciencias, Letras, Arte, etc.
+  area: {
+    id_area: number;
+    nombre: string;
+    estado: boolean;
+  };
   esObligatorio?: boolean;
   estado: boolean;
   id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
-  tipo?: string;//'interno' | 'externo'; // <--- agregado para filtro
+  tipo_curso?: string;
 }
 
 export interface CreateCursoDto {

@@ -1,6 +1,7 @@
 
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -15,10 +16,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DocentesComponent implements OnInit, OnDestroy {
   // Servicio de docentes
   private docentesService = inject(DocentesService);
+  private colegiosService = inject(ColegiosService);
   // ✅ PROPIEDADES ESENCIALES
   docentes: Docente[] = [];
   filteredDocentes: Docente[] = [];
   paginatedDocentes: Docente[] = [];
+
+  colegios: Colegio[] = [];
+  filtroColegio: string = '';
 
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
@@ -89,6 +94,18 @@ export class DocentesComponent implements OnInit, OnDestroy {
     this.cargarDepartamentos();
     this.cargarDocentes();
     this.testEndpointConnection();
+    this.cargarColegios();
+  }
+
+  cargarColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (data) => {
+        this.colegios = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar colegios clientes:', err);
+      }
+    });
   }
 
   cargarDepartamentos(): void {
@@ -224,15 +241,17 @@ export class DocentesComponent implements OnInit, OnDestroy {
 
   // ✅ FILTRADO DE COLEGIOS
   filterColegios(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredDocentes = [...this.docentes];
-    } else {
-      this.filteredDocentes = this.docentes.filter(docente =>
+    let filtered = [...this.docentes];
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(docente =>
         docente.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        docente.apellido.toLowerCase().includes(this.searchTerm.toLowerCase()) //||
-        //(docente.dni && docente.dni.includes(this.searchTerm)) // Asumiendo que DNI es string y existe
+        docente.apellido.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    if (this.filtroColegio) {
+      filtered = filtered.filter(docente => String(docente.id_colegio) === this.filtroColegio);
+    }
+    this.filteredDocentes = filtered;
     this.currentPage = 1;
     this.updatePaginatedDocentes();
   }

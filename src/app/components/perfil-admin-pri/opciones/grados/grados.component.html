@@ -28,15 +28,24 @@
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div class="p-4 border-b border-gray-200">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchGrado" class="block text-sm font-medium text-gray-700 mb-2">Buscar Grado:</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+            <!-- Filtro de búsqueda y selector de nivel -->
+            <div class="flex flex-col sm:flex-row gap-2 flex-1">
+              <div class="flex-1">
+                <label for="searchGrado" class="block text-sm font-medium text-gray-700 mb-2">Buscar Grado:</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input id="searchGrado" type="text" [(ngModel)]="searchTerm" (input)="filterGrados()" placeholder="Ingrese nombre o nivel"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
                 </div>
-                <input id="searchGrado" type="text" [(ngModel)]="searchTerm" (input)="filterGrados()" placeholder="Ingrese nombre o nivel"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
+              </div>
+              <div class="flex-1 min-w-[180px]">
+                <label for="nivelSelector" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Nivel:</label>
+                <select id="nivelSelector" [(ngModel)]="selectedNivel" (change)="filterGrados()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                  <option [ngValue]="null">Todos los niveles</option>
+                  <option *ngFor="let nivel of niveles" [ngValue]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                </select>
               </div>
             </div>
             <!-- Botón Nuevo Grado -->
@@ -61,7 +70,10 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let grado of paginatedGrados" class="hover:bg-gray-50 transition-colors duration-150">
                 <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ grado.id_grado }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
+                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
+                  <!-- Mostrar nombre del nivel si es posible -->
+                  {{ getNivelNombre(grado.nivel) }}
+                </td>
                 <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ grado.nombre }}</td>
                 <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
                   <span [ngClass]="grado.estado ? 'text-green-600' : 'text-red-600'">

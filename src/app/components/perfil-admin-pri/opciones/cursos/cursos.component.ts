@@ -71,7 +71,7 @@ export class CursosComponent implements OnInit {
     const term = this.searchCurso.toLowerCase();
     this.filteredCursos = this.cursos.filter(curso =>
       curso.nombre.toLowerCase().includes(term) ||
-      (curso.codigo && curso.codigo.toLowerCase().includes(term))
+      (curso.codigo_libro && curso.codigo_libro.toLowerCase().includes(term))
     );
     this.currentPage = 1;
     this.setPaginatedCursos();
@@ -120,7 +120,7 @@ export class CursosComponent implements OnInit {
     if (this.tipoCurso === 'ambos') {
       this.filteredCursos = this.cursos.slice();
     } else {
-      this.filteredCursos = this.cursos.filter(curso => curso.tipo === this.tipoCurso);
+      this.filteredCursos = this.cursos.filter(curso => curso.tipo_curso === this.tipoCurso);
     }
     this.setPaginatedCursos();
   }
@@ -132,7 +132,7 @@ export class CursosComponent implements OnInit {
         title: 'Detalles del Curso',
         html: `
           <strong>Nombre:</strong> ${curso.nombre}<br>
-          <strong>Código:</strong> ${curso.codigo}<br>
+          <strong>Código:</strong> ${curso.id_curso}<br>
           <strong>Nivel:</strong> ${curso.nivel}<br>
           <strong>Área:</strong> ${curso.area}<br>
           <strong>Grado:</strong> ${curso.grado}<br>
