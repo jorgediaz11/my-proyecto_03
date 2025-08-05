@@ -6,8 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
-  templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  templateUrl: './perfiles.component.html',
+  styleUrls: ['./perfiles.component.css']
 })
 export class PerfilComponent implements OnInit {
   Math = Math;
@@ -21,7 +21,7 @@ export class PerfilComponent implements OnInit {
   isEditing = false;
   editingPerfilId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   perfilForm!: FormGroup;
   private fb = inject(FormBuilder);
@@ -80,7 +80,7 @@ export class PerfilComponent implements OnInit {
     this.updatePaginatedPerfiles();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
   }
 

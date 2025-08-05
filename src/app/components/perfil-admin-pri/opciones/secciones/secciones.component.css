@@ -1,5 +1,5 @@
 /* Basado en perfil.component.css */
-.perfil-container {
+.secciones-container {
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -8,31 +8,31 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.perfil-table {
+.secciones-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.perfil-table th,
-.perfil-table td {
+.secciones-table th,
+.secciones-table td {
   font-size: 0.9em;
   border: 1px solid #ddd;
   padding: 6px;
   text-align: left;
 }
 
-.perfil-table th {
+.secciones-table th {
   background-color: #4EAD4F;
   color: white;
   font-size: 0.95em;
 }
 
-.perfil-table tr:nth-child(even) {
+.secciones-table tr:nth-child(even) {
   background-color: #f0f0f0;
 }
 
-.perfil-table tr:hover {
+.secciones-table tr:hover {
   background-color: #ddd;
 }
 

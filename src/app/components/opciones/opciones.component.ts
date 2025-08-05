@@ -11,7 +11,7 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
   templateUrl: './opciones.component.html',
   styleUrls: ['./opciones.component.css'],
   standalone: true,
-  imports: [CommonModule, ActivarLibrosComponent]
+imports: [CommonModule, ActivarLibrosComponent]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
 

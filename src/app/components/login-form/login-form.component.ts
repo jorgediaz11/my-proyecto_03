@@ -15,8 +15,6 @@ interface LoginRequest {
 }
 
 // ✅ REMOVER LoginResponse local - usar la del AuthService
-// interface LoginResponse { ... } ← ELIMINADA
-
 interface Usuario {
   id_usuario: number;
   username: string;

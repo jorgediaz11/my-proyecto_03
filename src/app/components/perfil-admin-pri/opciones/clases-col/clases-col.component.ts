@@ -47,7 +47,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   isEditing = false;
   editingClaseId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // FORMULARIO REACTIVO
   claseForm!: FormGroup;
@@ -231,7 +231,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   // CAMBIO DE PESTAÑA
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
     if (tab === 'tabla') {
       this.cancelEdit();

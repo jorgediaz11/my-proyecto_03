@@ -1,3 +1,50 @@
+/* ========================================================================== */
+/* SISTEMA DE PESTAÑAS (copiado de colegios) */
+/* ========================================================================== */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
+}
+
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-active:hover {
+  background-color: #3d8b40 !important;
+  transform: translateY(-1px);
+}
+
+.tab-inactive:hover {
+  background-color: #e8f5e8 !important;
+  color: #2d6b30 !important;
+  transform: translateY(-1px);
+}
+
+.tab-content {
+  margin-top: 1rem;
+}
+
+.tab-panel {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* ==========================================================================
    Contenedor Principal de docentes
    ========================================================================== */

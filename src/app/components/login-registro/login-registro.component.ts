@@ -39,7 +39,7 @@ export class LoginRegistroComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private colegiosService = inject(ColegiosService);
 
-  // ✅ MENSAJES DE VALIDACIÓN
+  // ✅ MENSAJES DE VALIDACIÓN - SEGURIDAD Y USABILIDAD
   readonly validationMessages = {
     usuario: {
       required: 'El usuario es requerido',

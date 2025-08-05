@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 
-// Interfaces para los datos del administrador
+// Interfaces para los datos del administrador eureka
 interface EstadisticaSistema {
   totalColegios: number;
   totalUsuarios: number;

@@ -1,3 +1,5 @@
+// Interface auxiliar para manejo de errores HTTP en cargarUsuarios
+interface ErrorObj { status?: number; error?: { message?: string }; message?: string }
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -26,7 +28,7 @@ export class UsuariosComponent implements OnInit {
   isEditing = false;
   editingUserId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // ✅ FORMULARIO REACTIVO
   usuarioForm!: FormGroup;
@@ -119,18 +121,19 @@ export class UsuariosComponent implements OnInit {
         this.updatePagination();
         this.loading = false;
       },
-      error: (error: any) => {
+      error: (error: unknown) => {
         this.loading = false;
         // Mostrar detalles del error en consola y en el alert
         console.error('Error al cargar usuarios:', error);
         let msg = 'Error al cargar los usuarios';
-        if (error && error.status) {
-          msg += `\nStatus: ${error.status}`;
+        const err = error as ErrorObj;
+        if (err && typeof err === 'object' && 'status' in err && err.status) {
+          msg += `\nStatus: ${err.status}`;
         }
-        if (error && error.error && error.error.message) {
-          msg += `\nMensaje: ${error.error.message}`;
-        } else if (error && error.message) {
-          msg += `\nMensaje: ${error.message}`;
+        if (err && typeof err === 'object' && err.error && err.error.message) {
+          msg += `\nMensaje: ${err.error.message}`;
+        } else if (err && typeof err === 'object' && err.message) {
+          msg += `\nMensaje: ${err.message}`;
         }
         this.showError(msg);
       }

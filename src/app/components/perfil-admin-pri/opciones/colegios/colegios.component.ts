@@ -28,10 +28,11 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   filtroDepartamento = '';
   filtroProvincia = '';
   filtroDistrito = '';
+  filtroCliente = '';
   isEditing = false;
   editingColegioId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // ✅ FORMULARIO REACTIVO
   colegioForm!: FormGroup;
@@ -133,6 +134,39 @@ export class ColegiosComponent implements OnInit, OnDestroy {
     this.filterColegios();
   }
 
+  // --- Métodos para selects dependientes en el formulario reactivo (pestaña Nuevo) ---
+  onDepartamentoFormChange(): void {
+    const depName = this.colegioForm.get('departamento')?.value;
+    const dep = this.departamentos.find(d => d.departamento === depName);
+    if (dep) {
+      const idDep = dep.id_ubigeo.substring(0, 2);
+      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
+        this.provincias = provs;
+        this.colegioForm.patchValue({ provincia: '', distrito: '' });
+        this.distritos = [];
+      });
+    } else {
+      this.provincias = [];
+      this.distritos = [];
+      this.colegioForm.patchValue({ provincia: '', distrito: '' });
+    }
+  }
+
+  onProvinciaFormChange(): void {
+    const provName = this.colegioForm.get('provincia')?.value;
+    const prov = this.provincias.find(p => p.provincia === provName);
+    if (prov) {
+      const idProv = prov.id_ubigeo.substring(0, 4);
+      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
+        this.distritos = dists;
+        this.colegioForm.patchValue({ distrito: '' });
+      });
+    } else {
+      this.distritos = [];
+      this.colegioForm.patchValue({ distrito: '' });
+    }
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -155,7 +189,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       turnos: [[], [Validators.required]],
       aforoMaximo: ['', [Validators.required, Validators.min(1)]],
       fechaFundacion: ['', [Validators.required]],
-      estado: [true, [Validators.required]]
+      estado: [true, [Validators.required]],
+      colegioCliente: [false, [Validators.required]]
     }, {
       validators: this.codigoModularValidator.bind(this)
     });
@@ -231,19 +266,24 @@ export class ColegiosComponent implements OnInit, OnDestroy {
     if (this.searchTerm.trim()) {
       filtered = filtered.filter(colegio =>
         colegio.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        colegio.codigoModular.includes(this.searchTerm) ||
+        colegio.codigoModular?.includes(this.searchTerm) ||
         colegio.direccion.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-    // Filtrar por distrito usando id_ubigeo
+    // Filtrar por distrito usando id_ubigeo exacto
     if (this.filtroDistrito) {
-      // Buscar el id_ubigeo del distrito seleccionado
       const distritoObj = this.distritos.find(d => d.distrito === this.filtroDistrito);
       if (distritoObj && distritoObj.id_ubigeo) {
         filtered = filtered.filter(colegio =>
-          colegio.id_ubigeo && colegio.id_ubigeo.startsWith(distritoObj.id_ubigeo)
+          colegio.id_ubigeo && colegio.id_ubigeo === distritoObj.id_ubigeo
         );
       }
+    }
+    // Filtrar por cliente SOLO sobre el resultado actual y usando solo colegio_cliente
+    if (this.filtroCliente === 'true') {
+      filtered = filtered.filter((colegio) => Boolean(colegio.colegio_cliente) === true);
+    } else if (this.filtroCliente === 'false') {
+      filtered = filtered.filter((colegio) => Boolean(colegio.colegio_cliente) === false);
     }
     this.filteredColegios = filtered;
     this.currentPage = 1;
@@ -264,7 +304,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   }
 
   // ✅ CAMBIO DE PESTAÑA
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'tabla') {
       this.cancelEdit();
@@ -366,7 +406,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       turnos: colegio.turnos,
       aforoMaximo: colegio.poblacion,
       fechaFundacion: colegio.fechaFundacion,
-      estado: colegio.estado
+      estado: colegio.estado,
+      colegio_cliente: colegio.colegio_cliente ?? false
     });
   }
 
@@ -461,7 +502,10 @@ export class ColegiosComponent implements OnInit, OnDestroy {
 
     this.docentesService.getDocentes().subscribe({
       next: (response) => {
-        const docentes = response;
+        // Filtrar docentes por el colegio seleccionado si existe la propiedad id_colegio en Docente
+        const docentes = Array.isArray(response)
+          ? response.filter((d: Docente & { id_colegio?: number }) => d.id_colegio === id_colegio)
+          : [];
         let html = '';
         if (docentes.length === 0) {
           html = '<p>No hay docentes registrados para este colegio.</p>';
@@ -482,7 +526,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
                   ${docentes.map((d: Docente & { nivel?: string; grado?: string; seccion?: string }, i: number) => `
                     <tr>
                       <td>${d.id_docente ?? (i+1)}</td>
-                      <td>${d.nombres} ${d.apellido}</td>
+                      <td>${d.nombres} ${d.apellido ?? ''}</td>
                       <td>${d.nivel ?? '-'}</td>
                       <td>${d.grado ?? '-'}</td>
                       <td>${d.seccion ?? '-'}</td>
@@ -494,7 +538,7 @@ export class ColegiosComponent implements OnInit, OnDestroy {
           `;
         }
         Swal.fire({
-          title: `Docentes del Colegio` + (colegio.nombre ? `: ${colegio.nombre}` : ''),
+          title: `Docentes del Colegio${colegio.nombre ? `: ${colegio.nombre}` : ''}`,
           html,
           icon: 'info',
           confirmButtonText: 'Cerrar',

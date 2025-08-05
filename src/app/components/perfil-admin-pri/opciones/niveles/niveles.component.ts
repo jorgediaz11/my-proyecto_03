@@ -18,7 +18,7 @@ export class NivelesComponent implements OnInit {
   isEditing = false;
   editingNivelId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   nivelForm!: FormGroup;
   private fb = inject(FormBuilder);
@@ -75,7 +75,7 @@ export class NivelesComponent implements OnInit {
     this.updatePaginatedNiveles();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'nuevo') {
       this.isEditing = false;

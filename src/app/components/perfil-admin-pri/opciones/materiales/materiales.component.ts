@@ -1,15 +1,15 @@
 
 import { Component, OnInit, inject } from '@angular/core';
-import { MaterialService, Material } from '../../../../services/material.service';
+import { MaterialesService, Material } from '../../../../services/materiales.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TipoMaterialService, TipoMaterial } from '../../../../services/tipo-material.service';
 
 @Component({
-  selector: 'app-material',
-  templateUrl: './material.component.html',
-  styleUrls: ['./material.component.css']
+  selector: 'app-materiales',
+  templateUrl: './materiales.component.html',
+  styleUrls: ['./materiales.component.css']
 })
-export class MaterialComponent implements OnInit {
+export class MaterialesComponent implements OnInit {
   Math = Math;
   materiales: Material[] = [];
   filteredMateriales: Material[] = [];
@@ -22,7 +22,7 @@ export class MaterialComponent implements OnInit {
   editingGradoId?: number;
   editingMaterialId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // Tipos de material para el selector
   tiposMaterial: TipoMaterial[] = [];
@@ -30,7 +30,7 @@ export class MaterialComponent implements OnInit {
 
   materialForm!: FormGroup;
   private fb = inject(FormBuilder);
-  private materialService = inject(MaterialService);
+  private materialService = inject(MaterialesService);
   private tipoMaterialService = inject(TipoMaterialService);
 
 
@@ -150,7 +150,7 @@ export class MaterialComponent implements OnInit {
     this.updatePaginatedMateriales();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
   }
 

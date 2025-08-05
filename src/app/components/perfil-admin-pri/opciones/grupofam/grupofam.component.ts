@@ -39,7 +39,7 @@ export class GrupofamComponent implements OnInit, OnDestroy {
   editingEstudianteId?: number;
   editingFamiliaId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // ✅ FORMULARIO REACTIVO
   familiaForm!: FormGroup;
@@ -269,7 +269,7 @@ export class GrupofamComponent implements OnInit, OnDestroy {
   }
 
   // ✅ CAMBIO DE PESTAÑA
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
     if (tab === 'tabla') {
       this.cancelEdit();

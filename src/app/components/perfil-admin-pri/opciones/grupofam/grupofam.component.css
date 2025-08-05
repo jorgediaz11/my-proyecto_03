@@ -1,5 +1,269 @@
+
+/* ========================================================================== 
+   GRUPO FAMILIAR COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS 02
+   ========================================================================== */
+
+/* CONTENEDOR PRINCIPAL */
 .grupofam-container {
-  background: #fff;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #F3FEF5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==========================================================================
+   SISTEMA DE PESTAÑAS
+   ========================================================================== */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
+}
+
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-active:hover {
+  background-color: #3d8b40 !important;
+  transform: translateY(-1px);
+}
+
+.tab-inactive:hover {
+  background-color: #e8f5e8 !important;
+  color: #2d6b30 !important;
+  transform: translateY(-1px);
+}
+
+.tab-content {
+  margin-top: 1rem;
+}
+
+.tab-panel {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   TABLA DE GRUPO FAMILIAR
+   ========================================================================== */
+.grupofam-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.grupofam-table th,
+.grupofam-table td {
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.grupofam-table th {
+  background-color: #4EAD4F;
+  color: white;
+  font-size: 0.95em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.grupofam-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.grupofam-table tr:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.001);
+  transition: all 0.2s ease-in-out;
+}
+
+/* ==========================================================================
+   BOTONES PERSONALIZADOS
+   ========================================================================== */
+.btn-primary {
+  background-color: #4EAD4F !important;
+  border-color: #4EAD4F !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #3d8b40 !important;
+  border-color: #3d8b40 !important;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.3) !important;
+}
+
+.form-control:focus {
+  border-color: #4EAD4F !important;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1) !important;
+}
+
+/* ==========================================================================
+   Íconos de Acción
+   ========================================================================== */
+
+.action-icon {
+  margin: 0 5px;
+  font-size: 1.2em;
+  color: #28a745;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  will-change: color;
+  backface-visibility: hidden;
+}
+
+.action-icon:hover {
+  color: #218838;
+}
+
+/* Opcional: Estilo para el tooltip (si no usas el atributo `title`) */
+.action-icon[title] {
+  position: relative;
+}
+
+.action-icon[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.6em;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.action-icon[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+  z-index: 10;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-container input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+}
+
+.filter-input label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-input input {
+  padding: 5px;
+  border: 1px solid #ddd; /* Borde fino */
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+/* ========================================================================== 
+   Botón de Crear Grupo Familiar
+   ========================================================================== */
+.create-button {
+  padding: 8px 15px;
+  background-color: #4EAD4F;  /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+}
+
+/* ==========================================================================
+   Estilos Generales
+   ========================================================================== */
+h2 {
+  color: #28a745; /* Color verde */
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  /* padding: 10px; */
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }

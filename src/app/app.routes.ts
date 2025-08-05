@@ -18,15 +18,16 @@ import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/est
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component';
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
-import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
+import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfiles/perfiles.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
 import { NivelesComponent } from './components/perfil-admin-pri/opciones/niveles/niveles.component';
 import { GradosComponent } from './components/perfil-admin-pri/opciones/grados/grados.component';
 import { SeccionesComponent } from './components/perfil-admin-pri/opciones/secciones/secciones.component';
 import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupofam/grupofam.component';
 import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
-import { MaterialComponent } from './components/perfil-admin-pri/opciones/material/material.component';
+import { MaterialesComponent } from './components/perfil-admin-pri/opciones/materiales/materiales.component';
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
+import { CuestionariosComponent } from './components/perfil-admin-pri/opciones/cuestionarios/cuestionarios.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component'; // Importar el nuevo componente
@@ -45,6 +46,8 @@ import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-edi
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component';
+import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
+import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
 
 // Confirm Dialog
 export const routes: Routes = [
@@ -84,8 +87,11 @@ export const routes: Routes = [
       { path: 'secciones', component: SeccionesComponent },   // Ruta para la sección de secciones
       { path: 'unidades', component: UnidadesComponent },     // Ruta para la sección de unidades
       { path: 'tipomaterial', component: TipoMaterialComponent }, // Ruta para la sección de tipo de material
-      { path: 'material', component: MaterialComponent },     // Ruta para la sección de material
+      { path: 'materiales', component: MaterialesComponent },     // Ruta para la sección de materiales
       { path: 'grupofam', component: GrupofamComponent },     // Ruta para la sección de grupo familiar
+      { path: 'aulas', component: AulasComponent }, // Ruta para la sección de aulas
+      { path: 'periodo-academ', component: PeriodoAcademComponent }, // Ruta para la sección de periodos académicos
+      { path: 'cuestionarios', component: CuestionariosComponent }, // Ruta para la sección de cuestionarios
     ]
   },
 // Ruta para el perfil de admin sec

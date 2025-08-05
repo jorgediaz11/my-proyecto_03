@@ -95,7 +95,7 @@ export interface EstadisticasMateriales {
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialService {
+export class MaterialesService {
   getMaterialDirecto() {
     throw new Error('Method not implemented.');
   }

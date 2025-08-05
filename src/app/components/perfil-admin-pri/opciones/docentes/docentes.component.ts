@@ -23,7 +23,7 @@ export class DocentesComponent implements OnInit, OnDestroy {
   paginatedDocentes: Docente[] = [];
 
   colegios: Colegio[] = [];
-  filtroColegio: string = '';
+  filtroColegio = '';
 
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
@@ -36,7 +36,7 @@ export class DocentesComponent implements OnInit, OnDestroy {
   isEditing = false;
   editingDocenteId?: number;
   loading = false;
-  activeTab = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // ✅ FORMULARIO REACTIVO
   docenteForm!: FormGroup;
@@ -161,19 +161,16 @@ export class DocentesComponent implements OnInit, OnDestroy {
   // ✅ INICIALIZACIÓN DEL FORMULARIO
   private initForm(): void {
     this.docenteForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellido: ['', [Validators.required, Validators.minLength(3)]], // Asumiendo que el docente tiene apellido
-      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]], // DNI para docentes
+      nombres: ['', [Validators.required, Validators.minLength(3)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]],
+      documento: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
       correo: ['', [Validators.required, Validators.email]],
       direccion: ['', [Validators.required, Validators.minLength(10)]],
-      departamento: ['', [Validators.required]],
-      provincia: ['', [Validators.required]],
-      distrito: ['', [Validators.required]],
-      // Campos específicos para docente
-      titulo: ['', [Validators.required]], // Título del docente
-      especialidad: ['', [Validators.required]], // Especialidad del docente
-      fechaContratacion: ['', [Validators.required]], // Fecha de contratación
+      id_colegio: [null, [Validators.required]],
+      especialidad: ['', [Validators.required]],
+      titulo: ['', [Validators.required]],
+      fechaIngreso: ['', [Validators.required]],
       estado: [true, [Validators.required]]
     });
   }
@@ -270,7 +267,7 @@ export class DocentesComponent implements OnInit, OnDestroy {
   }
 
   // ✅ CAMBIO DE PESTAÑA
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'tabla') {
       this.cancelEdit();
@@ -284,10 +281,17 @@ export class DocentesComponent implements OnInit, OnDestroy {
     this.editingDocenteId = undefined;
     this.docenteForm.reset();
     this.docenteForm.patchValue({
+      nombres: '',
+      apellido: '',
+      documento: '',
+      telefono: '',
+      correo: '',
+      direccion: '',
+      id_colegio: null,
+      especialidad: '',
+      titulo: '',
+      fechaIngreso: '',
       estado: true
-      // Si tienes campos de array como nivelesEducativos o turnos en docente, inicialízalos aquí
-      // nivelesEducativos: [],
-      // turnos: []
     });
   }
 
@@ -305,7 +309,6 @@ export class DocentesComponent implements OnInit, OnDestroy {
     if (this.isEditing && this.editingDocenteId) {
       // Actualizar docente existente
       const updateData: UpdateDocenteDto = {
-        id_docente: this.editingDocenteId,
         ...formData
       };
 
@@ -359,22 +362,17 @@ export class DocentesComponent implements OnInit, OnDestroy {
     this.activeTab = 'nuevo';
 
     this.docenteForm.patchValue({
-      nombre: docente.nombres, // Asumiendo que el campo es 'nombres' en la interfaz Docente
-      apellido: docente.apellido, // Asumiendo que el campo es 'apellido' en la interfaz Docente
-      //dni: docente.dni,
-      telefono: docente.telefono,
+      nombres: docente.nombres,
+      apellido: docente.apellido,
+      documento: docente.documento || '',
+      telefono: docente.telefono || '',
       correo: docente.correo,
-      direccion: docente.direccion,
-      //departamento: docente.departamento,
-      //provincia: docente.provincia,
-      //distrito: docente.distrito,
-      titulo: docente.titulo, // Campo específico de docente
-      especialidad: docente.especialidad, // Campo específico de docente
-      //fechaContratacion: docente.fechaContratacion, // Campo específico de docente
+      direccion: docente.direccion || '',
+      id_colegio: docente.id_colegio || null,
+      especialidad: docente.especialidad || '',
+      titulo: docente.titulo || '',
+      fechaIngreso: docente.fechaIngreso || '',
       estado: docente.estado
-      // Ajustar si docente tiene nivelesEducativos o turnos directamente
-      // nivelesEducativos: docente.nivelesEducativos || [],
-      // turnos: docente.turnos || []
     });
   }
 
@@ -419,6 +417,37 @@ export class DocentesComponent implements OnInit, OnDestroy {
 
   // ✅ VER DETALLES DEL DOCENTE
   viewDocente(id_docente: number): void {
+    const docente = this.docentes.find(d => d.id_docente === id_docente);
+    if (!docente) {
+      this.handleError('Docente no encontrado');
+      return;
+    }
+
+    Swal.fire({
+      title: `Detalles del Docente`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${docente.nombres}</p>
+          <p><strong>Apellidos:</strong> ${docente.apellido}</p>
+          <p><strong>DNI:</strong> </p>
+          <p><strong>Dirección:</strong> ${docente.direccion}</p>
+          <p><strong>Teléfono:</strong> ${docente.telefono}</p>
+          <p><strong>Correo:</strong> ${docente.correo}</p>
+          <p><strong>Ubicación:</strong> </p>
+          <p><strong>Título:</strong> ${docente.titulo || 'No especificado'}</p>
+          <p><strong>Especialidad:</strong> ${docente.especialidad || 'No especificado'}</p>
+          <p><strong>Fecha Contratación:</strong> </p>
+          <p><strong>Estado:</strong> ${docente.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+  }
+
+  // ✅ VER CLASES DEL DOCENTE
+  viewClases(id_docente: number): void {
     const docente = this.docentes.find(d => d.id_docente === id_docente);
     if (!docente) {
       this.handleError('Docente no encontrado');

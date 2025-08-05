@@ -1,5 +1,11 @@
+
 import { Component, OnInit, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
+import { CursosService, Curso } from 'src/app/services/cursos.service';
+import { NivelesService, Nivel } from 'src/app/services/niveles.service';
+import { GradosService, Grado } from 'src/app/services/grados.service';
+import { SeccionesService, Seccion } from 'src/app/services/secciones.service';
 
 interface Estudiante {
   nombre: string;
@@ -70,6 +76,17 @@ export class ReportesComponent implements OnInit {
   ];
   // Fin de la lista de estudiantes
 
+  colegiosClientes: Colegio[] = [];
+  cursos: Curso[] = [];
+  niveles: Nivel[] = [];
+  grados: Grado[] = [];
+  secciones: Seccion[] = [];
+  filtroColegio: string = '';
+  filtroCurso: string = '';
+  filtroNivel: string = '';
+  filtroGrado: string = '';
+  filtroSeccion: string = '';
+
   pageSize = 8;
   currentPage = 1;
 
@@ -81,9 +98,103 @@ export class ReportesComponent implements OnInit {
   filtroProvincia = '';
   filtroDistrito = '';
   private ubigeoService = inject(UbigeoService);
+  private colegiosService = inject(ColegiosService);
+  private cursosService = inject(CursosService);
+  private nivelesService = inject(NivelesService);
+  private gradosService = inject(GradosService);
+  private seccionesService = inject(SeccionesService);
 
   ngOnInit(): void {
     this.cargarDepartamentos();
+    this.cargarColegiosClientes();
+    this.cargarNiveles();
+  }
+
+  cargarNiveles(): void {
+    this.nivelesService.getNiveles().subscribe(niveles => {
+      this.niveles = niveles;
+    });
+  }
+
+  cargarGradosPorNivel(nivelNombre: string): void {
+    if (!nivelNombre) {
+      this.grados = [];
+      this.filtroGrado = '';
+      this.secciones = [];
+      this.filtroSeccion = '';
+      this.cursos = [];
+      this.filtroCurso = '';
+      return;
+    }
+    const nivelObj = this.niveles.find(n => n.nombre === nivelNombre);
+    if (!nivelObj) {
+      this.grados = [];
+      this.filtroGrado = '';
+      this.secciones = [];
+      this.filtroSeccion = '';
+      this.cursos = [];
+      this.filtroCurso = '';
+      return;
+    }
+    this.gradosService.getGradosPorIdNivel(nivelObj.id_nivel).subscribe(grados => {
+      this.grados = grados;
+      this.filtroGrado = '';
+      this.secciones = [];
+      this.filtroSeccion = '';
+      this.cursos = [];
+      this.filtroCurso = '';
+    });
+  }
+
+  cargarSeccionesPorGrado(grado: string): void {
+    if (!grado) {
+      this.secciones = [];
+      this.filtroSeccion = '';
+      this.cursos = [];
+      this.filtroCurso = '';
+      return;
+    }
+    this.seccionesService.getSecciones().subscribe(secciones => {
+      // Filtrar secciones por grado si el endpoint lo permite, si no, mostrar todas
+      this.secciones = secciones.filter(s => s.nombre && grado ? true : true); // Ajustar si hay relación
+      this.filtroSeccion = '';
+      this.cursos = [];
+      this.filtroCurso = '';
+    });
+  }
+
+  cargarCursosPorGrado(grado: string): void {
+    if (!grado) {
+      this.cursos = [];
+      this.filtroCurso = '';
+      return;
+    }
+    this.cursosService.getCursos().subscribe(cursos => {
+      this.cursos = cursos.filter(c => c.grado && c.grado.nombre === grado);
+      this.filtroCurso = '';
+    });
+  }
+
+
+  cargarColegiosClientes(): void {
+    this.colegiosService.getColegiosClientes().subscribe(colegios => {
+      this.colegiosClientes = colegios;
+    });
+  }
+
+  onNivelChange(): void {
+    this.cargarGradosPorNivel(this.filtroNivel);
+  }
+
+  onGradoChange(): void {
+    this.cargarSeccionesPorGrado(this.filtroGrado);
+    this.cargarCursosPorGrado(this.filtroGrado);
+  }
+
+  cargarCursos(): void {
+    this.cursosService.getCursos().subscribe(cursos => {
+      this.cursos = cursos;
+    });
   }
 
   cargarDepartamentos(): void {

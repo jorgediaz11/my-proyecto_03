@@ -20,7 +20,7 @@ export class GradosComponent implements OnInit {
   isEditing = false;
   editingGradoId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   // Niveles para el selector
   niveles: Nivel[] = [];
@@ -124,7 +124,7 @@ export class GradosComponent implements OnInit {
     return found ? found.nombre : String(nivel);
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
   }
 

@@ -313,6 +313,7 @@
             <a
               [routerLink]="['estudiantes']"
               routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
+              [routerLinkActiveOptions]="{ exact: true }"
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
             >
               <svg
@@ -322,8 +323,6 @@
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
               </svg>
               <span class="ml-3">Estudiantes</span>
@@ -332,8 +331,9 @@
           <!-- Grupo Familiar -->
           <li>
             <a
-              [routerLink]="['estudiantes']"
+              [routerLink]="['grupofam']"
               routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
+              [routerLinkActiveOptions]="{ exact: true }"
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
             >
               <svg
@@ -343,8 +343,6 @@
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
               </svg>
               <span class="ml-3">Grupo Familiar</span>
@@ -369,6 +367,28 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
               </svg>
               <span class="ml-3">Clases</span>
+            </a>
+          </li>
+
+          <!-- Cuestionarios -->
+          <li>
+            <a
+              [routerLink]="['cuestionarios']"
+              routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
+              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
+              </svg>
+              <span class="ml-3">Cuestionario</span>
             </a>
           </li>
 
@@ -490,11 +510,25 @@
                 </a>
               </li>
               <li>
-                <a [routerLink]="['material']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
-                  <span class="ml-auto text-right w-full">Material</span>
+                <a [routerLink]="['materiales']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
+                  <span class="ml-auto text-right w-full">Materiales</span>
                   <i class="fas fa-th-large ml-2"></i>
                 </a>
               </li>
+              <!-- Nuevos elementos -->
+              <li>
+                <a [routerLink]="['periodo-academ']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
+                  <span class="ml-auto text-right w-full">Periodo Acad.</span>
+                  <i class="fas fa-signal ml-2"></i>
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['aulas']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
+                  <span class="ml-auto text-right w-full">Aulas</span>
+                  <i class="fas fa-th-large ml-2"></i>
+                </a>
+              </li>
+              <!-- Fin Nuevos elementos -->
             </ul>
           </li>
 
@@ -523,70 +557,12 @@
               </span> -->
             </a>
           </li>
-          <!-- Auditoria -->
-          <li>
-            <button
-              type="button"
-              class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-[#76B177]"
-              aria-controls="dropdown-authentication"
-              data-collapse-toggle="dropdown-authentication"
-            >
-              <svg
-                aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:[color:#4EAD4F] dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <!-- <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path> -->
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              <span class="flex-1 ml-3 text-left whitespace-nowrap text-gray-900"
-                >Auditoría</span
-              >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
-            <ul id="dropdown-authentication" class="hidden py-2 space-y-2">
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-[#76B177]"
-                  >Visitas</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-[#76B177]"
-                  >Accesos</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-[#76B177]"
-                  >Historial</a
-                >
-              </li>
-            </ul>
-          </li>
+          <!-- Auditoria Pendiente -->
 
-          <!--Perfil-->
+          <!--Perfiles-->
           <li>
             <a
-              [routerLink]="['perfil']"
+              [routerLink]="['perfiles']"
               routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
             >
@@ -611,7 +587,7 @@
               (click)="cerrarSesion()"
               (keyup.enter)="cerrarSesion()"
               type="button"
-              class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white bg-gray-200 dark:bg-[#76B177] font-bold group cursor-pointer transition-colors hover:bg-gray-300 dark:hover:bg-[#5ca75c]"
+              class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white bg-gray-200 dark:bg-[#76B177] group cursor-pointer transition-colors hover:bg-gray-300 dark:hover:bg-[#5ca75c]"
               title="Cerrar sesión y volver al login"
             >
               <svg

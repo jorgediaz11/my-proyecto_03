@@ -19,7 +19,7 @@ enum RecoveryState {
   styleUrls: ['./login-recupera.component.css']
 })
 export class LoginRecuperaComponent implements OnInit, OnDestroy {
-  // ✅ PROPIEDADES PRINCIPALES
+  // ✅ PROPIEDADES PRINCIPALES DE VALIDACION
   recuperaForm!: FormGroup;
   currentState = RecoveryState.EMAIL_REQUEST;
   readonly RecoveryState = RecoveryState; // Para usar en el template

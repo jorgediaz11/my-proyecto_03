@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { Chart } from 'chart.js';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
-
+import { CommonModule } from '@angular/common';
+import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
 // Interfaces para los datos del estudiante
 interface Curso {
   id: number;
@@ -26,9 +27,22 @@ interface Evaluacion {
 @Component({
   selector: 'app-perfil-estudiante-muro',
   templateUrl: './perfil-estudiante-muro.component.html',
-  styleUrl: './perfil-estudiante-muro.component.css'
+  styleUrls: ['./perfil-estudiante-muro.component.css'],
+  standalone: true,
+  imports: [CommonModule, ActivarLibrosComponent]
 })
+
 export class PerfilEstudianteMuroComponent implements OnInit, AfterViewInit {
+  // Modal Activar Libro
+  mostrarModalActivarLibro = false;
+
+  onActivarLibro() {
+    this.mostrarModalActivarLibro = true;
+  }
+
+  cerrarModalActivarLibro() {
+    this.mostrarModalActivarLibro = false;
+  }
 
   // ✅ Inyección de servicios
   private userStateService = inject(UserStateService);

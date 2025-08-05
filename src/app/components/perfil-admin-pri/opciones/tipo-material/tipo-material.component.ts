@@ -25,7 +25,7 @@ export class TipoMaterialComponent implements OnInit {
   isEditing = false;
   editingTipoMaterialId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   tipoMaterialForm!: FormGroup;
   private fb = inject(FormBuilder);
@@ -83,7 +83,7 @@ export class TipoMaterialComponent implements OnInit {
     this.updatePaginatedTipoMateriales();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo' ): void {
     this.activeTab = tab;
   }
 

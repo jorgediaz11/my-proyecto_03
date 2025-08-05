@@ -15,7 +15,7 @@ export class CursosComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   searchCurso = '';
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
   showForm = false;
   loading = false;
 

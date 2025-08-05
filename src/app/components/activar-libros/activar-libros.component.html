@@ -2,10 +2,10 @@
   <div class="modal-activar-libros-inner">
     <!-- HEADER -->
     <div class="login-header flex items-center justify-between mb-4">
-      <h1 class="login-title text-3xl font-bold text-gray-800">- Activar Libro -</h1>
+      <h1 class="login-title text-3xl font-bold text-gray-800">ACTIVAR LIBRO</h1>
 
     </div>
-
+    <!-- CONTENIDO -->
     <div class="flex flex-row items-start justify-between mb-4 w-full gap-4">
       <div class="w-1/2 p-2 border-2 border-dashed border-blue-500 rounded-md flex items-start">
         <h3 class="login-subtitle text-base text-gray-600 flex items-center">
@@ -16,7 +16,7 @@
         <img src="assets/images/activarlibro.png" alt="Activar libro" class="w-full h-full max-h-40 max-w-40" loading="lazy" />
       </div>
     </div>
-
+    <!-- FORMULARIO DE ACTIVACIÓN -->
     <form (ngSubmit)="activarLibro()" #formLibro="ngForm" class="flex flex-row items-start flex-1 w-full gap-4 mb-4">
       <div class="form-group w-[70%]">
         <input
@@ -35,8 +35,11 @@
         </button>
       </div>
     </form>
+    <!-- BOTÓN CERRAR -->
     <button type="button" (click)="cerrarVentana()" class="mt-4 px-6 py-2 bg-gray-400 text-white font-bold rounded-lg shadow hover:bg-gray-600 transition-colors w-full">
       Cerrar ventana
     </button>
+
   </div>
+
 </div>

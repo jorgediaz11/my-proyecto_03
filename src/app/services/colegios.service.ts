@@ -25,6 +25,7 @@ export interface Colegio {
   estado: boolean;
   fechaCreacion?: string;
   fechaActualizacion?: string;
+  colegio_cliente?: boolean;
 }
 
 // ✅ INTERFACES PARA CRUD
@@ -45,6 +46,7 @@ export interface CreateColegioDto {
   poblacion: number;
   fechaFundacion: string;
   estado: boolean;
+  colegio_cliente?: boolean;
 }
 
 export interface UpdateColegioDto extends Partial<CreateColegioDto> {

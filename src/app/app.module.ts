@@ -34,7 +34,7 @@ import { DocentesComponent } from './components/perfil-admin-pri/opciones/docent
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component'; // Importa el componente de reportes
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
-import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfil/perfil.component';
+import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfiles/perfiles.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
 import { ClasesColComponent } from './components/perfil-admin-pri/opciones/clases-col/clases-col.component';
@@ -43,7 +43,7 @@ import { GradosComponent } from './components/perfil-admin-pri/opciones/grados/g
 import { SeccionesComponent } from './components/perfil-admin-pri/opciones/secciones/secciones.component';
 import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupofam/grupofam.component';
 import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
-import { MaterialComponent } from './components/perfil-admin-pri/opciones/material/material.component';
+import { MaterialesComponent } from './components/perfil-admin-pri/opciones/materiales/materiales.component';
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
@@ -63,6 +63,8 @@ import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-edi
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component';
+import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
+import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
 
 // Otros Import
 import { routes } from './app.routes';
@@ -89,7 +91,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     ReportesComponent,
     AuditoriaComponent,
     PerfilComponent,
-    MaterialComponent,
+    MaterialesComponent,
     TipoMaterialComponent,
     CursosComponent,
     NivelesComponent,
@@ -101,13 +103,14 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     PerfilDocenteComponent,
     PerfilDocenteMuroComponent,
     PerfilEstudianteComponent,
-    PerfilEstudianteMuroComponent,
     PerfilFamiliaComponent,
     PerfilFamiliaMuroComponent,
     PerfilEditorComponent,
     PerfilEditorMuroComponent,
     TestEndpointsComponent,
     ClasesColComponent,
+    AulasComponent,
+    PeriodoAcademComponent,
     //AcademicoComponent,
   ],
   imports: [
@@ -125,6 +128,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
     //OpcionesComponent,        // Ya está en declarations
     OpcionesComponent,         // Standalone component, import here
+    PerfilEstudianteMuroComponent, // Standalone component, import here
   ],
   providers: [
     provideAnimations(),  // Proveedor para animaciones

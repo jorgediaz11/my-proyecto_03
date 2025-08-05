@@ -83,7 +83,7 @@
 }
 
 .usuarios-table th {
-  background-color: #4EAD4F;
+    background-color: #4EAD4F;
   color: white;
   font-size: 0.95em;
   font-weight: 600;
@@ -518,7 +518,7 @@
 }
 
 /* ==========================================================================
-   UTILIDADES
+   UTILIDADES CSS
    ========================================================================== */
 .text-success { color: #4EAD4F; }
 .text-danger { color: #dc2626; }

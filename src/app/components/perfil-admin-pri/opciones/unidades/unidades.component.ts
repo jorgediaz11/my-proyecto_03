@@ -31,7 +31,7 @@ export class UnidadesComponent implements OnInit {
   isEditing = false;
   editingSeccionId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   unidadForm!: FormGroup;
   private fb = inject(FormBuilder);
@@ -89,7 +89,7 @@ export class UnidadesComponent implements OnInit {
     this.updatePaginatedUnidades();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'nuevo') {
       this.isEditing = false;

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angula
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, PerfilUsuario } from '../../services/user-state.service';
+
 interface MenuItem {
   label: string;      // Cambié 'label' a 'label'
   icon: string;       // Cambié 'icon' a 'icon'

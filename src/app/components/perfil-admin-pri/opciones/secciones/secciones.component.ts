@@ -24,7 +24,7 @@ export class SeccionesComponent implements OnInit {
   isEditing = false;
   editingSeccionId?: number;
   loading = false;
-  activeTab: 'tabla' | 'nuevo' | 'avanzado' = 'tabla';
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
 
   seccionForm!: FormGroup;
   private fb = inject(FormBuilder);
@@ -86,7 +86,7 @@ export class SeccionesComponent implements OnInit {
     this.updatePaginatedSecciones();
   }
 
-  selectTab(tab: 'tabla' | 'nuevo' | 'avanzado'): void {
+  selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'nuevo') {
       this.isEditing = false;

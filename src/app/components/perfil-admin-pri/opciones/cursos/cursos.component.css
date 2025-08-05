@@ -1,167 +1,203 @@
-/* ==========================================================================
-   Estilos de pestañas para cursos (idénticos a docentes y estudiantes)
-   ========================================================================== */
-.tab-active {
-  border-bottom: 2px solid #4EAD4F;
-  color: #28a745;
-  background-color: #fff;
-  font-weight: bold;
-}
+/* ========================================================================== */
+/* CURSOS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
+/* ========================================================================== */
 
-.tab-inactive {
-  border-bottom: 2px solid transparent;
-  color: #888;
-  background-color: #f3fef5;
-  font-weight: normal;
-}
-/* ==========================================================================
-   Contenedor Principal de cursos
-   ========================================================================== */
-
+/* CONTENEDOR PRINCIPAL */
 .cursos-container {
-  /* max-width: 800px; */
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #F3FEF5;  /* Fondo claro */
+  background-color: #F3FEF5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ==========================================================================
-   Tabla de cursos
-   ========================================================================== */
+/* ========================================================================== */
+/* SISTEMA DE PESTAÑAS */
+/* ========================================================================== */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
+}
 
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-active:hover {
+  background-color: #3d8b40 !important;
+  transform: translateY(-1px);
+}
+
+.tab-inactive:hover {
+  background-color: #e8f5e8 !important;
+  color: #2d6b30 !important;
+  transform: translateY(-1px);
+}
+
+.tab-content {
+  margin-top: 1rem;
+}
+
+.tab-panel {
+  animation: cursos-fadeIn 0.3s ease-in-out;
+}
+
+@keyframes cursos-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================================================== */
+/* TABLA DE CURSOS */
+/* ========================================================================== */
 .cursos-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .cursos-table th,
 .cursos-table td {
-  font-size: 0.9em; /* Reducir el tamaño del texto */
+  font-size: 0.9em;
   border: 1px solid #ddd;
-  padding: 6px; /* Reducir el espacio interno */
+  padding: 8px;
   text-align: left;
 }
 
 .cursos-table th {
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: white; /* Texto blanco */
-  font-size: 0.95em; /* Tamaño ligeramente mayor para los encabezados */
+  background-color: #4EAD4F;
+  color: white;
+  font-size: 0.95em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .cursos-table tr:nth-child(even) {
-  background-color: #f0f0f0;  /* Fondo gris claro */
+  background-color: #f9fafb;
 }
 
 .cursos-table tr:hover {
-  background-color: #ddd; /* Fondo gris al pasar el cursor */
+  background-color: #f3f4f6;
+  transform: scale(1.001);
+  transition: all 0.15s ease-in-out;
 }
 
-/* ==========================================================================
-   Paginación
-   ========================================================================== */
-
+/* ========================================================================== */
+/* PAGINACIÓN */
+/* ========================================================================== */
 .pagination {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .pagination button {
   margin: 0 5px;
-  padding: 5px 10px;
-  border: 1px solid #28a745;  /* Color verde */
-  background-color: white;  /* Fondo blanco */
-  color: #28a745; /* Color verde */
+  padding: 8px 12px;
+  border: 1px solid #28a745;
+  background-color: white;
+  color: #28a745;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 .pagination button.active {
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: white; /* Texto blanco */
+  background-color: #4EAD4F;
+  color: white;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
 .pagination button:hover {
-  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
-  color: white; /* Texto blanco */
+  background-color: #218838;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* ==========================================================================
-   Íconos de Acción
-   ========================================================================== */
-
+/* ========================================================================== */
+/* ICONOS DE ACCIÓN */
+/* ========================================================================== */
 .action-icon {
-  margin: 0 5px;
-  font-size: 1.2em;
-  color: #28a745; /* Color verde */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 3px;
+  font-size: 1em;
+  border-radius: 50%;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.2s ease-in-out;
 }
 
-.action-icon:hover {
-  color: #218838;
+.action-icon.view {
+  color: #3b82f6;
+  background-color: #eff6ff;
 }
 
-/* Opcional: Estilo para el tooltip (si no usas el atributo `title`) */
-.action-icon[title] {
-  position: relative;
+.action-icon.view:hover {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+  transform: scale(1.1);
 }
 
-.action-icon[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333; /* Fondo oscuro */
-  color: #fff;  /* Fondo blanco */
-  padding: 5px 10px;
-  border-radius: 4px;
-  white-space: nowrap;  /* Texto blanco */
-  font-size: 0.6em; /* Igual al tamaño del texto de la tabla */
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+.action-icon.edit {
+  color: #f59e0b;
+  background-color: #fffbeb;
 }
 
-.action-icon[title]:hover::before {
-  content: '';
-  position: absolute;
-  bottom: 90%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #333 transparent;
-  z-index: 10;
+.action-icon.edit:hover {
+  color: #d97706;
+  background-color: #fef3c7;
+  transform: scale(1.1);
 }
 
-.filter-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+.action-icon.delete {
+  color: #ef4444;
+  background-color: #fef2f2;
 }
 
-.filter-container label {
-  margin-right: 10px;
-  font-weight: bold;
+.action-icon.delete:hover {
+  color: #dc2626;
+  background-color: #fee2e2;
+  transform: scale(1.1);
 }
 
-.filter-container input {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9em;
-  width: 250px;
-}
-
+/* ========================================================================== */
+/* FILTROS Y BÚSQUEDA */
+/* ========================================================================== */
 .filter-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
 }
 
 .filter-input {
@@ -172,40 +208,91 @@
 .filter-input label {
   margin-right: 10px;
   font-weight: bold;
+  color: #374151;
+  font-size: 0.875rem;
 }
 
 .filter-input input {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9em;
-  width: 250px;
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  width: 280px;
+  transition: all 0.2s ease-in-out;
 }
 
-/* ==========================================================================
-   Botón de Crear Estudiante
-   ========================================================================== */
+.filter-input input:focus {
+  outline: none;
+  border-color: #4EAD4F;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
+}
+
+/* ========================================================================== */
+/* BOTONES */
+/* ========================================================================== */
 .create-button {
-  padding: 8px 15px;
-  background-color: #4EAD4F;  /* Fondo verde */
-  color: white; /* Texto blanco */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 0.9em;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
 .create-button:hover {
-  background-color: #218838;  /* Verde más oscuro al pasar el cursor */
+  background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  border-color: #4EAD4F;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
+}
+
+.btn-secondary {
+  background-color: white;
+  border: 2px solid #d1d5db;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
 }
 
 
-/* ==========================================================================
-   Estilos Generales
-   ========================================================================== */
+/* ========================================================================== */
+/* ESTILOS GENERALES BÁSICOS */
+/* ========================================================================== */
 h2 {
-  color: #28a745; /* Color verde */
+  color: #28a745;
 }
 
 label {
@@ -218,13 +305,13 @@ input {
   border-radius: 5px;
 }
 
+
 ul {
   list-style: none;
   padding: 0;
 }
 
 li {
-  /* padding: 10px; */
   border: 1px solid #ccc;
   margin-bottom: 5px;
   border-radius: 5px;
