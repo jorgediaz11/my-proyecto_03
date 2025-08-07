@@ -370,6 +370,28 @@
             </a>
           </li>
 
+          <!-- Actividades -->
+          <li>
+            <a
+              [routerLink]="['actividades']"
+              routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
+              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
+              </svg>
+              <span class="ml-3">Actividades</span>
+            </a>
+          </li>
+
           <!-- Cuestionarios -->
           <li>
             <a
@@ -529,6 +551,13 @@
                 </a>
               </li>
               <!-- Fin Nuevos elementos -->
+              <li>
+                <a [routerLink]="['tipo-actividad']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
+                  <span class="ml-auto text-right w-full">Tipo Actividad</span>
+                  <i class="fas fa-signal ml-2"></i>
+                </a>
+              </li>
+              
             </ul>
           </li>
 

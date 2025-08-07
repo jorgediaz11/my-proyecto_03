@@ -48,6 +48,8 @@ import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-edi
 import { TestEndpointsComponent } from './test-endpoints.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
 import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
+import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
+import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 
 // Confirm Dialog
 export const routes: Routes = [
@@ -89,9 +91,11 @@ export const routes: Routes = [
       { path: 'tipomaterial', component: TipoMaterialComponent }, // Ruta para la sección de tipo de material
       { path: 'materiales', component: MaterialesComponent },     // Ruta para la sección de materiales
       { path: 'grupofam', component: GrupofamComponent },     // Ruta para la sección de grupo familiar
-      { path: 'aulas', component: AulasComponent }, // Ruta para la sección de aulas
-      { path: 'periodo-academ', component: PeriodoAcademComponent }, // Ruta para la sección de periodos académicos
-      { path: 'cuestionarios', component: CuestionariosComponent }, // Ruta para la sección de cuestionarios
+  { path: 'aulas', component: AulasComponent }, // Ruta para la sección de aulas
+  { path: 'periodo-academ', component: PeriodoAcademComponent }, // Ruta para la sección de periodos académicos
+  { path: 'actividades', component: ActividadesComponent }, // Ruta para la sección de actividades
+  { path: 'tipo-actividad', component: TipoActividadComponent }, // Ruta para la sección de tipo de actividad
+  { path: 'cuestionarios', component: CuestionariosComponent }, // Ruta para la sección de cuestionarios
     ]
   },
 // Ruta para el perfil de admin sec

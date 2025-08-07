@@ -11,13 +11,6 @@ export interface Cuestionario {
   estado: boolean;
 }
 
-export interface Cuestionario {
-  id_cuestionario: number;
-  titulo: string;
-  descripcion?: string;
-  estado: boolean;
-}
-
 @Injectable({
   providedIn: 'root'
 })

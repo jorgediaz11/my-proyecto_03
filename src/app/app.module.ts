@@ -64,6 +64,9 @@ import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-edi
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
+
+import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
+import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
 
 // Otros Import
@@ -111,7 +114,9 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     ClasesColComponent,
     AulasComponent,
     PeriodoAcademComponent,
-    //AcademicoComponent,
+  //AcademicoComponent,
+  ActividadesComponent,
+  TipoActividadComponent,
   ],
   imports: [
     BrowserModule,            // Importa BrowserModule aquí
