@@ -1,9 +1,9 @@
 /* ========================================================================== */
-/* AULAS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
+/* AREAS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */
 
 /* CONTENEDOR PRINCIPAL */
-.aulas-container {
+.areas-container {
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -17,7 +17,7 @@
    SISTEMA DE PESTAÑAS
    ========================================================================== */
 
-.aulas-tab-active {
+.areas-tab-active {
   background-color: #4EAD4F !important;
   color: #fff !important;
   border-color: #4EAD4F !important;
@@ -25,33 +25,33 @@
   box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
 }
 
-.aulas-tab-inactive {
+.areas-tab-inactive {
   background-color: #f0f9f0 !important;
   color: #3d8b40 !important;
   border-color: #f0f9f0 !important;
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-tab-active:hover {
+.areas-tab-active:hover {
   background-color: #3d8b40 !important;
   transform: translateY(-1px);
 }
 
-.aulas-tab-inactive:hover {
+.areas-tab-inactive:hover {
   background-color: #e8f5e8 !important;
   color: #2d6b30 !important;
   transform: translateY(-1px);
 }
 
-.aulas-tab-content {
+.areas-tab-content {
   margin-top: 1rem;
 }
 
-.aulas-tab-panel {
-  animation: aulas-fadeIn 0.3s ease-in-out;
+.areas-tab-panel {
+  animation: areas-fadeIn 0.3s ease-in-out;
 }
 
-@keyframes aulas-fadeIn {
+@keyframes areas-fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -63,10 +63,10 @@
 }
 
 /* ==========================================================================
-   TABLA DE AULAS
+   TABLA DE AREAS
    ========================================================================== */
 
-.aulas-table {
+.areas-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
@@ -76,15 +76,15 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.aulas-table th,
-.aulas-table td {
+.areas-table th,
+.areas-table td {
   font-size: 0.9em;
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-.aulas-table th {
+.areas-table th {
   background-color: #4EAD4F;
   color: white;
   font-size: 0.95em;
@@ -93,11 +93,11 @@
   letter-spacing: 0.05em;
 }
 
-.aulas-table tr:nth-child(even) {
+.areas-table tr:nth-child(even) {
   background-color: #f9fafb;
 }
 
-.aulas-table tr:hover {
+.areas-table tr:hover {
   background-color: #f3f4f6;
   transform: scale(1.001);
   transition: all 0.15s ease-in-out;
@@ -107,7 +107,7 @@
    ICONOS DE ACCIÓN
    ========================================================================== */
 
-.aulas-action-icon {
+.areas-action-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -120,34 +120,34 @@
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-action-icon.view {
+.areas-action-icon.view {
   color: #3b82f6;
   background-color: #eff6ff;
 }
 
-.aulas-action-icon.view:hover {
+.areas-action-icon.view:hover {
   color: #1d4ed8;
   background-color: #dbeafe;
   transform: scale(1.1);
 }
 
-.aulas-action-icon.edit {
+.areas-action-icon.edit {
   color: #f59e0b;
   background-color: #fffbeb;
 }
 
-.aulas-action-icon.edit:hover {
+.areas-action-icon.edit:hover {
   color: #d97706;
   background-color: #fef3c7;
   transform: scale(1.1);
 }
 
-.aulas-action-icon.delete {
+.areas-action-icon.delete {
   color: #ef4444;
   background-color: #fef2f2;
 }
 
-.aulas-action-icon.delete:hover {
+.areas-action-icon.delete:hover {
   color: #dc2626;
   background-color: #fee2e2;
   transform: scale(1.1);
@@ -157,7 +157,7 @@
    FILTROS Y BÚSQUEDA
    ========================================================================== */
 
-.aulas-filter-container {
+.areas-filter-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -168,19 +168,19 @@
   border: 1px solid #e2e8f0;
 }
 
-.aulas-filter-input {
+.areas-filter-input {
   display: flex;
   align-items: center;
 }
 
-.aulas-filter-input label {
+.areas-filter-input label {
   margin-right: 10px;
   font-weight: bold;
   color: #374151;
   font-size: 0.875rem;
 }
 
-.aulas-filter-input input {
+.areas-filter-input input {
   padding: 8px 12px;
   border: 2px solid #e5e7eb;
   border-radius: 6px;
@@ -189,7 +189,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-filter-input input:focus {
+.areas-filter-input input:focus {
   outline: none;
   border-color: #4EAD4F;
   box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
@@ -199,7 +199,7 @@
    BOTONES
    ========================================================================== */
 
-.aulas-create-button {
+.areas-create-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -215,13 +215,13 @@
   box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
-.aulas-create-button:hover {
+.areas-create-button:hover {
   background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
 }
 
-.aulas-btn-primary {
+.areas-btn-primary {
   background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
   border-color: #4EAD4F;
   color: white;
@@ -233,13 +233,13 @@
   box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
-.aulas-btn-primary:hover {
+.areas-btn-primary:hover {
   background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
 }
 
-.aulas-btn-secondary {
+.areas-btn-secondary {
   background-color: white;
   border: 2px solid #d1d5db;
   color: #374151;
@@ -250,7 +250,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-btn-secondary:hover {
+.areas-btn-secondary:hover {
   background-color: #f9fafb;
   border-color: #9ca3af;
   transform: translateY(-1px);
@@ -260,7 +260,7 @@
    PAGINACIÓN
    ========================================================================== */
 
-.aulas-pagination {
+.areas-pagination {
   text-align: center;
   display: flex;
   justify-content: center;
@@ -268,7 +268,7 @@
   margin-top: 1.5rem;
 }
 
-.aulas-pagination button {
+.areas-pagination button {
   margin: 0 5px;
   padding: 8px 12px;
   border: 1px solid #28a745;
@@ -280,13 +280,13 @@
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-pagination button.active {
+.areas-pagination button.active {
   background-color: #4EAD4F;
   color: white;
   box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
-.aulas-pagination button:hover {
+.areas-pagination button:hover {
   background-color: #218838;
   color: white;
   transform: translateY(-1px);
@@ -297,29 +297,29 @@
    FORMULARIOS
    ========================================================================== */
 
-.aulas-form-container {
+.areas-form-container {
   background-color: white;
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
 }
 
-.aulas-form-header {
+.areas-form-header {
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border-bottom: 1px solid #e5e7eb;
   border-radius: 0.75rem 0.75rem 0 0;
   padding: 1.5rem;
 }
 
-.aulas-form-body {
+.areas-form-body {
   padding: 1.5rem;
 }
 
-.aulas-form-group {
+.areas-form-group {
   margin-bottom: 1.5rem;
 }
 
-.aulas-form-label {
+.areas-form-label {
   display: block;
   font-weight: 600;
   color: #374151;
@@ -327,7 +327,7 @@
   font-size: 0.875rem;
 }
 
-.aulas-form-input {
+.areas-form-input {
   width: 100%;
   padding: 0.75rem;
   border: 2px solid #e5e7eb;
@@ -337,25 +337,25 @@
   background-color: white;
 }
 
-.aulas-form-input:focus {
+.areas-form-input:focus {
   outline: none;
   border-color: #4EAD4F;
   box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
 }
 
-.aulas-form-input.error {
+.areas-form-input.error {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.aulas-form-error {
+.areas-form-error {
   color: #ef4444;
   font-size: 0.75rem;
   margin-top: 0.25rem;
   font-weight: 500;
 }
 
-.aulas-form-select {
+.areas-form-select {
   width: 100%;
   padding: 0.75rem;
   border: 2px solid #e5e7eb;
@@ -366,7 +366,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.aulas-form-select:focus {
+.areas-form-select:focus {
   outline: none;
   border-color: #4EAD4F;
   box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
@@ -376,7 +376,7 @@
    LOADING Y OVERLAYS
    ========================================================================== */
 
-.aulas-loading-overlay {
+.areas-loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -389,7 +389,7 @@
   z-index: 9999;
 }
 
-.aulas-loading-content {
+.areas-loading-content {
   background-color: white;
   padding: 2rem;
   border-radius: 0.75rem;
@@ -399,16 +399,16 @@
   gap: 1rem;
 }
 
-.aulas-spinner {
+.areas-spinner {
   width: 2rem;
   height: 2rem;
   border: 3px solid #f3f4f6;
   border-top: 3px solid #4EAD4F;
   border-radius: 50%;
-  animation: aulas-spin 1s linear infinite;
+  animation: areas-spin 1s linear infinite;
 }
 
-@keyframes aulas-spin {
+@keyframes areas-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
@@ -417,7 +417,7 @@
    BADGES Y ESTADOS
    ========================================================================== */
 
-.aulas-badge {
+.areas-badge {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
@@ -428,19 +428,19 @@
   letter-spacing: 0.025em;
 }
 
-.aulas-badge-success {
+.areas-badge-success {
   background-color: #d1fae5;
   color: #065f46;
   border: 1px solid #a7f3d0;
 }
 
-.aulas-badge-danger {
+.areas-badge-danger {
   background-color: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
 }
 
-.aulas-badge-info {
+.areas-badge-info {
   background-color: #dbeafe;
   color: #1e40af;
   border: 1px solid #93c5fd;
@@ -450,26 +450,26 @@
    ESTADOS VACÍOS
    ========================================================================== */
 
-.aulas-empty-state {
+.areas-empty-state {
   text-align: center;
   padding: 3rem 1rem;
   color: #6b7280;
 }
 
-.aulas-empty-state-icon {
+.areas-empty-state-icon {
   font-size: 4rem;
   color: #d1d5db;
   margin-bottom: 1rem;
 }
 
-.aulas-empty-state-title {
+.areas-empty-state-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #374151;
   margin-bottom: 0.5rem;
 }
 
-.aulas-empty-state-description {
+.areas-empty-state-description {
   color: #6b7280;
   margin-bottom: 1.5rem;
 }
@@ -478,51 +478,51 @@
    RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 768px) {
-  .aulas-container {
+  .areas-container {
     margin: 10px;
     padding: 15px;
   }
 
-  .aulas-filter-container {
+  .areas-filter-container {
     flex-direction: column;
     gap: 1rem;
   }
 
-  .aulas-filter-input input {
+  .areas-filter-input input {
     width: 100%;
   }
 
-  .aulas-table th,
-  .aulas-table td {
+  .areas-table th,
+  .areas-table td {
     padding: 4px;
     font-size: 0.8em;
   }
 
-  .aulas-action-icon {
+  .areas-action-icon {
     width: 1.5rem;
     height: 1.5rem;
     font-size: 0.8em;
   }
 
-  .aulas-pagination {
+  .areas-pagination {
     flex-wrap: wrap;
     gap: 0.25rem;
   }
 
-  .aulas-pagination button {
+  .areas-pagination button {
     font-size: 0.8em;
     padding: 4px 8px;
   }
 }
 
 @media (max-width: 480px) {
-  .aulas-table {
+  .areas-table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
   }
 
-  .aulas-form-container {
+  .areas-form-container {
     margin: 0.5rem;
   }
 }
@@ -531,37 +531,37 @@
    UTILIDADES CSS
    ========================================================================== */
 
-.aulas-text-success { color: #4EAD4F; }
-.aulas-text-danger { color: #dc2626; }
-.aulas-text-warning { color: #d97706; }
-.aulas-text-info { color: #2563eb; }
+.areas-text-success { color: #4EAD4F; }
+.areas-text-danger { color: #dc2626; }
+.areas-text-warning { color: #d97706; }
+.areas-text-info { color: #2563eb; }
 
-.aulas-bg-success { background-color: #d1fae5; }
-.aulas-bg-danger { background-color: #fee2e2; }
-.aulas-bg-warning { background-color: #fef3c7; }
-.aulas-bg-info { background-color: #dbeafe; }
+.areas-bg-success { background-color: #d1fae5; }
+.areas-bg-danger { background-color: #fee2e2; }
+.areas-bg-warning { background-color: #fef3c7; }
+.areas-bg-info { background-color: #dbeafe; }
 
 /* ESTILOS GENERALES BÁSICOS */
-.aulas-title {
+.areas-title {
   color: #28a745;
 }
 
-.aulas-label {
+.areas-label {
   font-weight: bold;
 }
 
-.aulas-input {
+.areas-input {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.aulas-list {
+.areas-list {
   list-style: none;
   padding: 0;
 }
 
-.aulas-list-item {
+.areas-list-item {
   border: 1px solid #ccc;
   margin-bottom: 5px;
   border-radius: 5px;

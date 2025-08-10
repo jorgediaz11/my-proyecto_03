@@ -23,7 +23,12 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { LoginRegistroComponent } from './components/login-registro/login-registro.component';
 import { LoginRecuperaComponent } from './components/login-recupera/login-recupera.component'; // Importar el componente de recuperación de contraseña
 // Menu TMP Opciones
-import { OpcionesComponent } from './components/opciones/opciones.component';
+import { AreasComponent } from './components/perfil-admin-pri/opciones/areas/areas.component';
+import { CursosDetalleComponent } from './components/perfil-admin-pri/opciones/cursos-detalle/cursos-detalle.component';
+import { LeccionesComponent } from './components/perfil-admin-pri/opciones/lecciones/lecciones.component';
+import { LibrosComponent } from './components/perfil-admin-pri/opciones/libros/libros.component';
+import { OpcionesComponent } from './components/perfil-admin-pri/opciones/opciones/opciones.component';
+import { PreguntasComponent } from './components/perfil-admin-pri/opciones/preguntas/preguntas.component';
 // import { ActivarLibrosComponent } from './components/activar-libros/activar-libros.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
@@ -80,7 +85,12 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     LoginFormComponent,
     LoginRegistroComponent,
     LoginRecuperaComponent,
-    //OpcionesComponent, // Standalone component, imported below
+    AreasComponent,
+    CursosDetalleComponent,
+    LeccionesComponent,
+    LibrosComponent,
+    OpcionesComponent,
+    PreguntasComponent,
     // ActivarLibrosComponent, // Ahora standalone, no va en declarations
     PerfilAdminPriComponent,
     PerfilAdminPriMuroComponent,
@@ -114,9 +124,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     ClasesColComponent,
     AulasComponent,
     PeriodoAcademComponent,
-  //AcademicoComponent,
-  ActividadesComponent,
-  TipoActividadComponent,
+    ActividadesComponent,
+    TipoActividadComponent,
   ],
   imports: [
     BrowserModule,            // Importa BrowserModule aquí
@@ -131,8 +140,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     MatTabsModule,            // Importa MatTabsModule aquí
     ReactiveFormsModule,      // Importa ReactiveFormsModule aquí BackEnd
     HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
-    //OpcionesComponent,        // Ya está en declarations
-    OpcionesComponent,         // Standalone component, import here
+  //OpcionesComponent,        // Ya está en declarations
+  //OpcionesComponent,         // Standalone component, import here
     PerfilEstudianteMuroComponent, // Standalone component, import here
   ],
   providers: [
