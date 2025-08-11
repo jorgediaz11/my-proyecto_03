@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CursosService, Curso } from '../../../../services/cursos.service';
+import { CursosDetalleService } from 'src/app/services/cursos-detalle.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -26,6 +27,7 @@ export class CursosComponent implements OnInit {
   cursoForm!: FormGroup;
 
   private cursosService = inject(CursosService);
+  private cursosDetalleService = inject(CursosDetalleService);
   private fb = inject(FormBuilder);
 
   ngOnInit(): void {
@@ -168,10 +170,91 @@ export class CursosComponent implements OnInit {
 
   viewContenido(id_curso: number): void {
     Swal.fire({
-      title: 'Contenido del Curso',
-      html: `<p>Próximamente se mostrará el contenido del curso:</p>${id_curso}`,
-      icon: 'info'
+      title: 'Cargando...',
+      html: '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando detalle del curso...</div>',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      width: 1000,
+      heightAuto: false,
+      customClass: {
+        popup: 'swal-contenido-curso'
+      }
     });
+
+    interface LeccionApi {
+      titulo_leccion: string;
+      contenido_leccion: string;
+    }
+    interface UnidadApi {
+      nombre_unidad: string;
+      orden_unidad: number;
+      descripcion_unidad: string;
+      lecciones: LeccionApi[];
+    }
+    interface CursoApi {
+      nombre_curso: string;
+      descripcion_curso: string;
+      unidades: UnidadApi[];
+    }
+    this.cursosDetalleService.getDetalleCurso(id_curso).subscribe(
+      (curso: CursoApi) => {
+        // Mapear campos del backend a los nombres esperados
+        const mappedCurso = {
+          nombre: curso.nombre_curso,
+          descripcion: curso.descripcion_curso,
+          unidades: (curso.unidades || []).map((unidad: UnidadApi) => ({
+            nombre: unidad.nombre_unidad,
+            orden: unidad.orden_unidad,
+            descripcion: unidad.descripcion_unidad,
+            lecciones: (unidad.lecciones || []).map((leccion: LeccionApi) => ({
+              titulo: leccion.titulo_leccion,
+              contenido: leccion.contenido_leccion
+            }))
+          }))
+        };
+        let html = `<div class='cursos-detalle-container'>`;
+        html += `<h2 class='text-xl font-bold mb-2'>${mappedCurso.nombre}</h2>`;
+        html += `<div class='mb-2 text-gray-700'>${mappedCurso.descripcion || ''}</div>`;
+        if (mappedCurso.unidades && mappedCurso.unidades.length > 0) {
+          mappedCurso.unidades.forEach((unidad) => {
+            html += `<div class='mb-4 p-2 bg-white rounded shadow border'>`;
+            html += `<div class='font-semibold text-green-700 mb-1'>Unidad ${unidad.orden}: <span class='font-bold'>${unidad.nombre}</span></div>`;
+            html += `<div class='text-gray-600 mb-1'>${unidad.descripcion || ''}</div>`;
+            if (unidad.lecciones && unidad.lecciones.length > 0) {
+              html += `<div class='font-semibold text-green-600 mb-1'>Lecciones</div><ul class='list-disc pl-5'>`;
+              unidad.lecciones.forEach((leccion) => {
+                html += `<li class='mb-1'><span class='font-medium'>${leccion.titulo}</span>: <span class='text-gray-500'>${leccion.contenido}</span></li>`;
+              });
+              html += `</ul>`;
+            } else {
+              html += `<div class='text-sm text-gray-400 italic'>No hay lecciones en esta unidad.</div>`;
+            }
+            html += `</div>`;
+          });
+        } else {
+          html += `<div class='text-sm text-gray-400 italic'>No hay unidades registradas para este curso.</div>`;
+        }
+        html += `</div>`;
+        Swal.fire({
+          title: 'Contenido del Curso',
+          html,
+          icon: 'info',
+          width: 1000,
+          heightAuto: false,
+          customClass: {
+            popup: 'swal-contenido-curso'
+          }
+        });
+      },
+      () => {
+        Swal.fire({
+          title: 'Error',
+          html: 'No se pudo cargar el detalle del curso.',
+          icon: 'error',
+          width: 500
+        });
+      }
+    );
   }
 
 }

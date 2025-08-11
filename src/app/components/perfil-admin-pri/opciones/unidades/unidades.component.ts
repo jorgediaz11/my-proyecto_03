@@ -1,6 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UnidadesService } from '../../../../services/unidades.service';
+import { NivelesService, Nivel } from '../../../../services/niveles.service';
+import { GradosService, Grado } from '../../../../services/grados.service';
+import { CursosService, Curso } from '../../../../services/cursos.service';
 
 interface Unidad {
   id_unidad?: number;
@@ -19,6 +22,20 @@ interface Unidad {
   styleUrls: ['./unidades.component.css']
 })
 export class UnidadesComponent implements OnInit {
+  // Listas para selects
+  niveles: Nivel[] = [];
+  grados: Grado[] = [];
+  cursos: Curso[] = [];
+
+  // Selección actual
+  filtroNivel = '';
+  filtroGrado = '';
+  filtroCurso = '';
+
+  // Servicios
+  private nivelesService = inject(NivelesService);
+  private gradosService = inject(GradosService);
+  private cursosService = inject(CursosService);
   Math = Math;
   unidades: Unidad[] = [];
   filteredUnidades: Unidad[] = [];
@@ -40,6 +57,7 @@ export class UnidadesComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.cargarUnidades();
+  this.cargarNiveles();
   }
 
   cargarUnidades(): void {
@@ -67,15 +85,98 @@ export class UnidadesComponent implements OnInit {
   }
 
   filterUnidades(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredUnidades = [...this.unidades];
-    } else {
-      this.filteredUnidades = this.unidades.filter(unidad =>
+    let resultado = [...this.unidades];
+    // Filtro por texto
+    if (this.searchTerm.trim()) {
+      resultado = resultado.filter(unidad =>
         unidad.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    // Filtro por nivel
+    if (this.filtroNivel) {
+      const nivelId = Number(this.filtroNivel);
+      resultado = resultado.filter(unidad =>
+        (unidad as { id_nivel?: number }).id_nivel === nivelId
+      );
+    }
+    // Filtro por curso (único relevante para unidades)
+    if (this.filtroCurso) {
+      const cursoId = Number(this.filtroCurso);
+      resultado = resultado.filter(unidad => unidad.id_curso === cursoId);
+    }
+    this.filteredUnidades = resultado;
     this.currentPage = 1;
     this.updatePaginatedUnidades();
+
+  }
+
+  cargarNiveles(): void {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles) => {
+        this.niveles = niveles;
+      },
+      error: (err) => {
+        console.error('Error cargando niveles', err);
+      }
+    });
+  }
+
+  onNivelChange(): void {
+    this.filtroGrado = '';
+    this.filtroCurso = '';
+    this.grados = [];
+    this.cursos = [];
+    if (this.filtroNivel) {
+      const nivelId = Number(this.filtroNivel);
+      this.gradosService.getGrados().subscribe({
+        next: (grados) => {
+          this.grados = grados.filter(g => typeof g.nivel === 'object' && g.nivel && 'id_nivel' in g.nivel && g.nivel.id_nivel === nivelId);
+        },
+        error: (err) => {
+          console.error('Error cargando grados', err);
+        }
+      });
+    }
+    this.filterUnidades();
+  }
+
+  onGradoChange(): void {
+    this.filtroCurso = '';
+    this.cursos = [];
+    if (this.filtroGrado) {
+      const gradoId = Number(this.filtroGrado);
+      this.cursosService.getCursos().subscribe({
+        next: (cursos) => {
+          this.cursos = cursos.filter(c => c.grado && c.grado.id_grado === gradoId);
+        },
+        error: (err) => {
+          console.error('Error cargando cursos', err);
+        }
+      });
+    }
+    this.filterUnidades();
+  }
+
+  onCursoChange(): void {
+    if (this.filtroCurso) {
+      const cursoId = Number(this.filtroCurso);
+      this.unidadesService.getUnidadesPorCurso(cursoId).subscribe({
+        next: (unidades) => {
+          this.unidades = unidades;
+          this.filteredUnidades = [...unidades];
+          this.currentPage = 1;
+          this.updatePaginatedUnidades();
+        },
+        error: (err) => {
+          this.unidades = [];
+          this.filteredUnidades = [];
+          this.updatePaginatedUnidades();
+          console.error('Error cargando unidades por curso', err);
+        }
+      });
+    } else {
+      this.cargarUnidades();
+    }
   }
 
   updatePaginatedUnidades(): void {

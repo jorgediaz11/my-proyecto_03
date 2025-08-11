@@ -50,6 +50,10 @@ import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupof
 import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
 import { MaterialesComponent } from './components/perfil-admin-pri/opciones/materiales/materiales.component';
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
+import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
+import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
+import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
+import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -68,11 +72,6 @@ import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-edi
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component';
-import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
-
-import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
-import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
-import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
 
 // Otros Import
 import { routes } from './app.routes';

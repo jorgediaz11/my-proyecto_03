@@ -16,7 +16,22 @@ export class CursosDetalleComponent implements OnInit {
   ngOnInit() {
     if (this.id) {
       this.cursosDetalleService.getDetalleCurso(this.id).subscribe(data => {
-        this.curso = data;
+        this.curso = {
+          id_curso: data.id_curso,
+          nombre: data.nombre_curso,
+          descripcion: data.descripcion_curso,
+          unidades: (data.unidades || []).map(unidad => ({
+            id_unidad: unidad.id_unidad,
+            nombre: unidad.nombre_unidad,
+            orden: unidad.orden_unidad,
+            descripcion: unidad.descripcion_unidad,
+            lecciones: (unidad.lecciones || []).map(leccion => ({
+              id_leccion: leccion.id_leccion,
+              titulo: leccion.titulo_leccion,
+              contenido: leccion.contenido_leccion
+            }))
+          }))
+        };
         this.loading = false;
       });
     }

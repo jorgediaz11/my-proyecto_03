@@ -1,3 +1,24 @@
+// Tipos para la respuesta de la API de detalle de curso
+export interface LeccionApi {
+  id_leccion: number;
+  titulo_leccion: string;
+  contenido_leccion: string;
+}
+
+export interface UnidadApi {
+  id_unidad: number;
+  nombre_unidad: string;
+  orden_unidad: number;
+  descripcion_unidad: string;
+  lecciones: LeccionApi[];
+}
+
+export interface CursoApi {
+  id_curso: number;
+  nombre_curso: string;
+  descripcion_curso: string;
+  unidades: UnidadApi[];
+}
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -42,7 +63,7 @@ export interface UpdateCursoDetalleDto {
 })
 export class CursosDetalleService {
   // API base URL Cursos Detalle
-  private apiUrl = environment.apiBaseUrl + '/cursos-detalle';
+  private apiUrl = environment.apiBaseUrl + '/curso-detalle';
   private http = inject(HttpClient);
 
   // Obtener headers con JWT token
@@ -68,8 +89,8 @@ export class CursosDetalleService {
   }
 
     // GET /cursos-detalle/:id - Obtener detalle de curso por ID
-  getDetalleCurso(id_curso: number): Observable<CursoDetalle> {
-    return this.http.get<CursoDetalle>(`${this.apiUrl}/${id_curso}`, {
+  getDetalleCurso(id_curso: number): Observable<CursoApi> {
+    return this.http.get<CursoApi>(`${this.apiUrl}/${id_curso}`, {
       headers: this.getAuthHeaders()
     });
   }

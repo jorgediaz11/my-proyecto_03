@@ -8,7 +8,11 @@ export interface Grado {
   id_grado?: number;
   nombre: string; // 1°, 2°, 3°, 4°, 5°, 6°
   descripcion?: string;
-  nivel: string; // Inicial, Primaria, Secundaria
+  nivel: {
+    id_nivel: number;
+    nombre: string;
+    estado: boolean;
+  };
   idNivel?: number;
   orden?: number; // orden dentro del nivel
   edadRecomendada?: number;

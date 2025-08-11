@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError, retry } from 'rxjs/operators';
-
 
 // Interfaz principal para Unidad
 export interface UnidadDirecta {
@@ -25,6 +24,7 @@ export interface Unidad {
   createdAt?: string;
   updatedAt?: string;
 }
+
 
 export interface CreateUnidadDto {
   id_curso: number;
@@ -75,6 +75,14 @@ export interface EstadisticasUnidades {
 
 @Injectable({ providedIn: 'root' })
 export class UnidadesService {
+  private apiUrl = environment.apiBaseUrl + '/unidad';
+  private http = inject(HttpClient);
+
+  // Obtener unidades por curso
+  getUnidadesPorCurso(idCurso: number): Observable<Unidad[]> {
+    return this.http.get<Unidad[]>(`${this.apiUrl}/curso/${idCurso}`);
+  }
+
   getUnidadesDirecto() {
     throw new Error('Method not implemented.');
   }
@@ -83,47 +91,6 @@ export class UnidadesService {
   getUnidades(): Observable<Unidad[]> {
     console.log('UnidadesService.getUnidades llamado');
     return this.http.get<Unidad[]>(this.apiUrl)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-    );
-  }
-
-  private apiUrl = environment.apiBaseUrl + '/unidad';
-  private http = inject(HttpClient);
-
-  // Obtener una unidad por ID
-  getUnidadPorId(id_unidad: number): Observable<Unidad> {
-    if (!id_unidad || id_unidad <= 0) {
-      return throwError(() => new Error('ID de unidad inválido'));
-    }
-    return this.http.get<Unidad>(`${this.apiUrl}/${id_unidad}`)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-    );
-  }
-
-  // Crear una nueva unidad
-  crearUnidad(data: CreateUnidadDto): Observable<Unidad> {
-    if (!this.validateUnidadData(data)) {
-      return throwError(() => new Error('Datos de unidad inválidos'));
-    }
-
-    return this.http.post<Unidad>(this.apiUrl, data)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-    );
-  }
-
-  // Actualizar una unidad
-  actualizarUnidad(id_unidad: number, data: UpdateUnidadDto): Observable<Unidad> {
-    if (!id_unidad || id_unidad <= 0) {
-      return throwError(() => new Error('ID de unidad inválido'));
-    }
-
-    return this.http.put<Unidad>(`${this.apiUrl}/${id_unidad}`, data)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -143,54 +110,31 @@ export class UnidadesService {
     );
   }
 
-  /**
-   * 🔍 Buscar unidades por texto
-   */
-  buscarUnidades(query: string, limit = 10): Observable<Unidad[]> {
-    if (!query || query.trim().length < 2) {
-      return throwError(() => new Error('Query de búsqueda debe tener al menos 2 caracteres'));
+  // Crear una nueva unidad
+  crearUnidad(data: CreateUnidadDto): Observable<Unidad> {
+    if (!data || !data.nombre || !data.id_curso) {
+      return throwError(() => new Error('Datos de unidad inválidos'));
     }
-
-    const params = new HttpParams()
-      .set('q', query.trim())
-      .set('limit', limit.toString());
-
-    return this.http.get<Unidad[]>(`${this.apiUrl}/search`, { params })
+    return this.http.post<Unidad>(this.apiUrl, data)
       .pipe(
         retry(2),
         catchError(this.handleError)
       );
   }
 
-   /**
-    * 📊 Obtener estadísticas de unidades
-    */
-   getEstadisticasUnidades(): Observable<EstadisticasUnidades> {
-     return this.http.get<EstadisticasUnidades>(`${this.apiUrl}/estadisticas`)
-       .pipe(
-         retry(2),
-         catchError(this.handleError)
-       );
-   }
-
-  /**
-   * 📝 Validar datos de unidades
-   */
-  private validateUnidadData(unidad: CreateUnidadDto | UpdateUnidadDto): boolean {
-    if ('nombre' in unidad && unidad.nombre && unidad.nombre.trim().length < 2) {
-      return false;
+  // Actualizar una unidad existente
+  actualizarUnidad(id_unidad: number, data: UpdateUnidadDto): Observable<Unidad> {
+    if (!id_unidad || id_unidad <= 0) {
+      return throwError(() => new Error('ID de unidad inválido'));
     }
-    if ('descripcion' in unidad && unidad.descripcion && unidad.descripcion.trim().length < 2) {
-      return false;
-    }
-    // if ('correo' in unidad && unidad.correo && !this.isValidEmail(unidad.correo)) {
-    //   return false;
-    // }
-    return true;
+    return this.http.put<Unidad>(`${this.apiUrl}/${id_unidad}`, data)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 
-
-/**
+  /**
    * 🚨 Manejo centralizado de errores
    */
   private handleError = (error: unknown) => {
@@ -229,4 +173,4 @@ export class UnidadesService {
 
     return throwError(() => new Error(errorMessage));
   };
-}
+  }

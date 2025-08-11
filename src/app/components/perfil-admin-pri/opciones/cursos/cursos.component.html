@@ -40,8 +40,8 @@
               <label for="tipoCurso" class="block text-sm font-medium text-gray-700 mb-2">Tipo de Curso:</label>
               <select id="tipoCurso" [(ngModel)]="tipoCurso" (change)="onTipoCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
                 <option value="ambos">Ambos</option>
-                <option value="INT">Internos</option>
-                <option value="EXT">Externos</option>
+                <option value="Interno">Internos</option>
+                <option value="Externo">Externos</option>
               </select>
             </div>
             <!-- Botón Nuevo Curso -->
@@ -102,7 +102,7 @@
                       type="button"
                       (click)="viewContenido(curso.id_curso!)"
                       class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
-                      title="Ver Contenido"
+                      title="Ver Contenido/Detalle"
                     >
                       <i class="fas fa-book-open"></i>
                     </button>

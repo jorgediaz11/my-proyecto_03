@@ -1,3 +1,10 @@
+/* SweetAlert personalizado para contenido de curso */
+.swal-contenido-curso {
+  height: 700px !important;
+  min-height: 500px !important;
+  max-height: 500px !important;
+  box-sizing: border-box;
+}
 /* ========================================================================== */
 /* CURSOS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */

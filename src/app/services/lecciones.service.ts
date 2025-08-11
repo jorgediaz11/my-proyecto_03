@@ -38,7 +38,7 @@ export interface UpdateLeccionDto {
   providedIn: 'root'
 })
 export class LeccionesService {
-  private apiUrl = environment.apiBaseUrl + '/lecciones';
+  private apiUrl = environment.apiBaseUrl + '/leccion';
   private http = inject(HttpClient);
 
   private getAuthHeaders(): HttpHeaders {
