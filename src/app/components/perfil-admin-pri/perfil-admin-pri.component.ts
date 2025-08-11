@@ -139,14 +139,12 @@ export class PerfilAdminPriComponent implements OnInit, OnDestroy {
     if (!nombre || nombre.trim() === '' || nombre.toLowerCase().includes('undefined')) {
       nombre = 'Usuario sin nombre';
     }
-    console.log('👤 Getter nombreUsuario llamado:', nombre);
     return nombre;
   }
 
   get rolUsuario(): string {
-    const rol = this.perfilUsuario?.rolCorto || 'Sin Perfil';
-    console.log('🏷️ Getter rolUsuario llamado:', rol);
-    return rol;
+  const rol = this.perfilUsuario?.rolCorto || 'Sin Perfil';
+  return rol;
   }
 
   get avatarUsuario(): string {

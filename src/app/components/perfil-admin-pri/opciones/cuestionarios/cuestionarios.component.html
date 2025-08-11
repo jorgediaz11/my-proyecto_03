@@ -22,23 +22,46 @@
     <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="tab-panel animate-fadeIn">
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchCuestionario" class="block text-sm font-medium text-gray-700 mb-2">Buscar Cuestionario:</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+          <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
+              <div class="w-full sm:w-56">
+                <label for="searchCuestionario" class="block text-sm font-medium text-gray-700 mb-2">Buscar Cuestionario:</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input id="searchCuestionario" type="text" [(ngModel)]="searchTerm" (input)="filterCuestionarios()" placeholder="Ingrese título"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
                 </div>
-                <input id="searchCuestionario" type="text" [(ngModel)]="searchTerm" (input)="filterCuestionarios()" placeholder="Ingrese título"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+              </div>
+              <div class="w-full sm:w-48">
+                <label for="filtroNivel" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Nivel:</label>
+                <select id="filtroNivel" [(ngModel)]="filtroNivel" (change)="onNivelChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                  <option value="">[Seleccionar]</option>
+                  <option *ngFor="let nivel of niveles" [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                </select>
+              </div>
+              <div class="w-full sm:w-48">
+                <label for="filtroGrado" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Grado:</label>
+                <select id="filtroGrado" [(ngModel)]="filtroGrado" (change)="onGradoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                  <option value="">[Seleccionar]</option>
+                  <option *ngFor="let grado of grados" [value]="grado.id_grado">{{ grado.nombre }}</option>
+                </select>
+              </div>
+              <div class="w-full sm:w-48">
+                <label for="filtroCurso" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Curso:</label>
+                <select id="filtroCurso" [(ngModel)]="filtroCurso" (change)="onCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                  <option value="">[Seleccionar]</option>
+                  <option *ngFor="let curso of cursos" [value]="curso.id_curso">{{ curso.id_curso }}-{{ curso.nombre }}</option>
+                </select>
               </div>
             </div>
-            <!-- Botón Nuevo Cuestionario -->
-            <button type="button" (click)="selectTab('nuevo')"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-              <i class="fas fa-plus mr-2"></i> Nuevo Cuestionario
-            </button>
+            <div class="flex-shrink-0">
+              <button type="button" (click)="selectTab('nuevo')"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                <i class="fas fa-plus mr-2"></i> Nuevo Cuestionario
+              </button>
+            </div>
           </div>
         </div>
         <!-- Tabla de cuestionarios -->

@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CursosService, Curso } from '../../../../services/cursos.service';
 import { CursosDetalleService } from 'src/app/services/cursos-detalle.service';
+import { NivelesService, Nivel } from 'src/app/services/niveles.service';
+import { GradosService, Grado } from 'src/app/services/grados.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -9,6 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './cursos.component.html',
   styleUrls: ['./cursos.component.css']
 })
+
 export class CursosComponent implements OnInit {
   cursos: Curso[] = [];
   filteredCursos: Curso[] = [];
@@ -21,16 +24,29 @@ export class CursosComponent implements OnInit {
   loading = false;
 
   tipoCurso = 'ambos';
-  tipo?: 'interno' | 'externo'; // <--- agrega esto
+  tipo?: 'interno' | 'externo';
+
+  // Niveles y grados para los selectores
+  niveles: Nivel[] = [];
+  grados: Grado[] = [];
+  allGrados: Grado[] = [];
+  selectedNivel: number | '' = '';
+  selectedGrado: number | '' = '';
+
+  // Mapeo auxiliar grado -> nivel
+  gradoToNivelMap: { [id_grado: number]: number } = {};
 
   // Formularios
   cursoForm!: FormGroup;
 
   private cursosService = inject(CursosService);
   private cursosDetalleService = inject(CursosDetalleService);
+  private nivelesService = inject(NivelesService);
+  private gradosService = inject(GradosService);
   private fb = inject(FormBuilder);
 
   ngOnInit(): void {
+    this.getNiveles();
     this.getCursos();
     this.cursoForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -45,6 +61,96 @@ export class CursosComponent implements OnInit {
       estado: [true, Validators.required],
       id_colegio: [null]
     });
+  }
+
+
+  getNiveles() {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles) => {
+        this.niveles = niveles.filter(n => n.estado);
+        // Cargar grados y construir el mapeo auxiliar
+        this.gradosService.getGrados().subscribe({
+          next: (grados) => {
+            this.allGrados = grados.filter(g => g.estado && g.nivel && typeof g.nivel === 'object' && 'id_nivel' in g.nivel);
+            // Construir mapeo grado -> nivel
+            this.gradoToNivelMap = {};
+            this.allGrados.forEach(g => {
+              if (g.id_grado && g.nivel && typeof g.nivel.id_nivel === 'number') {
+                this.gradoToNivelMap[g.id_grado] = g.nivel.id_nivel;
+              }
+            });
+            // Inicialmente mostrar todos los grados
+            this.grados = [...this.allGrados];
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
+          }
+        });
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudieron cargar los niveles', 'error');
+      }
+    });
+  }
+
+  onNivelChange() {
+    this.selectedGrado = '';
+    this.grados = [];
+    if (this.selectedNivel) {
+      const nivelId = Number(this.selectedNivel);
+      this.gradosService.getGrados().subscribe({
+        next: (grados) => {
+          this.grados = grados.filter(g => typeof g.nivel === 'object' && g.nivel && 'id_nivel' in g.nivel && g.nivel.id_nivel === nivelId && g.estado);
+        },
+        error: () => {
+          Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
+        }
+      });
+    } else {
+      // Si no hay nivel seleccionado, mostrar todos los grados activos
+      this.gradosService.getGrados().subscribe({
+        next: (grados) => {
+          this.grados = grados.filter(g => g.estado);
+        },
+        error: () => {
+          Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
+        }
+      });
+    }
+    this.filtrarCursos();
+  }
+
+  onGradoChange() {
+    this.filtrarCursos();
+  }
+
+  onTipoCursoChange() {
+    this.currentPage = 1;
+    this.filtrarCursos();
+  }
+
+  filtrarCursos() {
+    this.filteredCursos = this.cursos.filter(curso => {
+      let match = true;
+      // Filtrar por nivel (ya implementado)
+      if (this.selectedNivel) {
+        const idGrado = curso.grado && curso.grado.id_grado;
+        const idNivel = idGrado ? this.gradoToNivelMap[idGrado] : undefined;
+        match = match && idNivel === Number(this.selectedNivel);
+      }
+      // Filtrar por grado
+      if (this.selectedGrado) {
+        match = match && curso.grado && curso.grado.id_grado === Number(this.selectedGrado);
+      }
+      // Filtrar por tipo de curso (Interno, Externo, Ambos)
+      if (this.tipoCurso !== 'ambos') {
+        // Aceptar mayúsculas/minúsculas y variantes
+        match = match && (typeof curso.tipo_curso === 'string' && curso.tipo_curso.toLowerCase() === this.tipoCurso.toLowerCase());
+      }
+      return match;
+    });
+    this.currentPage = 1;
+    this.setPaginatedCursos();
   }
 
   getCursos() {
@@ -113,19 +219,7 @@ export class CursosComponent implements OnInit {
     return Array(this.getTotalPages()).fill(0);
   }
 
-  onTipoCursoChange() {
-    this.currentPage = 1;
-    this.filtrarPorTipoCurso();
-  }
-
-  filtrarPorTipoCurso() {
-    if (this.tipoCurso === 'ambos') {
-      this.filteredCursos = this.cursos.slice();
-    } else {
-      this.filteredCursos = this.cursos.filter(curso => curso.tipo_curso === this.tipoCurso);
-    }
-    this.setPaginatedCursos();
-  }
+  // (Métodos reemplazados por filtrarCursos y onTipoCursoChange actualizados)
 
   viewCurso(id_curso: number): void {
     const curso = this.cursos.find(c => c.id_curso === id_curso);
@@ -167,6 +261,8 @@ export class CursosComponent implements OnInit {
       }
     });
   }
+
+
 
   viewContenido(id_curso: number): void {
     Swal.fire({
@@ -212,7 +308,7 @@ export class CursosComponent implements OnInit {
             }))
           }))
         };
-        let html = `<div class='cursos-detalle-container'>`;
+        let html = `<div class='cursos-detalle-container' style='text-align:left;max-width:900px;'>`;
         html += `<h2 class='text-xl font-bold mb-2'>${mappedCurso.nombre}</h2>`;
         html += `<div class='mb-2 text-gray-700'>${mappedCurso.descripcion || ''}</div>`;
         if (mappedCurso.unidades && mappedCurso.unidades.length > 0) {
@@ -223,7 +319,7 @@ export class CursosComponent implements OnInit {
             if (unidad.lecciones && unidad.lecciones.length > 0) {
               html += `<div class='font-semibold text-green-600 mb-1'>Lecciones</div><ul class='list-disc pl-5'>`;
               unidad.lecciones.forEach((leccion) => {
-                html += `<li class='mb-1'><span class='font-medium'>${leccion.titulo}</span>: <span class='text-gray-500'>${leccion.contenido}</span></li>`;
+                html += `<li class='mb-1' style='text-align:left;'><span class='font-medium'>${leccion.titulo}</span>: <span class='text-gray-500'>${leccion.contenido}</span></li>`;
               });
               html += `</ul>`;
             } else {
@@ -237,7 +333,7 @@ export class CursosComponent implements OnInit {
         html += `</div>`;
         Swal.fire({
           title: 'Contenido del Curso',
-          html,
+          html: `<div style="max-height:800px;overflow:auto;">${html}</div>`,
           icon: 'info',
           width: 1000,
           heightAuto: false,

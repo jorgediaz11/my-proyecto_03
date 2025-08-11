@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 
 export interface Cuestionario {
   id_cuestionario: number;
+  id_curso: number;
   titulo: string;
   descripcion?: string;
   estado: boolean;
@@ -15,7 +16,7 @@ export interface Cuestionario {
   providedIn: 'root'
 })
 export class CuestionariosService {
-  private apiUrl = environment.apiBaseUrl + '/cuestionario';
+  private apiUrl = environment.apiBaseUrl + '/cuestionarios';
   private http = inject(HttpClient);
 
   getCuestionarios(): Observable<Cuestionario[]> {

@@ -5,7 +5,7 @@ import { Libro, LibrosService } from 'src/app/services/libros.service';
 @Component({
   selector: 'app-libros',
   templateUrl: './libros.component.html',
-  // styleUrls: ['./libros.component.css']
+  styleUrls: ['./libros.component.css']
 })
 export class LibrosComponent implements OnInit {
   Math = Math;

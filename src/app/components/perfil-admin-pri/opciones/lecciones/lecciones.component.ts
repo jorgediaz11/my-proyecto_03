@@ -4,7 +4,7 @@ import { Leccion, LeccionesService } from 'src/app/services/lecciones.service';
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
-import { Unidad } from 'src/app/services/unidades.service';
+import { Unidad, UnidadesService } from 'src/app/services/unidades.service';
 // import { leccionesService } from 'src/app/services/unidades.service';
 
 @Component({
@@ -30,6 +30,7 @@ export class LeccionesComponent implements OnInit {
   private gradosService = inject(GradosService);
   private cursosService = inject(CursosService);
   Math = Math;
+  private unidadesService = inject(UnidadesService);
   lecciones: Leccion[] = [];
   filteredLecciones: Leccion[] = [];
   paginatedLecciones: Leccion[] = [];
@@ -65,11 +66,16 @@ export class LeccionesComponent implements OnInit {
       this.filtroUnidad = '';
       return;
     }
-    // Aquí deberías llamar a tu servicio de unidades por curso
-    // this.unidadesService.getUnidadesPorCurso(this.filtroCurso).subscribe(...)
-    // Simulación temporal:
-    this.unidades = [];
-    this.filtroUnidad = '';
+    this.unidadesService.getUnidadesPorCurso(Number(this.filtroCurso)).subscribe({
+      next: (unidades) => {
+        this.unidades = unidades;
+      },
+      error: (error: unknown) => {
+        this.unidades = [];
+        this.filtroUnidad = '';
+        console.error('Error al cargar unidades:', error);
+      }
+    });
   }
 
   cargarLecciones(): void {
@@ -80,9 +86,10 @@ export class LeccionesComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.leccionesService.getLeccionesPorUnidad(Number(this.filtroUnidad)).subscribe({
+    this.leccionesService.getLecciones().subscribe({
       next: (lecciones) => {
-        this.lecciones = lecciones;
+        // Filtrar por idUnidad (del backend) vs filtroUnidad (del select)
+  this.lecciones = lecciones.filter(l => String((l as any).idUnidad ?? l.id_unidad) === String(this.filtroUnidad));
         this.filterLecciones();
         this.loading = false;
       },
@@ -174,7 +181,13 @@ export class LeccionesComponent implements OnInit {
   }
 
   onUnidadChange(): void {
-    this.cargarLecciones();
+    if (this.filtroUnidad) {
+      this.cargarLecciones();
+    } else {
+      this.lecciones = [];
+      this.filteredLecciones = [];
+      this.paginatedLecciones = [];
+    }
   }
 
   updatePaginatedLecciones(): void {

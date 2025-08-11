@@ -1,3 +1,4 @@
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
@@ -139,6 +140,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     MatTabsModule,            // Importa MatTabsModule aquí
     ReactiveFormsModule,      // Importa ReactiveFormsModule aquí BackEnd
     HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
+  AngularEditorModule,
   //OpcionesComponent,        // Ya está en declarations
   //OpcionesComponent,         // Standalone component, import here
     PerfilEstudianteMuroComponent, // Standalone component, import here

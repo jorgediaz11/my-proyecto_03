@@ -3,6 +3,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CuestionariosService, Cuestionario } from 'src/app/services/cuestionarios.service';
+import { NivelesService, Nivel } from 'src/app/services/niveles.service';
+import { GradosService, Grado } from 'src/app/services/grados.service';
+import { CursosService, Curso } from 'src/app/services/cursos.service';
 
 @Component({
   selector: 'app-cuestionarios',
@@ -24,26 +27,92 @@ export class CuestionariosComponent implements OnInit {
   loading = false;
   activeTab: 'tabla' | 'nuevo' = 'tabla';
 
+  // Selectores de nivel, grado y curso
+  niveles: Nivel[] = [];
+  grados: Grado[] = [];
+  cursos: Curso[] = [];
+  filtroNivel = '';
+  filtroGrado = '';
+  filtroCurso = '';
+
   cuestionarioForm!: FormGroup;
   private fb = inject(FormBuilder);
   private cuestionariosService = inject(CuestionariosService);
+  private nivelesService = inject(NivelesService);
+  private gradosService = inject(GradosService);
+  private cursosService = inject(CursosService);
 
   ngOnInit(): void {
     this.initForm();
     this.cargarCuestionarios();
+    this.cargarNiveles();
+  }
+
+  cargarNiveles(): void {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles) => {
+        this.niveles = niveles;
+      },
+      error: (err) => {
+        console.error('Error cargando niveles', err);
+      }
+    });
+  }
+
+  onNivelChange(): void {
+    this.filtroGrado = '';
+    this.filtroCurso = '';
+    this.grados = [];
+    this.cursos = [];
+    if (this.filtroNivel) {
+      const nivelId = Number(this.filtroNivel);
+      this.gradosService.getGrados().subscribe({
+        next: (grados) => {
+          this.grados = grados.filter(g => typeof g.nivel === 'object' && g.nivel && 'id_nivel' in g.nivel && g.nivel.id_nivel === nivelId);
+        },
+        error: (err) => {
+          console.error('Error cargando grados', err);
+        }
+      });
+    }
+    this.filterCuestionarios();
+  }
+
+  onGradoChange(): void {
+    this.filtroCurso = '';
+    this.cursos = [];
+    if (this.filtroGrado) {
+      const gradoId = Number(this.filtroGrado);
+      this.cursosService.getCursos().subscribe({
+        next: (cursos) => {
+          this.cursos = cursos.filter(c => c.grado && c.grado.id_grado === gradoId);
+        },
+        error: (err) => {
+          console.error('Error cargando cursos', err);
+        }
+      });
+    }
+    this.filterCuestionarios();
+  }
+
+  onCursoChange(): void {
+    this.filterCuestionarios();
   }
 
   cargarCuestionarios(): void {
-    this.loading = true;
+  this.loading = true;
+  console.log('[Cuestionarios] loading:', this.loading);
     this.cuestionariosService.getCuestionarios().subscribe({
       next: (data) => {
         this.cuestionarios = data;
         this.filteredCuestionarios = [...data];
         this.updatePaginatedCuestionarios();
-        this.loading = false;
+  this.loading = false;
+  console.log('[Cuestionarios] loading:', this.loading);
       },
       error: (error) => {
-        this.loading = false;
+  this.loading = false;
+  console.log('[Cuestionarios] loading:', this.loading);
         console.error('Error al cargar cuestionarios:', error);
       }
     });
@@ -58,14 +127,20 @@ export class CuestionariosComponent implements OnInit {
   }
 
   filterCuestionarios(): void {
+    let resultado = [...this.cuestionarios];
+    // Filtro por texto
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) {
-      this.filteredCuestionarios = [...this.cuestionarios];
-    } else {
-      this.filteredCuestionarios = this.cuestionarios.filter(cuestionario =>
+    if (term) {
+      resultado = resultado.filter(cuestionario =>
         cuestionario.titulo.toLowerCase().includes(term)
       );
     }
+    // Filtro por curso (único campo disponible en el modelo)
+    if (this.filtroCurso) {
+      const cursoId = Number(this.filtroCurso);
+      resultado = resultado.filter(cuestionario => cuestionario.id_curso === cursoId);
+    }
+    this.filteredCuestionarios = resultado;
     this.currentPage = 1;
     this.updatePaginatedCuestionarios();
   }

@@ -5,14 +5,13 @@ import { environment } from '../../environments/environment';
 
 // Interfaces para tipado de Preguntas
 export interface Pregunta {
-  id_pregunta?: number;
-  texto: string;
-  tipo: string;
-  descripcion?: string;
+  id_pregunta: number;
+  id_cuestionario: number;
+  tipo_pregunta: string;
+  enunciado: string;
+  puntaje: string;
+  orden: number;
   estado: boolean;
-  id_leccion?: number;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
 }
 
 export interface CreatePreguntaDto {

@@ -32,7 +32,7 @@ export interface UpdateAreaDto {
   providedIn: 'root'
 })
 export class AreasService {
-  private apiUrl = environment.apiBaseUrl + '/areas';
+  private apiUrl = environment.apiBaseUrl + '/area';
   private http = inject(HttpClient);
 
   private getAuthHeaders(): HttpHeaders {

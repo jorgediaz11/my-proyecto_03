@@ -1,3 +1,33 @@
+.lecciones-block ul {
+  width: 100%;
+}
+.lecciones-block li {
+  display: block;
+  width: 100%;
+  text-align: left !important;
+}
+.lecciones-block li span {
+  display: inline;
+  text-align: left !important;
+  word-break: break-word;
+}
+/* Forzar alineación a la izquierda en el bloque de lecciones y sus registros */
+.cursos-detalle-container .lecciones-block,
+.cursos-detalle-container .lecciones-block h4,
+.cursos-detalle-container .lecciones-block ul,
+.cursos-detalle-container .lecciones-block li,
+.cursos-detalle-container .lecciones-block li span {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* Eliminar posibles alineaciones centradas heredadas de ul, li, span */
+.cursos-detalle-container ul,
+.cursos-detalle-container li,
+.cursos-detalle-container span {
+  text-align: left !important;
+}
 /* ========================================================================== */
 /* CURSOS-DETALLE COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */

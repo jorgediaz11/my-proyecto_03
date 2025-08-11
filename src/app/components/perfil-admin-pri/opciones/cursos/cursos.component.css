@@ -1,8 +1,9 @@
-/* SweetAlert personalizado para contenido de curso */
+/* Altura fija y scroll para el popup de SweetAlert2 solo en este componente */
 .swal-contenido-curso {
-  height: 700px !important;
-  min-height: 500px !important;
-  max-height: 500px !important;
+  height: 800px !important;
+  max-height: 800px !important;
+  min-height: 500px;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 /* ========================================================================== */

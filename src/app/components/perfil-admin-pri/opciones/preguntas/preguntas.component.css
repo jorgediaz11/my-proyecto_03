@@ -1,3 +1,15 @@
+/* Forzar altura del área editable de Quill */
+::ng-deep .ql-container {
+  min-height: 400px !important;
+  height: 400px !important;
+  max-height: 600px;
+}
+::ng-deep .ql-editor {
+  min-height: 380px !important;
+  height: 380px !important;
+  max-height: 580px;
+  overflow-y: auto;
+}
 /* ========================================================================== */
 /* PREGUNTAS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */

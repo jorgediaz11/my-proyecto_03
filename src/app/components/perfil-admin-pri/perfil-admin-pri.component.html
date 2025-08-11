@@ -511,15 +511,18 @@
               </li>
               <!-- Cuestionarios -->
               <li>
-                <a
-                  [routerLink]="['cuestionarios']"
-                  routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
-                  class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
-                >
+                <a [routerLink]="['cuestionarios']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
                   <span class="ml-auto text-right w-full">Cuestionario</span>
                   <i class="fas fa-clipboard-list ml-2"></i>
                 </a>
               </li>
+              <!-- Preguntas -->
+              <li>
+                <a [routerLink]="['preguntas']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-end p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
+                  <span class="ml-auto text-right w-full">Preguntas</span>
+                  <i class="fas fa-th-large ml-2"></i>
+                </a>
+              </li>              
               <!-- Unidades -->
               <li>
                 <a [routerLink]="['unidades']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-end p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
@@ -552,13 +555,6 @@
               <li>
                 <a [routerLink]="['libros']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-end p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
                   <span class="ml-auto text-right w-full">Libros</span>
-                  <i class="fas fa-th-large ml-2"></i>
-                </a>
-              </li>
-              <!-- Preguntas -->
-              <li>
-                <a [routerLink]="['preguntas']" routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold" class="flex items-center justify-end p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group">
-                  <span class="ml-auto text-right w-full">Preguntas</span>
                   <i class="fas fa-th-large ml-2"></i>
                 </a>
               </li>
