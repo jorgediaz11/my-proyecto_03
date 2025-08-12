@@ -7,7 +7,7 @@
   @if (!loading && curso) {
     <div>
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Curso: {{ curso.nombre }}</h2>
-      @if (curso.unidades?.length) {
+  @if (curso.unidades && curso.unidades.length > 0) {
         <div>
           @for (unidad of curso.unidades; track unidad) {
             <div class="mb-6 p-4 bg-white rounded-lg shadow border border-gray-200">
@@ -16,7 +16,7 @@
                 <span class="text-lg font-bold">{{ unidad.nombre }}</span>
               </div>
               <div class="text-gray-600 mb-2">{{ unidad.descripcion }}</div>
-              @if (unidad.lecciones?.length) {
+              @if (unidad.lecciones && unidad.lecciones.length > 0) {
                 <div class="lecciones-block">
                   <h4 class="font-semibold text-green-600 mb-2">Lecciones</h4>
                   <ul class="list-disc pl-6">

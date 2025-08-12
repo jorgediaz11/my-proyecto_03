@@ -31,6 +31,7 @@ import { LibrosComponent } from './components/perfil-admin-pri/opciones/libros/l
 import { OpcionesComponent } from './components/perfil-admin-pri/opciones/opciones/opciones.component';
 import { PreguntasComponent } from './components/perfil-admin-pri/opciones/preguntas/preguntas.component';
 // import { ActivarLibrosComponent } from './components/activar-libros/activar-libros.component';
+import { CuestionariosComponent } from './components/perfil-admin-pri/opciones/cuestionarios/cuestionarios.component';
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 import { PerfilAdminPriMuroComponent } from './components/perfil-admin-pri/perfil-admin-pri-muro.component'; // Importa el componente de muro del perfil administrador
@@ -124,26 +125,24 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         AulasComponent,
         PeriodoAcademComponent,
         ActividadesComponent,
-        TipoActividadComponent,
+        TipoActividadComponent
+        // CuestionariosComponent (standalone, va en imports)
     ],
-    bootstrap: [AppComponent] // Componente raíz de la aplicación
-    , imports: [BrowserModule, // Importa BrowserModule aquí
-        RouterModule.forRoot(routes), // Configura las rutas de la aplicación
-        //AppRoutingModule,
-        FormsModule, // <-- Agrega esto
-        BrowserAnimationsModule, // Necesario para Angular Material
-        MatDialogModule, // Importa MatDialogModule aquí
-        MatButtonModule, // Importa MatButtonModule aquí
-        MatTabsModule, // Importa MatTabsModule aquí
-        MatTabsModule, // Importa MatTabsModule aquí
-        MatTabsModule, // Importa MatTabsModule aquí
-        ReactiveFormsModule, // Agrega HttpClientModule a los imports BackEnd
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatTabsModule,
+        ReactiveFormsModule,
         AngularEditorModule,
-        //OpcionesComponent,        // Ya está en declarations
-        //OpcionesComponent,         // Standalone component, import here
-        PerfilEstudianteMuroComponent], providers: [
-        provideAnimations(), // Proveedor para animaciones
-        // ✅ INTERCEPTORS PARA AUTENTICACIÓN AUTOMÁTICA
+        CuestionariosComponent // standalone
+    ],
+    providers: [
+        provideAnimations(),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
@@ -154,18 +153,17 @@ import { provideAnimations } from '@angular/platform-browser/animations';
             useClass: LoggingInterceptor,
             multi: true
         },
-        // ✅ INTERCEPTOR PARA MANEJO GLOBAL DE ERRORES
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorInterceptor,
             multi: true
         },
-        // ✅ INTERCEPTOR PARA LOADING GLOBAL
         {
             provide: HTTP_INTERCEPTORS,
             useClass: LoadingInterceptor,
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi())
-    ] })
+    ]
+})
 export class AppModule { }

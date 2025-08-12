@@ -7,7 +7,8 @@
     "types": [] // An empty array to avoid errors in IDEs
   },
   "files": [
-    "src/main.server.ts"  // The main entry point for server-side rendering
+    "src/main.server.ts",
+    "src/server.ts"
   ],
   "angularCompilerOptions": {
     "entryModule": "src/app/app.server.module#AppServerModule"  // The entry module for server-side rendering

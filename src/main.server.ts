@@ -1,12 +1,10 @@
-import { enableProdMode } from '@angular/core'; // Importar el módulo de enrutamiento 03
-import { environment } from './environments/environment'; // Importar el módulo de enrutamiento 03
 
-// Importar el módulo de enrutamiento 03b
+import { enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+import { AppServerModule } from './app/app.server.module';
+
 if (environment.production) {
-  enableProdMode(); // Importar el módulo de enrutamiento 03
+  enableProdMode();
 }
-// Importar el módulo de enrutamiento 03b
-export default function bootstrap() { // Función para inicializar el servidor
-  // Lógica para inicializar el servidor 03b
-  // Lógica específica del componente 03b
-}
+
+export default AppServerModule;

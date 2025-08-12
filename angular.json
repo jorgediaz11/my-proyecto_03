@@ -99,7 +99,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/my-proyecto_02-server",
-            "main": "server.ts",
+            "main": "src/server.ts",
             "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
@@ -122,6 +122,39 @@
               "src/**/*.html"
             ]
           }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "Ejercicio1:build:development",
+              "serverTarget": "Ejercicio1:server:development"
+            },
+            "production": {
+              "browserTarget": "Ejercicio1:build:production",
+              "serverTarget": "Ejercicio1:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "Ejercicio1:build:production",
+              "serverTarget": "Ejercicio1:server:production"
+            },
+            "development": {
+              "browserTarget": "Ejercicio1:build:development",
+              "serverTarget": "Ejercicio1:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
