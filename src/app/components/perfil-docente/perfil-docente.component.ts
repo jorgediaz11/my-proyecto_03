@@ -11,10 +11,11 @@ interface MenuItem {
 }
 
 @Component({
-// standalone: true,
-  selector: 'app-perfil-docente',
-  templateUrl: './perfil-docente.component.html',
-  styleUrls: ['./perfil-docente.component.css']
+    // standalone: true,
+    selector: 'app-perfil-docente',
+    templateUrl: './perfil-docente.component.html',
+    styleUrls: ['./perfil-docente.component.css'],
+    standalone: false
 })
 export class PerfilDocenteComponent implements OnInit, OnDestroy {
 

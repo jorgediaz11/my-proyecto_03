@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeriodosAcademService, PeriodoAcadem } from 'src/app/services/periodos-academ.service';
 
 @Component({
-  selector: 'app-periodo-academ',
-  templateUrl: './periodo-academ.component.html',
-  styleUrls: ['./periodo-academ.component.css']
+    selector: 'app-periodo-academ',
+    templateUrl: './periodo-academ.component.html',
+    styleUrls: ['./periodo-academ.component.css'],
+    standalone: false
 })
 export class PeriodoAcademComponent {
   Math = Math;

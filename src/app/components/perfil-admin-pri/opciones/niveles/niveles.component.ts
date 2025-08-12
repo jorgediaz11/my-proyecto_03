@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
 
 @Component({
-  selector: 'app-niveles',
-  templateUrl: './niveles.component.html',
-  styleUrls: ['./niveles.component.css']
+    selector: 'app-niveles',
+    templateUrl: './niveles.component.html',
+    styleUrls: ['./niveles.component.css'],
+    standalone: false
 })
 export class NivelesComponent implements OnInit {
   Math = Math;

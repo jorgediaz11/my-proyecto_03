@@ -8,11 +8,10 @@ import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
 
 @Component({
-  selector: 'app-cuestionarios',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './cuestionarios.component.html',
-  styleUrls: ['./cuestionarios.component.css']
+    selector: 'app-cuestionarios',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './cuestionarios.component.html',
+    styleUrls: ['./cuestionarios.component.css']
 })
 export class CuestionariosComponent implements OnInit {
   Math = Math;

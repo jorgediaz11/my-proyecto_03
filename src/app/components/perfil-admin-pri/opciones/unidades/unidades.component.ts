@@ -17,9 +17,10 @@ interface Unidad {
 }
 
 @Component({
-  selector: 'app-unidades',
-  templateUrl: './unidades.component.html',
-  styleUrls: ['./unidades.component.css']
+    selector: 'app-unidades',
+    templateUrl: './unidades.component.html',
+    styleUrls: ['./unidades.component.css'],
+    standalone: false
 })
 export class UnidadesComponent implements OnInit {
   // Listas para selects

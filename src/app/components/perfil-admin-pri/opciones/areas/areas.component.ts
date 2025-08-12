@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Area, AreasService } from 'src/app/services/areas.service';
 
 @Component({
-  selector: 'app-areas',
-  templateUrl: './areas.component.html',
-  styleUrls: ['./areas.component.css']
+    selector: 'app-areas',
+    templateUrl: './areas.component.html',
+    styleUrls: ['./areas.component.css'],
+    standalone: false
 })
 export class AreasComponent implements OnInit {
   Math = Math;

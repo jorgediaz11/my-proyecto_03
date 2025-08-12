@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TipoMaterialService, TipoMaterial } from '../../../../services/tipo-material.service';
 
 @Component({
-  selector: 'app-materiales',
-  templateUrl: './materiales.component.html',
-  styleUrls: ['./materiales.component.css']
+    selector: 'app-materiales',
+    templateUrl: './materiales.component.html',
+    styleUrls: ['./materiales.component.css'],
+    standalone: false
 })
 export class MaterialesComponent implements OnInit {
   Math = Math;

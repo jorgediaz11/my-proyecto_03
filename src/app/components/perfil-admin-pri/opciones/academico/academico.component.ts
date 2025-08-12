@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-academico',                  // Cambié 'app-academico' a 'app-academico'
-  templateUrl: './academico.component.html',  //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.html
-  styleUrls: ['./academico.component.css']    //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.css
+    selector: 'app-academico', // Cambié 'app-academico' a 'app-academico'
+    templateUrl: './academico.component.html', //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.html
+    styleUrls: ['./academico.component.css'] //  Path: src/app/components/perfil-admin-pri/opciones/academico/academico.component.css
+    ,
+    standalone: false
 })
 export class AcademicoComponent { // Cambié 'AcademicoComponent' a 'app-academico'
   academicos = [

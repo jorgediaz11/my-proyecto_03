@@ -25,11 +25,10 @@ interface Evaluacion {
 }
 
 @Component({
-  selector: 'app-perfil-estudiante-muro',
-  templateUrl: './perfil-estudiante-muro.component.html',
-  styleUrls: ['./perfil-estudiante-muro.component.css'],
-  standalone: true,
-  imports: [CommonModule, ActivarLibrosComponent]
+    selector: 'app-perfil-estudiante-muro',
+    templateUrl: './perfil-estudiante-muro.component.html',
+    styleUrls: ['./perfil-estudiante-muro.component.css'],
+    imports: [CommonModule, ActivarLibrosComponent]
 })
 
 export class PerfilEstudianteMuroComponent implements OnInit, AfterViewInit {

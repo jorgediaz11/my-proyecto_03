@@ -25,9 +25,10 @@ export interface ClaseCol {
 
 
 @Component({
-  selector: 'app-clases-col',
-  templateUrl: './clases-col.component.html',
-  styleUrl: './clases-col.component.css'
+    selector: 'app-clases-col',
+    templateUrl: './clases-col.component.html',
+    styleUrl: './clases-col.component.css',
+    standalone: false
 })
 
 export class ClasesColComponent implements OnInit, OnDestroy {

@@ -43,9 +43,10 @@ interface ColegioDatos {
 }
 
 @Component({
-  selector: 'app-perfil-admin-pri-muro',
-  templateUrl: './perfil-admin-pri-muro.component.html',
-  styleUrls: ['./perfil-admin-pri-muro.component.css']
+    selector: 'app-perfil-admin-pri-muro',
+    templateUrl: './perfil-admin-pri-muro.component.html',
+    styleUrls: ['./perfil-admin-pri-muro.component.css'],
+    standalone: false
 })
 export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
 

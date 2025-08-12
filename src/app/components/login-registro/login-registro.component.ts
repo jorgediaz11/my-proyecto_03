@@ -16,9 +16,10 @@ interface RegisterData {
 }
 
 @Component({
-  selector: 'app-login-registro',
-  templateUrl: './login-registro.component.html',
-  styleUrls: ['./login-registro.component.css']
+    selector: 'app-login-registro',
+    templateUrl: './login-registro.component.html',
+    styleUrls: ['./login-registro.component.css'],
+    standalone: false
 })
 export class LoginRegistroComponent implements OnInit, OnDestroy {
   showFloatingPanel = true;

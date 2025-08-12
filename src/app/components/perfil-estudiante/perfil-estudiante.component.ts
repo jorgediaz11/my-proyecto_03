@@ -11,10 +11,11 @@ interface MenuItem {
 }
 
 @Component({
-  // standalone: true,
-  selector: 'app-perfil-estudiante',
-  templateUrl: './perfil-estudiante.component.html',
-  styleUrls: ['./perfil-estudiante.component.css']
+    // standalone: true,
+    selector: 'app-perfil-estudiante',
+    templateUrl: './perfil-estudiante.component.html',
+    styleUrls: ['./perfil-estudiante.component.css'],
+    standalone: false
 })
 export class PerfilEstudianteComponent implements OnInit, OnDestroy {
 

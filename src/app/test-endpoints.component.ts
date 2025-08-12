@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ColegiosService } from './services/colegios.service';
 
 @Component({
-  selector: 'app-test-endpoints',
-  template: `
+    selector: 'app-test-endpoints',
+    template: `
     <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
       <h2>🧪 Test de Endpoints - Backend Eureka</h2>
 
@@ -101,7 +101,8 @@ import { ColegiosService } from './services/colegios.service';
         </div>
       </div>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class TestEndpointsComponent implements OnInit {
   private http = inject(HttpClient);

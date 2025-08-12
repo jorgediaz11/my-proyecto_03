@@ -7,11 +7,10 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
 
 // Importar el módulo de enrutamiento
 @Component({
-  selector: 'app-opciones',
-  templateUrl: './opciones.component.html',
-  styleUrls: ['./opciones.component.css'],
-  standalone: true,
-imports: [CommonModule, ActivarLibrosComponent]
+    selector: 'app-opciones',
+    templateUrl: './opciones.component.html',
+    styleUrls: ['./opciones.component.css'],
+    imports: [CommonModule, ActivarLibrosComponent]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
 

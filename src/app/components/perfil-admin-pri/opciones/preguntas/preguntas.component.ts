@@ -8,9 +8,10 @@ import { CursosService, Curso } from 'src/app/services/cursos.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
-  selector: 'app-preguntas',
-  templateUrl: './preguntas.component.html',
-  styleUrls: ['./preguntas.component.css']
+    selector: 'app-preguntas',
+    templateUrl: './preguntas.component.html',
+    styleUrls: ['./preguntas.component.css'],
+    standalone: false
 })
 export class PreguntasComponent implements OnInit {
   editorConfig: AngularEditorConfig = {

@@ -21,9 +21,10 @@ interface UsuarioAuditoria {
 }
 
 @Component({
-  selector: 'app-auditoria',
-  templateUrl: './auditoria.component.html',
-  styleUrls: ['./auditoria.component.css']
+    selector: 'app-auditoria',
+    templateUrl: './auditoria.component.html',
+    styleUrls: ['./auditoria.component.css'],
+    standalone: false
 })
 export class AuditoriaComponent {
   usuarios: UsuarioAuditoria[] = [

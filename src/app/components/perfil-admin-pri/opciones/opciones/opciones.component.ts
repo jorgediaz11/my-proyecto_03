@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Opcion, OpcionesService } from 'src/app/services/opciones.service';
 
 @Component({
-  selector: 'app-opciones',
-  templateUrl: './opciones.component.html',
-  // styleUrls: ['./opciones.component.css']
+    selector: 'app-opciones',
+    templateUrl: './opciones.component.html',
+    standalone: false
 })
 export class OpcionesComponent implements OnInit {
   Math = Math;

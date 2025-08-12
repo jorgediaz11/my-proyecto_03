@@ -11,10 +11,12 @@ interface MenuItem {
 }
 
 @Component({
-  // standalone: true,
-  selector: 'app-perfil-admin-sec',   // Asegúrate de que el selector sea correcto
-  templateUrl: './perfil-admin-sec.component.html', // Asegúrate de que la ruta sea correcta
-  styleUrls: ['./perfil-admin-sec.component.css'] // Asegúrate de que la ruta sea correcta
+    // standalone: true,
+    selector: 'app-perfil-admin-sec', // Asegúrate de que el selector sea correcto
+    templateUrl: './perfil-admin-sec.component.html', // Asegúrate de que la ruta sea correcta
+    styleUrls: ['./perfil-admin-sec.component.css'] // Asegúrate de que la ruta sea correcta
+    ,
+    standalone: false
 })
 export class PerfilAdminSecComponent implements OnInit, OnDestroy {
 

@@ -8,9 +8,10 @@ import { Unidad, UnidadesService } from 'src/app/services/unidades.service';
 // import { leccionesService } from 'src/app/services/unidades.service';
 
 @Component({
-  selector: 'app-lecciones',
-  templateUrl: './lecciones.component.html',
-  styleUrls: ['./lecciones.component.css']
+    selector: 'app-lecciones',
+    templateUrl: './lecciones.component.html',
+    styleUrls: ['./lecciones.component.css'],
+    standalone: false
 })
 export class LeccionesComponent implements OnInit {
   // Listas para selects

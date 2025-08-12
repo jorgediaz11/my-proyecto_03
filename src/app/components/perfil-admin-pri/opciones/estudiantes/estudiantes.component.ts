@@ -7,10 +7,11 @@ import Swal from 'sweetalert2';
 import { Estudiante, EstudiantesService, CreateEstudianteDto, UpdateEstudianteDto } from 'src/app/services/estudiantes.service';
 import { AuthService } from 'src/app/services/auth.service';
 
-@Component({  // Cambié 'app-estudiantes' a 'app-estudiantes'
-  selector: 'app-estudiantes',
-  templateUrl: './estudiantes.component.html',
-  styleUrls: ['./estudiantes.component.css']
+@Component({
+    selector: 'app-estudiantes',
+    templateUrl: './estudiantes.component.html',
+    styleUrls: ['./estudiantes.component.css'],
+    standalone: false
 })
 export class EstudiantesComponent implements OnInit, OnDestroy {
   // Servicio de estudiantes

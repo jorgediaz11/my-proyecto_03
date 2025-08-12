@@ -8,9 +8,10 @@ import { DocentesService, Docente } from '../../../../services/docentes.service'
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
-  selector: 'app-colegios',
-  templateUrl: './colegios.component.html',
-  styleUrls: ['./colegios.component.css']
+    selector: 'app-colegios',
+    templateUrl: './colegios.component.html',
+    styleUrls: ['./colegios.component.css'],
+    standalone: false
 })
 export class ColegiosComponent implements OnInit, OnDestroy {
   // Servicio de docentes

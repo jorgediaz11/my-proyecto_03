@@ -14,9 +14,10 @@ enum RecoveryState {
 }
 
 @Component({
-  selector: 'app-login-recupera',
-  templateUrl: './login-recupera.component.html',
-  styleUrls: ['./login-recupera.component.css']
+    selector: 'app-login-recupera',
+    templateUrl: './login-recupera.component.html',
+    styleUrls: ['./login-recupera.component.css'],
+    standalone: false
 })
 export class LoginRecuperaComponent implements OnInit, OnDestroy {
   // ✅ PROPIEDADES PRINCIPALES DE VALIDACION

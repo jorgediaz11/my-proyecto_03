@@ -4,9 +4,10 @@ import { NivelesService, Nivel } from '../../../../services/niveles.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-grados',
-  templateUrl: './grados.component.html',
-  styleUrls: ['./grados.component.css']
+    selector: 'app-grados',
+    templateUrl: './grados.component.html',
+    styleUrls: ['./grados.component.css'],
+    standalone: false
 })
 export class GradosComponent implements OnInit {
   Math = Math;

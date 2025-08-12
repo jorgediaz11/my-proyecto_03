@@ -31,9 +31,10 @@ interface Estudiante {
 }
 
 @Component({
-  selector: 'app-perfil-docente-muro',
-  templateUrl: './perfil-docente-muro.component.html',
-  styleUrl: './perfil-docente-muro.component.css'
+    selector: 'app-perfil-docente-muro',
+    templateUrl: './perfil-docente-muro.component.html',
+    styleUrl: './perfil-docente-muro.component.css',
+    standalone: false
 })
 export class PerfilDocenteMuroComponent implements OnInit, AfterViewInit {
 

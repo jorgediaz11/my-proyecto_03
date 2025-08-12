@@ -6,9 +6,10 @@ import { ColegiosService, Colegio } from '../../../../services/colegios.service'
 import { TipoActividadService, TipoActividad } from '../../../../services/tipo-actividad.service';
 
 @Component({
-  selector: 'app-actividades',
-  templateUrl: './actividades.component.html',
-  styleUrls: ['./actividades.component.css']
+    selector: 'app-actividades',
+    templateUrl: './actividades.component.html',
+    styleUrls: ['./actividades.component.css'],
+    standalone: false
 })
 
 export class ActividadesComponent implements OnInit {

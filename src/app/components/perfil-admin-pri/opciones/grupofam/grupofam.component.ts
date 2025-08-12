@@ -8,9 +8,10 @@ import { Familia, FamilasService, CreateFamiliaDto, UpdateFamiliaDto } from 'src
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-grupofam',
-  templateUrl: './grupofam.component.html',
-  styleUrls: ['./grupofam.component.css']
+    selector: 'app-grupofam',
+    templateUrl: './grupofam.component.html',
+    styleUrls: ['./grupofam.component.css'],
+    standalone: false
 })
 export class GrupofamComponent implements OnInit, OnDestroy {
   // Servicio de familias

@@ -9,9 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // }
 
 @Component({
-  selector: 'app-tipo-actividad',
-  templateUrl: './tipo-actividad.component.html',
-  styleUrls: ['./tipo-actividad.component.css']
+    selector: 'app-tipo-actividad',
+    templateUrl: './tipo-actividad.component.html',
+    styleUrls: ['./tipo-actividad.component.css'],
+    standalone: false
 })
 export class TipoActividadComponent implements OnInit {
   Math = Math;

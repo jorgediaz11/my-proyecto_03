@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Libro, LibrosService } from 'src/app/services/libros.service';
 
 @Component({
-  selector: 'app-libros',
-  templateUrl: './libros.component.html',
-  styleUrls: ['./libros.component.css']
+    selector: 'app-libros',
+    templateUrl: './libros.component.html',
+    styleUrls: ['./libros.component.css'],
+    standalone: false
 })
 export class LibrosComponent implements OnInit {
   Math = Math;

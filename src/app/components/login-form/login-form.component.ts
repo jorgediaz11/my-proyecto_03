@@ -27,21 +27,22 @@ interface Usuario {
 }
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css'],
-  // ✅ DEFINIR ANIMACIONES
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate('0.3s ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('0.3s ease-in', style({ transform: 'translateX(100%)', opacity: 0 }))
-      ])
-    ])
-  ]
+    selector: 'app-login-form',
+    templateUrl: './login-form.component.html',
+    styleUrls: ['./login-form.component.css'],
+    // ✅ DEFINIR ANIMACIONES
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)', opacity: 0 }),
+                animate('0.3s ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
+            ]),
+            transition(':leave', [
+                animate('0.3s ease-in', style({ transform: 'translateX(100%)', opacity: 0 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class LoginFormComponent implements OnInit, OnDestroy {
 

@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AulasService, Aula } from 'src/app/services/aulas.service';
 
 @Component({
-  selector: 'app-aulas',
-  templateUrl: './aulas.component.html',
-  styleUrls: ['./aulas.component.css']
+    selector: 'app-aulas',
+    templateUrl: './aulas.component.html',
+    styleUrls: ['./aulas.component.css'],
+    standalone: false
 })
 export class AulasComponent implements OnInit {
   Math = Math;

@@ -11,9 +11,10 @@ interface MenuItem {
 }
 
 @Component({
-  selector: 'app-perfil-familia',
-  templateUrl: './perfil-familia.component.html',
-  styleUrls: ['./perfil-familia.component.css']
+    selector: 'app-perfil-familia',
+    templateUrl: './perfil-familia.component.html',
+    styleUrls: ['./perfil-familia.component.css'],
+    standalone: false
 })
 export class PerfilFamiliaComponent implements OnInit, OnDestroy {
 

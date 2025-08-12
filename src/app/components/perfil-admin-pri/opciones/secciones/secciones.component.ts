@@ -9,9 +9,10 @@ interface Seccion {
 }
 
 @Component({
-  selector: 'app-secciones',
-  templateUrl: './secciones.component.html',
-  styleUrls: ['./secciones.component.css']
+    selector: 'app-secciones',
+    templateUrl: './secciones.component.html',
+    styleUrls: ['./secciones.component.css'],
+    standalone: false
 })
 export class SeccionesComponent implements OnInit {
   Math = Math;

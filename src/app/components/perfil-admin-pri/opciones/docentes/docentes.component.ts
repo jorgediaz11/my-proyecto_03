@@ -9,9 +9,10 @@ import { Docente, DocentesService, CreateDocenteDto, UpdateDocenteDto } from 'sr
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-docentes',
-  templateUrl: './docentes.component.html',
-  styleUrls: ['./docentes.component.css']
+    selector: 'app-docentes',
+    templateUrl: './docentes.component.html',
+    styleUrls: ['./docentes.component.css'],
+    standalone: false
 })
 export class DocentesComponent implements OnInit, OnDestroy {
   // Servicio de docentes

@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfiles.component.html',
-  styleUrls: ['./perfiles.component.css']
+    selector: 'app-perfil',
+    templateUrl: './perfiles.component.html',
+    styleUrls: ['./perfiles.component.css'],
+    standalone: false
 })
 export class PerfilComponent implements OnInit {
   Math = Math;

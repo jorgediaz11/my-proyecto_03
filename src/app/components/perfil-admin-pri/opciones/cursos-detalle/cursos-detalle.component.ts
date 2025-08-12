@@ -3,8 +3,9 @@ import { Component, OnInit, Input, inject } from '@angular/core';
 import { CursosDetalleService, CursoDetalle } from 'src/app/services/cursos-detalle.service';
 
 @Component({
-  selector: 'app-cursos-detalle',
-  templateUrl: './cursos-detalle.component.html'
+    selector: 'app-cursos-detalle',
+    templateUrl: './cursos-detalle.component.html',
+    standalone: false
 })
 export class CursosDetalleComponent implements OnInit {
   @Input() id!: number;

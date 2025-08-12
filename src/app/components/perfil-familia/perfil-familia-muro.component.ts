@@ -58,9 +58,10 @@ interface EstadisticasFamilia {
 }
 
 @Component({
-  selector: 'app-perfil-familia-muro',
-  templateUrl: './perfil-familia-muro.component.html',
-  styleUrl: './perfil-familia-muro.component.css'
+    selector: 'app-perfil-familia-muro',
+    templateUrl: './perfil-familia-muro.component.html',
+    styleUrl: './perfil-familia-muro.component.css',
+    standalone: false
 })
 export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewInit {
 

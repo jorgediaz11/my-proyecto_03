@@ -53,9 +53,10 @@ interface DocenteInfo {
 }
 
 @Component({
-  selector: 'app-perfil-admin-sec-muro',
-  templateUrl: './perfil-admin-sec-muro.component.html',
-  styleUrls: ['./perfil-admin-sec-muro.component.css']
+    selector: 'app-perfil-admin-sec-muro',
+    templateUrl: './perfil-admin-sec-muro.component.html',
+    styleUrls: ['./perfil-admin-sec-muro.component.css'],
+    standalone: false
 })
 export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
 

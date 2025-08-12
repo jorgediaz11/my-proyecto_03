@@ -4,9 +4,11 @@ import { LoadingService } from './services/loading.service';
 
 // Importar el módulo de enrutamiento
 @Component({
-  selector: 'app-root',                 // Selector del componente
-  templateUrl: './app.component.html',  // Archivo HTML del componente
-  styleUrls: ['./app.component.css']    // Archivo CSS del componente
+    selector: 'app-root', // Selector del componente
+    templateUrl: './app.component.html', // Archivo HTML del componente
+    styleUrls: ['./app.component.css'] // Archivo CSS del componente
+    ,
+    standalone: false
 })
 // Clase principal de la aplicación
 export class AppComponent {

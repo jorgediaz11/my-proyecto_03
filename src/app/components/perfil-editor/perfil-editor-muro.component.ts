@@ -49,9 +49,10 @@ interface EstadisticasEditor {
 }
 
 @Component({
-  selector: 'app-perfil-editor-muro',
-  templateUrl: './perfil-editor-muro.component.html',
-  styleUrl: './perfil-editor-muro.component.css'
+    selector: 'app-perfil-editor-muro',
+    templateUrl: './perfil-editor-muro.component.html',
+    styleUrl: './perfil-editor-muro.component.css',
+    standalone: false
 })
 export class PerfilEditorMuroComponent implements OnInit, OnDestroy, AfterViewInit {
 
