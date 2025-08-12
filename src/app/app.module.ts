@@ -2,7 +2,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; // Importa HttpClientModule
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Importa HttpClientModule
 import { RouterModule } from '@angular/router'; // Importa RouterModule para el enrutamiento
 //import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -78,99 +78,94 @@ import { TestEndpointsComponent } from './test-endpoints.component';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    InicioComponent,
-    LoginFormComponent,
-    LoginRegistroComponent,
-    LoginRecuperaComponent,
-    AreasComponent,
-    CursosDetalleComponent,
-    LeccionesComponent,
-    LibrosComponent,
-    OpcionesComponent,
-    PreguntasComponent,
-    // ActivarLibrosComponent, // Ahora standalone, no va en declarations
-    PerfilAdminPriComponent,
-    PerfilAdminPriMuroComponent,
-    UsuariosComponent,
-    ColegiosComponent,
-    DocentesComponent,
-    EstudiantesComponent,
-    ClasesColComponent,
-    GrupofamComponent,
-    UnidadesComponent,
-    ReportesComponent,
-    AuditoriaComponent,
-    PerfilComponent,
-    MaterialesComponent,
-    TipoMaterialComponent,
-    CursosComponent,
-    NivelesComponent,
-    GradosComponent,
-    SeccionesComponent,
-    AcademicoComponent,
-    PerfilAdminSecComponent,
-    PerfilAdminSecMuroComponent,
-    PerfilDocenteComponent,
-    PerfilDocenteMuroComponent,
-    PerfilEstudianteComponent,
-    PerfilFamiliaComponent,
-    PerfilFamiliaMuroComponent,
-    PerfilEditorComponent,
-    PerfilEditorMuroComponent,
-    TestEndpointsComponent,
-    ClasesColComponent,
-    AulasComponent,
-    PeriodoAcademComponent,
-    ActividadesComponent,
-    TipoActividadComponent,
-  ],
-  imports: [
-    BrowserModule,            // Importa BrowserModule aquí
-    RouterModule.forRoot(routes), // Configura las rutas de la aplicación
-    //AppRoutingModule,
-    FormsModule,              // <-- Agrega esto
-    BrowserAnimationsModule,  // Necesario para Angular Material
-    MatDialogModule,          // Importa MatDialogModule aquí
-    MatButtonModule,          // Importa MatButtonModule aquí
-    MatTabsModule,            // Importa MatTabsModule aquí
-    MatTabsModule,            // Importa MatTabsModule aquí
-    MatTabsModule,            // Importa MatTabsModule aquí
-    ReactiveFormsModule,      // Importa ReactiveFormsModule aquí BackEnd
-    HttpClientModule,         // Agrega HttpClientModule a los imports BackEnd
-  AngularEditorModule,
-  //OpcionesComponent,        // Ya está en declarations
-  //OpcionesComponent,         // Standalone component, import here
-    PerfilEstudianteMuroComponent, // Standalone component, import here
-  ],
-  providers: [
-    provideAnimations(),  // Proveedor para animaciones
-    // ✅ INTERCEPTORS PARA AUTENTICACIÓN AUTOMÁTICA
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoggingInterceptor,
-      multi: true
-    },
-    // ✅ INTERCEPTOR PARA MANEJO GLOBAL DE ERRORES
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
-    // ✅ INTERCEPTOR PARA LOADING GLOBAL
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]   // Componente raíz de la aplicación
-})
+@NgModule({ declarations: [
+        AppComponent,
+        InicioComponent,
+        LoginFormComponent,
+        LoginRegistroComponent,
+        LoginRecuperaComponent,
+        AreasComponent,
+        CursosDetalleComponent,
+        LeccionesComponent,
+        LibrosComponent,
+        OpcionesComponent,
+        PreguntasComponent,
+        // ActivarLibrosComponent, // Ahora standalone, no va en declarations
+        PerfilAdminPriComponent,
+        PerfilAdminPriMuroComponent,
+        UsuariosComponent,
+        ColegiosComponent,
+        DocentesComponent,
+        EstudiantesComponent,
+        ClasesColComponent,
+        GrupofamComponent,
+        UnidadesComponent,
+        ReportesComponent,
+        AuditoriaComponent,
+        PerfilComponent,
+        MaterialesComponent,
+        TipoMaterialComponent,
+        CursosComponent,
+        NivelesComponent,
+        GradosComponent,
+        SeccionesComponent,
+        AcademicoComponent,
+        PerfilAdminSecComponent,
+        PerfilAdminSecMuroComponent,
+        PerfilDocenteComponent,
+        PerfilDocenteMuroComponent,
+        PerfilEstudianteComponent,
+        PerfilFamiliaComponent,
+        PerfilFamiliaMuroComponent,
+        PerfilEditorComponent,
+        PerfilEditorMuroComponent,
+        TestEndpointsComponent,
+        ClasesColComponent,
+        AulasComponent,
+        PeriodoAcademComponent,
+        ActividadesComponent,
+        TipoActividadComponent,
+    ],
+    bootstrap: [AppComponent] // Componente raíz de la aplicación
+    , imports: [BrowserModule, // Importa BrowserModule aquí
+        RouterModule.forRoot(routes), // Configura las rutas de la aplicación
+        //AppRoutingModule,
+        FormsModule, // <-- Agrega esto
+        BrowserAnimationsModule, // Necesario para Angular Material
+        MatDialogModule, // Importa MatDialogModule aquí
+        MatButtonModule, // Importa MatButtonModule aquí
+        MatTabsModule, // Importa MatTabsModule aquí
+        MatTabsModule, // Importa MatTabsModule aquí
+        MatTabsModule, // Importa MatTabsModule aquí
+        ReactiveFormsModule, // Agrega HttpClientModule a los imports BackEnd
+        AngularEditorModule,
+        //OpcionesComponent,        // Ya está en declarations
+        //OpcionesComponent,         // Standalone component, import here
+        PerfilEstudianteMuroComponent], providers: [
+        provideAnimations(), // Proveedor para animaciones
+        // ✅ INTERCEPTORS PARA AUTENTICACIÓN AUTOMÁTICA
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoggingInterceptor,
+            multi: true
+        },
+        // ✅ INTERCEPTOR PARA MANEJO GLOBAL DE ERRORES
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        },
+        // ✅ INTERCEPTOR PARA LOADING GLOBAL
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
