@@ -1,32 +1,42 @@
 <div class="cursos-detalle-container w-full max-w-full">
-  <div *ngIf="loading" class="text-center py-8 text-gray-500">
-    <i class="fas fa-spinner fa-spin text-2xl"></i> Cargando detalle del curso...
-  </div>
-  <div *ngIf="!loading && curso">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Curso: {{ curso.nombre }}</h2>
-    <div *ngIf="curso.unidades?.length; else noUnidades">
-      <div *ngFor="let unidad of curso.unidades" class="mb-6 p-4 bg-white rounded-lg shadow border border-gray-200">
-        <div class="flex items-center mb-2">
-          <span class="text-lg font-semibold text-green-700 mr-2">{{ unidad.orden }}:</span>
-          <span class="text-lg font-bold">{{ unidad.nombre }}</span>
-        </div>
-        <div class="text-gray-600 mb-2">{{ unidad.descripcion }}</div>
-        <div *ngIf="unidad.lecciones?.length; else noLecciones" class="lecciones-block">
-          <h4 class="font-semibold text-green-600 mb-2">Lecciones</h4>
-          <ul class="list-disc pl-6">
-            <li *ngFor="let leccion of unidad.lecciones" class="mb-1">
-              <span class="font-medium">{{ leccion.titulo }}</span>
-              <span class="text-gray-500 text-left">: {{ leccion.contenido }}</span>
-            </li>
-          </ul>
-        </div>
-        <ng-template #noLecciones>
-          <div class="text-sm text-gray-400 italic">No hay lecciones en esta unidad.</div>
-        </ng-template>
-      </div>
+  @if (loading) {
+    <div class="text-center py-8 text-gray-500">
+      <i class="fas fa-spinner fa-spin text-2xl"></i> Cargando detalle del curso...
     </div>
-    <ng-template #noUnidades>
-      <div class="text-sm text-gray-400 italic">No hay unidades registradas para este curso.</div>
-    </ng-template>
-  </div>
+  }
+  @if (!loading && curso) {
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Curso: {{ curso.nombre }}</h2>
+      @if (curso.unidades?.length) {
+        <div>
+          @for (unidad of curso.unidades; track unidad) {
+            <div class="mb-6 p-4 bg-white rounded-lg shadow border border-gray-200">
+              <div class="flex items-center mb-2">
+                <span class="text-lg font-semibold text-green-700 mr-2">{{ unidad.orden }}:</span>
+                <span class="text-lg font-bold">{{ unidad.nombre }}</span>
+              </div>
+              <div class="text-gray-600 mb-2">{{ unidad.descripcion }}</div>
+              @if (unidad.lecciones?.length) {
+                <div class="lecciones-block">
+                  <h4 class="font-semibold text-green-600 mb-2">Lecciones</h4>
+                  <ul class="list-disc pl-6">
+                    @for (leccion of unidad.lecciones; track leccion) {
+                      <li class="mb-1">
+                        <span class="font-medium">{{ leccion.titulo }}</span>
+                        <span class="text-gray-500 text-left">: {{ leccion.contenido }}</span>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              } @else {
+                <div class="text-sm text-gray-400 italic">No hay lecciones en esta unidad.</div>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="text-sm text-gray-400 italic">No hay unidades registradas para este curso.</div>
+      }
+    </div>
+  }
 </div>

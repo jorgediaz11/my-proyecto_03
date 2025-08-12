@@ -63,11 +63,13 @@
         [attr.aria-selected]="vistaActual === 'comunicaciones'"
         [attr.aria-label]="'Ver comunicaciones' + (estadisticas.mensajesPendientes > 0 ? ', ' + estadisticas.mensajesPendientes + ' mensajes nuevos' : '')">
         💬 Comunicaciones
-        <span *ngIf="estadisticas.mensajesPendientes > 0"
-              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
-              aria-hidden="true">
-          {{ estadisticas.mensajesPendientes }}
-        </span>
+        @if (estadisticas.mensajesPendientes > 0) {
+          <span
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+            aria-hidden="true">
+            {{ estadisticas.mensajesPendientes }}
+          </span>
+        }
       </button>
       <button
         (click)="cambiarVista('eventos')"
@@ -86,497 +88,510 @@
   </div>
 
   <!-- Vista Dashboard Principal -->
-  <div *ngIf="vistaActual === 'dashboard'">
-
-    <!-- Cards de Estadísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Hijos en el Sistema</p>
-            <p class="text-3xl font-bold text-purple-600">{{ estadisticas.totalHijos }}</p>
+  @if (vistaActual === 'dashboard') {
+    <div>
+      <!-- Cards de Estadísticas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Hijos en el Sistema</p>
+              <p class="text-3xl font-bold text-purple-600">{{ estadisticas.totalHijos }}</p>
+            </div>
+            <div class="p-3 bg-purple-100 rounded-full">
+              <span class="text-2xl">👨‍👩‍👧‍👦</span>
+            </div>
           </div>
-          <div class="p-3 bg-purple-100 rounded-full">
-            <span class="text-2xl">👨‍👩‍👧‍👦</span>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Promedio General</p>
+              <p class="text-3xl font-bold text-green-600">{{ estadisticas.promedioGeneral }}</p>
+            </div>
+            <div class="p-3 bg-green-100 rounded-full">
+              <span class="text-2xl">📈</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Asistencia Promedio</p>
+              <p class="text-3xl font-bold text-blue-600">{{ estadisticas.asistenciaPromedio }}%</p>
+            </div>
+            <div class="p-3 bg-blue-100 rounded-full">
+              <span class="text-2xl">✅</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Mensajes Pendientes</p>
+              <p class="text-3xl font-bold text-red-600">{{ estadisticas.mensajesPendientes }}</p>
+            </div>
+            <div class="p-3 bg-red-100 rounded-full">
+              <span class="text-2xl">💬</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Próximos Eventos</p>
+              <p class="text-3xl font-bold text-yellow-600">{{ estadisticas.proximosEventos }}</p>
+            </div>
+            <div class="p-3 bg-yellow-100 rounded-full">
+              <span class="text-2xl">📅</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Tareas Pendientes</p>
+              <p class="text-3xl font-bold text-orange-600">{{ estadisticas.tareaspendientes }}</p>
+            </div>
+            <div class="p-3 bg-orange-100 rounded-full">
+              <span class="text-2xl">📝</span>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Promedio General</p>
-            <p class="text-3xl font-bold text-green-600">{{ estadisticas.promedioGeneral }}</p>
+      <!-- Gráficos de Análisis -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Rendimiento Académico -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Evolución del Rendimiento</h3>
+          <div class="h-64">
+            <canvas id="rendimientoChart"></canvas>
           </div>
-          <div class="p-3 bg-green-100 rounded-full">
-            <span class="text-2xl">📈</span>
+        </div>
+        <!-- Asistencia General -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Asistencia General</h3>
+          <div class="h-64">
+            <canvas id="asistenciaChart"></canvas>
+          </div>
+        </div>
+        <!-- Rendimiento por Materia -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Promedio por Materia</h3>
+          <div class="h-64">
+            <canvas id="materiaChart"></canvas>
           </div>
         </div>
       </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Asistencia Promedio</p>
-            <p class="text-3xl font-bold text-blue-600">{{ estadisticas.asistenciaPromedio }}%</p>
+      <!-- Información de Hijos y Comunicaciones -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Resumen de Hijos -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900">Mis Hijos</h3>
           </div>
-          <div class="p-3 bg-blue-100 rounded-full">
-            <span class="text-2xl">✅</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Mensajes Pendientes</p>
-            <p class="text-3xl font-bold text-red-600">{{ estadisticas.mensajesPendientes }}</p>
-          </div>
-          <div class="p-3 bg-red-100 rounded-full">
-            <span class="text-2xl">💬</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Próximos Eventos</p>
-            <p class="text-3xl font-bold text-yellow-600">{{ estadisticas.proximosEventos }}</p>
-          </div>
-          <div class="p-3 bg-yellow-100 rounded-full">
-            <span class="text-2xl">📅</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Tareas Pendientes</p>
-            <p class="text-3xl font-bold text-orange-600">{{ estadisticas.tareaspendientes }}</p>
-          </div>
-          <div class="p-3 bg-orange-100 rounded-full">
-            <span class="text-2xl">📝</span>
+          <div class="p-6">
+            <div class="space-y-4">
+              @for (estudiante of estudiantes; track estudiante) {
+                <button
+                  class="w-full flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 text-left"
+                  (click)="verDetalleEstudiante(estudiante)"
+                  (keydown)="handleTabNavigation($event, estudiante)"
+                  role="button"
+                  [attr.aria-label]="'Ver detalles de ' + estudiante.nombre + ' ' + estudiante.apellido + ', promedio ' + estudiante.promedio + ', ' + estudiante.asistencia + '% de asistencia'">
+                  <div class="flex items-center space-x-4">
+                    <div class="text-3xl" aria-hidden="true">{{ estudiante.avatar }}</div>
+                    <div>
+                      <h4 class="font-medium text-gray-900">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
+                      <p class="text-sm text-gray-500">{{ estudiante.grado }} - Sección {{ estudiante.seccion }}</p>
+                      <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getComportamientoClass(estudiante.comportamiento)">
+                        {{ getComportamientoTexto(estudiante.comportamiento) }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-lg font-bold" [ngClass]="getNotaClass(estudiante.promedio)">{{ estudiante.promedio }}</p>
+                    <p class="text-sm text-gray-500">{{ estudiante.asistencia }}% asistencia</p>
+                  </div>
+                </button>
+              }
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Gráficos de Análisis -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-      <!-- Rendimiento Académico -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Evolución del Rendimiento</h3>
-        <div class="h-64">
-          <canvas id="rendimientoChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Asistencia General -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Asistencia General</h3>
-        <div class="h-64">
-          <canvas id="asistenciaChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Rendimiento por Materia -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Promedio por Materia</h3>
-        <div class="h-64">
-          <canvas id="materiaChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Información de Hijos y Comunicaciones -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      <!-- Resumen de Hijos -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div class="p-6 border-b border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900">Mis Hijos</h3>
-        </div>
-        <div class="p-6">
-          <div class="space-y-4">
-            <button
-              *ngFor="let estudiante of estudiantes"
-              class="w-full flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 text-left"
-              (click)="verDetalleEstudiante(estudiante)"
-              (keydown)="handleTabNavigation($event, estudiante)"
-              role="button"
-              [attr.aria-label]="'Ver detalles de ' + estudiante.nombre + ' ' + estudiante.apellido + ', promedio ' + estudiante.promedio + ', ' + estudiante.asistencia + '% de asistencia'">
-              <div class="flex items-center space-x-4">
-                <div class="text-3xl" aria-hidden="true">{{ estudiante.avatar }}</div>
-                <div>
-                  <h4 class="font-medium text-gray-900">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
-                  <p class="text-sm text-gray-500">{{ estudiante.grado }} - Sección {{ estudiante.seccion }}</p>
-                  <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getComportamientoClass(estudiante.comportamiento)">
-                    {{ getComportamientoTexto(estudiante.comportamiento) }}
-                  </span>
+        <!-- Comunicaciones Recientes -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div class="p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900">Comunicaciones Recientes</h3>
+              @if (estadisticas.mensajesPendientes > 0) {
+                <span
+                  class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
+                  {{ estadisticas.mensajesPendientes }} nuevos
+                </span>
+              }
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="space-y-4">
+              @for (comunicacion of comunicaciones.slice(0, 4); track comunicacion) {
+                <div
+                  class="p-4 rounded-lg border-l-4"
+                  [class.border-red-400]="!comunicacion.leido"
+                  [class.border-gray-200]="comunicacion.leido"
+                  [class.bg-red-50]="!comunicacion.leido"
+                  [class.bg-gray-50]="comunicacion.leido">
+                  <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                      <div class="flex items-center space-x-2 mb-1">
+                        <h4 class="font-medium text-gray-900">{{ comunicacion.docenteNombre }}</h4>
+                        <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoComunicacionClass(comunicacion.tipo)">
+                          {{ comunicacion.tipo }}
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-600 mb-2">{{ comunicacion.materia }}</p>
+                      <p class="text-sm text-gray-800">{{ comunicacion.mensaje }}</p>
+                      <p class="text-xs text-gray-500 mt-2">{{ formatDateWithTime(comunicacion.fecha) }}</p>
+                    </div>
+                    @if (!comunicacion.leido) {
+                      <button
+                        (click)="marcarComoLeido(comunicacion)"
+                        (keydown)="handleComunicacionKeydown($event, comunicacion)"
+                        class="text-blue-600 hover:text-blue-800 text-sm ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 px-2 py-1 rounded"
+                        role="button"
+                        [attr.aria-label]="'Marcar como leído mensaje de ' + comunicacion.docenteNombre">
+                        Marcar leído
+                      </button>
+                    }
+                  </div>
                 </div>
-              </div>
-              <div class="text-right">
-                <p class="text-lg font-bold" [ngClass]="getNotaClass(estudiante.promedio)">{{ estudiante.promedio }}</p>
-                <p class="text-sm text-gray-500">{{ estudiante.asistencia }}% asistencia</p>
-              </div>
-            </button>
+              }
+            </div>
+            <div class="mt-4 text-center">
+              <button
+                (click)="cambiarVista('comunicaciones')"
+                (keydown)="handleVistaKeydown($event, 'comunicaciones')"
+                class="text-purple-600 hover:text-purple-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 px-2 py-1 rounded"
+                role="button"
+                aria-label="Ver todas las comunicaciones del colegio">
+                Ver todas las comunicaciones →
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Comunicaciones Recientes -->
+      <!-- Eventos Próximos -->
       <div class="bg-white rounded-xl shadow-sm border border-gray-200">
         <div class="p-6 border-b border-gray-200">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-gray-900">Comunicaciones Recientes</h3>
-            <span *ngIf="estadisticas.mensajesPendientes > 0"
-                  class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
-              {{ estadisticas.mensajesPendientes }} nuevos
-            </span>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="space-y-4">
-            <div
-              *ngFor="let comunicacion of comunicaciones.slice(0, 4)"
-              class="p-4 rounded-lg border-l-4"
-              [class.border-red-400]="!comunicacion.leido"
-              [class.border-gray-200]="comunicacion.leido"
-              [class.bg-red-50]="!comunicacion.leido"
-              [class.bg-gray-50]="comunicacion.leido">
-              <div class="flex items-start justify-between">
-                <div class="flex-1">
-                  <div class="flex items-center space-x-2 mb-1">
-                    <h4 class="font-medium text-gray-900">{{ comunicacion.docenteNombre }}</h4>
-                    <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoComunicacionClass(comunicacion.tipo)">
-                      {{ comunicacion.tipo }}
-                    </span>
-                  </div>
-                  <p class="text-sm text-gray-600 mb-2">{{ comunicacion.materia }}</p>
-                  <p class="text-sm text-gray-800">{{ comunicacion.mensaje }}</p>
-                  <p class="text-xs text-gray-500 mt-2">{{ formatDateWithTime(comunicacion.fecha) }}</p>
-                </div>
-                <button
-                  *ngIf="!comunicacion.leido"
-                  (click)="marcarComoLeido(comunicacion)"
-                  (keydown)="handleComunicacionKeydown($event, comunicacion)"
-                  class="text-blue-600 hover:text-blue-800 text-sm ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 px-2 py-1 rounded"
-                  role="button"
-                  [attr.aria-label]="'Marcar como leído mensaje de ' + comunicacion.docenteNombre">
-                  Marcar leído
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="mt-4 text-center">
+            <h3 class="text-lg font-semibold text-gray-900">Próximos Eventos</h3>
             <button
-              (click)="cambiarVista('comunicaciones')"
-              (keydown)="handleVistaKeydown($event, 'comunicaciones')"
-              class="text-purple-600 hover:text-purple-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 px-2 py-1 rounded"
+              (click)="verCalendarioCompleto()"
+              (keydown)="handleCalendarioKeydown($event)"
+              class="px-3 py-1 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
               role="button"
-              aria-label="Ver todas las comunicaciones del colegio">
-              Ver todas las comunicaciones →
+              aria-label="Ver calendario completo de eventos">
+              Ver Calendario
             </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Eventos Próximos -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-gray-900">Próximos Eventos</h3>
-          <button
-            (click)="verCalendarioCompleto()"
-            (keydown)="handleCalendarioKeydown($event)"
-            class="px-3 py-1 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            role="button"
-            aria-label="Ver calendario completo de eventos">
-            Ver Calendario
-          </button>
-        </div>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div
-            *ngFor="let evento of eventosProximos.slice(0, 6)"
-            class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-            <div class="flex items-start justify-between mb-2">
-              <h4 class="font-medium text-gray-900 text-sm">{{ evento.titulo }}</h4>
-              <span *ngIf="evento.importante" class="text-red-500 text-lg">⚠️</span>
-            </div>
-            <p class="text-xs text-gray-600 mb-2">{{ evento.descripcion }}</p>
-            <div class="flex items-center justify-between">
-              <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoEventoClass(evento.tipo)">
-                {{ evento.tipo }}
-              </span>
-              <div class="text-right">
-                <p class="text-xs text-gray-500">{{ formatDate(evento.fecha) }}</p>
-                <p class="text-xs font-medium"
-                   [class.text-red-600]="getDiasHastaEvento(evento.fecha) <= 3"
-                   [class.text-yellow-600]="getDiasHastaEvento(evento.fecha) > 3 && getDiasHastaEvento(evento.fecha) <= 7"
-                   [class.text-green-600]="getDiasHastaEvento(evento.fecha) > 7">
-                  En {{ getDiasHastaEvento(evento.fecha) }} días
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Estudiantes -->
-  <div *ngIf="vistaActual === 'estudiantes'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <h3 class="text-xl font-semibold text-gray-900">Información Detallada de Estudiantes</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div
-            *ngFor="let estudiante of estudiantes"
-            class="bg-gray-50 rounded-lg p-6">
-            <div class="flex items-center space-x-4 mb-6">
-              <div class="text-4xl">{{ estudiante.avatar }}</div>
-              <div>
-                <h4 class="text-xl font-bold text-gray-900">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
-                <p class="text-gray-600">{{ estudiante.grado }} - Sección {{ estudiante.seccion }}</p>
-                <p class="text-sm text-gray-500">{{ estudiante.edad }} años</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-6">
-              <div class="text-center p-4 bg-white rounded-lg">
-                <p class="text-2xl font-bold" [ngClass]="getNotaClass(estudiante.promedio)">{{ estudiante.promedio }}</p>
-                <p class="text-sm text-gray-600">Promedio</p>
-              </div>
-              <div class="text-center p-4 bg-white rounded-lg">
-                <p class="text-2xl font-bold text-blue-600">{{ estudiante.asistencia }}%</p>
-                <p class="text-sm text-gray-600">Asistencia</p>
-              </div>
-            </div>
-
-            <div class="mb-4">
-              <p class="text-sm font-medium text-gray-700 mb-2">Comportamiento:</p>
-              <span class="px-3 py-1 text-sm rounded-full" [ngClass]="getComportamientoClass(estudiante.comportamiento)">
-                {{ getComportamientoTexto(estudiante.comportamiento) }}
-              </span>
-            </div>
-
-            <div class="mb-6">
-              <h5 class="font-medium text-gray-900 mb-3">Últimas Calificaciones</h5>
-              <div class="space-y-2">
-                <div
-                  *ngFor="let nota of estudiante.ultimasNotas"
-                  class="flex items-center justify-between p-3 bg-white rounded-lg">
-                  <div>
-                    <p class="font-medium text-gray-900">{{ nota.materia }}</p>
-                    <p class="text-sm text-gray-500">{{ nota.descripcion }}</p>
-                    <p class="text-xs text-gray-400">{{ formatDate(nota.fecha) }}</p>
-                  </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (evento of eventosProximos.slice(0, 6); track evento) {
+              <div
+                class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="flex items-start justify-between mb-2">
+                  <h4 class="font-medium text-gray-900 text-sm">{{ evento.titulo }}</h4>
+                  @if (evento.importante) {
+                    <span class="text-red-500 text-lg">⚠️</span>
+                  }
+                </div>
+                <p class="text-xs text-gray-600 mb-2">{{ evento.descripcion }}</p>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoEventoClass(evento.tipo)">
+                    {{ evento.tipo }}
+                  </span>
                   <div class="text-right">
-                    <p class="text-lg font-bold" [ngClass]="getNotaClass(nota.nota)">{{ nota.nota }}</p>
-                    <p class="text-xs text-gray-500 capitalize">{{ nota.tipo }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex space-x-2">
-              <button
-                (click)="descargarReporte(estudiante.id)"
-                (keydown)="handleDescargarReporteKeydown($event, estudiante.id)"
-                class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                role="button"
-                [attr.aria-label]="'Descargar reporte académico de ' + estudiante.nombre + ' ' + estudiante.apellido">
-                📄 Descargar Reporte
-              </button>
-              <button
-                (click)="programarReunion()"
-                (keydown)="handleProgramarReunionKeydown($event)"
-                class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                role="button"
-                aria-label="Programar reunión con docentes">
-                📅 Programar Reunión
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Calificaciones -->
-  <div *ngIf="vistaActual === 'notas'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <h3 class="text-xl font-semibold text-gray-900">Historial de Calificaciones</h3>
-      </div>
-      <div class="p-6">
-        <div class="space-y-8">
-          <div *ngFor="let estudiante of estudiantes">
-            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-              <span class="text-2xl">{{ estudiante.avatar }}</span>
-              <span>{{ estudiante.nombre }} {{ estudiante.apellido }}</span>
-            </h4>
-            <div class="overflow-x-auto">
-              <table class="min-w-full bg-gray-50 rounded-lg">
-                <thead>
-                  <tr class="border-b border-gray-200">
-                    <th class="text-left py-3 px-4 font-medium text-gray-700">Materia</th>
-                    <th class="text-left py-3 px-4 font-medium text-gray-700">Descripción</th>
-                    <th class="text-left py-3 px-4 font-medium text-gray-700">Tipo</th>
-                    <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
-                    <th class="text-left py-3 px-4 font-medium text-gray-700">Nota</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="let nota of estudiante.ultimasNotas"
-                    class="border-b border-gray-100">
-                    <td class="py-3 px-4 font-medium text-gray-900">{{ nota.materia }}</td>
-                    <td class="py-3 px-4 text-gray-700">{{ nota.descripcion }}</td>
-                    <td class="py-3 px-4">
-                      <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize">
-                        {{ nota.tipo }}
-                      </span>
-                    </td>
-                    <td class="py-3 px-4 text-gray-600">{{ formatDate(nota.fecha) }}</td>
-                    <td class="py-3 px-4">
-                      <span class="text-lg font-bold" [ngClass]="getNotaClass(nota.nota)">{{ nota.nota }}</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Comunicaciones -->
-  <div *ngIf="vistaActual === 'comunicaciones'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <h3 class="text-xl font-semibold text-gray-900">Comunicaciones con Docentes</h3>
-      </div>
-      <div class="p-6">
-        <div class="space-y-4">
-          <div
-            *ngFor="let comunicacion of comunicaciones"
-            class="p-6 rounded-lg border-l-4 transition-all"
-            [class.border-red-400]="!comunicacion.leido"
-            [class.border-gray-200]="comunicacion.leido"
-            [class.bg-red-50]="!comunicacion.leido"
-            [class.bg-gray-50]="comunicacion.leido">
-            <div class="flex items-start justify-between">
-              <div class="flex-1">
-                <div class="flex items-center space-x-3 mb-2">
-                  <h4 class="text-lg font-semibold text-gray-900">{{ comunicacion.docenteNombre }}</h4>
-                  <span class="px-3 py-1 text-sm rounded-full" [ngClass]="getTipoComunicacionClass(comunicacion.tipo)">
-                    {{ comunicacion.tipo }}
-                  </span>
-                  <span *ngIf="!comunicacion.leido" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                    Nuevo
-                  </span>
-                </div>
-                <p class="text-gray-600 mb-2">
-                  <span class="font-medium">Materia:</span> {{ comunicacion.materia }}
-                </p>
-                <p class="text-gray-600 mb-2">
-                  <span class="font-medium">Estudiante:</span>
-                  {{ getEstudianteNombre(comunicacion.estudianteId) }}
-                </p>
-                <p class="text-gray-800 mb-4">{{ comunicacion.mensaje }}</p>
-                <p class="text-sm text-gray-500">{{ formatDateWithTime(comunicacion.fecha) }}</p>
-              </div>
-              <div class="flex flex-col space-y-2 ml-4">
-                <button
-                  *ngIf="!comunicacion.leido"
-                  (click)="marcarComoLeido(comunicacion)"
-                  (keydown)="handleComunicacionKeydown($event, comunicacion)"
-                  class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  role="button"
-                  [attr.aria-label]="'Marcar como leído mensaje de ' + comunicacion.docenteNombre">
-                  Marcar leído
-                </button>
-                <button
-                  (click)="contactarDocente(comunicacion.docenteNombre)"
-                  (keydown)="handleContactarDocenteKeydown($event, comunicacion.docenteNombre)"
-                  class="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  role="button"
-                  [attr.aria-label]="'Responder a ' + comunicacion.docenteNombre">
-                  Responder
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Eventos -->
-  <div *ngIf="vistaActual === 'eventos'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold text-gray-900">Calendario de Eventos</h3>
-          <button
-            (click)="verCalendarioCompleto()"
-            (keydown)="handleCalendarioKeydown($event)"
-            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            role="button"
-            aria-label="Ver calendario completo de eventos escolares">
-            Ver Calendario Completo
-          </button>
-        </div>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let evento of eventosProximos"
-            class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between mb-4">
-              <div>
-                <h4 class="font-semibold text-gray-900 mb-1">{{ evento.titulo }}</h4>
-                <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoEventoClass(evento.tipo)">
-                  {{ evento.tipo }}
-                </span>
-              </div>
-              <div class="flex flex-col items-end">
-                <span *ngIf="evento.importante" class="text-red-500 text-xl mb-1">⚠️</span>
-                <span class="text-xs font-medium"
+                    <p class="text-xs text-gray-500">{{ formatDate(evento.fecha) }}</p>
+                    <p class="text-xs font-medium"
                       [class.text-red-600]="getDiasHastaEvento(evento.fecha) <= 3"
                       [class.text-yellow-600]="getDiasHastaEvento(evento.fecha) > 3 && getDiasHastaEvento(evento.fecha) <= 7"
                       [class.text-green-600]="getDiasHastaEvento(evento.fecha) > 7">
-                  {{ getDiasHastaEvento(evento.fecha) }} días
-                </span>
+                      En {{ getDiasHastaEvento(evento.fecha) }} días
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <p class="text-sm text-gray-600 mb-4">{{ evento.descripcion }}</p>
-
-            <div class="space-y-2">
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Fecha:</span>
-                <span class="font-medium">{{ formatDate(evento.fecha) }}</span>
-              </div>
-
-              <div *ngIf="evento.grado" class="flex justify-between text-sm">
-                <span class="text-gray-600">Dirigido a:</span>
-                <span class="font-medium">{{ evento.grado }}</span>
-              </div>
-            </div>
+            }
           </div>
         </div>
       </div>
     </div>
-  </div>
+  }
+
+  <!-- Vista de Estudiantes -->
+  @if (vistaActual === 'estudiantes') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-900">Información Detallada de Estudiantes</h3>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            @for (estudiante of estudiantes; track estudiante) {
+              <div
+                class="bg-gray-50 rounded-lg p-6">
+                <div class="flex items-center space-x-4 mb-6">
+                  <div class="text-4xl">{{ estudiante.avatar }}</div>
+                  <div>
+                    <h4 class="text-xl font-bold text-gray-900">{{ estudiante.nombre }} {{ estudiante.apellido }}</h4>
+                    <p class="text-gray-600">{{ estudiante.grado }} - Sección {{ estudiante.seccion }}</p>
+                    <p class="text-sm text-gray-500">{{ estudiante.edad }} años</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div class="text-center p-4 bg-white rounded-lg">
+                    <p class="text-2xl font-bold" [ngClass]="getNotaClass(estudiante.promedio)">{{ estudiante.promedio }}</p>
+                    <p class="text-sm text-gray-600">Promedio</p>
+                  </div>
+                  <div class="text-center p-4 bg-white rounded-lg">
+                    <p class="text-2xl font-bold text-blue-600">{{ estudiante.asistencia }}%</p>
+                    <p class="text-sm text-gray-600">Asistencia</p>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <p class="text-sm font-medium text-gray-700 mb-2">Comportamiento:</p>
+                  <span class="px-3 py-1 text-sm rounded-full" [ngClass]="getComportamientoClass(estudiante.comportamiento)">
+                    {{ getComportamientoTexto(estudiante.comportamiento) }}
+                  </span>
+                </div>
+                <div class="mb-6">
+                  <h5 class="font-medium text-gray-900 mb-3">Últimas Calificaciones</h5>
+                  <div class="space-y-2">
+                    @for (nota of estudiante.ultimasNotas; track nota) {
+                      <div
+                        class="flex items-center justify-between p-3 bg-white rounded-lg">
+                        <div>
+                          <p class="font-medium text-gray-900">{{ nota.materia }}</p>
+                          <p class="text-sm text-gray-500">{{ nota.descripcion }}</p>
+                          <p class="text-xs text-gray-400">{{ formatDate(nota.fecha) }}</p>
+                        </div>
+                        <div class="text-right">
+                          <p class="text-lg font-bold" [ngClass]="getNotaClass(nota.nota)">{{ nota.nota }}</p>
+                          <p class="text-xs text-gray-500 capitalize">{{ nota.tipo }}</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    (click)="descargarReporte(estudiante.id)"
+                    (keydown)="handleDescargarReporteKeydown($event, estudiante.id)"
+                    class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    role="button"
+                    [attr.aria-label]="'Descargar reporte académico de ' + estudiante.nombre + ' ' + estudiante.apellido">
+                    📄 Descargar Reporte
+                  </button>
+                  <button
+                    (click)="programarReunion()"
+                    (keydown)="handleProgramarReunionKeydown($event)"
+                    class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    role="button"
+                    aria-label="Programar reunión con docentes">
+                    📅 Programar Reunión
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Vista de Calificaciones -->
+  @if (vistaActual === 'notas') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-900">Historial de Calificaciones</h3>
+        </div>
+        <div class="p-6">
+          <div class="space-y-8">
+            @for (estudiante of estudiantes; track estudiante) {
+              <div>
+                <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+                  <span class="text-2xl">{{ estudiante.avatar }}</span>
+                  <span>{{ estudiante.nombre }} {{ estudiante.apellido }}</span>
+                </h4>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full bg-gray-50 rounded-lg">
+                    <thead>
+                      <tr class="border-b border-gray-200">
+                        <th class="text-left py-3 px-4 font-medium text-gray-700">Materia</th>
+                        <th class="text-left py-3 px-4 font-medium text-gray-700">Descripción</th>
+                        <th class="text-left py-3 px-4 font-medium text-gray-700">Tipo</th>
+                        <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
+                        <th class="text-left py-3 px-4 font-medium text-gray-700">Nota</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (nota of estudiante.ultimasNotas; track nota) {
+                        <tr
+                          class="border-b border-gray-100">
+                          <td class="py-3 px-4 font-medium text-gray-900">{{ nota.materia }}</td>
+                          <td class="py-3 px-4 text-gray-700">{{ nota.descripcion }}</td>
+                          <td class="py-3 px-4">
+                            <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full capitalize">
+                              {{ nota.tipo }}
+                            </span>
+                          </td>
+                          <td class="py-3 px-4 text-gray-600">{{ formatDate(nota.fecha) }}</td>
+                          <td class="py-3 px-4">
+                            <span class="text-lg font-bold" [ngClass]="getNotaClass(nota.nota)">{{ nota.nota }}</span>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Vista de Comunicaciones -->
+  @if (vistaActual === 'comunicaciones') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-900">Comunicaciones con Docentes</h3>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            @for (comunicacion of comunicaciones; track comunicacion) {
+              <div
+                class="p-6 rounded-lg border-l-4 transition-all"
+                [class.border-red-400]="!comunicacion.leido"
+                [class.border-gray-200]="comunicacion.leido"
+                [class.bg-red-50]="!comunicacion.leido"
+                [class.bg-gray-50]="comunicacion.leido">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <h4 class="text-lg font-semibold text-gray-900">{{ comunicacion.docenteNombre }}</h4>
+                      <span class="px-3 py-1 text-sm rounded-full" [ngClass]="getTipoComunicacionClass(comunicacion.tipo)">
+                        {{ comunicacion.tipo }}
+                      </span>
+                      @if (!comunicacion.leido) {
+                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                          Nuevo
+                        </span>
+                      }
+                    </div>
+                    <p class="text-gray-600 mb-2">
+                      <span class="font-medium">Materia:</span> {{ comunicacion.materia }}
+                    </p>
+                    <p class="text-gray-600 mb-2">
+                      <span class="font-medium">Estudiante:</span>
+                      {{ getEstudianteNombre(comunicacion.estudianteId) }}
+                    </p>
+                    <p class="text-gray-800 mb-4">{{ comunicacion.mensaje }}</p>
+                    <p class="text-sm text-gray-500">{{ formatDateWithTime(comunicacion.fecha) }}</p>
+                  </div>
+                  <div class="flex flex-col space-y-2 ml-4">
+                    @if (!comunicacion.leido) {
+                      <button
+                        (click)="marcarComoLeido(comunicacion)"
+                        (keydown)="handleComunicacionKeydown($event, comunicacion)"
+                        class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        role="button"
+                        [attr.aria-label]="'Marcar como leído mensaje de ' + comunicacion.docenteNombre">
+                        Marcar leído
+                      </button>
+                    }
+                    <button
+                      (click)="contactarDocente(comunicacion.docenteNombre)"
+                      (keydown)="handleContactarDocenteKeydown($event, comunicacion.docenteNombre)"
+                      class="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                      role="button"
+                      [attr.aria-label]="'Responder a ' + comunicacion.docenteNombre">
+                      Responder
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Vista de Eventos -->
+  @if (vistaActual === 'eventos') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-gray-900">Calendario de Eventos</h3>
+            <button
+              (click)="verCalendarioCompleto()"
+              (keydown)="handleCalendarioKeydown($event)"
+              class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              role="button"
+              aria-label="Ver calendario completo de eventos escolares">
+              Ver Calendario Completo
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (evento of eventosProximos; track evento) {
+              <div
+                class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <h4 class="font-semibold text-gray-900 mb-1">{{ evento.titulo }}</h4>
+                    <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getTipoEventoClass(evento.tipo)">
+                      {{ evento.tipo }}
+                    </span>
+                  </div>
+                  <div class="flex flex-col items-end">
+                    @if (evento.importante) {
+                      <span class="text-red-500 text-xl mb-1">⚠️</span>
+                    }
+                    <span class="text-xs font-medium"
+                      [class.text-red-600]="getDiasHastaEvento(evento.fecha) <= 3"
+                      [class.text-yellow-600]="getDiasHastaEvento(evento.fecha) > 3 && getDiasHastaEvento(evento.fecha) <= 7"
+                      [class.text-green-600]="getDiasHastaEvento(evento.fecha) > 7">
+                      {{ getDiasHastaEvento(evento.fecha) }} días
+                    </span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">{{ evento.descripcion }}</p>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Fecha:</span>
+                    <span class="font-medium">{{ formatDate(evento.fecha) }}</span>
+                  </div>
+                  @if (evento.grado) {
+                    <div class="flex justify-between text-sm">
+                      <span class="text-gray-600">Dirigido a:</span>
+                      <span class="font-medium">{{ evento.grado }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 
 </div>
 <!-- Fin Gráfica -->

@@ -16,7 +16,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'tabla'"
-      >
+        >
         <i class="fas fa-table mr-2"></i>
         Tabla de Usuarios
       </button>
@@ -31,7 +31,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'nuevo'"
-      >
+        >
         <i class="fas fa-user-plus mr-2"></i>
         Usuario
       </button>
@@ -44,464 +44,491 @@
   <div class="tab-content">
 
     <!-- Panel: Tabla de Usuarios -->
-    <div
-      *ngIf="activeTab === 'tabla'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-tabla'"
-    >
-      <!-- Encabezado con filtro y botón -->
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchUser" class="block text-sm font-medium text-gray-700 mb-2">
-                Buscar Usuario:
-              </label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+    @if (activeTab === 'tabla') {
+      <div
+        role="tabpanel"
+        class="tab-panel animate-fadeIn"
+        [attr.aria-labelledby]="'tab-tabla'"
+        >
+        <!-- Encabezado con filtro y botón -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+          <div class="p-4 border-b border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <!-- Filtro de búsqueda -->
+              <div class="flex-1 max-w-md">
+                <label for="searchUser" class="block text-sm font-medium text-gray-700 mb-2">
+                  Buscar Usuario:
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input
+                    id="searchUser"
+                    type="text"
+                    [(ngModel)]="searchTerm"
+                    (input)="filterUsuarios()"
+                    placeholder="Ingrese correo, nombre o apellido"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    />
+                  </div>
                 </div>
-                <input
-                  id="searchUser"
-                  type="text"
-                  [(ngModel)]="searchTerm"
-                  (input)="filterUsuarios()"
-                  placeholder="Ingrese correo, nombre o apellido"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                />
+                <!-- Filtro por Perfil -->
+                <div class="w-48">
+                  <label for="filtroPerfil" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Perfil:</label>
+                  <select
+                    id="filtroPerfil"
+                    [(ngModel)]="filtroPerfil"
+                    (change)="filterUsuarios()"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    >
+                    <option value="">Todos los perfiles</option>
+                    @for (perfil of perfiles; track perfil) {
+                      <option [value]="perfil.id">{{ perfil.nombre }}</option>
+                    }
+                  </select>
+                </div>
+                <!-- Filtro por Colegio -->
+                <div class="w-48">
+                  <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
+                  <select
+                    id="filtroColegio"
+                    [(ngModel)]="filtroColegio"
+                    (change)="filterUsuarios()"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    >
+                    <option value="">Todos los colegios</option>
+                    @for (colegio of colegios; track colegio) {
+                      <option [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
+                    }
+                  </select>
+                </div>
+                <!-- Botón Nuevo Usuario -->
+                <button
+                  type="button"
+                  (click)="createUsuario()"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                  >
+                  <i class="fas fa-plus mr-2"></i>
+                  Nuevo Usuario
+                </button>
               </div>
             </div>
-
-            <!-- Filtro por Perfil -->
-            <div class="w-48">
-              <label for="filtroPerfil" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Perfil:</label>
-              <select
-                id="filtroPerfil"
-                [(ngModel)]="filtroPerfil"
-                (change)="filterUsuarios()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">Todos los perfiles</option>
-                <option *ngFor="let perfil of perfiles" [value]="perfil.id">{{ perfil.nombre }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro por Colegio -->
-            <div class="w-48">
-              <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
-              <select
-                id="filtroColegio"
-                [(ngModel)]="filtroColegio"
-                (change)="filterUsuarios()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">Todos los colegios</option>
-                <option *ngFor="let colegio of colegios" [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
-              </select>
-            </div>
-
-            <!-- Botón Nuevo Usuario -->
-            <button
-              type="button"
-              (click)="createUsuario()"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
-            >
-              <i class="fas fa-plus mr-2"></i>
-              Nuevo Usuario
-            </button>
-          </div>
-        </div>
-
-        <!-- Tabla de usuarios -->
-        <div class="overflow-x-auto">
-          <table class="usuarios-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let usuario of paginatedUsuarios; trackBy: trackByUserId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id_usuario }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.username }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.nombres }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.apellido }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.correo }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {{ getRoleName(usuario.id_perfil) }}
-                  </span>
-                </td>
-                <td class="px-6 py-1.5 whitespace-nowrap">
-                  <span
+            <!-- Tabla de usuarios -->
+            <div class="overflow-x-auto">
+              <table class="usuarios-table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (usuario of paginatedUsuarios; track trackByUserId($index, usuario)) {
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ usuario.id_usuario }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.username }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.nombres }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.apellido }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ usuario.correo }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          {{ getRoleName(usuario.id_perfil) }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-1.5 whitespace-nowrap">
+                        <span
                     [class]="usuario.estado
                       ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'
                       : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'"
-                  >
-                    {{ usuario.estado ? 'Activo' : 'Inactivo' }}
-                  </span>
-                </td>
-                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
-                  <div class="flex justify-center space-x-2">
-                    <button
-                      type="button"
-                      (click)="viewUsuario(usuario.id_usuario!)"
-                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
-                      title="Ver detalles"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="editUsuario(usuario.id_usuario!)"
-                      class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
-                      title="Editar"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="deleteUsuario(usuario.id_usuario!)"
-                      class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
-                      title="Eliminar"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- Estado vacío -->
-              <tr *ngIf="paginatedUsuarios.length === 0">
-                <td colspan="8" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay usuarios</p>
-                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer usuario.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="getTotalPages().length > 1">
-          <div class="flex items-center justify-between">
-            <div class="flex-1 flex justify-between sm:hidden">
-              <button
-                (click)="changePage(currentPage - 1)"
-                [disabled]="currentPage === 1"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <button
-                (click)="changePage(currentPage + 1)"
-                [disabled]="currentPage === getTotalPages().length"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
+                          >
+                          {{ usuario.estado ? 'Activo' : 'Inactivo' }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
+                        <div class="flex justify-center space-x-2">
+                          <button
+                            type="button"
+                            (click)="viewUsuario(usuario.id_usuario!)"
+                            class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                            title="Ver detalles"
+                            >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button
+                            type="button"
+                            (click)="editUsuario(usuario.id_usuario!)"
+                            class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                            title="Editar"
+                            >
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button
+                            type="button"
+                            (click)="deleteUsuario(usuario.id_usuario!)"
+                            class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                            title="Eliminar"
+                            >
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                  <!-- Estado vacío -->
+                  @if (paginatedUsuarios.length === 0) {
+                    <tr>
+                      <td colspan="8" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <div class="flex flex-col items-center">
+                          <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
+                          <p class="text-lg font-medium text-gray-900 mb-2">No hay usuarios</p>
+                          <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer usuario.' }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
             </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm text-gray-700">
-                  Mostrando
-                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
-                  a
-                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredUsuarios.length) }}</span>
-                  de
-                  <span class="font-medium">{{ filteredUsuarios.length }}</span>
-                  resultados
-                </p>
-              </div>
-              <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
-                  <button
-                    *ngFor="let page of getTotalPages(); let i = index"
-                    (click)="changePage(i + 1)"
+            <!-- Paginación -->
+            @if (getTotalPages().length > 1) {
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <div class="flex-1 flex justify-between sm:hidden">
+                    <button
+                      (click)="changePage(currentPage - 1)"
+                      [disabled]="currentPage === 1"
+                      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                      Anterior
+                    </button>
+                    <button
+                      (click)="changePage(currentPage + 1)"
+                      [disabled]="currentPage === getTotalPages().length"
+                      class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                      Siguiente
+                    </button>
+                  </div>
+                  <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                      <p class="text-sm text-gray-700">
+                        Mostrando
+                        <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                        a
+                        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredUsuarios.length) }}</span>
+                        de
+                        <span class="font-medium">{{ filteredUsuarios.length }}</span>
+                        resultados
+                      </p>
+                    </div>
+                    <div>
+                      <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                        @for (page of getTotalPages(); track page; let i = $index) {
+                          <button
+                            (click)="changePage(i + 1)"
                     [class]="currentPage === i + 1
                       ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
                       : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
-                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
-                  >
-                    {{ i + 1 }}
-                  </button>
-                </nav>
+                            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                            >
+                            {{ i + 1 }}
+                          </button>
+                        }
+                      </nav>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            }
           </div>
         </div>
-      </div>
-    </div>
+      }
 
-    <!-- Panel: Nuevo Usuario -->
-    <div
-      *ngIf="activeTab === 'nuevo'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-nuevo'"
-    >
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">
-              {{ isEditing ? 'Editar Usuario' : 'Usuario' }}
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">
-              {{ isEditing ? 'Modifica la información del usuario' : 'Completa la información para crear un usuario' }}
-            </p>
-          </div>
-
-          <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="p-6">
-            <div class="space-y-6">
-              <!-- Usuario -->
-              <div>
-                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Usuario *</label>
-                <input
-                  type="text"
-                  id="username"
-                  formControlName="username"
-                  placeholder="Ingrese el nombre de usuario"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched"
-                >
-                <div *ngIf="usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched" class="mt-1 text-sm text-red-600">
-                  Este campo es requerido
-                </div>
+      <!-- Panel: Nuevo Usuario -->
+      @if (activeTab === 'nuevo') {
+        <div
+          role="tabpanel"
+          class="tab-panel animate-fadeIn"
+          [attr.aria-labelledby]="'tab-nuevo'"
+          >
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">
+                  {{ isEditing ? 'Editar Usuario' : 'Usuario' }}
+                </h3>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ isEditing ? 'Modifica la información del usuario' : 'Completa la información para crear un usuario' }}
+                </p>
               </div>
+              <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="p-6">
+                <div class="space-y-6">
+                  <!-- Usuario -->
+                  <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Usuario *</label>
+                    <input
+                      type="text"
+                      id="username"
+                      formControlName="username"
+                      placeholder="Ingrese el nombre de usuario"
+                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      [class.border-red-300]="usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched"
+                      >
+                      @if (usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched) {
+                        <div class="mt-1 text-sm text-red-600">
+                          Este campo es requerido
+                        </div>
+                      }
+                    </div>
+                    <!-- Perfil -->
+                    <div>
+                      <label for="id_perfil" class="block text-sm font-medium text-gray-700 mb-2">Perfil *</label>
+                      <select
+                        id="id_perfil"
+                        formControlName="id_perfil"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched"
+                        >
+                        <option value="" disabled>Seleccione un perfil</option>
+                        @for (perfil of perfiles; track perfil) {
+                          <option [value]="perfil.id">{{ perfil.nombre }}</option>
+                        }
+                      </select>
+                      @if (usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched) {
+                        <div class="mt-1 text-sm text-red-600">
+                          Por favor selecciona un perfil
+                        </div>
+                      }
+                    </div>
+                    <!-- Colegio -->
+                    <div>
+                      <label for="id_colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
+                      <select
+                        id="id_colegio"
+                        formControlName="id_colegio"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched"
+                        >
+                        <option value="" disabled>Seleccione un colegio</option>
+                        @for (colegio of colegios; track colegio) {
+                          <option [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
+                        }
+                      </select>
+                      @if (usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched) {
+                        <div class="mt-1 text-sm text-red-600">
+                          Por favor selecciona un colegio
+                        </div>
+                      }
+                    </div>
+                    <!-- Nro DNI -->
+                    <div>
+                      <label for="nrodni" class="block text-sm font-medium text-gray-700 mb-2">Nro DNI *</label>
+                      <input
+                        type="text"
+                        id="nrodni"
+                        formControlName="nrodni"
+                        placeholder="Ingrese el número de DNI"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="usuarioForm.get('nrodni')?.invalid && usuarioForm.get('nrodni')?.touched"
+                        >
+                        @if (usuarioForm.get('nrodni')?.invalid && usuarioForm.get('nrodni')?.touched) {
+                          <div class="mt-1 text-sm text-red-600">
+                            Este campo es requerido
+                          </div>
+                        }
+                      </div>
+                      <!-- Correo Electrónico -->
+                      <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
+                        <input
+                          type="email"
+                          id="correo"
+                          formControlName="correo"
+                          placeholder="usuario@ejemplo.com"
+                          class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                          [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched"
+                          >
+                          @if (usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched) {
+                            <div class="mt-1 text-sm text-red-600">
+                              El correo es obligatorio
+                            </div>
+                          }
+                          @if (usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched) {
+                            <div class="mt-1 text-sm text-red-600">
+                              Ingresa un correo válido
+                            </div>
+                          }
+                        </div>
+                        <!-- Nombres y Apellidos -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
+                            <input
+                              type="text"
+                              id="nombre"
+                              formControlName="nombre"
+                              placeholder="Ingrese los nombres"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="usuarioForm.get('nombre')?.invalid && usuarioForm.get('nombre')?.touched"
+                              >
+                              @if (usuarioForm.get('nombre')?.invalid && usuarioForm.get('nombre')?.touched) {
+                                <div class="mt-1 text-sm text-red-600">
+                                  Este campo es requerido
+                                </div>
+                              }
+                            </div>
+                            <div>
+                              <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
+                              <input
+                                type="text"
+                                id="apellido"
+                                formControlName="apellido"
+                                placeholder="Ingrese los apellidos"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                [class.border-red-300]="usuarioForm.get('apellido')?.invalid && usuarioForm.get('apellido')?.touched"
+                                >
+                                @if (usuarioForm.get('apellido')?.invalid && usuarioForm.get('apellido')?.touched) {
+                                  <div class="mt-1 text-sm text-red-600">
+                                    Este campo es requerido
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                            <!-- Fecha de nacimiento -->
+                            <div>
+                              <label for="fecha_nacimiento" class="block text-sm font-medium text-gray-700 mb-2">Fecha de nacimiento *</label>
+                              <input
+                                type="date"
+                                id="fecha_nacimiento"
+                                formControlName="fecha_nacimiento"
+                                placeholder="Fecha de nacimiento"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                [class.border-red-300]="usuarioForm.get('fecha_nacimiento')?.invalid && usuarioForm.get('fecha_nacimiento')?.touched"
+                                >
+                                @if (usuarioForm.get('fecha_nacimiento')?.invalid && usuarioForm.get('fecha_nacimiento')?.touched) {
+                                  <div class="mt-1 text-sm text-red-600">
+                                    Este campo es requerido
+                                  </div>
+                                }
+                              </div>
+                              <!-- Contraseñas -->
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                  <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Ingrese contraseña *</label>
+                                  <input
+                                    type="password"
+                                    id="password"
+                                    formControlName="password"
+                                    placeholder="Ingrese la contraseña"
+                                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                    [class.border-red-300]="usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched"
+                                    >
+                                    @if (usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched) {
+                                      <div class="mt-1 text-sm text-red-600">
+                                        Este campo es requerido
+                                      </div>
+                                    }
+                                  </div>
+                                  <div>
+                                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Repetir contraseña *</label>
+                                    <input
+                                      type="password"
+                                      id="confirmPassword"
+                                      formControlName="confirmPassword"
+                                      placeholder="Repita la contraseña"
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                      [class.border-red-300]="usuarioForm.get('confirmPassword')?.invalid && usuarioForm.get('confirmPassword')?.touched"
+                                      >
+                                      @if (usuarioForm.get('confirmPassword')?.invalid && usuarioForm.get('confirmPassword')?.touched) {
+                                        <div class="mt-1 text-sm text-red-600">
+                                          Este campo es requerido
+                                        </div>
+                                      }
+                                    </div>
+                                  </div>
+                                  <!-- Estado -->
+                                  <div>
+                                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                                    <select
+                                      id="estado"
+                                      formControlName="estado"
+                                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                      [class.border-red-300]="usuarioForm.get('estado')?.invalid && usuarioForm.get('estado')?.touched"
+                                      >
+                                      <option value="1">Activo</option>
+                                      <option value="0">Inactivo</option>
+                                    </select>
+                                    @if (usuarioForm.get('estado')?.invalid && usuarioForm.get('estado')?.touched) {
+                                      <div class="mt-1 text-sm text-red-600">
+                                        Por favor selecciona un estado
+                                      </div>
+                                    }
+                                  </div>
+                                  <!-- Error de contraseñas no coinciden -->
+                                  @if (usuarioForm.hasError('passwordMismatch') && usuarioForm.touched) {
+                                    <div class="rounded-md bg-red-50 p-4">
+                                      <div class="flex">
+                                        <i class="fas fa-exclamation-circle text-red-400 mr-3 mt-0.5"></i>
+                                        <div class="text-sm text-red-700">
+                                          Las contraseñas no coinciden
+                                        </div>
+                                      </div>
+                                    </div>
+                                  }
+                                  <!-- Botones -->
+                                  <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                                    <button
+                                      type="button"
+                                      (click)="resetForm(); activeTab = 'tabla'"
+                                      class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                                      >
+                                      Cancelar
+                                    </button>
+                                    <button
+                                      type="submit"
+                                      [disabled]="usuarioForm.invalid || loading"
+                                      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                                      >
+                                      @if (loading) {
+                                        <i class="fas fa-spinner fa-spin mr-2"></i>
+                                      }
+                                      {{ isEditing ? 'Actualizar Usuario' : 'Crear Usuario' }}
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      }
 
-              <!-- Perfil -->
-              <div>
-                <label for="id_perfil" class="block text-sm font-medium text-gray-700 mb-2">Perfil *</label>
-                <select
-                  id="id_perfil"
-                  formControlName="id_perfil"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched"
-                >
-                  <option value="" disabled>Seleccione un perfil</option>
-                  <option *ngFor="let perfil of perfiles" [value]="perfil.id">{{ perfil.nombre }}</option>
-                </select>
-                <div *ngIf="usuarioForm.get('id_perfil')?.invalid && usuarioForm.get('id_perfil')?.touched" class="mt-1 text-sm text-red-600">
-                  Por favor selecciona un perfil
-                </div>
-              </div>
 
-              <!-- Colegio -->
-              <div>
-                <label for="id_colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
-                <select
-                  id="id_colegio"
-                  formControlName="id_colegio"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched"
-                >
-                  <option value="" disabled>Seleccione un colegio</option>
-                  <option *ngFor="let colegio of colegios" [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
-                </select>
-                <div *ngIf="usuarioForm.get('id_colegio')?.invalid && usuarioForm.get('id_colegio')?.touched" class="mt-1 text-sm text-red-600">
-                  Por favor selecciona un colegio
-                </div>
-              </div>
 
-              <!-- Nro DNI -->
-              <div>
-                <label for="nrodni" class="block text-sm font-medium text-gray-700 mb-2">Nro DNI *</label>
-                <input
-                  type="text"
-                  id="nrodni"
-                  formControlName="nrodni"
-                  placeholder="Ingrese el número de DNI"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('nrodni')?.invalid && usuarioForm.get('nrodni')?.touched"
-                >
-                <div *ngIf="usuarioForm.get('nrodni')?.invalid && usuarioForm.get('nrodni')?.touched" class="mt-1 text-sm text-red-600">
-                  Este campo es requerido
-                </div>
-              </div>
-
-              <!-- Correo Electrónico -->
-              <div>
-                <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
-                <input
-                  type="email"
-                  id="correo"
-                  formControlName="correo"
-                  placeholder="usuario@ejemplo.com"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('correo')?.invalid && usuarioForm.get('correo')?.touched"
-                >
-                <div *ngIf="usuarioForm.get('correo')?.errors?.['required'] && usuarioForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
-                  El correo es obligatorio
-                </div>
-                <div *ngIf="usuarioForm.get('correo')?.errors?.['email'] && usuarioForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
-                  Ingresa un correo válido
-                </div>
-              </div>
-
-              <!-- Nombres y Apellidos -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
-                  <input
-                    type="text"
-                    id="nombre"
-                    formControlName="nombre"
-                    placeholder="Ingrese los nombres"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="usuarioForm.get('nombre')?.invalid && usuarioForm.get('nombre')?.touched"
-                  >
-                  <div *ngIf="usuarioForm.get('nombre')?.invalid && usuarioForm.get('nombre')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
-                  <input
-                    type="text"
-                    id="apellido"
-                    formControlName="apellido"
-                    placeholder="Ingrese los apellidos"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="usuarioForm.get('apellido')?.invalid && usuarioForm.get('apellido')?.touched"
-                  >
-                  <div *ngIf="usuarioForm.get('apellido')?.invalid && usuarioForm.get('apellido')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-              </div>
-
-              <!-- Fecha de nacimiento -->
-              <div>
-                <label for="fecha_nacimiento" class="block text-sm font-medium text-gray-700 mb-2">Fecha de nacimiento *</label>
-                <input
-                  type="date"
-                  id="fecha_nacimiento"
-                  formControlName="fecha_nacimiento"
-                  placeholder="Fecha de nacimiento"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('fecha_nacimiento')?.invalid && usuarioForm.get('fecha_nacimiento')?.touched"
-                >
-                <div *ngIf="usuarioForm.get('fecha_nacimiento')?.invalid && usuarioForm.get('fecha_nacimiento')?.touched" class="mt-1 text-sm text-red-600">
-                  Este campo es requerido
-                </div>
-              </div>
-
-              <!-- Contraseñas -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Ingrese contraseña *</label>
-                  <input
-                    type="password"
-                    id="password"
-                    formControlName="password"
-                    placeholder="Ingrese la contraseña"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched"
-                  >
-                  <div *ngIf="usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-
-                <div>
-                  <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Repetir contraseña *</label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    formControlName="confirmPassword"
-                    placeholder="Repita la contraseña"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="usuarioForm.get('confirmPassword')?.invalid && usuarioForm.get('confirmPassword')?.touched"
-                  >
-                  <div *ngIf="usuarioForm.get('confirmPassword')?.invalid && usuarioForm.get('confirmPassword')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-              </div>
-
-              <!-- Estado -->
-              <div>
-                <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                <select
-                  id="estado"
-                  formControlName="estado"
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  [class.border-red-300]="usuarioForm.get('estado')?.invalid && usuarioForm.get('estado')?.touched"
-                >
-                  <option value="1">Activo</option>
-                  <option value="0">Inactivo</option>
-                </select>
-                <div *ngIf="usuarioForm.get('estado')?.invalid && usuarioForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
-                  Por favor selecciona un estado
-                </div>
-              </div>
-
-              <!-- Error de contraseñas no coinciden -->
-              <div *ngIf="usuarioForm.hasError('passwordMismatch') && usuarioForm.touched" class="rounded-md bg-red-50 p-4">
-                <div class="flex">
-                  <i class="fas fa-exclamation-circle text-red-400 mr-3 mt-0.5"></i>
-                  <div class="text-sm text-red-700">
-                    Las contraseñas no coinciden
-                  </div>
-                </div>
-              </div>
-
-              <!-- Botones -->
-              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                <button
-                  type="button"
-                  (click)="resetForm(); activeTab = 'tabla'"
-                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  [disabled]="usuarioForm.invalid || loading"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
-                  {{ isEditing ? 'Actualizar Usuario' : 'Crear Usuario' }}
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-
-
-  </div>
-</div>
-
-<!-- Loading overlay -->
-<div
-  *ngIf="loading"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-  role="dialog"
-  aria-label="Cargando"
->
-  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
-    <div class="flex items-center space-x-3">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
-      <div>
-        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
-        <p class="text-sm text-gray-500">Por favor espera un momento</p>
-      </div>
-    </div>
-  </div>
-</div>
+                  <!-- Loading overlay -->
+                  @if (loading) {
+                    <div
+                      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                      role="dialog"
+                      aria-label="Cargando"
+                      >
+                      <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+                        <div class="flex items-center space-x-3">
+                          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+                          <div>
+                            <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+                            <p class="text-sm text-gray-500">Por favor espera un momento</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }

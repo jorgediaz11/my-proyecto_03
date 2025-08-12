@@ -1,57 +1,60 @@
 <<div class="bg-gray-50 min-h-screen p-6">
-  <!-- Header personalizado -->
+<!-- Header personalizado -->
 
-  <div class="bg-white rounded-lg shadow-md p-6 mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">
-        🎓 Bienvenido, {{ nombreEstudiante }}
-      </h1>
-      <p class="text-gray-600">Dashboard Estudiantil - Gestiona tus cursos y evaluaciones</p>
-    </div>
-    <div class="mt-4 md:mt-0 flex justify-end">
-      <button
-        class="px-6 py-2 bg-orange-600 text-white font-bold rounded-lg shadow hover:bg-orange-700 transition-colors text-base"
-        (click)="onActivarLibro()"
-      >
-        <i class="fas fa-book mr-2"></i> Activar Libro
-      </button>
-    </div>
+<div class="bg-white rounded-lg shadow-md p-6 mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      🎓 Bienvenido, {{ nombreEstudiante }}
+    </h1>
+    <p class="text-gray-600">Dashboard Estudiantil - Gestiona tus cursos y evaluaciones</p>
   </div>
+  <div class="mt-4 md:mt-0 flex justify-end">
+    <button
+      class="px-6 py-2 bg-orange-600 text-white font-bold rounded-lg shadow hover:bg-orange-700 transition-colors text-base"
+      (click)="onActivarLibro()"
+      >
+      <i class="fas fa-book mr-2"></i> Activar Libro
+    </button>
+  </div>
+</div>
 
-  <!-- Modal Activar Libro -->
-  <div *ngIf="mostrarModalActivarLibro" class="fixed inset-0 z-50">
+<!-- Modal Activar Libro -->
+@if (mostrarModalActivarLibro) {
+  <div class="fixed inset-0 z-50">
     <div class="bg-[#76B177] rounded-lg p-0 relative animate-fade-in border-4 border-red-600" style="width: 46.8vw; height: 60vh; min-width: 192px; min-height: 192px; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;">
       <button (click)="cerrarModalActivarLibro()" class="absolute top-2 right-2 text-white hover:text-yellow-300 text-2xl font-bold focus:outline-none">&times;</button>
       <app-activar-libros style="width: 100%; height: 100%;" (cerrar)="cerrarModalActivarLibro()"></app-activar-libros>
     </div>
   </div>
+}
 
-  <!-- Contadores del estudiante -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-lg shadow-md p-4 text-center">
-      <div class="text-2xl font-bold text-blue-600">{{ totalCursos }}</div>
-      <div class="text-sm text-gray-600">Mis Cursos</div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md p-4 text-center">
-      <div class="text-2xl font-bold text-green-600">{{ cursosActivos }}</div>
-      <div class="text-sm text-gray-600">Cursos Activos</div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md p-4 text-center">
-      <div class="text-2xl font-bold text-yellow-600">{{ progresoPromedio }}%</div>
-      <div class="text-sm text-gray-600">Progreso Promedio</div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md p-4 text-center">
-      <div class="text-2xl font-bold text-red-600">{{ evaluacionesPendientes }}</div>
-      <div class="text-sm text-gray-600">Evaluaciones Pendientes</div>
-    </div>
+<!-- Contadores del estudiante -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+  <div class="bg-white rounded-lg shadow-md p-4 text-center">
+    <div class="text-2xl font-bold text-blue-600">{{ totalCursos }}</div>
+    <div class="text-sm text-gray-600">Mis Cursos</div>
   </div>
+  <div class="bg-white rounded-lg shadow-md p-4 text-center">
+    <div class="text-2xl font-bold text-green-600">{{ cursosActivos }}</div>
+    <div class="text-sm text-gray-600">Cursos Activos</div>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4 text-center">
+    <div class="text-2xl font-bold text-yellow-600">{{ progresoPromedio }}%</div>
+    <div class="text-sm text-gray-600">Progreso Promedio</div>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-4 text-center">
+    <div class="text-2xl font-bold text-red-600">{{ evaluacionesPendientes }}</div>
+    <div class="text-sm text-gray-600">Evaluaciones Pendientes</div>
+  </div>
+</div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- Sección: Mis Cursos -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">📚 Mis Cursos</h2>
-      <div class="space-y-4">
-        <div *ngFor="let curso of misCursos" class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Sección: Mis Cursos -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">📚 Mis Cursos</h2>
+    <div class="space-y-4">
+      @for (curso of misCursos; track curso) {
+        <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
           <div class="flex justify-between items-start mb-2">
             <h3 class="font-semibold text-gray-800">{{ curso.nombre }}</h3>
             <span [class]="getProgresoColor(curso.progreso)" class="text-lg">
@@ -81,14 +84,16 @@
             <p>🕐 Próxima clase: {{ curso.proximaClase }}</p>
           </div>
         </div>
-      </div>
+      }
     </div>
+  </div>
 
-    <!-- Sección: Próximas Evaluaciones -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">📝 Próximas Evaluaciones</h2>
-      <div class="space-y-4">
-        <div *ngFor="let evaluacion of proximasEvaluaciones" class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+  <!-- Sección: Próximas Evaluaciones -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">📝 Próximas Evaluaciones</h2>
+    <div class="space-y-4">
+      @for (evaluacion of proximasEvaluaciones; track evaluacion) {
+        <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
           <div class="flex justify-between items-start mb-2">
             <h3 class="font-semibold text-gray-800">{{ evaluacion.titulo }}</h3>
             <span class="text-lg">{{ getTipoEvaluacionIcon(evaluacion.tipo) }}</span>
@@ -109,23 +114,24 @@
             </span>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
+</div>
 
-  <!-- Gráficos -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-    <!-- Gráfico de Progreso por Curso -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Progreso por Curso</h3>
-      <canvas id="progressChart" class="w-full h-64"></canvas>
-    </div>
-
-    <!-- Gráfico de Tipos de Evaluaciones -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <h3 class="text-lg font-bold text-gray-800 mb-4">📋 Tipos de Evaluaciones Pendientes</h3>
-      <canvas id="evaluacionesChart" class="w-full h-64"></canvas>
-    </div>
+<!-- Gráficos -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+  <!-- Gráfico de Progreso por Curso -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Progreso por Curso</h3>
+    <canvas id="progressChart" class="w-full h-64"></canvas>
   </div>
+
+  <!-- Gráfico de Tipos de Evaluaciones -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">📋 Tipos de Evaluaciones Pendientes</h3>
+    <canvas id="evaluacionesChart" class="w-full h-64"></canvas>
+  </div>
+</div>
 </div>
 <!-- Fin Gráfica -->

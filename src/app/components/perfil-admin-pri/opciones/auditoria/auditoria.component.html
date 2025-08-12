@@ -5,13 +5,15 @@
   <div class="bg-white rounded-lg shadow p-6 w-full md:w-1/3">
     <h3 class="text-lg font-bold mb-4 text-green-700">Selecciona un usuario</h3>
     <select class="w-full mb-4 p-2 border rounded text-gray-800 font-semibold bg-gray-100 focus:bg-white focus:border-green-500 transition"
-            [(ngModel)]="usuarioSeleccionado"
-            (change)="seleccionarUsuario(usuarioSeleccionado)">
-      <option *ngFor="let usuario of usuarios" [ngValue]="usuario">
-        {{ usuario.usuario }} - {{ usuario.nombres }} {{ usuario.apellidos }}
-      </option>
+      [(ngModel)]="usuarioSeleccionado"
+      (change)="seleccionarUsuario(usuarioSeleccionado)">
+      @for (usuario of usuarios; track usuario) {
+        <option [ngValue]="usuario">
+          {{ usuario.usuario }} - {{ usuario.nombres }} {{ usuario.apellidos }}
+        </option>
+      }
     </select>
-    <ng-container *ngIf="usuarioSeleccionado">
+    @if (usuarioSeleccionado) {
       <div class="mb-2"><span class="font-semibold text-gray-700">Usuario:</span> <span class="text-gray-800">{{ usuarioSeleccionado.usuario }}</span></div>
       <div class="mb-2"><span class="font-semibold text-gray-700">Nombres:</span> <span class="text-gray-800">{{ usuarioSeleccionado.nombres }}</span></div>
       <div class="mb-2"><span class="font-semibold text-gray-700">Apellidos:</span> <span class="text-gray-800">{{ usuarioSeleccionado.apellidos }}</span></div>
@@ -25,35 +27,37 @@
         <li><span class="font-semibold text-gray-700">Término:</span> {{ usuarioSeleccionado.termino }}</li>
         <li><span class="font-semibold text-gray-700">Estado:</span> {{ usuarioSeleccionado.estado }}</li>
       </ul>
-    </ng-container>
-    <ng-container *ngIf="!usuarioSeleccionado">
+    }
+    @if (!usuarioSeleccionado) {
       <div class="text-gray-500 text-center py-10">Selecciona un usuario para ver sus datos.</div>
-    </ng-container>
+    }
   </div>
 
   <!-- Contenedor 2: Solo Hoja de Ruta del Usuario -->
   <div class="bg-white rounded-lg shadow p-6 w-full md:w-2/3">
-    <ng-container *ngIf="usuarioSeleccionado">
+    @if (usuarioSeleccionado) {
       <h3 class="text-lg font-bold mb-4 text-green-700">Hoja de Ruta del Usuario</h3>
       <ol class="space-y-4 ml-2">
-        <li *ngFor="let paso of usuarioSeleccionado.traza; let idx = index" class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-base mt-1"
-                [ngClass]="paso.color">
-            {{ idx + 1 }}
-          </span>
-          <div>
-            <div class="font-semibold text-gray-800">
-              {{ paso.titulo }}
-              <span class="text-xs text-gray-500 font-normal ml-2">({{ paso.fecha }})</span>
+        @for (paso of usuarioSeleccionado.traza; track paso; let idx = $index) {
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-base mt-1"
+              [ngClass]="paso.color">
+              {{ idx + 1 }}
+            </span>
+            <div>
+              <div class="font-semibold text-gray-800">
+                {{ paso.titulo }}
+                <span class="text-xs text-gray-500 font-normal ml-2">({{ paso.fecha }})</span>
+              </div>
+              <div class="text-gray-600 text-sm">{{ paso.descripcion }}</div>
             </div>
-            <div class="text-gray-600 text-sm">{{ paso.descripcion }}</div>
-          </div>
-        </li>
+          </li>
+        }
       </ol>
-    </ng-container>
-    <ng-container *ngIf="!usuarioSeleccionado">
+    }
+    @if (!usuarioSeleccionado) {
       <div class="text-gray-500 text-center py-10">Selecciona un usuario para ver su auditoría.</div>
-    </ng-container>
+    }
   </div>
 </div>
 <!-- Diagrama de flujo tipo workflow (opcional, puedes dejarlo o quitarlo) -->

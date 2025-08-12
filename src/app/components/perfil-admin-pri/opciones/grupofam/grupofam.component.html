@@ -16,7 +16,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'tabla'"
-      >
+        >
         <i class="fas fa-table mr-2"></i>
         Tabla de Familias
       </button>
@@ -31,7 +31,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'nuevo'"
-      >
+        >
         <i class="fas fa-user-plus mr-2"></i>
         Nuevo Familia
       </button>
@@ -41,378 +41,389 @@
 
   <div class="tab-content">
     <!-- Panel: Nuevo Familia -->
-    <div
-      *ngIf="activeTab === 'nuevo'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-nuevo'"
-    >
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">
-              {{ isEditing ? 'Editar Familia' : 'Nuevo Grupo Familiar' }}
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">
-              {{ isEditing ? 'Modifica la información del grupo familiar' : 'Completa la información para crear un nuevo grupo familiar' }}
-            </p>
-          </div>
-
-          <form [formGroup]="familiaForm" (ngSubmit)="saveFamilia()" class="p-6">
-            <div class="space-y-6">
-              <!-- Nombres y Apellidos -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
-                  <input
-                    type="text"
-                    id="nombres"
-                    formControlName="nombres"
-                    placeholder="Ingrese nombres del responsable"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                </div>
-                <div>
-                  <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
-                  <input
-                    type="text"
-                    id="apellido"
-                    formControlName="apellido"
-                    placeholder="Ingrese apellidos del responsable"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                </div>
-              </div>
-
-              <!-- Correo y Teléfono -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
-                  <input
-                    type="email"
-                    id="correo"
-                    formControlName="correo"
-                    placeholder="familia@ejemplo.com"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                </div>
-                <div>
-                  <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
-                  <input
-                    type="text"
-                    id="telefono"
-                    formControlName="telefono"
-                    placeholder="123-456-7890"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                </div>
-              </div>
-
-              <!-- Colegio, Estado -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
-                  <select
-                    id="colegio"
-                    formControlName="colegio"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                    <option value="">Seleccione colegio</option>
-                    <option *ngFor="let col of colegios" [ngValue]="col.id_colegio">{{col.nombre}}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                  <select
-                    id="estado"
-                    formControlName="estado"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  >
-                    <option value="">Seleccione estado</option>
-                    <option [ngValue]="true">Activo</option>
-                    <option [ngValue]="false">Inactivo</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Observaciones -->
-              <div>
-                <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
-                <textarea
-                  id="observaciones"
-                  formControlName="observaciones"
-                  rows="3"
-                  placeholder="Ingrese observaciones adicionales..."
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm resize-none"
-                ></textarea>
-              </div>
-
-              <!-- Botones -->
-              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                <button
-                  type="button"
-                  (click)="resetForm(); activeTab = 'tabla'"
-                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  [disabled]="familiaForm.invalid || loading"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
-                  {{ isEditing ? 'Actualizar Familia' : 'Crear Familia' }}
-                </button>
-              </div>
+    @if (activeTab === 'nuevo') {
+      <div
+        role="tabpanel"
+        class="tab-panel animate-fadeIn"
+        [attr.aria-labelledby]="'tab-nuevo'"
+        >
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">
+                {{ isEditing ? 'Editar Familia' : 'Nuevo Grupo Familiar' }}
+              </h3>
+              <p class="mt-1 text-sm text-gray-500">
+                {{ isEditing ? 'Modifica la información del grupo familiar' : 'Completa la información para crear un nuevo grupo familiar' }}
+              </p>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Panel: Tabla de Familias -->
-    <div
-      *ngIf="activeTab === 'tabla'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-tabla'"
-    >
-      <!-- Encabezado con filtro y botón -->
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchFamilia" class="block text-sm font-medium text-gray-700 mb-2">
-                Buscar Familia:
-              </label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
-                </div>
-                <input
-                  id="searchFamilia"
-                  type="text"
-                  placeholder="Ingrese nombre, apellido o grado"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <!-- Filtro Departamento -->
-            <div class="w-48">
-              <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
-              <select
-                id="filtroDepartamento"
-                [(ngModel)]="filtroDepartamento"
-                (change)="onDepartamentoChange()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar departamento]</option>
-                <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro Provincia -->
-            <div class="w-48">
-              <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
-              <select
-                id="filtroProvincia"
-                [(ngModel)]="filtroProvincia"
-                (change)="onProvinciaChange()"
-                [disabled]="!filtroDepartamento || provincias.length === 0"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar provincia]</option>
-                <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
-              </select>
-              <div *ngIf="filtroDepartamento && provincias.length === 0" class="text-xs text-gray-500 mt-1">No hay provincias disponibles.</div>
-            </div>
-
-            <!-- Filtro Distrito -->
-            <div class="w-48">
-              <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
-              <select
-                id="filtroDistrito"
-                [(ngModel)]="filtroDistrito"
-                (change)="filterFamilias()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar distrito]</option>
-                <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro Colegio -->
-            <div class="w-48">
-              <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
-              <select
-                id="filtroColegio"
-                [(ngModel)]="filtroColegio"
-                (change)="filterFamilias()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">Todos los colegios</option>
-                <option *ngFor="let col of colegios" [value]="col.id_colegio">{{ col.nombre }}</option>
-              </select>
-            </div>
-
-            <!-- Botón Nuevo Familia -->
-            <button
-              type="button"
-              (click)="createFamilia()"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
-            >
-              <i class="fas fa-plus mr-2"></i>
-              Nuevo Familia
-            </button>
-          </div>
-        </div>
-
-        <!-- Tabla de estudiantes -->
-        <div class="overflow-x-auto">
-          <table class="grupofam-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Nivel</th>
-                <th scope="col">Grado</th>
-                <th scope="col">Sección</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let familia of paginatedFamilias; trackBy: trackByFamiliaId" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ familia.id_familia }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.nombres }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.apellido }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.id_colegio }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.estado ? 'Activo' : 'Inactivo' }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
-                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
-                  <div class="flex justify-center space-x-2">
-                    <button
-                      type="button"
-                      (click)="viewFamilia(familia.id_familia)"
-                      class="action-icon text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
-                      title="Ver detalles"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="editFamilia(familia.id_familia)"
-                      class="action-icon text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
-                      title="Editar"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="deleteFamilia(familia.id_familia)"
-                      class="action-icon text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
-                      title="Eliminar"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="viewFamilia(familia.id_familia)"
-                      class="action-icon text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
-                      title="Ver Cursos"
-                    >
-                      <i class="fas fa-book"></i>
-                    </button>
+            <form [formGroup]="familiaForm" (ngSubmit)="saveFamilia()" class="p-6">
+              <div class="space-y-6">
+                <!-- Nombres y Apellidos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
+                    <input
+                      type="text"
+                      id="nombres"
+                      formControlName="nombres"
+                      placeholder="Ingrese nombres del responsable"
+                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      >
+                    </div>
+                    <div>
+                      <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
+                      <input
+                        type="text"
+                        id="apellido"
+                        formControlName="apellido"
+                        placeholder="Ingrese apellidos del responsable"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        >
+                      </div>
+                    </div>
+                    <!-- Correo y Teléfono -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                        <input
+                          type="email"
+                          id="correo"
+                          formControlName="correo"
+                          placeholder="familia@ejemplo.com"
+                          class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                          >
+                        </div>
+                        <div>
+                          <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                          <input
+                            type="text"
+                            id="telefono"
+                            formControlName="telefono"
+                            placeholder="123-456-7890"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                          </div>
+                        </div>
+                        <!-- Colegio, Estado -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label for="colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
+                            <select
+                              id="colegio"
+                              formControlName="colegio"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              >
+                              <option value="">Seleccione colegio</option>
+                              @for (col of colegios; track col) {
+                                <option [ngValue]="col.id_colegio">{{col.nombre}}</option>
+                              }
+                            </select>
+                          </div>
+                          <div>
+                            <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                            <select
+                              id="estado"
+                              formControlName="estado"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              >
+                              <option value="">Seleccione estado</option>
+                              <option [ngValue]="true">Activo</option>
+                              <option [ngValue]="false">Inactivo</option>
+                            </select>
+                          </div>
+                        </div>
+                        <!-- Observaciones -->
+                        <div>
+                          <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
+                          <textarea
+                            id="observaciones"
+                            formControlName="observaciones"
+                            rows="3"
+                            placeholder="Ingrese observaciones adicionales..."
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm resize-none"
+                          ></textarea>
+                        </div>
+                        <!-- Botones -->
+                        <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                          <button
+                            type="button"
+                            (click)="resetForm(); activeTab = 'tabla'"
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                            >
+                            Cancelar
+                          </button>
+                          <button
+                            type="submit"
+                            [disabled]="familiaForm.invalid || loading"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                            @if (loading) {
+                              <i class="fas fa-spinner fa-spin mr-2"></i>
+                            }
+                            {{ isEditing ? 'Actualizar Familia' : 'Crear Familia' }}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                </td>
-              </tr>
-
-              <!-- Estado vacío -->
-              <tr *ngIf="paginatedFamilias.length === 0">
-                <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay familias</p>
-                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer grupo familiar.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="getTotalPages().length > 1">
-          <div class="flex items-center justify-between">
-            <div class="flex-1 flex justify-between sm:hidden">
-              <button
-                (click)="changePage(currentPage - 1)"
-                [disabled]="currentPage === 1"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <button
-                (click)="changePage(currentPage + 1)"
-                [disabled]="currentPage === getTotalPages().length"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm text-gray-700">
-                  Mostrando
-                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
-                  a
-                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredFamilias.length) }}</span>
-                  de
-                  <span class="font-medium">{{ filteredFamilias.length }}</span>
-                  resultados
-                </p>
+                </div>
               </div>
-              <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
-                  <button
-                    *ngFor="let page of getTotalPages(); let i = index"
-                    (click)="changePage(i + 1)"
+            }
+
+            <!-- Panel: Tabla de Familias -->
+            @if (activeTab === 'tabla') {
+              <div
+                role="tabpanel"
+                class="tab-panel animate-fadeIn"
+                [attr.aria-labelledby]="'tab-tabla'"
+                >
+                <!-- Encabezado con filtro y botón -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                  <div class="p-4 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      <!-- Filtro de búsqueda -->
+                      <div class="flex-1 max-w-md">
+                        <label for="searchFamilia" class="block text-sm font-medium text-gray-700 mb-2">
+                          Buscar Familia:
+                        </label>
+                        <div class="relative">
+                          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                          </div>
+                          <input
+                            id="searchFamilia"
+                            type="text"
+                            placeholder="Ingrese nombre, apellido o grado"
+                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            />
+                          </div>
+                        </div>
+                        <!-- Filtro Departamento -->
+                        <div class="w-48">
+                          <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
+                          <select
+                            id="filtroDepartamento"
+                            [(ngModel)]="filtroDepartamento"
+                            (change)="onDepartamentoChange()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar departamento]</option>
+                            @for (dep of departamentos; track dep) {
+                              <option [value]="dep.departamento">{{ dep.departamento }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Filtro Provincia -->
+                        <div class="w-48">
+                          <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
+                          <select
+                            id="filtroProvincia"
+                            [(ngModel)]="filtroProvincia"
+                            (change)="onProvinciaChange()"
+                            [disabled]="!filtroDepartamento || provincias.length === 0"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar provincia]</option>
+                            @for (prov of provincias; track prov) {
+                              <option [value]="prov.provincia">{{ prov.provincia }}</option>
+                            }
+                          </select>
+                          @if (filtroDepartamento && provincias.length === 0) {
+                            <div class="text-xs text-gray-500 mt-1">No hay provincias disponibles.</div>
+                          }
+                        </div>
+                        <!-- Filtro Distrito -->
+                        <div class="w-48">
+                          <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
+                          <select
+                            id="filtroDistrito"
+                            [(ngModel)]="filtroDistrito"
+                            (change)="filterFamilias()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar distrito]</option>
+                            @for (dist of distritos; track dist) {
+                              <option [value]="dist.distrito">{{ dist.distrito }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Filtro Colegio -->
+                        <div class="w-48">
+                          <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
+                          <select
+                            id="filtroColegio"
+                            [(ngModel)]="filtroColegio"
+                            (change)="filterFamilias()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">Todos los colegios</option>
+                            @for (col of colegios; track col) {
+                              <option [value]="col.id_colegio">{{ col.nombre }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Botón Nuevo Familia -->
+                        <button
+                          type="button"
+                          (click)="createFamilia()"
+                          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                          >
+                          <i class="fas fa-plus mr-2"></i>
+                          Nuevo Familia
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Tabla de estudiantes -->
+                    <div class="overflow-x-auto">
+                      <table class="grupofam-table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Nivel</th>
+                            <th scope="col">Grado</th>
+                            <th scope="col">Sección</th>
+                            <th scope="col">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                          @for (familia of paginatedFamilias; track trackByFamiliaId($index, familia)) {
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                              <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ familia.id_familia }}</td>
+                              <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.nombres }}</td>
+                              <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.apellido }}</td>
+                              <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.id_colegio }}</td>
+                              <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ familia.estado ? 'Activo' : 'Inactivo' }}</td>
+                              <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
+                              <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
+                                <div class="flex justify-center space-x-2">
+                                  <button
+                                    type="button"
+                                    (click)="viewFamilia(familia.id_familia)"
+                                    class="action-icon text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                                    title="Ver detalles"
+                                    >
+                                    <i class="fas fa-eye"></i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    (click)="editFamilia(familia.id_familia)"
+                                    class="action-icon text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                                    title="Editar"
+                                    >
+                                    <i class="fas fa-edit"></i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    (click)="deleteFamilia(familia.id_familia)"
+                                    class="action-icon text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                                    title="Eliminar"
+                                    >
+                                    <i class="fas fa-trash"></i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    (click)="viewFamilia(familia.id_familia)"
+                                    class="action-icon text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                                    title="Ver Cursos"
+                                    >
+                                    <i class="fas fa-book"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          }
+                          <!-- Estado vacío -->
+                          @if (paginatedFamilias.length === 0) {
+                            <tr>
+                              <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
+                                <div class="flex flex-col items-center">
+                                  <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
+                                  <p class="text-lg font-medium text-gray-900 mb-2">No hay familias</p>
+                                  <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer grupo familiar.' }}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Paginación -->
+                    @if (getTotalPages().length > 1) {
+                      <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                        <div class="flex items-center justify-between">
+                          <div class="flex-1 flex justify-between sm:hidden">
+                            <button
+                              (click)="changePage(currentPage - 1)"
+                              [disabled]="currentPage === 1"
+                              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                              Anterior
+                            </button>
+                            <button
+                              (click)="changePage(currentPage + 1)"
+                              [disabled]="currentPage === getTotalPages().length"
+                              class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                              Siguiente
+                            </button>
+                          </div>
+                          <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                              <p class="text-sm text-gray-700">
+                                Mostrando
+                                <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                                a
+                                <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredFamilias.length) }}</span>
+                                de
+                                <span class="font-medium">{{ filteredFamilias.length }}</span>
+                                resultados
+                              </p>
+                            </div>
+                            <div>
+                              <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                                @for (page of getTotalPages(); track page; let i = $index) {
+                                  <button
+                                    (click)="changePage(i + 1)"
                     [class]="currentPage === i + 1
                       ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
                       : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
-                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
-                  >
-                    {{ i + 1 }}
-                  </button>
-                </nav>
-              </div>
+                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                                    >
+                                    {{ i + 1 }}
+                                  </button>
+                                }
+                              </nav>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+
+
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-
-  </div>
-</div>
-
-<!-- Loading overlay -->
-<div
-  *ngIf="loading"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-  role="dialog"
-  aria-label="Cargando"
->
-  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
-    <div class="flex items-center space-x-3">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
-      <div>
-        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
-        <p class="text-sm text-gray-500">Por favor espera un momento</p>
-      </div>
-    </div>
-  </div>
-</div>
+          <!-- Loading overlay -->
+          @if (loading) {
+            <div
+              class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+              role="dialog"
+              aria-label="Cargando"
+              >
+              <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+                <div class="flex items-center space-x-3">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+                    <p class="text-sm text-gray-500">Por favor espera un momento</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }

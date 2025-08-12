@@ -20,133 +20,145 @@
 
   <div class="tab-content">
     <!-- Panel: Tabla de Materiales -->
-    <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda y selector de tipo de material -->
-            <div class="flex flex-col sm:flex-row gap-2 flex-1">
-              <div class="flex-1">
-                <label for="searchMaterial" class="block text-sm font-medium text-gray-700 mb-2">Buscar Material:</label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-search text-gray-400"></i>
+    @if (activeTab === 'tabla') {
+      <div role="tabpanel" class="tab-panel animate-fadeIn">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+          <div class="p-4 border-b border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <!-- Filtro de búsqueda y selector de tipo de material -->
+              <div class="flex flex-col sm:flex-row gap-2 flex-1">
+                <div class="flex-1">
+                  <label for="searchMaterial" class="block text-sm font-medium text-gray-700 mb-2">Buscar Material:</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input id="searchMaterial" type="text" [(ngModel)]="searchTerm" (input)="filterMaterial()" placeholder="Ingrese nombre"
+                      class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+                    </div>
                   </div>
-                  <input id="searchMaterial" type="text" [(ngModel)]="searchTerm" (input)="filterMaterial()" placeholder="Ingrese nombre"
-                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+                  <div class="flex-1 min-w-[180px]">
+                    <label for="tipoMaterialSelector" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Tipo de Material:</label>
+                    <select id="tipoMaterialSelector" [(ngModel)]="selectedTipoMaterial" (change)="filterMaterial()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                      <option [ngValue]="null">Todos los tipos</option>
+                      @for (tipo of tiposMaterial; track tipo) {
+                        <option [ngValue]="tipo.id_tipo_material">{{ tipo.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                <!-- Botón Nuevo Material -->
+                <button type="button" (click)="selectTab('nuevo')"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  <i class="fas fa-plus mr-2"></i> Nuevo Material
+                </button>
+              </div>
+            </div>
+            <!-- Tabla de materiales -->
+            <div class="overflow-x-auto">
+              <table class="material-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ruta Archivo</th>
+                    <th>Tamaño (bytes)</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (material of paginatedMateriales; track material) {
+                    <tr>
+                      <td>{{ getMaterialId(material) }}</td>
+                      <td>{{ material.nombre }}</td>
+                      <td class="text-blue-700 underline">
+                        <a [href]="material.rutaArchivo" target="_blank">{{ material.rutaArchivo }}</a>
+                      </td>
+                      <td>{{ material.tamanoBytes }}</td>
+                      <td class="text-center">
+                        <span [ngClass]="material.estado ? 'text-green-600' : 'text-red-600'">
+                          {{ material.estado ? 'Activo' : 'Inactivo' }}
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <div class="flex justify-center space-x-2">
+                          <button type="button" (click)="viewMaterial(material.id_material!)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver material">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button type="button" (click)="editMaterial(material.id_material!)" class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150" title="Editar">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" (click)="deleteMaterial(material.id_material!)" class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          <button type="button" (click)="detailMaterial(material.id_material!)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                  @if (paginatedMateriales.length === 0) {
+                    <tr>
+                      <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <div class="flex flex-col items-center">
+                          <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
+                          <p class="text-lg font-medium text-gray-900 mb-2">No hay materiales</p>
+                          <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer material.' }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <!-- Paginación -->
+            @if (filteredMateriales.length > itemsPerPage) {
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+                  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredMateriales.length/itemsPerPage)"
+                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
                 </div>
               </div>
-              <div class="flex-1 min-w-[180px]">
-                <label for="tipoMaterialSelector" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Tipo de Material:</label>
-                <select id="tipoMaterialSelector" [(ngModel)]="selectedTipoMaterial" (change)="filterMaterial()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                  <option [ngValue]="null">Todos los tipos</option>
-                  <option *ngFor="let tipo of tiposMaterial" [ngValue]="tipo.id_tipo_material">{{ tipo.nombre }}</option>
-                </select>
-              </div>
-            </div>
-            <!-- Botón Nuevo Material -->
-            <button type="button" (click)="selectTab('nuevo')"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-              <i class="fas fa-plus mr-2"></i> Nuevo Material
-            </button>
+            }
           </div>
         </div>
-        <!-- Tabla de materiales -->
-        <div class="overflow-x-auto">
-          <table class="material-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Ruta Archivo</th>
-                <th>Tamaño (bytes)</th>
-                <th class="text-center">Estado</th>
-                <th class="text-center">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let material of paginatedMateriales">
-                <td>{{ getMaterialId(material) }}</td>
-                <td>{{ material.nombre }}</td>
-                <td class="text-blue-700 underline">
-                  <a [href]="material.rutaArchivo" target="_blank">{{ material.rutaArchivo }}</a>
-                </td>
-                <td>{{ material.tamanoBytes }}</td>
-                <td class="text-center">
-                  <span [ngClass]="material.estado ? 'text-green-600' : 'text-red-600'">
-                    {{ material.estado ? 'Activo' : 'Inactivo' }}
-                  </span>
-                </td>
-                <td class="text-center">
-                  <div class="flex justify-center space-x-2">
-                    <button type="button" (click)="viewMaterial(material.id_material!)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver material">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button type="button" (click)="editMaterial(material.id_material!)" class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150" title="Editar">
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" (click)="deleteMaterial(material.id_material!)" class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" title="Eliminar">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                    <button type="button" (click)="detailMaterial(material.id_material!)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr *ngIf="paginatedMateriales.length === 0">
-                <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay materiales</p>
-                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer material.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="filteredMateriales.length > itemsPerPage">
-          <div class="flex items-center justify-between">
-            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
-            <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredMateriales.length/itemsPerPage)"
-              class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
 
-    <!-- Panel: Nuevo Material -->
-    <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-        <form [formGroup]="materialForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <div class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">Datos del Material</h2>
-            <div class="flex flex-wrap -mx-2">
-              <div class="w-full md:w-1/2 px-2">
-                <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre del material"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                <select id="estado" formControlName="estado"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                  <option [value]="true">Activo</option>
-                  <option [value]="false">Inactivo</option>
-                </select>
-              </div>
+      <!-- Panel: Nuevo Material -->
+      @if (activeTab === 'nuevo') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <form [formGroup]="materialForm" (ngSubmit)="onSubmit()" class="space-y-6">
+              <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-700">Datos del Material</h2>
+                <div class="flex flex-wrap -mx-2">
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre del material"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                      <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                      <select id="estado" formControlName="estado"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                        <option [value]="true">Activo</option>
+                        <option [value]="false">Inactivo</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  <i class="fas fa-save mr-2"></i> Guardar Material
+                </button>
+              </form>
             </div>
           </div>
-          <button type="submit"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-            <i class="fas fa-save mr-2"></i> Guardar Material
-          </button>
-        </form>
+        }
+
       </div>
     </div>
-
-  </div>
-</div>

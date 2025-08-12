@@ -20,125 +20,135 @@
 
   <div class="tab-content">
     <!-- Panel: Tabla de Perfiles -->
-    <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchPerfil" class="block text-sm font-medium text-gray-700 mb-2">Buscar Perfil:</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
+    @if (activeTab === 'tabla') {
+      <div role="tabpanel" class="tab-panel animate-fadeIn">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+          <div class="p-4 border-b border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <!-- Filtro de búsqueda -->
+              <div class="flex-1 max-w-md">
+                <label for="searchPerfil" class="block text-sm font-medium text-gray-700 mb-2">Buscar Perfil:</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input id="searchPerfil" type="text" [(ngModel)]="searchTerm" (input)="filterPerfiles()" placeholder="Ingrese nombre o descripción"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
+                  </div>
                 </div>
-                <input id="searchPerfil" type="text" [(ngModel)]="searchTerm" (input)="filterPerfiles()" placeholder="Ingrese nombre o descripción"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
+                <!-- Botón Nuevo Perfil -->
+                <button type="button" (click)="selectTab('nuevo')"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  <i class="fas fa-plus mr-2"></i> Nuevo Perfil
+                </button>
               </div>
             </div>
-            <!-- Botón Nuevo Perfil -->
-            <button type="button" (click)="selectTab('nuevo')"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-              <i class="fas fa-plus mr-2"></i> Nuevo Perfil
-            </button>
+            <!-- Tabla de perfiles -->
+            <div class="overflow-x-auto">
+              <table class="perfil-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (perfil of paginatedPerfiles; track perfil) {
+                    <tr>
+                      <td>{{ perfil.id }}</td>
+                      <td>{{ perfil.nombre }}</td>
+                      <td>{{ perfil.descripcion }}</td>
+                      <td class="text-center">
+                        <span [ngClass]="perfil.estado ? 'text-green-600' : 'text-red-600'">
+                          {{ perfil.estado ? 'Activo' : 'Inactivo' }}
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <div class="flex justify-center space-x-2">
+                          <button type="button" (click)="viewPerfil(perfil.id)" class="action-icon view" title="Ver perfil">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button type="button" (click)="editPerfil(perfil.id)" class="action-icon edit" title="Editar">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" (click)="deletePerfil(perfil.id)" class="action-icon delete" title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          <button type="button" (click)="detailPerfil(perfil.id)" class="action-icon view" title="Detalle">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                  @if (paginatedPerfiles.length === 0) {
+                    <tr>
+                      <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <div class="flex flex-col items-center">
+                          <i class="fas fa-user-shield text-4xl text-gray-300 mb-4"></i>
+                          <p class="text-lg font-medium text-gray-900 mb-2">No hay perfiles</p>
+                          <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer perfil.' }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <!-- Paginación -->
+            @if (filteredPerfiles.length > itemsPerPage) {
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+                  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredPerfiles.length/itemsPerPage)"
+                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+              </div>
+            }
           </div>
         </div>
-        <!-- Tabla de perfiles -->
-        <div class="overflow-x-auto">
-          <table class="perfil-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th class="text-center">Estado</th>
-                <th class="text-center">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let perfil of paginatedPerfiles">
-                <td>{{ perfil.id }}</td>
-                <td>{{ perfil.nombre }}</td>
-                <td>{{ perfil.descripcion }}</td>
-                <td class="text-center">
-                  <span [ngClass]="perfil.estado ? 'text-green-600' : 'text-red-600'">
-                    {{ perfil.estado ? 'Activo' : 'Inactivo' }}
-                  </span>
-                </td>
-                <td class="text-center">
-                  <div class="flex justify-center space-x-2">
-                    <button type="button" (click)="viewPerfil(perfil.id)" class="action-icon view" title="Ver perfil">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button type="button" (click)="editPerfil(perfil.id)" class="action-icon edit" title="Editar">
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" (click)="deletePerfil(perfil.id)" class="action-icon delete" title="Eliminar">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                    <button type="button" (click)="detailPerfil(perfil.id)" class="action-icon view" title="Detalle">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr *ngIf="paginatedPerfiles.length === 0">
-                <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-user-shield text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay perfiles</p>
-                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer perfil.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="filteredPerfiles.length > itemsPerPage">
-          <div class="flex items-center justify-between">
-            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
-            <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredPerfiles.length/itemsPerPage)"
-              class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
 
-    <!-- Panel: Nuevo Perfil -->
-    <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-        <form [formGroup]="perfilForm" class="space-y-6">
-          <div class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">Datos del Perfil</h2>
-            <div class="flex flex-wrap -mx-2">
-              <div class="w-full md:w-1/2 px-2">
-                <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre del perfil"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                <select id="estado" formControlName="estado"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
-                  <option [value]="true">Activo</option>
-                  <option [value]="false">Inactivo</option>
-                </select>
+      <!-- Panel: Nuevo Perfil -->
+      @if (activeTab === 'nuevo') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <form [formGroup]="perfilForm" class="space-y-6">
+              <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-700">Datos del Perfil</h2>
+                <div class="flex flex-wrap -mx-2">
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre del perfil"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                      <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                      <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
+                      </div>
+                      <div class="w-full md:w-1/2 px-2">
+                        <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                        <select id="estado" formControlName="estado"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                          <option [value]="true">Activo</option>
+                          <option [value]="false">Inactivo</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                    <i class="fas fa-save mr-2"></i> Guardar Perfil
+                  </button>
+                </form>
               </div>
             </div>
-          </div>
-          <button type="submit"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-            <i class="fas fa-save mr-2"></i> Guardar Perfil
-          </button>
-        </form>
-      </div>
-    </div>
+          }
 
-  </div>
-</div>
+        </div>
+      </div>

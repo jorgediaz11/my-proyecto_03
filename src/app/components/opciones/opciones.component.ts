@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
@@ -10,7 +10,7 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
     selector: 'app-opciones',
     templateUrl: './opciones.component.html',
     styleUrls: ['./opciones.component.css'],
-    imports: [CommonModule, ActivarLibrosComponent]
+    imports: [ActivarLibrosComponent]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
 

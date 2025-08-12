@@ -1,12 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-activar-libros',
     templateUrl: './activar-libros.component.html',
     styleUrls: ['./activar-libros.component.css'],
-    imports: [CommonModule, FormsModule]
+    imports: [FormsModule]
 })
 export class ActivarLibrosComponent {
   @Output() cerrar = new EventEmitter<void>();

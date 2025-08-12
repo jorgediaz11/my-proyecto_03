@@ -9,7 +9,9 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Departamento</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm" [(ngModel)]="filtroDepartamento" (change)="onDepartamentoChange()">
           <option value="" disabled selected>Departamento</option>
-          <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
+          @for (dep of departamentos; track dep) {
+            <option [value]="dep.departamento">{{ dep.departamento }}</option>
+          }
         </select>
       </div>
       <!-- Provincia -->
@@ -17,7 +19,9 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Provincia</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm" [(ngModel)]="filtroProvincia" (change)="onProvinciaChange()" [disabled]="!provincias.length">
           <option value="" disabled selected>Provincia</option>
-          <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
+          @for (prov of provincias; track prov) {
+            <option [value]="prov.provincia">{{ prov.provincia }}</option>
+          }
         </select>
       </div>
       <!-- Distrito -->
@@ -25,7 +29,9 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Distrito</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm" [(ngModel)]="filtroDistrito" [disabled]="!distritos.length">
           <option value="" disabled selected>Distrito</option>
-          <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
+          @for (dist of distritos; track dist) {
+            <option [value]="dist.distrito">{{ dist.distrito }}</option>
+          }
         </select>
       </div>
       <!-- Colegio -->
@@ -33,7 +39,9 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Colegio</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm" [(ngModel)]="filtroColegio">
           <option value="" disabled selected>Colegio</option>
-          <option *ngFor="let colegio of colegiosClientes" [value]="colegio.nombre">{{ colegio.nombre }}</option>
+          @for (colegio of colegiosClientes; track colegio) {
+            <option [value]="colegio.nombre">{{ colegio.nombre }}</option>
+          }
         </select>
       </div>
     </div>
@@ -43,27 +51,33 @@
       <div class="min-w-[120px] max-w-xs flex-1">
         <label class="block text-sm font-medium text-gray-700 mb-2">Nivel</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                [(ngModel)]="filtroNivel" (change)="onNivelChange()">
+          [(ngModel)]="filtroNivel" (change)="onNivelChange()">
           <option value="" disabled selected>Nivel</option>
-          <option *ngFor="let nivel of niveles" [value]="nivel.nombre">{{ nivel.nombre }}</option>
+          @for (nivel of niveles; track nivel) {
+            <option [value]="nivel.nombre">{{ nivel.nombre }}</option>
+          }
         </select>
       </div>
       <!-- Grado -->
       <div class="min-w-[120px] max-w-xs flex-1">
         <label class="block text-sm font-medium text-gray-700 mb-2">Grado</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                [(ngModel)]="filtroGrado" (change)="onGradoChange()" [disabled]="!grados.length">
+          [(ngModel)]="filtroGrado" (change)="onGradoChange()" [disabled]="!grados.length">
           <option value="" disabled selected>Grado</option>
-          <option *ngFor="let grado of grados" [value]="grado.nombre">{{ grado.nombre }}</option>
+          @for (grado of grados; track grado) {
+            <option [value]="grado.nombre">{{ grado.nombre }}</option>
+          }
         </select>
       </div>
       <!-- Sección -->
       <div class="min-w-[120px] max-w-xs flex-1">
         <label class="block text-sm font-medium text-gray-700 mb-2">Sección</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                [(ngModel)]="filtroSeccion" [disabled]="!secciones.length">
+          [(ngModel)]="filtroSeccion" [disabled]="!secciones.length">
           <option value="" disabled selected>Sección</option>
-          <option *ngFor="let seccion of secciones" [value]="seccion.nombre">{{ seccion.nombre }}</option>
+          @for (seccion of secciones; track seccion) {
+            <option [value]="seccion.nombre">{{ seccion.nombre }}</option>
+          }
         </select>
       </div>
       <!-- Curso -->
@@ -71,7 +85,9 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Curso</label>
         <select class="block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm" [(ngModel)]="filtroCurso">
           <option value="" disabled selected>Curso</option>
-          <option *ngFor="let curso of cursos" [value]="curso.nombre">{{ curso.nombre }}</option>
+          @for (curso of cursos; track curso) {
+            <option [value]="curso.nombre">{{ curso.nombre }}</option>
+          }
         </select>
       </div>
     </div>
@@ -127,16 +143,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let estudiante of estudiantesPaginados; let i = index"
+        @for (estudiante of estudiantesPaginados; track estudiante; let i = $index) {
+          <tr
             [ngClass]="i % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
             class="transition-colors duration-200 hover:bg-green-100 cursor-pointer">
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nombre }}</td>
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.colegio }}</td>
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nivel }}</td>
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.curso }}</td>
-          <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.notas }}</td>
-        </tr>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nombre }}</td>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.colegio }}</td>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.nivel }}</td>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.curso }}</td>
+            <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-700">{{ estudiante.notas }}</td>
+          </tr>
+        }
       </tbody>
     </table>
     <!-- Fin de tabla -->
@@ -148,14 +166,14 @@
     <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">
       Anterior
     </button>
-    <ng-container *ngFor="let page of [].constructor(totalPages); let idx = index">
+    @for (page of [].constructor(totalPages); track page; let idx = $index) {
       <button
         class="px-3 py-1 rounded"
         [ngClass]="currentPage === idx + 1 ? 'bg-green-600 text-white' : 'bg-gray-200'"
         (click)="cambiarPagina(idx + 1)">
         {{ idx + 1 }}
       </button>
-    </ng-container>
+    }
     <button class="px-3 py-1 bg-gray-200 rounded" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">
       Siguiente
     </button>

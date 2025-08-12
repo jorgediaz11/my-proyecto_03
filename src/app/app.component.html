@@ -2,10 +2,12 @@
 <router-outlet></router-outlet>
 
 <!-- ✅ SPINNER GLOBAL DE LOADING -->
-<div *ngIf="loading$ | async" class="loading-overlay">
-  <div class="loading-spinner">
-    <div class="spinner"></div>
-    <p>Cargando...</p>
+@if (loading$ | async) {
+  <div class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Cargando...</p>
+    </div>
   </div>
-</div>
+}
 <!-- Componente de inicio de sesión 004b -->

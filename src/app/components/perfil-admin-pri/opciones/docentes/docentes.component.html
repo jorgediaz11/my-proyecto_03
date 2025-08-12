@@ -16,7 +16,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'tabla'"
-      >
+        >
         <i class="fas fa-table mr-2"></i>
         Tabla de Docentes
       </button>
@@ -31,7 +31,7 @@
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab"
         [attr.aria-selected]="activeTab === 'nuevo'"
-      >
+        >
         <i class="fas fa-user-plus mr-2"></i>
         Nuevo Docente
       </button>
@@ -42,465 +42,489 @@
   <!-- ✅ CONTENIDO DE LAS PESTAÑAS -->
   <div class="tab-content">
     <!-- Panel: Nuevo Docente -->
-    <div
-      *ngIf="activeTab === 'nuevo'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-nuevo'"
-    >
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">
-              {{ isEditing ? 'Editar Docente' : 'Nuevo Docente' }}
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">
-              {{ isEditing ? 'Modifica la información del docente' : 'Completa la información para crear un nuevo docente' }}
-            </p>
-          </div>
-
-          <form [formGroup]="docenteForm" (ngSubmit)="saveDocente()" class="p-6">
-            <div class="space-y-6">
-              <!-- Nombres y Apellidos -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
-                  <input
-                    type="text"
-                    id="nombres"
-                    formControlName="nombres"
-                    placeholder="Ingrese nombres del docente"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('nombres')?.invalid && docenteForm.get('nombres')?.touched"
-                  >
-                  <div *ngIf="docenteForm.get('nombres')?.invalid && docenteForm.get('nombres')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-                <div>
-                  <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
-                  <input
-                    type="text"
-                    id="apellido"
-                    formControlName="apellido"
-                    placeholder="Ingrese apellidos del docente"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('apellido')?.invalid && docenteForm.get('apellido')?.touched"
-                  >
-                  <div *ngIf="docenteForm.get('apellido')?.invalid && docenteForm.get('apellido')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
+    @if (activeTab === 'nuevo') {
+      <div
+        role="tabpanel"
+        class="tab-panel animate-fadeIn"
+        [attr.aria-labelledby]="'tab-nuevo'"
+        >
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">
+                {{ isEditing ? 'Editar Docente' : 'Nuevo Docente' }}
+              </h3>
+              <p class="mt-1 text-sm text-gray-500">
+                {{ isEditing ? 'Modifica la información del docente' : 'Completa la información para crear un nuevo docente' }}
+              </p>
+            </div>
+            <form [formGroup]="docenteForm" (ngSubmit)="saveDocente()" class="p-6">
+              <div class="space-y-6">
+                <!-- Nombres y Apellidos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label for="nombres" class="block text-sm font-medium text-gray-700 mb-2">Nombres *</label>
+                    <input
+                      type="text"
+                      id="nombres"
+                      formControlName="nombres"
+                      placeholder="Ingrese nombres del docente"
+                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      [class.border-red-300]="docenteForm.get('nombres')?.invalid && docenteForm.get('nombres')?.touched"
+                      >
+                      @if (docenteForm.get('nombres')?.invalid && docenteForm.get('nombres')?.touched) {
+                        <div class="mt-1 text-sm text-red-600">
+                          Este campo es requerido
+                        </div>
+                      }
+                    </div>
+                    <div>
+                      <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellidos *</label>
+                      <input
+                        type="text"
+                        id="apellido"
+                        formControlName="apellido"
+                        placeholder="Ingrese apellidos del docente"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                        [class.border-red-300]="docenteForm.get('apellido')?.invalid && docenteForm.get('apellido')?.touched"
+                        >
+                        @if (docenteForm.get('apellido')?.invalid && docenteForm.get('apellido')?.touched) {
+                          <div class="mt-1 text-sm text-red-600">
+                            Este campo es requerido
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <!-- Correo y Teléfono -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
+                        <input
+                          type="email"
+                          id="correo"
+                          formControlName="correo"
+                          placeholder="docente@ejemplo.com"
+                          class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                          [class.border-red-300]="docenteForm.get('correo')?.invalid && docenteForm.get('correo')?.touched"
+                          >
+                          @if (docenteForm.get('correo')?.errors?.['required'] && docenteForm.get('correo')?.touched) {
+                            <div class="mt-1 text-sm text-red-600">
+                              El correo es obligatorio
+                            </div>
+                          }
+                          @if (docenteForm.get('correo')?.errors?.['email'] && docenteForm.get('correo')?.touched) {
+                            <div class="mt-1 text-sm text-red-600">
+                              Ingresa un correo válido
+                            </div>
+                          }
+                        </div>
+                        <div>
+                          <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono *</label>
+                          <input
+                            type="text"
+                            id="telefono"
+                            formControlName="telefono"
+                            placeholder="123-456-7890"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            [class.border-red-300]="docenteForm.get('telefono')?.invalid && docenteForm.get('telefono')?.touched"
+                            >
+                            @if (docenteForm.get('telefono')?.invalid && docenteForm.get('telefono')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Este campo es requerido
+                              </div>
+                            }
+                          </div>
+                        </div>
+                        <!-- Departamento, Provincia, Distrito, Colegio -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                          <div>
+                            <label for="departamento" class="block text-sm font-medium text-gray-700 mb-2">Departamento *</label>
+                            <select
+                              id="departamento"
+                              formControlName="departamento"
+                              (change)="onDepartamentoChange()"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="docenteForm.get('departamento')?.invalid && docenteForm.get('departamento')?.touched"
+                              >
+                              <option value="">Seleccione departamento</option>
+                              @for (dep of departamentos; track dep) {
+                                <option [ngValue]="dep.departamento">{{dep.departamento}}</option>
+                              }
+                            </select>
+                            @if (docenteForm.get('departamento')?.invalid && docenteForm.get('departamento')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Este campo es requerido
+                              </div>
+                            }
+                          </div>
+                          <div>
+                            <label for="provincia" class="block text-sm font-medium text-gray-700 mb-2">Provincia *</label>
+                            <select
+                              id="provincia"
+                              formControlName="provincia"
+                              (change)="onProvinciaChange()"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="docenteForm.get('provincia')?.invalid && docenteForm.get('provincia')?.touched"
+                              >
+                              <option value="">Seleccione provincia</option>
+                              @for (prov of provincias; track prov) {
+                                <option [ngValue]="prov.provincia">{{prov.provincia}}</option>
+                              }
+                            </select>
+                            @if (docenteForm.get('provincia')?.invalid && docenteForm.get('provincia')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Este campo es requerido
+                              </div>
+                            }
+                          </div>
+                          <div>
+                            <label for="distrito" class="block text-sm font-medium text-gray-700 mb-2">Distrito *</label>
+                            <select
+                              id="distrito"
+                              formControlName="distrito"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="docenteForm.get('distrito')?.invalid && docenteForm.get('distrito')?.touched"
+                              >
+                              <option value="">Seleccione distrito</option>
+                              @for (dist of distritos; track dist) {
+                                <option [ngValue]="dist.distrito">{{dist.distrito}}</option>
+                              }
+                            </select>
+                            @if (docenteForm.get('distrito')?.invalid && docenteForm.get('distrito')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Este campo es requerido
+                              </div>
+                            }
+                          </div>
+                          <div>
+                            <label for="colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
+                            <select
+                              id="colegio"
+                              formControlName="colegio"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="docenteForm.get('colegio')?.invalid && docenteForm.get('colegio')?.touched"
+                              >
+                              <option value="">Seleccione colegio</option>
+                              @for (col of colegios; track col) {
+                                <option [ngValue]="col.id_colegio">{{col.nombre}}</option>
+                              }
+                            </select>
+                            @if (docenteForm.get('colegio')?.invalid && docenteForm.get('colegio')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Este campo es requerido
+                              </div>
+                            }
+                          </div>
+                        </div>
+                        <!-- Estado -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                            <select
+                              id="estado"
+                              formControlName="estado"
+                              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                              [class.border-red-300]="docenteForm.get('estado')?.invalid && docenteForm.get('estado')?.touched"
+                              >
+                              <option value="">Seleccione estado</option>
+                              <option [ngValue]="true">Activo</option>
+                              <option [ngValue]="false">Inactivo</option>
+                            </select>
+                            @if (docenteForm.get('estado')?.invalid && docenteForm.get('estado')?.touched) {
+                              <div class="mt-1 text-sm text-red-600">
+                                Por favor selecciona un estado
+                              </div>
+                            }
+                          </div>
+                        </div>
+                        <!-- Observaciones -->
+                        <div>
+                          <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
+                          <textarea
+                            id="observaciones"
+                            formControlName="observaciones"
+                            rows="3"
+                            placeholder="Ingrese observaciones adicionales..."
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm resize-none"
+                            [class.border-red-300]="docenteForm.get('observaciones')?.invalid && docenteForm.get('observaciones')?.touched"
+                          ></textarea>
+                        </div>
+                        <!-- Botones -->
+                        <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                          <button
+                            type="button"
+                            (click)="resetForm(); activeTab = 'tabla'"
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                            >
+                            Cancelar
+                          </button>
+                          <button
+                            type="submit"
+                            [disabled]="docenteForm.invalid || loading"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                            @if (loading) {
+                              <i class="fas fa-spinner fa-spin mr-2"></i>
+                            }
+                            {{ isEditing ? 'Actualizar Docente' : 'Crear Docente' }}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
+            }
 
-              <!-- Correo y Teléfono -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
-                  <input
-                    type="email"
-                    id="correo"
-                    formControlName="correo"
-                    placeholder="docente@ejemplo.com"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('correo')?.invalid && docenteForm.get('correo')?.touched"
-                  >
-                  <div *ngIf="docenteForm.get('correo')?.errors?.['required'] && docenteForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
-                    El correo es obligatorio
-                  </div>
-                  <div *ngIf="docenteForm.get('correo')?.errors?.['email'] && docenteForm.get('correo')?.touched" class="mt-1 text-sm text-red-600">
-                    Ingresa un correo válido
-                  </div>
-                </div>
-                <div>
-                  <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono *</label>
-                  <input
-                    type="text"
-                    id="telefono"
-                    formControlName="telefono"
-                    placeholder="123-456-7890"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('telefono')?.invalid && docenteForm.get('telefono')?.touched"
-                  >
-                  <div *ngIf="docenteForm.get('telefono')?.invalid && docenteForm.get('telefono')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-              </div>
 
-              <!-- Departamento, Provincia, Distrito, Colegio -->
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div>
-                  <label for="departamento" class="block text-sm font-medium text-gray-700 mb-2">Departamento *</label>
-                  <select
-                    id="departamento"
-                    formControlName="departamento"
-                    (change)="onDepartamentoChange()"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('departamento')?.invalid && docenteForm.get('departamento')?.touched"
-                  >
-                    <option value="">Seleccione departamento</option>
-                    <option *ngFor="let dep of departamentos" [ngValue]="dep.departamento">{{dep.departamento}}</option>
-                  </select>
-                  <div *ngIf="docenteForm.get('departamento')?.invalid && docenteForm.get('departamento')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-                <div>
-                  <label for="provincia" class="block text-sm font-medium text-gray-700 mb-2">Provincia *</label>
-                  <select
-                    id="provincia"
-                    formControlName="provincia"
-                    (change)="onProvinciaChange()"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('provincia')?.invalid && docenteForm.get('provincia')?.touched"
-                  >
-                    <option value="">Seleccione provincia</option>
-                    <option *ngFor="let prov of provincias" [ngValue]="prov.provincia">{{prov.provincia}}</option>
-                  </select>
-                  <div *ngIf="docenteForm.get('provincia')?.invalid && docenteForm.get('provincia')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-                <div>
-                  <label for="distrito" class="block text-sm font-medium text-gray-700 mb-2">Distrito *</label>
-                  <select
-                    id="distrito"
-                    formControlName="distrito"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('distrito')?.invalid && docenteForm.get('distrito')?.touched"
-                  >
-                    <option value="">Seleccione distrito</option>
-                    <option *ngFor="let dist of distritos" [ngValue]="dist.distrito">{{dist.distrito}}</option>
-                  </select>
-                  <div *ngIf="docenteForm.get('distrito')?.invalid && docenteForm.get('distrito')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-                <div>
-                  <label for="colegio" class="block text-sm font-medium text-gray-700 mb-2">Colegio *</label>
-                  <select
-                    id="colegio"
-                    formControlName="colegio"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('colegio')?.invalid && docenteForm.get('colegio')?.touched"
-                  >
-                    <option value="">Seleccione colegio</option>
-                    <option *ngFor="let col of colegios" [ngValue]="col.id_colegio">{{col.nombre}}</option>
-                  </select>
-                  <div *ngIf="docenteForm.get('colegio')?.invalid && docenteForm.get('colegio')?.touched" class="mt-1 text-sm text-red-600">
-                    Este campo es requerido
-                  </div>
-                </div>
-              </div>
-
-              <!-- Estado -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                  <select
-                    id="estado"
-                    formControlName="estado"
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                    [class.border-red-300]="docenteForm.get('estado')?.invalid && docenteForm.get('estado')?.touched"
-                  >
-                    <option value="">Seleccione estado</option>
-                    <option [ngValue]="true">Activo</option>
-                    <option [ngValue]="false">Inactivo</option>
-                  </select>
-                  <div *ngIf="docenteForm.get('estado')?.invalid && docenteForm.get('estado')?.touched" class="mt-1 text-sm text-red-600">
-                    Por favor selecciona un estado
-                  </div>
-                </div>
-              </div>
-
-              <!-- Observaciones -->
-              <div>
-                <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">Observaciones</label>
-                <textarea
-                  id="observaciones"
-                  formControlName="observaciones"
-                  rows="3"
-                  placeholder="Ingrese observaciones adicionales..."
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm resize-none"
-                  [class.border-red-300]="docenteForm.get('observaciones')?.invalid && docenteForm.get('observaciones')?.touched"
-                ></textarea>
-              </div>
-
-              <!-- Botones -->
-              <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                <button
-                  type="button"
-                  (click)="resetForm(); activeTab = 'tabla'"
-                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+            <!-- Panel: Tabla de Docentes -->
+            @if (activeTab === 'tabla') {
+              <div
+                role="tabpanel"
+                class="tab-panel animate-fadeIn"
+                [attr.aria-labelledby]="'tab-tabla'"
                 >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  [disabled]="docenteForm.invalid || loading"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  <i *ngIf="loading" class="fas fa-spinner fa-spin mr-2"></i>
-                  {{ isEditing ? 'Actualizar Docente' : 'Crear Docente' }}
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Panel: Tabla de Docentes -->
-    <div
-      *ngIf="activeTab === 'tabla'"
-      role="tabpanel"
-      class="tab-panel animate-fadeIn"
-      [attr.aria-labelledby]="'tab-tabla'"
-    >
-      <!-- Encabezado con filtro y botón -->
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-
-            <!-- Filtro de búsqueda -->
-            <div class="flex-1 max-w-md">
-              <label for="searchDocente" class="block text-sm font-medium text-gray-700 mb-2">
-                Buscar Docente:
-              </label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i class="fas fa-search text-gray-400"></i>
-                </div>
-                <input
-                  id="searchDocente"
-                  type="text"
-
-                  placeholder="Ingrese nombre, apellido o correo"
-                  class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <!-- Filtro Departamento -->
-            <div class="w-48">
-              <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
-              <select
-                id="filtroDepartamento"
-                [(ngModel)]="filtroDepartamento"
-                (change)="onDepartamentoChange()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar]</option>
-                <option *ngFor="let dep of departamentos" [value]="dep.departamento">{{ dep.departamento }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro Provincia -->
-            <div class="w-48">
-              <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
-              <select
-                id="filtroProvincia"
-                [(ngModel)]="filtroProvincia"
-                (change)="onProvinciaChange()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar]</option>
-                <option *ngFor="let prov of provincias" [value]="prov.provincia">{{ prov.provincia }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro Distrito -->
-            <div class="w-48">
-              <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
-              <select
-                id="filtroDistrito"
-                [(ngModel)]="filtroDistrito"
-                (change)="filterColegios()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">[Seleccionar]</option>
-                <option *ngFor="let dist of distritos" [value]="dist.distrito">{{ dist.distrito }}</option>
-              </select>
-            </div>
-
-            <!-- Filtro Colegio -->
-            <div class="w-48">
-              <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
-              <select
-                id="filtroColegio"
-                [(ngModel)]="filtroColegio"
-                (change)="filterColegios()"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-              >
-                <option value="">Todos los colegios</option>
-                <option *ngFor="let col of colegios" [value]="col.id_colegio">{{ col.nombre }}</option>
-              </select>
-            </div>
-
-            <!-- Botón Nuevo Docente -->
-            <button
-              type="button"
-              (click)="createDocente()"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
-            >
-              <i class="fas fa-plus mr-2"></i>
-              Nuevo Docente
-            </button>
-
-        </div>
-
-        <!-- Tabla de docentes -->
-        <div class="overflow-x-auto">
-          <table class="docentes-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th class="text-center">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let docente of paginatedDocentes; trackBy: trackByDocenteId">
-                <td>{{ docente.id_docente }}</td>
-                <td>{{ docente.nombres }}</td>
-                <td>{{ docente.apellido }}</td>
-                <td>{{ docente.correo }}</td>
-                <td>{{ docente.telefono }}</td>
-                <td class="text-center">
-                  <div class="flex justify-center space-x-2">
-                    <button
-                      type="button"
-                      (click)="viewDocente(docente.id_docente!)"
-                      class="action-icon view"
-                      title="Ver detalles"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="editDocente(docente.id_docente!)"
-                      class="action-icon edit"
-                      title="Editar"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button
-                      type="button"
-                      (click)="deleteDocente(docente.id_docente!)"
-                      class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
-                      title="Eliminar"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-
-                    <!--Icono Vista Docentes-->
-                    <button
-                      type="button"
-                      (click)="viewDocente(docente.id_docente!)"
-                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
-                      title="Clases"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <!---->
-
-
-                  </div>
-                </td>
-              </tr>
-
-              <!-- Estado vacío -->
-              <tr *ngIf="paginatedDocentes.length === 0">
-                <td colspan="6" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-chalkboard-teacher text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay docentes</p>
-                    <p class="text-gray-500">{{ searchTerm  ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer docente.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="getTotalPages().length > 1">
-          <div class="flex items-center justify-between">
-            <div class="flex-1 flex justify-between sm:hidden">
-              <button
-                (click)="changePage(currentPage - 1)"
-                [disabled]="currentPage === 1"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <button
-                (click)="changePage(currentPage + 1)"
-                [disabled]="currentPage === getTotalPages().length"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm text-gray-700">
-                  Mostrando
-                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
-                  a
-                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDocentes.length) }}</span>
-                  de
-                  <span class="font-medium">{{ filteredDocentes.length }}</span>
-                  resultados
-                </p>
-              </div>
-              <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
-                  <button
-                    *ngFor="let page of getTotalPages(); let i = index"
-                    (click)="changePage(i + 1)"
+                <!-- Encabezado con filtro y botón -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                  <div class="p-4 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      <!-- Filtro de búsqueda -->
+                      <div class="flex-1 max-w-md">
+                        <label for="searchDocente" class="block text-sm font-medium text-gray-700 mb-2">
+                          Buscar Docente:
+                        </label>
+                        <div class="relative">
+                          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                          </div>
+                          <input
+                            id="searchDocente"
+                            type="text"
+                            placeholder="Ingrese nombre, apellido o correo"
+                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            />
+                          </div>
+                        </div>
+                        <!-- Filtro Departamento -->
+                        <div class="w-48">
+                          <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
+                          <select
+                            id="filtroDepartamento"
+                            [(ngModel)]="filtroDepartamento"
+                            (change)="onDepartamentoChange()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar]</option>
+                            @for (dep of departamentos; track dep) {
+                              <option [value]="dep.departamento">{{ dep.departamento }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Filtro Provincia -->
+                        <div class="w-48">
+                          <label for="filtroProvincia" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Provincia:</label>
+                          <select
+                            id="filtroProvincia"
+                            [(ngModel)]="filtroProvincia"
+                            (change)="onProvinciaChange()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar]</option>
+                            @for (prov of provincias; track prov) {
+                              <option [value]="prov.provincia">{{ prov.provincia }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Filtro Distrito -->
+                        <div class="w-48">
+                          <label for="filtroDistrito" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Distrito:</label>
+                          <select
+                            id="filtroDistrito"
+                            [(ngModel)]="filtroDistrito"
+                            (change)="filterColegios()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">[Seleccionar]</option>
+                            @for (dist of distritos; track dist) {
+                              <option [value]="dist.distrito">{{ dist.distrito }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Filtro Colegio -->
+                        <div class="w-48">
+                          <label for="filtroColegio" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Colegio:</label>
+                          <select
+                            id="filtroColegio"
+                            [(ngModel)]="filtroColegio"
+                            (change)="filterColegios()"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            >
+                            <option value="">Todos los colegios</option>
+                            @for (col of colegios; track col) {
+                              <option [value]="col.id_colegio">{{ col.nombre }}</option>
+                            }
+                          </select>
+                        </div>
+                        <!-- Botón Nuevo Docente -->
+                        <button
+                          type="button"
+                          (click)="createDocente()"
+                          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                          >
+                          <i class="fas fa-plus mr-2"></i>
+                          Nuevo Docente
+                        </button>
+                      </div>
+                      <!-- Tabla de docentes -->
+                      <div class="overflow-x-auto">
+                        <table class="docentes-table">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Nombres</th>
+                              <th>Apellidos</th>
+                              <th>Correo</th>
+                              <th>Teléfono</th>
+                              <th class="text-center">Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @for (docente of paginatedDocentes; track trackByDocenteId($index, docente)) {
+                              <tr>
+                                <td>{{ docente.id_docente }}</td>
+                                <td>{{ docente.nombres }}</td>
+                                <td>{{ docente.apellido }}</td>
+                                <td>{{ docente.correo }}</td>
+                                <td>{{ docente.telefono }}</td>
+                                <td class="text-center">
+                                  <div class="flex justify-center space-x-2">
+                                    <button
+                                      type="button"
+                                      (click)="viewDocente(docente.id_docente!)"
+                                      class="action-icon view"
+                                      title="Ver detalles"
+                                      >
+                                      <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      (click)="editDocente(docente.id_docente!)"
+                                      class="action-icon edit"
+                                      title="Editar"
+                                      >
+                                      <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      (click)="deleteDocente(docente.id_docente!)"
+                                      class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                                      title="Eliminar"
+                                      >
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                    <!--Icono Vista Docentes-->
+                                    <button
+                                      type="button"
+                                      (click)="viewDocente(docente.id_docente!)"
+                                      class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                                      title="Clases"
+                                      >
+                                      <i class="fas fa-eye"></i>
+                                    </button>
+                                    <!---->
+                                  </div>
+                                </td>
+                              </tr>
+                            }
+                            <!-- Estado vacío -->
+                            @if (paginatedDocentes.length === 0) {
+                              <tr>
+                                <td colspan="6" class="px-6 py-12 text-center text-sm text-gray-500">
+                                  <div class="flex flex-col items-center">
+                                    <i class="fas fa-chalkboard-teacher text-4xl text-gray-300 mb-4"></i>
+                                    <p class="text-lg font-medium text-gray-900 mb-2">No hay docentes</p>
+                                    <p class="text-gray-500">{{ searchTerm  ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer docente.' }}</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- Paginación -->
+                      @if (getTotalPages().length > 1) {
+                        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                          <div class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between sm:hidden">
+                              <button
+                                (click)="changePage(currentPage - 1)"
+                                [disabled]="currentPage === 1"
+                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                Anterior
+                              </button>
+                              <button
+                                (click)="changePage(currentPage + 1)"
+                                [disabled]="currentPage === getTotalPages().length"
+                                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                Siguiente
+                              </button>
+                            </div>
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                              <div>
+                                <p class="text-sm text-gray-700">
+                                  Mostrando
+                                  <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                                  a
+                                  <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDocentes.length) }}</span>
+                                  de
+                                  <span class="font-medium">{{ filteredDocentes.length }}</span>
+                                  resultados
+                                </p>
+                              </div>
+                              <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                                  @for (page of getTotalPages(); track page; let i = $index) {
+                                    <button
+                                      (click)="changePage(i + 1)"
                     [class]="currentPage === i + 1
                       ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
                       : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
-                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
-                  >
-                    {{ i + 1 }}
-                  </button>
-                </nav>
-              </div>
+                                      class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                                      >
+                                      {{ i + 1 }}
+                                    </button>
+                                  }
+                                </nav>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+
             </div>
           </div>
-        </div>
 
-    </div>
-  </div>
-
-
-    </div>
-
-  </div>
-</div>
-
-<!-- Loading overlay -->
-<div
-  *ngIf="loading"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-  role="dialog"
-  aria-label="Cargando"
->
-  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
-    <div class="flex items-center space-x-3">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
-      <div>
-        <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
-        <p class="text-sm text-gray-500">Por favor espera un momento</p>
-      </div>
-    </div>
-  </div>
-</div>
+          <!-- Loading overlay -->
+          @if (loading) {
+            <div
+              class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+              role="dialog"
+              aria-label="Cargando"
+              >
+              <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+                <div class="flex items-center space-x-3">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+                    <p class="text-sm text-gray-500">Por favor espera un momento</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }

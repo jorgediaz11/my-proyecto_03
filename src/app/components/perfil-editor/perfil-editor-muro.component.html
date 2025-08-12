@@ -53,407 +53,400 @@
   </div>
 
   <!-- Vista Dashboard Principal -->
-  <div *ngIf="vistaActual === 'dashboard'">
-
-    <!-- Cards de Estadísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Materias Gestionadas</p>
-            <p class="text-3xl font-bold text-blue-600">{{ estadisticas.materiasGestionadas }}</p>
-          </div>
-          <div class="p-3 bg-blue-100 rounded-full">
-            <span class="text-2xl">📚</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Capítulos Creados</p>
-            <p class="text-3xl font-bold text-green-600">{{ estadisticas.capitulosCreados }}</p>
-          </div>
-          <div class="p-3 bg-green-100 rounded-full">
-            <span class="text-2xl">📖</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Recursos Subidos</p>
-            <p class="text-3xl font-bold text-purple-600">{{ estadisticas.recursosSubidos }}</p>
-          </div>
-          <div class="p-3 bg-purple-100 rounded-full">
-            <span class="text-2xl">📁</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">En Revisión</p>
-            <p class="text-3xl font-bold text-yellow-600">{{ estadisticas.revisionesPendientes }}</p>
-          </div>
-          <div class="p-3 bg-yellow-100 rounded-full">
-            <span class="text-2xl">⏳</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Materias Publicadas</p>
-            <p class="text-3xl font-bold text-emerald-600">{{ estadisticas.materiasPublicadas }}</p>
-          </div>
-          <div class="p-3 bg-emerald-100 rounded-full">
-            <span class="text-2xl">✅</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-600">Interacciones Hoy</p>
-            <p class="text-3xl font-bold text-indigo-600">{{ estadisticas.interaccionesHoy }}</p>
-          </div>
-          <div class="p-3 bg-indigo-100 rounded-full">
-            <span class="text-2xl">👥</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gráficos de Análisis -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-      <!-- Estado de Materias -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Estado de Materias</h3>
-        <div class="h-64">
-          <canvas id="materiasChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Tipos de Recursos -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recursos por Tipo</h3>
-        <div class="h-64">
-          <canvas id="recursosChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Actividad Semanal -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Actividad de la Semana</h3>
-        <div class="h-64">
-          <canvas id="actividadChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Materias Destacadas -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      <!-- Lista de Materias -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div class="p-6 border-b border-gray-200">
+  @if (vistaActual === 'dashboard') {
+    <div>
+      <!-- Cards de Estadísticas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-gray-900">Materias Gestionadas</h3>
-            <button
-              (click)="crearNuevaMateria()"
-              class="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              + Nueva
-            </button>
+            <div>
+              <p class="text-sm font-medium text-gray-600">Materias Gestionadas</p>
+              <p class="text-3xl font-bold text-blue-600">{{ estadisticas.materiasGestionadas }}</p>
+            </div>
+            <div class="p-3 bg-blue-100 rounded-full">
+              <span class="text-2xl">📚</span>
+            </div>
           </div>
         </div>
-        <div class="p-6">
-          <div class="space-y-4">
-            <div
-              *ngFor="let materia of materias.slice(0, 4)"
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
-              (click)="verDetalleMateria(materia)">
-              <div class="flex items-center space-x-3">
-                <span class="text-2xl">{{ materia.icono }}</span>
-                <div>
-                  <h4 class="font-medium text-gray-900">{{ materia.nombre }}</h4>
-                  <p class="text-sm text-gray-500">{{ materia.capitulosPublicados }}/{{ materia.totalCapitulos }} capítulos</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(materia.estado)">
-                  {{ getEstadoTexto(materia.estado) }}
-                </span>
-                <p class="text-sm text-gray-500 mt-1">{{ materia.recursos }} recursos</p>
-              </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Capítulos Creados</p>
+              <p class="text-3xl font-bold text-green-600">{{ estadisticas.capitulosCreados }}</p>
+            </div>
+            <div class="p-3 bg-green-100 rounded-full">
+              <span class="text-2xl">📖</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Recursos Subidos</p>
+              <p class="text-3xl font-bold text-purple-600">{{ estadisticas.recursosSubidos }}</p>
+            </div>
+            <div class="p-3 bg-purple-100 rounded-full">
+              <span class="text-2xl">📁</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">En Revisión</p>
+              <p class="text-3xl font-bold text-yellow-600">{{ estadisticas.revisionesPendientes }}</p>
+            </div>
+            <div class="p-3 bg-yellow-100 rounded-full">
+              <span class="text-2xl">⏳</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Materias Publicadas</p>
+              <p class="text-3xl font-bold text-emerald-600">{{ estadisticas.materiasPublicadas }}</p>
+            </div>
+            <div class="p-3 bg-emerald-100 rounded-full">
+              <span class="text-2xl">✅</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Interacciones Hoy</p>
+              <p class="text-3xl font-bold text-indigo-600">{{ estadisticas.interaccionesHoy }}</p>
+            </div>
+            <div class="p-3 bg-indigo-100 rounded-full">
+              <span class="text-2xl">👥</span>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Capítulos Recientes -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div class="p-6 border-b border-gray-200">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-gray-900">Capítulos Recientes</h3>
-            <button
-              (click)="crearCapitulo()"
-              class="px-3 py-1 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700">
-              + Capítulo
-            </button>
+      <!-- Gráficos de Análisis -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Estado de Materias -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Estado de Materias</h3>
+          <div class="h-64">
+            <canvas id="materiasChart"></canvas>
           </div>
         </div>
-        <div class="p-6">
-          <div class="space-y-4">
-            <div
-              *ngFor="let capitulo of capitulosRecientes"
-              class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
-              (click)="editarCapitulo(capitulo)">
-              <div>
-                <h4 class="font-medium text-gray-900">{{ capitulo.titulo }}</h4>
-                <p class="text-sm text-gray-500">{{ getMateriaNombre(capitulo.materiaId) }}</p>
-                <p class="text-xs text-gray-400">{{ formatDate(capitulo.fechaCreacion) }}</p>
-              </div>
-              <div class="text-right">
-                <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(capitulo.estado)">
-                  {{ getEstadoTexto(capitulo.estado) }}
-                </span>
-                <p class="text-sm text-gray-500 mt-1">{{ capitulo.recursos }} recursos</p>
-              </div>
-            </div>
+        <!-- Tipos de Recursos -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Recursos por Tipo</h3>
+          <div class="h-64">
+            <canvas id="recursosChart"></canvas>
+          </div>
+        </div>
+        <!-- Actividad Semanal -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Actividad de la Semana</h3>
+          <div class="h-64">
+            <canvas id="actividadChart"></canvas>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Accesos Rápidos -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900">Accesos Rápidos</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <button
-            (click)="crearNuevaMateria()"
-            class="p-4 text-center bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
-            <span class="text-3xl block mb-2">📚</span>
-            <span class="text-sm font-medium text-blue-700">Nueva Materia</span>
-          </button>
-          <button
-            (click)="crearCapitulo()"
-            class="p-4 text-center bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
-            <span class="text-3xl block mb-2">📖</span>
-            <span class="text-sm font-medium text-green-700">Nuevo Capítulo</span>
-          </button>
-          <button
-            (click)="subirRecurso()"
-            class="p-4 text-center bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
-            <span class="text-3xl block mb-2">📁</span>
-            <span class="text-sm font-medium text-purple-700">Subir Recurso</span>
-          </button>
-          <button
-            (click)="cambiarVista('recursos')"
-            class="p-4 text-center bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors">
-            <span class="text-3xl block mb-2">⚙️</span>
-            <span class="text-sm font-medium text-yellow-700">Gestionar</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Materias -->
-  <div *ngIf="vistaActual === 'materias'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold text-gray-900">Gestión de Materias</h3>
-          <button
-            (click)="crearNuevaMateria()"
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            + Nueva Materia
-          </button>
-        </div>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let materia of materias"
-            class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
-            (click)="verDetalleMateria(materia)">
-            <div class="flex items-start justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <span class="text-3xl">{{ materia.icono }}</span>
-                <div>
-                  <h4 class="font-semibold text-gray-900">{{ materia.nombre }}</h4>
-                  <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(materia.estado)">
-                    {{ getEstadoTexto(materia.estado) }}
-                  </span>
-                </div>
-              </div>
+      <!-- Materias Destacadas -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Lista de Materias -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div class="p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900">Materias Gestionadas</h3>
               <button
-                (click)="editarMateria(materia); $event.stopPropagation()"
-                class="text-gray-400 hover:text-gray-600">
-                ⚙️
+                (click)="crearNuevaMateria()"
+                class="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                + Nueva
               </button>
             </div>
-
-            <p class="text-sm text-gray-600 mb-4">{{ materia.descripcion }}</p>
-
-            <div class="space-y-3">
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Capítulos:</span>
-                <span class="font-medium">{{ materia.capitulosPublicados }}/{{ materia.totalCapitulos }}</span>
-              </div>
-
-              <div class="w-full bg-gray-200 rounded-full h-2">
+          </div>
+          <div class="p-6">
+            <div class="space-y-4">
+              @for (materia of materias.slice(0, 4); track materia) {
                 <div
-                  class="h-2 rounded-full transition-all"
-                  [style.width.%]="getProgresoMateria(materia)"
-                  [style.background-color]="materia.color">
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+                  (click)="verDetalleMateria(materia)">
+                  <div class="flex items-center space-x-3">
+                    <span class="text-2xl">{{ materia.icono }}</span>
+                    <div>
+                      <h4 class="font-medium text-gray-900">{{ materia.nombre }}</h4>
+                      <p class="text-sm text-gray-500">{{ materia.capitulosPublicados }}/{{ materia.totalCapitulos }} capítulos</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(materia.estado)">
+                      {{ getEstadoTexto(materia.estado) }}
+                    </span>
+                    <p class="text-sm text-gray-500 mt-1">{{ materia.recursos }} recursos</p>
+                  </div>
                 </div>
-              </div>
-
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Recursos:</span>
-                <span class="font-medium">{{ materia.recursos }}</span>
-              </div>
-
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Última actualización:</span>
-                <span class="font-medium">{{ formatDate(materia.ultimaActualizacion) }}</span>
-              </div>
+              }
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Capítulos -->
-  <div *ngIf="vistaActual === 'capitulos'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold text-gray-900">Gestión de Capítulos</h3>
-          <button
-            (click)="crearCapitulo()"
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-            + Nuevo Capítulo
-          </button>
-        </div>
-      </div>
-      <div class="p-6">
-        <div class="overflow-x-auto">
-          <table class="min-w-full">
-            <thead>
-              <tr class="border-b border-gray-200">
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Título</th>
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Materia</th>
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Estado</th>
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Recursos</th>
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
-                <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="let capitulo of capitulosRecientes"
-                class="border-b border-gray-100 hover:bg-gray-50">
-                <td class="py-3 px-4">
+        <!-- Capítulos Recientes -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div class="p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900">Capítulos Recientes</h3>
+              <button
+                (click)="crearCapitulo()"
+                class="px-3 py-1 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700">
+                + Capítulo
+              </button>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="space-y-4">
+              @for (capitulo of capitulosRecientes; track capitulo) {
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+                  (click)="editarCapitulo(capitulo)">
                   <div>
                     <h4 class="font-medium text-gray-900">{{ capitulo.titulo }}</h4>
-                    <p class="text-sm text-gray-500">{{ capitulo.descripcion }}</p>
+                    <p class="text-sm text-gray-500">{{ getMateriaNombre(capitulo.materiaId) }}</p>
+                    <p class="text-xs text-gray-400">{{ formatDate(capitulo.fechaCreacion) }}</p>
                   </div>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="text-sm text-gray-700">{{ getMateriaNombre(capitulo.materiaId) }}</span>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(capitulo.estado)">
-                    {{ getEstadoTexto(capitulo.estado) }}
-                  </span>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="text-sm text-gray-700">{{ capitulo.recursos }}</span>
-                </td>
-                <td class="py-3 px-4">
-                  <span class="text-sm text-gray-700">{{ formatDate(capitulo.fechaCreacion) }}</span>
-                </td>
-                <td class="py-3 px-4">
-                  <button
-                    (click)="editarCapitulo(capitulo)"
-                    class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vista de Recursos -->
-  <div *ngIf="vistaActual === 'recursos'">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="p-6 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xl font-semibold text-gray-900">Gestión de Recursos</h3>
-          <button
-            (click)="subirRecurso()"
-            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-            + Subir Recurso
-          </button>
-        </div>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let recurso of recursosRecientes"
-            class="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between mb-3">
-              <div class="flex items-center space-x-3">
-                <span class="text-2xl">{{ getTipoIcon(recurso.tipo) }}</span>
-                <div>
-                  <h4 class="font-medium text-gray-900 text-sm">{{ recurso.nombre }}</h4>
-                  <p class="text-xs text-gray-500">{{ recurso.tamano }}</p>
+                  <div class="text-right">
+                    <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(capitulo.estado)">
+                      {{ getEstadoTexto(capitulo.estado) }}
+                    </span>
+                    <p class="text-sm text-gray-500 mt-1">{{ capitulo.recursos }} recursos</p>
+                  </div>
                 </div>
-              </div>
-              <button
-                (click)="eliminarRecurso(recurso)"
-                class="text-red-400 hover:text-red-600 text-sm">
-                🗑️
-              </button>
-            </div>
-
-            <div class="space-y-2">
-              <div class="flex justify-between text-xs">
-                <span class="text-gray-600">Tipo:</span>
-                <span class="font-medium capitalize">{{ recurso.tipo }}</span>
-              </div>
-
-              <div class="flex justify-between text-xs">
-                <span class="text-gray-600">Estado:</span>
-                <span class="px-2 py-1 rounded-full" [ngClass]="getEstadoClass(recurso.estado)">
-                  {{ getEstadoTexto(recurso.estado) }}
-                </span>
-              </div>
-
-              <div class="flex justify-between text-xs">
-                <span class="text-gray-600">Subido:</span>
-                <span class="font-medium">{{ formatDate(recurso.fechaSubida) }}</span>
-              </div>
+              }
             </div>
           </div>
         </div>
       </div>
+      <!-- Accesos Rápidos -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-900">Accesos Rápidos</h3>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <button
+              (click)="crearNuevaMateria()"
+              class="p-4 text-center bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+              <span class="text-3xl block mb-2">📚</span>
+              <span class="text-sm font-medium text-blue-700">Nueva Materia</span>
+            </button>
+            <button
+              (click)="crearCapitulo()"
+              class="p-4 text-center bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+              <span class="text-3xl block mb-2">📖</span>
+              <span class="text-sm font-medium text-green-700">Nuevo Capítulo</span>
+            </button>
+            <button
+              (click)="subirRecurso()"
+              class="p-4 text-center bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+              <span class="text-3xl block mb-2">📁</span>
+              <span class="text-sm font-medium text-purple-700">Subir Recurso</span>
+            </button>
+            <button
+              (click)="cambiarVista('recursos')"
+              class="p-4 text-center bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors">
+              <span class="text-3xl block mb-2">⚙️</span>
+              <span class="text-sm font-medium text-yellow-700">Gestionar</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  }
+
+  <!-- Vista de Materias -->
+  @if (vistaActual === 'materias') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-gray-900">Gestión de Materias</h3>
+            <button
+              (click)="crearNuevaMateria()"
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              + Nueva Materia
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (materia of materias; track materia) {
+              <div
+                class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
+                (click)="verDetalleMateria(materia)">
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex items-center space-x-3">
+                    <span class="text-3xl">{{ materia.icono }}</span>
+                    <div>
+                      <h4 class="font-semibold text-gray-900">{{ materia.nombre }}</h4>
+                      <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(materia.estado)">
+                        {{ getEstadoTexto(materia.estado) }}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    (click)="editarMateria(materia); $event.stopPropagation()"
+                    class="text-gray-400 hover:text-gray-600">
+                    ⚙️
+                  </button>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">{{ materia.descripcion }}</p>
+                <div class="space-y-3">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Capítulos:</span>
+                    <span class="font-medium">{{ materia.capitulosPublicados }}/{{ materia.totalCapitulos }}</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      class="h-2 rounded-full transition-all"
+                      [style.width.%]="getProgresoMateria(materia)"
+                      [style.background-color]="materia.color">
+                    </div>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Recursos:</span>
+                    <span class="font-medium">{{ materia.recursos }}</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Última actualización:</span>
+                    <span class="font-medium">{{ formatDate(materia.ultimaActualizacion) }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Vista de Capítulos -->
+  @if (vistaActual === 'capitulos') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-gray-900">Gestión de Capítulos</h3>
+            <button
+              (click)="crearCapitulo()"
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+              + Nuevo Capítulo
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="overflow-x-auto">
+            <table class="min-w-full">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Título</th>
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Materia</th>
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Estado</th>
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Recursos</th>
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
+                  <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (capitulo of capitulosRecientes; track capitulo) {
+                  <tr
+                    class="border-b border-gray-100 hover:bg-gray-50">
+                    <td class="py-3 px-4">
+                      <div>
+                        <h4 class="font-medium text-gray-900">{{ capitulo.titulo }}</h4>
+                        <p class="text-sm text-gray-500">{{ capitulo.descripcion }}</p>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="text-sm text-gray-700">{{ getMateriaNombre(capitulo.materiaId) }}</span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getEstadoClass(capitulo.estado)">
+                        {{ getEstadoTexto(capitulo.estado) }}
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="text-sm text-gray-700">{{ capitulo.recursos }}</span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="text-sm text-gray-700">{{ formatDate(capitulo.fechaCreacion) }}</span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <button
+                        (click)="editarCapitulo(capitulo)"
+                        class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                        Editar
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Vista de Recursos -->
+  @if (vistaActual === 'recursos') {
+    <div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-gray-900">Gestión de Recursos</h3>
+            <button
+              (click)="subirRecurso()"
+              class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+              + Subir Recurso
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (recurso of recursosRecientes; track recurso) {
+              <div
+                class="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center space-x-3">
+                    <span class="text-2xl">{{ getTipoIcon(recurso.tipo) }}</span>
+                    <div>
+                      <h4 class="font-medium text-gray-900 text-sm">{{ recurso.nombre }}</h4>
+                      <p class="text-xs text-gray-500">{{ recurso.tamano }}</p>
+                    </div>
+                  </div>
+                  <button
+                    (click)="eliminarRecurso(recurso)"
+                    class="text-red-400 hover:text-red-600 text-sm">
+                    🗑️
+                  </button>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-600">Tipo:</span>
+                    <span class="font-medium capitalize">{{ recurso.tipo }}</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-600">Estado:</span>
+                    <span class="px-2 py-1 rounded-full" [ngClass]="getEstadoClass(recurso.estado)">
+                      {{ getEstadoTexto(recurso.estado) }}
+                    </span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-600">Subido:</span>
+                    <span class="font-medium">{{ formatDate(recurso.fechaSubida) }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 
 </div>

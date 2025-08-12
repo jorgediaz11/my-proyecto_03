@@ -19,179 +19,199 @@
 
   <div class="tab-content">
     <!-- Panel: Tabla de Preguntas -->
-    <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-        <div class="p-4 border-b border-gray-200">
-          <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
+    @if (activeTab === 'tabla') {
+      <div role="tabpanel" class="tab-panel animate-fadeIn">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+          <div class="p-4 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
-              <div class="w-full sm:w-56">
-                <label for="searchPregunta" class="block text-sm font-medium text-gray-700 mb-2">Buscar Pregunta:</label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-search text-gray-400"></i>
+              <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
+                <div class="w-full sm:w-56">
+                  <label for="searchPregunta" class="block text-sm font-medium text-gray-700 mb-2">Buscar Pregunta:</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input id="searchPregunta" type="text" [(ngModel)]="searchTerm" (input)="filterPreguntas()" placeholder="Ingrese texto"
+                      class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+                    </div>
                   </div>
-                  <input id="searchPregunta" type="text" [(ngModel)]="searchTerm" (input)="filterPreguntas()" placeholder="Ingrese texto"
-                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+                  <div class="w-full sm:w-48">
+                    <label for="filtroNivel" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Nivel:</label>
+                    <select id="filtroNivel" [(ngModel)]="filtroNivel" (change)="onNivelChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                      <option value="">[Seleccionar]</option>
+                      @for (nivel of niveles; track nivel) {
+                        <option [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="w-full sm:w-48">
+                    <label for="filtroGrado" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Grado:</label>
+                    <select id="filtroGrado" [(ngModel)]="filtroGrado" (change)="onGradoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                      <option value="">[Seleccionar]</option>
+                      @for (grado of grados; track grado) {
+                        <option [value]="grado.id_grado">{{ grado.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="w-full sm:w-48">
+                    <label for="filtroCurso" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Curso:</label>
+                    <select id="filtroCurso" [(ngModel)]="filtroCurso" (change)="onCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                      <option value="">[Seleccionar]</option>
+                      @for (curso of cursos; track curso) {
+                        <option [value]="curso.id_curso">{{ curso.id_curso }}-{{ curso.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="w-full sm:w-56">
+                    <label for="selectorCuestionario" class="block text-sm font-medium text-gray-700 mb-2">Cuestionario:</label>
+                    <select id="selectorCuestionario" [(ngModel)]="selectedCuestionario" (change)="filterPreguntas()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                      <option value="">[Seleccionar]</option>
+                      @for (c of filteredCuestionarios; track c) {
+                        <option [value]="c.id_cuestionario">{{ c.titulo }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="flex-shrink-0">
+                  <button type="button" (click)="selectTab('nuevo')"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                    <i class="fas fa-plus mr-2"></i> Nueva Pregunta
+                  </button>
                 </div>
               </div>
-              <div class="w-full sm:w-48">
-                <label for="filtroNivel" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Nivel:</label>
-                <select id="filtroNivel" [(ngModel)]="filtroNivel" (change)="onNivelChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="">[Seleccionar]</option>
-                  <option *ngFor="let nivel of niveles" [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
-                </select>
-              </div>
-              <div class="w-full sm:w-48">
-                <label for="filtroGrado" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Grado:</label>
-                <select id="filtroGrado" [(ngModel)]="filtroGrado" (change)="onGradoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="">[Seleccionar]</option>
-                  <option *ngFor="let grado of grados" [value]="grado.id_grado">{{ grado.nombre }}</option>
-                </select>
-              </div>
-              <div class="w-full sm:w-48">
-                <label for="filtroCurso" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Curso:</label>
-                <select id="filtroCurso" [(ngModel)]="filtroCurso" (change)="onCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="">[Seleccionar]</option>
-                  <option *ngFor="let curso of cursos" [value]="curso.id_curso">{{ curso.id_curso }}-{{ curso.nombre }}</option>
-                </select>
-              </div>
-              <div class="w-full sm:w-56">
-                <label for="selectorCuestionario" class="block text-sm font-medium text-gray-700 mb-2">Cuestionario:</label>
-                <select id="selectorCuestionario" [(ngModel)]="selectedCuestionario" (change)="filterPreguntas()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="">[Seleccionar]</option>
-                  <option *ngFor="let c of filteredCuestionarios" [value]="c.id_cuestionario">{{ c.titulo }}</option>
-                </select>
-              </div>
             </div>
-            <div class="flex-shrink-0">
-              <button type="button" (click)="selectTab('nuevo')"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                <i class="fas fa-plus mr-2"></i> Nueva Pregunta
-              </button>
+            <!-- Tabla de preguntas -->
+            <div class="overflow-x-auto">
+              <table class="preguntas-table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Enunciado</th>
+                    <th scope="col">Tipo</th>
+                    <!-- Removed 'Puntaje' column header because 'puntaje' does not exist on type 'Pregunta' -->
+                    <!-- Removed 'Orden' column header because 'orden' does not exist on type 'Pregunta' -->
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (pregunta of paginatedPreguntas; track pregunta) {
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ pregunta.id_pregunta }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
+                        <div [innerHTML]="pregunta.enunciado"></div>
+                      </td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ pregunta.tipo_pregunta || '-' }}</td>
+                      <!-- Removed 'puntaje' column cell because 'puntaje' does not exist on type 'Pregunta' -->
+                      <!-- Removed 'orden' column cell because 'orden' does not exist on type 'Pregunta' -->
+                      <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
+                        <span [ngClass]="pregunta.estado ? 'text-green-600' : 'text-red-600'">
+                          {{ pregunta.estado ? 'Activo' : 'Inactivo' }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
+                        <div class="flex justify-center space-x-2">
+                          <button type="button" (click)="viewPregunta(pregunta.id_pregunta!)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver pregunta">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button type="button" (click)="editPregunta(pregunta.id_pregunta!)" class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150" title="Editar">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" (click)="deletePregunta(pregunta.id_pregunta!)" class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          <button type="button" (click)="detailPregunta(pregunta.id_pregunta!)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                  @if (paginatedPreguntas.length === 0) {
+                    <tr>
+                      <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <div class="flex flex-col items-center">
+                          <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
+                          <p class="text-lg font-medium text-gray-900 mb-2">No hay preguntas</p>
+                          <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primera pregunta.' }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
             </div>
+            <!-- Paginación -->
+            @if (filteredPreguntas.length > itemsPerPage) {
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+                  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredPreguntas.length/itemsPerPage)"
+                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+              </div>
+            }
           </div>
         </div>
-        <!-- Tabla de preguntas -->
-        <div class="overflow-x-auto">
-          <table class="preguntas-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Enunciado</th>
-                <th scope="col">Tipo</th>
-                <!-- Removed 'Puntaje' column header because 'puntaje' does not exist on type 'Pregunta' -->
-                <!-- Removed 'Orden' column header because 'orden' does not exist on type 'Pregunta' -->
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let pregunta of paginatedPreguntas" class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ pregunta.id_pregunta }}</td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">
-                  <div [innerHTML]="pregunta.enunciado"></div>
-                </td>
-                <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ pregunta.tipo_pregunta || '-' }}</td>
-                <!-- Removed 'puntaje' column cell because 'puntaje' does not exist on type 'Pregunta' -->
-                <!-- Removed 'orden' column cell because 'orden' does not exist on type 'Pregunta' -->
-                <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
-                  <span [ngClass]="pregunta.estado ? 'text-green-600' : 'text-red-600'">
-                    {{ pregunta.estado ? 'Activo' : 'Inactivo' }}
-                  </span>
-                </td>
-                <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
-                  <div class="flex justify-center space-x-2">
-                    <button type="button" (click)="viewPregunta(pregunta.id_pregunta!)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver pregunta">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button type="button" (click)="editPregunta(pregunta.id_pregunta!)" class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150" title="Editar">
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" (click)="deletePregunta(pregunta.id_pregunta!)" class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" title="Eliminar">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                    <button type="button" (click)="detailPregunta(pregunta.id_pregunta!)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
-                      <i class="fas fa-info-circle"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr *ngIf="paginatedPreguntas.length === 0">
-                <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
-                  <div class="flex flex-col items-center">
-                    <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-lg font-medium text-gray-900 mb-2">No hay preguntas</p>
-                    <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primera pregunta.' }}</p>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Paginación -->
-        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6" *ngIf="filteredPreguntas.length > itemsPerPage">
-          <div class="flex items-center justify-between">
-            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
-            <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredPreguntas.length/itemsPerPage)"
-              class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
 
-    <!-- Panel: Nueva Pregunta -->
-    <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="tab-panel animate-fadeIn">
-      <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-        <form [formGroup]="preguntaForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <div class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">Datos de la Pregunta</h2>
-            <div class="flex flex-wrap -mx-2">
-              <div class="w-full px-2">
-                <label for="enunciado" class="block text-sm font-medium text-gray-700 mb-1">Enunciado <span class="text-red-500">*</span></label>
-                <textarea id="enunciado" formControlName="enunciado" rows="6" placeholder="Enunciado de la pregunta"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+      <!-- Panel: Nueva Pregunta -->
+      @if (activeTab === 'nuevo') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <form [formGroup]="preguntaForm" (ngSubmit)="onSubmit()" class="space-y-6">
+              <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-700">Datos de la Pregunta</h2>
+                <div class="flex flex-wrap -mx-2">
+                  <div class="w-full px-2">
+                    <label for="enunciado" class="block text-sm font-medium text-gray-700 mb-1">Enunciado <span class="text-red-500">*</span></label>
+                    <textarea id="enunciado" formControlName="enunciado" rows="6" placeholder="Enunciado de la pregunta"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="tipo_pregunta" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Pregunta <span class="text-red-500">*</span></label>
+                    <input type="text" id="tipo_pregunta" formControlName="tipo_pregunta" placeholder="Tipo de pregunta (ej: VALOR, OPCION)"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                      <label for="puntaje" class="block text-sm font-medium text-gray-700 mb-1">Puntaje <span class="text-red-500">*</span></label>
+                      <input type="number" id="puntaje" formControlName="puntaje" placeholder="Puntaje de la pregunta"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                      </div>
+                      <div class="w-full md:w-1/2 px-2">
+                        <label for="orden" class="block text-sm font-medium text-gray-700 mb-1">Orden <span class="text-red-500">*</span></label>
+                        <input type="number" id="orden" formControlName="orden" placeholder="Orden de la pregunta"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                        </div>
+                        <div class="w-full md:w-1/2 px-2">
+                          <label for="id_cuestionario" class="block text-sm font-medium text-gray-700 mb-1">Cuestionario <span class="text-red-500">*</span></label>
+                          <select id="id_cuestionario" formControlName="id_cuestionario"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                            <option value="">[Seleccionar]</option>
+                            @for (c of filteredCuestionarios; track c) {
+                              <option [value]="c.id_cuestionario">{{ c.titulo }}</option>
+                            }
+                          </select>
+                        </div>
+                        <div class="w-full md:w-1/2 px-2">
+                          <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado <span class="text-red-500">*</span></label>
+                          <select id="estado" formControlName="estado"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                            <option [value]="true">Activo</option>
+                            <option [value]="false">Inactivo</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit"
+                      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                      <i class="fas fa-save mr-2"></i> Guardar Pregunta
+                    </button>
+                  </form>
+                </div>
               </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="tipo_pregunta" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Pregunta <span class="text-red-500">*</span></label>
-                <input type="text" id="tipo_pregunta" formControlName="tipo_pregunta" placeholder="Tipo de pregunta (ej: VALOR, OPCION)"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="puntaje" class="block text-sm font-medium text-gray-700 mb-1">Puntaje <span class="text-red-500">*</span></label>
-                <input type="number" id="puntaje" formControlName="puntaje" placeholder="Puntaje de la pregunta"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="orden" class="block text-sm font-medium text-gray-700 mb-1">Orden <span class="text-red-500">*</span></label>
-                <input type="number" id="orden" formControlName="orden" placeholder="Orden de la pregunta"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="id_cuestionario" class="block text-sm font-medium text-gray-700 mb-1">Cuestionario <span class="text-red-500">*</span></label>
-                <select id="id_cuestionario" formControlName="id_cuestionario"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                  <option value="">[Seleccionar]</option>
-                  <option *ngFor="let c of filteredCuestionarios" [value]="c.id_cuestionario">{{ c.titulo }}</option>
-                </select>
-              </div>
-              <div class="w-full md:w-1/2 px-2">
-                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado <span class="text-red-500">*</span></label>
-                <select id="estado" formControlName="estado"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                  <option [value]="true">Activo</option>
-                  <option [value]="false">Inactivo</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <button type="submit"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-            <i class="fas fa-save mr-2"></i> Guardar Pregunta
-          </button>
-        </form>
-      </div>
-    </div>
+            }
 
-  </div>
-</div>
+          </div>
+        </div>

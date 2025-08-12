@@ -5,186 +5,228 @@
         <img class="logo-icon" src="assets/images/login-logo.png" alt="logo">
       </a>
       <h2 class="recupera-title">
-        <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">Recuperar Contraseña</span>
-        <span *ngIf="currentState === RecoveryState.EMAIL_SENT">Código de Verificación</span>
-        <span *ngIf="currentState === RecoveryState.TOKEN_VERIFICATION">Verificar Código</span>
-        <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">Nueva Contraseña</span>
+        @if (currentState === RecoveryState.EMAIL_REQUEST) {
+          <span>Recuperar Contraseña</span>
+        }
+        @if (currentState === RecoveryState.EMAIL_SENT) {
+          <span>Código de Verificación</span>
+        }
+        @if (currentState === RecoveryState.TOKEN_VERIFICATION) {
+          <span>Verificar Código</span>
+        }
+        @if (currentState === RecoveryState.PASSWORD_RESET) {
+          <span>Nueva Contraseña</span>
+        }
       </h2>
       <p class="recupera-subtitle">
-        <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
-          Ingresa tu correo electrónico para recibir las instrucciones de recuperación
-        </span>
-        <span *ngIf="currentState === RecoveryState.EMAIL_SENT">
-          Revisa tu correo electrónico e ingresa el código de verificación
-        </span>
-        <span *ngIf="currentState === RecoveryState.TOKEN_VERIFICATION">
-          Ingresa el código de verificación que recibiste por correo
-        </span>
-        <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">
-          Ingresa tu nueva contraseña
-        </span>
+        @if (currentState === RecoveryState.EMAIL_REQUEST) {
+          <span>
+            Ingresa tu correo electrónico para recibir las instrucciones de recuperación
+          </span>
+        }
+        @if (currentState === RecoveryState.EMAIL_SENT) {
+          <span>
+            Revisa tu correo electrónico e ingresa el código de verificación
+          </span>
+        }
+        @if (currentState === RecoveryState.TOKEN_VERIFICATION) {
+          <span>
+            Ingresa el código de verificación que recibiste por correo
+          </span>
+        }
+        @if (currentState === RecoveryState.PASSWORD_RESET) {
+          <span>
+            Ingresa tu nueva contraseña
+          </span>
+        }
       </p>
     </div>
     <form [formGroup]="recuperaForm" (ngSubmit)="onSubmit()" class="recupera-form">
       <!-- PASO 1: Solicitar email -->
-      <div *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
-        <div class="form-group">
-          <label for="correo" class="form-label">
-            <i class="label-icon fas fa-envelope"></i>
-            Correo Electrónico
-          </label>
-          <div class="input-container">
-            <input
-              type="email"
-              id="correo"
-              formControlName="correo"
-              placeholder="correo@ejemplo.com"
-              class="form-input"
-              [class.error]="getFieldError('correo')"
-              required>
+      @if (currentState === RecoveryState.EMAIL_REQUEST) {
+        <div>
+          <div class="form-group">
+            <label for="correo" class="form-label">
+              <i class="label-icon fas fa-envelope"></i>
+              Correo Electrónico
+            </label>
+            <div class="input-container">
+              <input
+                type="email"
+                id="correo"
+                formControlName="correo"
+                placeholder="correo@ejemplo.com"
+                class="form-input"
+                [class.error]="getFieldError('correo')"
+                required>
+              </div>
+              @if (getFieldError('correo')) {
+                <p class="error-message">
+                  <i class="error-icon fas fa-exclamation-circle"></i>
+                  {{ getFieldError('correo') }}
+                </p>
+              }
+            </div>
           </div>
-          <p *ngIf="getFieldError('correo')" class="error-message">
-            <i class="error-icon fas fa-exclamation-circle"></i>
-            {{ getFieldError('correo') }}
-          </p>
-        </div>
-      </div>
-      <!-- PASO 2: Ingresar código de verificación -->
-      <div *ngIf="currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION">
-        <div class="form-group">
-          <label for="token" class="form-label">
-            <i class="label-icon fas fa-key"></i>
-            Código de Verificación
-          </label>
-          <div class="input-container">
-            <input
-              type="text"
-              id="token"
-              formControlName="token"
-              placeholder="Ingresa el código de verificación"
-              class="form-input"
-              [class.error]="getFieldError('token')"
-              required>
+        }
+        <!-- PASO 2: Ingresar código de verificación -->
+        @if (currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION) {
+          <div>
+            <div class="form-group">
+              <label for="token" class="form-label">
+                <i class="label-icon fas fa-key"></i>
+                Código de Verificación
+              </label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="token"
+                  formControlName="token"
+                  placeholder="Ingresa el código de verificación"
+                  class="form-input"
+                  [class.error]="getFieldError('token')"
+                  required>
+                </div>
+                @if (getFieldError('token')) {
+                  <p class="error-message">
+                    <i class="error-icon fas fa-exclamation-circle"></i>
+                    {{ getFieldError('token') }}
+                  </p>
+                }
+              </div>
+              <div class="form-links">
+                <button
+                  type="button"
+                  class="link"
+                  (click)="restartProcess()"
+                  [disabled]="loading">
+                  ¿No recibiste el código? Reintentar...
+                </button>
+              </div>
+            </div>
+          }
+          <!-- PASO 3: Nueva contraseña -->
+          @if (currentState === RecoveryState.PASSWORD_RESET) {
+            <div>
+              <div class="form-group">
+                <label for="password" class="form-label">
+                  <i class="label-icon fas fa-lock"></i>
+                  Nueva Contraseña
+                </label>
+                <div class="input-container">
+                  <input
+                    type="password"
+                    id="password"
+                    formControlName="password"
+                    placeholder="Ingresa tu nueva contraseña"
+                    class="form-input"
+                    [class.error]="getFieldError('password')"
+                    required>
+                  </div>
+                  @if (getFieldError('password')) {
+                    <p class="error-message">
+                      <i class="error-icon fas fa-exclamation-circle"></i>
+                      {{ getFieldError('password') }}
+                    </p>
+                  }
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword" class="form-label">
+                    <i class="label-icon fas fa-lock"></i>
+                    Confirmar Contraseña
+                  </label>
+                  <div class="input-container">
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      formControlName="confirmPassword"
+                      placeholder="Confirma tu nueva contraseña"
+                      class="form-input"
+                      [class.error]="getFieldError('confirmPassword')"
+                      required>
+                    </div>
+                    @if (getFieldError('confirmPassword')) {
+                      <p class="error-message">
+                        <i class="error-icon fas fa-exclamation-circle"></i>
+                        {{ getFieldError('confirmPassword') }}
+                      </p>
+                    }
+                  </div>
+                </div>
+              }
+              <!-- Botones de acción -->
+              <div class="btn-content" style="gap:1rem; margin-top:1.5rem;">
+                <button
+                  type="button"
+                  class="btn-submit bg-red-600 hover:bg-red-700"
+                  (click)="onReset()"
+                  [disabled]="loading">
+                  Limpiar
+                </button>
+                <button
+                  type="submit"
+                  class="btn-submit"
+                  [disabled]="!canSubmit">
+                  @if (loading) {
+                    <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                  }
+                  @if (currentState === RecoveryState.EMAIL_REQUEST) {
+                    <span>
+                      {{ loading ? 'Enviando...' : 'Enviar Solicitud' }}
+                    </span>
+                  }
+                  @if (currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION) {
+                    <span>
+                      {{ loading ? 'Verificando...' : 'Verificar Código' }}
+                    </span>
+                  }
+                  @if (currentState === RecoveryState.PASSWORD_RESET) {
+                    <span>
+                      {{ loading ? 'Guardando...' : 'Cambiar Contraseña' }}
+                    </span>
+                  }
+                </button>
+              </div>
+              <!-- Mensaje de error general -->
+              @if (recoveryError) {
+                <div class="alert alert-error" style="margin-top:1.5rem;">
+                  {{ recoveryError }}
+                </div>
+              }
+              <!-- Panel flotante de accesos rápidos con título y botón cerrar -->
+              @if (showFloatingPanel) {
+                <div class="info-panel" style="z-index:1001;">
+                  <button type="button" class="alert-close" (click)="showFloatingPanel = false" aria-label="Cerrar panel">&times;</button>
+                  <div class="info-content">
+                    <h3>Accesos rápidos</h3>
+                    <ul class="feature-list">
+                      <li>
+                        <a routerLink="/login-registro" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
+                          Nueva Cuenta
+                        </a>
+                      </li>
+                      <li>
+                        <a routerLink="/opciones" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
+                          Opciones
+                        </a>
+                      </li>
+                      <li>
+                        <a routerLink="/inicio" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
+                          Inicio
+                        </a>
+                      </li>
+                      <li>
+                        <a routerLink="/login" class="link bg-blue-500 text-white hover:bg-blue-600 w-full justify-center">
+                          Regresar al Login
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              }
+            </form>
+            <div class="recupera-footer">
+              <span class="footer-text">©2025 Plataforma Educativa</span>
+            </div>
           </div>
-          <p *ngIf="getFieldError('token')" class="error-message">
-            <i class="error-icon fas fa-exclamation-circle"></i>
-            {{ getFieldError('token') }}
-          </p>
         </div>
-        <div class="form-links">
-          <button
-            type="button"
-            class="link"
-            (click)="restartProcess()"
-            [disabled]="loading">
-            ¿No recibiste el código? Reintentar...
-          </button>
-        </div>
-      </div>
-      <!-- PASO 3: Nueva contraseña -->
-      <div *ngIf="currentState === RecoveryState.PASSWORD_RESET">
-        <div class="form-group">
-          <label for="password" class="form-label">
-            <i class="label-icon fas fa-lock"></i>
-            Nueva Contraseña
-          </label>
-          <div class="input-container">
-            <input
-              type="password"
-              id="password"
-              formControlName="password"
-              placeholder="Ingresa tu nueva contraseña"
-              class="form-input"
-              [class.error]="getFieldError('password')"
-              required>
-          </div>
-          <p *ngIf="getFieldError('password')" class="error-message">
-            <i class="error-icon fas fa-exclamation-circle"></i>
-            {{ getFieldError('password') }}
-          </p>
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword" class="form-label">
-            <i class="label-icon fas fa-lock"></i>
-            Confirmar Contraseña
-          </label>
-          <div class="input-container">
-            <input
-              type="password"
-              id="confirmPassword"
-              formControlName="confirmPassword"
-              placeholder="Confirma tu nueva contraseña"
-              class="form-input"
-              [class.error]="getFieldError('confirmPassword')"
-              required>
-          </div>
-          <p *ngIf="getFieldError('confirmPassword')" class="error-message">
-            <i class="error-icon fas fa-exclamation-circle"></i>
-            {{ getFieldError('confirmPassword') }}
-          </p>
-        </div>
-      </div>
-      <!-- Botones de acción -->
-      <div class="btn-content" style="gap:1rem; margin-top:1.5rem;">
-        <button
-          type="button"
-          class="btn-submit bg-red-600 hover:bg-red-700"
-          (click)="onReset()"
-          [disabled]="loading">
-          Limpiar
-        </button>
-        <button
-          type="submit"
-          class="btn-submit"
-          [disabled]="!canSubmit">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-          <span *ngIf="currentState === RecoveryState.EMAIL_REQUEST">
-            {{ loading ? 'Enviando...' : 'Enviar Solicitud' }}
-          </span>
-          <span *ngIf="currentState === RecoveryState.EMAIL_SENT || currentState === RecoveryState.TOKEN_VERIFICATION">
-            {{ loading ? 'Verificando...' : 'Verificar Código' }}
-          </span>
-          <span *ngIf="currentState === RecoveryState.PASSWORD_RESET">
-            {{ loading ? 'Guardando...' : 'Cambiar Contraseña' }}
-          </span>
-        </button>
-      </div>
-      <!-- Mensaje de error general -->
-      <div *ngIf="recoveryError" class="alert alert-error" style="margin-top:1.5rem;">
-        {{ recoveryError }}
-      </div>
-      <!-- Panel flotante de accesos rápidos con título y botón cerrar -->
-      <div *ngIf="showFloatingPanel" class="info-panel" style="z-index:1001;">
-        <button type="button" class="alert-close" (click)="showFloatingPanel = false" aria-label="Cerrar panel">&times;</button>
-        <div class="info-content">
-          <h3>Accesos rápidos</h3>
-          <ul class="feature-list">
-            <li>
-              <a routerLink="/login-registro" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
-                Nueva Cuenta
-              </a>
-            </li>
-            <li>
-              <a routerLink="/opciones" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
-                Opciones
-              </a>
-            </li>
-            <li>
-              <a routerLink="/inicio" class="link bg-orange-500 text-white hover:bg-orange-600 w-full justify-center">
-                Inicio
-              </a>
-            </li>
-            <li>
-              <a routerLink="/login" class="link bg-blue-500 text-white hover:bg-blue-600 w-full justify-center">
-                Regresar al Login
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </form>
-    <div class="recupera-footer">
-      <span class="footer-text">©2025 Plataforma Educativa</span>
-    </div>
-  </div>
-</div>
