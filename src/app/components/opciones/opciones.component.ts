@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { QuillModule } from 'ngx-quill';
+import { FormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +12,7 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
     selector: 'app-opciones',
     templateUrl: './opciones.component.html',
     styleUrls: ['./opciones.component.css'],
-    imports: [ActivarLibrosComponent]
+  imports: [ActivarLibrosComponent, QuillModule, FormsModule]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
 
@@ -26,6 +28,9 @@ export class OpcionesComponent implements OnInit, OnDestroy {
   // ✅ Propiedades de la interfaz
   showUserMenu = false;
   showSidebar = true;
+
+  // Propiedad para el Quill Editor
+  enunciado = '';
 
   ngOnInit(): void {
     console.log('🚀 OpcionesComponent iniciando...');
