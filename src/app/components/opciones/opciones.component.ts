@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
 import { UserStateService, PerfilUsuario } from '../../services/user-state.service';
+import * as mammoth from 'mammoth';
+import * as pdfjsLib from 'pdfjs-dist';
+// Configurar el worker de PDF.js para Angular
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
 
 // Importar el módulo de enrutamiento
 @Component({
@@ -31,6 +35,82 @@ export class OpcionesComponent implements OnInit, OnDestroy {
 
   // Propiedad para el Quill Editor
   enunciado = '';
+  
+  // Método para limpiar el editor (Nuevo)
+  onNuevo() {
+    this.enunciado = '';
+  }
+
+  // Método para grabar como HTML enriquecido con nombre personalizado
+  onSaveAs() {
+    let nombre = prompt('Ingrese el nombre del archivo:', 'contenido.html');
+    if (!nombre) return;
+    // El contenido enriquecido se obtiene del editor Quill
+    // Si usas [(ngModel)]="enunciado" y el editor está en modo HTML, puedes usarlo directamente
+    // Si necesitas el HTML real del editor, deberías obtenerlo desde el editor Quill
+    // Aquí asumimos que enunciado ya es HTML
+    const blob = new Blob([this.enunciado], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombre;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  async onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    if (file.type === 'text/plain') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.enunciado = reader.result as string;
+      };
+      reader.readAsText(file);
+    } else if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const typedarray = new Uint8Array(reader.result as ArrayBuffer);
+        try {
+          const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+          let text = '';
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            text += content.items.map((item: any) => item.str).join(' ') + '\n';
+          }
+          if (!text.trim()) {
+            alert('No se pudo extraer texto del PDF. Puede que el archivo solo contenga imágenes o esté protegido.');
+          }
+          this.enunciado = text;
+        } catch (err) {
+          alert('Error al procesar el PDF: ' + String(err));
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else if (file.name.endsWith('.docx')) {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        this.enunciado = result.value;
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      alert('Formato no soportado. Solo TXT, PDF y DOCX.');
+    }
+  }
+  
+  onSave() {
+    // Ejemplo: descarga el contenido como archivo TXT
+    const blob = new Blob([this.enunciado], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'contenido.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 
   ngOnInit(): void {
     console.log('🚀 OpcionesComponent iniciando...');

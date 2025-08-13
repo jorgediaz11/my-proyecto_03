@@ -416,6 +416,20 @@
                   ]
                 }"
               ></quill-editor>
+
+            </div>
+
+            <div style="margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;">
+              <input type="file" (change)="onFileSelected($event)" accept=".txt,.pdf,.doc,.docx" class="px-2 py-1 border rounded bg-white text-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button class="px-4 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700 transition-colors font-semibold" (click)="onNuevo()">
+                <span class="inline-block align-middle mr-1">🆕</span> Nuevo
+              </button>
+              <button class="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition-colors font-semibold" (click)="onSave()">
+                <span class="inline-block align-middle mr-1">💾</span> Grabar
+              </button>
+              <button class="px-4 py-2 bg-purple-600 text-white rounded shadow hover:bg-purple-700 transition-colors font-semibold" (click)="onSaveAs()">
+                <span class="inline-block align-middle mr-1">📝</span> Grabar Como
+              </button>
             </div>
 
           </div>
