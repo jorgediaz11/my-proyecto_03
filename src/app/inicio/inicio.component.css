@@ -172,8 +172,9 @@
 
 /* CONTENIDO PRINCIPAL */
 .main-content {
-  margin-top: 120px; /* Espacio base para la navbar */
-  padding-top: 2rem; /* Padding adicional para mayor separación */
+  /*margin-top: 120px; /* Espacio base para la navbar */
+  margin-top: 1320px; /* Espacio exacto para la barra superior */
+  padding-top: 2rem;
 }
 
 .navbar-spacer {

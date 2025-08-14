@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 
 // Interfaces para tipado de Lecciones
 export interface Leccion {
+  id?: number;
   id_leccion?: number;
   titulo: string;
   contenido: string;

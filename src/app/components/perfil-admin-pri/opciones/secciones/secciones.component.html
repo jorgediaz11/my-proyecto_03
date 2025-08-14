@@ -65,16 +65,29 @@
                       </td>
                       <td class="text-center">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" (click)="viewSeccion(seccion.id_seccion!)" class="action-icon view" title="Ver sección">
+                          <button
+                            type="button" 
+                            (click)="viewSeccion(seccion.id_seccion!)" 
+                            class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                            title="Ver sección">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" (click)="editSeccion(seccion.id_seccion!)" class="action-icon edit" title="Editar">
+                          <button type="button" 
+                            (click)="editSeccion(seccion.id_seccion!)" 
+                            class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                            title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button" (click)="deleteSeccion(seccion.id_seccion!)" class="action-icon delete" title="Eliminar">
+                          <button type="button" 
+                            (click)="deleteSeccion(seccion.id_seccion!)" 
+                            class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                            title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button" (click)="detailSeccion(seccion.id_seccion!)" class="action-icon view" title="Detalle">
+                          <button type="button" 
+                            (click)="detailSeccion(seccion.id_seccion!)" 
+                            class="text-green-600 hover:text-blue-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                            title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>
                         </div>

@@ -1,3 +1,18 @@
+/* SISTEMA DE PESTAÑAS - Igualado al modelo de Cursos */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
+}
+
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
+  transition: all 0.2s ease-in-out;
+}
 /* ========================================================================== */
 /* NIVELES COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */
@@ -194,6 +209,10 @@
 }
 
 /* ESTILOS GENERALES BÁSICOS */
+h2 {
+  color: #28a745;
+}
+
 .niveles-title {
   color: #28a745;
 }

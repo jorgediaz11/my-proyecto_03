@@ -31,7 +31,7 @@ export interface UpdateActividadDto extends Partial<CreateActividadDto> {
   providedIn: 'root'
 })
 export class ActividadesService {
-  private apiUrl = environment.apiBaseUrl + '/actividad';
+  private apiUrl = environment.apiBaseUrl + '/actividades';
   private http = inject(HttpClient);
 
   getActividades(): Observable<Actividad[]> {

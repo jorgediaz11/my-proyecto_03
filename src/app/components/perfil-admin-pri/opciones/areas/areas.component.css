@@ -260,29 +260,20 @@
    PAGINACIÓN
    ========================================================================== */
 
-.areas-pagination {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
+/* SISTEMA DE PESTAÑAS - Igualado al modelo de Cursos */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
 }
 
-.areas-pagination button {
-  margin: 0 5px;
-  padding: 8px 12px;
-  border: 1px solid #28a745;
-  background-color: white;
-  color: #28a745;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: 500;
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
   transition: all 0.2s ease-in-out;
-}
-
-.areas-pagination button.active {
-  background-color: #4EAD4F;
-  color: white;
   box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
 }
 
@@ -542,6 +533,10 @@
 .areas-bg-info { background-color: #dbeafe; }
 
 /* ESTILOS GENERALES BÁSICOS */
+h2 {
+  color: #28a745;
+}
+
 .areas-title {
   color: #28a745;
 }

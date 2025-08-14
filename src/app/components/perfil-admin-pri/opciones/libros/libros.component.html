@@ -50,7 +50,9 @@
                   <tr>
                     <th>ID</th>
                     <th>Título</th>
-                    <th>Autor</th>
+                    <th>Línea de Negocio</th>
+                    <th>Colección</th>
+                    <th>Costo</th>
                     <th class="text-center">Estado</th>
                     <th class="text-center">Acciones</th>
                   </tr>
@@ -60,7 +62,9 @@
                     <tr>
                       <td>{{ libro.id_libro }}</td>
                       <td>{{ libro.titulo }}</td>
-                      <td>{{ libro.autor }}</td>
+                      <td>{{ libro.lineanegocio }}</td>
+                      <td>{{ libro.coleccion }}</td>
+                      <td>{{ libro.costolibro | currency:'PEN':'symbol':'1.2-2' }}</td>
                       <td class="text-center">
                         <span [ngClass]="libro.estado ? 'text-green-600' : 'text-red-600'">
                           {{ libro.estado ? 'Activo' : 'Inactivo' }}
@@ -68,16 +72,28 @@
                       </td>
                       <td class="text-center">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" (click)="viewLibro(libro.id_libro!)" class="libros-action-icon view" title="Ver libro">
+                          <button type="button" 
+                            (click)="viewLibro(libro.id_libro!)" 
+                            class="libros-action-icon view" 
+                            title="Ver libro">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" (click)="editLibro(libro.id_libro!)" class="libros-action-icon edit" title="Editar">
+                          <button type="button" 
+                            (click)="editLibro(libro.id_libro!)" 
+                            class="libros-action-icon edit" 
+                            title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button" (click)="deleteLibro(libro.id_libro!)" class="libros-action-icon delete" title="Eliminar">
+                          <button type="button" 
+                            (click)="deleteLibro(libro.id_libro!)" 
+                            class="libros-action-icon delete" 
+                            title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button" (click)="detailLibro(libro.id_libro!)" class="libros-action-icon view" title="Detalle">
+                          <button type="button" 
+                            (click)="viewContenido(libro.id_libro!)" 
+                            class="text-green-600 hover:text-blue-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                            title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>
                         </div>
@@ -117,57 +133,74 @@
       @if (activeTab === 'nuevo') {
         <div role="tabpanel" class="libros-tab-panel libros-animate-fadeIn">
           <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <div class="mb-4">
+              <h2 class="text-xl font-semibold text-gray-700">
+                {{ isEditing ? 'Editar Libro' : 'Nuevo Libro' }}
+              </h2>
+              <div *ngIf="isEditing" class="text-sm text-green-700 bg-green-100 rounded px-3 py-2 mt-2">
+                <i class="fas fa-edit mr-1"></i>
+                Editando registro ID: {{ editingLibroId }}
+              </div>
+            </div>
             <form [formGroup]="libroForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <div class="space-y-4">
-                <h2 class="text-xl font-semibold text-gray-700">Datos del Libro</h2>
                 <div class="flex flex-wrap -mx-2">
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="codigointerno" class="block text-sm font-medium text-gray-700 mb-1">Código Interno</label>
+                    <input type="text" id="codigointerno" formControlName="codigointerno" placeholder="Código interno"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
+                    <input type="text" id="isbn" formControlName="isbn" placeholder="ISBN del libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
                   <div class="w-full md:w-1/2 px-2">
                     <label for="titulo" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
                     <input type="text" id="titulo" formControlName="titulo" placeholder="Título del libro"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                    </div>
-                    <div class="w-full md:w-1/2 px-2">
-                      <label for="autor" class="block text-sm font-medium text-gray-700 mb-1">Autor</label>
-                      <input type="text" id="autor" formControlName="autor" placeholder="Autor del libro"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                      </div>
-                      <div class="w-full md:w-1/2 px-2">
-                        <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                        <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción del libro"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                        </div>
-                        <div class="w-full md:w-1/2 px-2">
-                          <label for="editorial" class="block text-sm font-medium text-gray-700 mb-1">Editorial</label>
-                          <input type="text" id="editorial" formControlName="editorial" placeholder="Editorial del libro"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                          </div>
-                          <div class="w-full md:w-1/2 px-2">
-                            <label for="anio_publicacion" class="block text-sm font-medium text-gray-700 mb-1">Año de Publicación</label>
-                            <input type="number" id="anio_publicacion" formControlName="anio_publicacion" placeholder="Año de publicación"
-                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                            </div>
-                            <div class="w-full md:w-1/2 px-2">
-                              <label for="id_area" class="block text-sm font-medium text-gray-700 mb-1">ID Área</label>
-                              <input type="number" id="id_area" formControlName="id_area" placeholder="ID del área"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                              </div>
-                              <div class="w-full md:w-1/2 px-2">
-                                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                                <select id="estado" formControlName="estado"
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                                  <option [value]="true">Activo</option>
-                                  <option [value]="false">Inactivo</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                            <i class="fas fa-save mr-2"></i> Guardar Libro
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  }
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                    <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción del libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="lineanegocio" class="block text-sm font-medium text-gray-700 mb-1">Línea de Negocio</label>
+                    <input type="text" id="lineanegocio" formControlName="lineanegocio" placeholder="Línea de negocio"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="id_nivel" class="block text-sm font-medium text-gray-700 mb-1">Nivel</label>
+                    <input type="number" id="id_nivel" formControlName="id_nivel" placeholder="ID del nivel"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="coleccion" class="block text-sm font-medium text-gray-700 mb-1">Colección</label>
+                    <input type="text" id="coleccion" formControlName="coleccion" placeholder="Colección del libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="costolibro" class="block text-sm font-medium text-gray-700 mb-1">Costo</label>
+                    <input type="number" id="costolibro" formControlName="costolibro" placeholder="Costo del libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="estado" formControlName="estado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                      <option [value]="true">Activo</option>
+                      <option [value]="false">Inactivo</option>
+                    </select>
+                  </div>
                 </div>
               </div>
+              <button type="submit"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                <i class="fas fa-save mr-2"></i> Guardar Libro
+              </button>
+            </form>
+          </div>
+        </div>
+      }
+  <!-- Eliminados duplicados y cierres incorrectos -->

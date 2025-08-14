@@ -6,35 +6,39 @@ import { environment } from '../../environments/environment';
 // Interfaces para tipado de Libros
 export interface Libro {
   id_libro?: number;
+  codigointerno?: string;
+  isbn?: string;
   titulo: string;
-  autor: string;
   descripcion?: string;
-  editorial?: string;
-  anio_publicacion?: number;
+  lineanegocio?: string;
+  id_nivel?: number;
+  coleccion?: string;
+  costolibro?: number;
   estado: boolean;
-  id_area?: number;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
 }
 
 export interface CreateLibroDto {
+  codigointerno?: string;
+  isbn?: string;
   titulo: string;
-  autor: string;
   descripcion?: string;
-  editorial?: string;
-  anio_publicacion?: number;
+  lineanegocio?: string;
+  id_nivel?: number;
+  coleccion?: string;
+  costolibro?: number;
   estado: boolean;
-  id_area?: number;
 }
 
 export interface UpdateLibroDto {
+  codigointerno?: string;
+  isbn?: string;
   titulo?: string;
-  autor?: string;
   descripcion?: string;
-  editorial?: string;
-  anio_publicacion?: number;
+  lineanegocio?: string;
+  id_nivel?: number;
+  coleccion?: string;
+  costolibro?: number;
   estado?: boolean;
-  id_area?: number;
 }
 
 @Injectable({

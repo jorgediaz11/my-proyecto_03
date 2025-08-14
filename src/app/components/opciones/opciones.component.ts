@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 
@@ -8,7 +9,6 @@ import { ActivarLibrosComponent } from '../activar-libros/activar-libros.compone
 import { UserStateService, PerfilUsuario } from '../../services/user-state.service';
 import * as mammoth from 'mammoth';
 import * as pdfjsLib from 'pdfjs-dist';
-// Configurar el worker de PDF.js para Angular
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
 
 // Importar el módulo de enrutamiento
@@ -16,9 +16,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
     selector: 'app-opciones',
     templateUrl: './opciones.component.html',
     styleUrls: ['./opciones.component.css'],
-  imports: [ActivarLibrosComponent, QuillModule, FormsModule]
+    imports: [CommonModule, ActivarLibrosComponent, QuillModule, FormsModule]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
+  mostrarInputFile = true;
 
   // ✅ Inyección de dependencias con inject() - tipado explícito
   private router: Router = inject(Router);
@@ -39,6 +40,10 @@ export class OpcionesComponent implements OnInit, OnDestroy {
   // Método para limpiar el editor (Nuevo)
   onNuevo() {
     this.enunciado = '';
+    this.mostrarInputFile = false;
+    setTimeout(() => {
+      this.mostrarInputFile = true;
+    }, 0);
   }
 
   // Método para grabar como HTML enriquecido con nombre personalizado
@@ -92,8 +97,9 @@ export class OpcionesComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.onload = async () => {
         const arrayBuffer = reader.result as ArrayBuffer;
-        const result = await mammoth.extractRawText({ arrayBuffer });
-        this.enunciado = result.value;
+        // Usar convertToHtml para conservar estilos básicos
+        const result = await mammoth.convertToHtml({ arrayBuffer });
+        this.enunciado = result.value; // HTML enriquecido
       };
       reader.readAsArrayBuffer(file);
     } else {

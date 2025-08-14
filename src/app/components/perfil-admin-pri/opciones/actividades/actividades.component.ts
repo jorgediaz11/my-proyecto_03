@@ -4,6 +4,9 @@ import Swal from 'sweetalert2';
 import { ActividadesService, Actividad, CreateActividadDto, UpdateActividadDto } from '../../../../services/actividades.service';
 import { ColegiosService, Colegio } from '../../../../services/colegios.service';
 import { TipoActividadService, TipoActividad } from '../../../../services/tipo-actividad.service';
+import { NivelesService } from '../../../../services/niveles.service';
+import { GradosService } from '../../../../services/grados.service';
+import { CursosService } from '../../../../services/cursos.service';
 
 @Component({
     selector: 'app-actividades',
@@ -17,6 +20,12 @@ export class ActividadesComponent implements OnInit {
   actividades: Actividad[] = [];
   filteredActividades: Actividad[] = [];
   paginatedActividades: Actividad[] = [];
+    niveles: any[] = [];
+    grados: any[] = [];
+    cursos: any[] = [];
+    filtroNivel: string = '';
+    filtroGrado: string = '';
+    filtroCurso: string = '';
 
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
@@ -53,6 +62,9 @@ export class ActividadesComponent implements OnInit {
   private fb = inject(FormBuilder);
   private colegiosService = inject(ColegiosService);
   private tipoActividadService = inject(TipoActividadService);
+    private nivelesService = inject(NivelesService);
+    private gradosService = inject(GradosService);
+    private cursosService = inject(CursosService);
 
   // ✅ COLEGIOS
   colegios: Colegio[] = [];
@@ -62,10 +74,123 @@ export class ActividadesComponent implements OnInit {
   }
 
 
+    // Mostrar detalles de la actividad
+    detailActividad(id_actividad: number): void {
+      const actividad = this.actividades.find(a => a.id_actividad === id_actividad);
+      if (actividad) {
+        Swal.fire({
+          title: 'Detalle actividad',
+          html: `<div><strong>ID:</strong> ${actividad.id_actividad}</div>
+                 <div><strong>Nombre:</strong> ${actividad.nombre}</div>
+                 <div><strong>Descripción:</strong> ${actividad.descripcion}</div>
+                 <div><strong>Estado:</strong> ${actividad.estado ? 'Activo' : 'Inactivo'}</div>`,
+          icon: 'info',
+          confirmButtonText: 'Cerrar',
+          confirmButtonColor: '#4EAD4F'
+        });
+      }
+    }
+
+    // Paginación desde el HTML
+    onPageChange(page: number): void {
+      this.changePage(page);
+    }
+
+    // Cambiar de pestaña y resetear el formulario
+    selectTab(tab: 'tabla' | 'nuevo'): void {
+      this.activeTab = tab;
+      if (tab === 'nuevo') {
+        this.isEditing = false;
+        this.editingActividadId = undefined;
+        this.actividadForm.reset({
+          id_tipo: 1,
+          id_colegio: 1,
+          estado: '1'
+        });
+      }
+    }
   ngOnInit(): void {
     this.cargarColegios();
     this.cargarTipos();
     this.cargarActividades();
+    this.getNiveles();
+    this.getGrados();
+    this.getCursos();
+  }
+  // Métodos para cargar selectores
+  getNiveles(): void {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles: any[]) => {
+        this.niveles = niveles || [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar niveles:', error);
+      }
+    });
+  }
+
+  getGrados(): void {
+    this.gradosService.getGrados().subscribe({
+      next: (grados: any[]) => {
+        this.grados = grados || [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar grados:', error);
+      }
+    });
+  }
+
+  getCursos(): void {
+    this.cursosService.getCursos().subscribe({
+      next: (cursos: any[]) => {
+        this.cursos = cursos || [];
+      },
+      error: (error: unknown) => {
+        console.error('Error al cargar cursos:', error);
+      }
+    });
+  }
+
+  onNivelChange(): void {
+    this.filtroGrado = '';
+    this.filtroCurso = '';
+    this.cursos = [];
+    if (this.filtroNivel) {
+      const nivelId = Number(this.filtroNivel);
+      this.gradosService.getGrados().subscribe({
+        next: (grados: any[]) => {
+          this.grados = grados.filter(g => typeof g.nivel === 'object' && g.nivel && 'id_nivel' in g.nivel && g.nivel.id_nivel === nivelId);
+        },
+        error: (err) => {
+          console.error('Error cargando grados', err);
+          this.grados = [];
+        }
+      });
+    } else {
+      this.grados = [];
+    }
+  }
+
+  onGradoChange(): void {
+    this.filtroCurso = '';
+    if (this.filtroGrado) {
+      const gradoId = Number(this.filtroGrado);
+      this.cursosService.getCursos().subscribe({
+        next: (cursos: any[]) => {
+          this.cursos = cursos.filter(c => typeof c.grado === 'object' && c.grado && 'id_grado' in c.grado && c.grado.id_grado === gradoId);
+        },
+        error: (err) => {
+          console.error('Error cargando cursos', err);
+          this.cursos = [];
+        }
+      });
+    } else {
+      this.cursos = [];
+    }
+  }
+
+  onCursoChange(): void {
+    // Puede agregar lógica adicional si es necesario
   }
 
 

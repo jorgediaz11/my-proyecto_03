@@ -6,6 +6,10 @@ import { environment } from '../../environments/environment';
 export interface PeriodoAcadem {
   id_periodo: number;
   nombre: string;
+  anio: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  esta_activo: boolean;
   estado: boolean;
 }
 
@@ -13,7 +17,7 @@ export interface PeriodoAcadem {
   providedIn: 'root'
 })
 export class PeriodosAcademService {
-  private apiUrl = environment.apiBaseUrl + '/periodo-academ';
+  private apiUrl = environment.apiBaseUrl + '/periodo-academico';
   private http = inject(HttpClient);
 
   getPeriodos(): Observable<PeriodoAcadem[]> {

@@ -67,16 +67,30 @@
                       </td>
                       <td class="text-center">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" (click)="viewTipoActividad(tm.id_tipo_actividad)" class="action-icon view" title="Ver tipo_actividad">
+                          <button 
+                            type="button" 
+                            (click)="viewTipoActividad(tm.id_tipo_actividad)" 
+                            class="action-icon view" 
+                            title="Ver tipo_actividad">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" (click)="editTipoActividad(tm.id_tipo_actividad)" class="action-icon edit" title="Editar">
+                          <button type="button" 
+                            (click)="editTipoActividad(tm.id_tipo_actividad)" 
+                            class="action-icon edit" 
+                            title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button" (click)="deleteTipoActividad(tm.id_tipo_actividad)" class="action-icon delete" title="Eliminar">
+                          <button type="button" 
+                            (click)="deleteTipoActividad(tm.id_tipo_actividad)" 
+                            class="action-icon delete" 
+                            title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button" (click)="detailTipoActividad(tm.id_tipo_actividad)" class="action-icon view" title="Detalle">
+                          <button 
+                            type="button" 
+                            (click)="detailTipoActividad(tm.id_tipo_actividad)" 
+                            class="text-green-600 hover:text-blue-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                            title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>
                         </div>

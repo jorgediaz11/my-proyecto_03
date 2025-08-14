@@ -105,11 +105,25 @@
                       </td>
                       <td class="text-center">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" (click)="detailLeccion(leccion.id_leccion!)" class="action-icon view" title="Detalle">
-                            <i class="fas fa-info-circle"></i>
+                          <button type="button" (click)="viewLeccion(leccion.id_leccion!)" 
+                            class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" 
+                            title="Ver lección">
+                            <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" (click)="editLeccion(leccion.id_leccion!)" class="action-icon edit" title="Editar">
+                          <button type="button" (click)="editLeccion(leccion.id_leccion!)" 
+                            class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150"
+                            title="Editar">
                             <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" (click)="deleteLeccion(leccion.id_leccion!)" 
+                            class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" 
+                            title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          <button type="button" (click)="detailLeccion(leccion.id_leccion!)" 
+                            class="text-green-600 hover:text-blue-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                            title="Detalle">
+                            <i class="fas fa-info-circle"></i>
                           </button>
                         </div>
                       </td>
@@ -148,6 +162,8 @@
       @if (activeTab === 'nuevo') {
         <div role="tabpanel" class="tab-panel animate-fadeIn">
           <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+              <!-- Depuración: mostrar valores actuales del formulario -->
+              <!-- <pre class="mb-4 bg-gray-100 p-2 rounded text-xs text-gray-700">{{ leccionForm.value | json }}</pre> -->
             <form [formGroup]="leccionForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <div class="space-y-4">
                 <h2 class="text-xl font-semibold text-gray-700">Datos de la Lección</h2>

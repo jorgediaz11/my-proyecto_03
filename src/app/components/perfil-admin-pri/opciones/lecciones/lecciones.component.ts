@@ -55,9 +55,10 @@ export class LeccionesComponent implements OnInit {
 
   selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
-    if (tab === 'nuevo') {
+    // Solo desactivar edición si NO se está editando una lección
+    if (tab === 'nuevo' && !this.editingLeccionId) {
       this.isEditing = false;
-      this.leccionForm.reset({ estado: true });
+      // Se elimina el reset para evitar borrar los datos cargados por patchValue
     }
   }
 
@@ -90,7 +91,12 @@ export class LeccionesComponent implements OnInit {
     this.leccionesService.getLecciones().subscribe({
       next: (lecciones) => {
         // Filtrar por idUnidad (del backend) vs filtroUnidad (del select)
-  this.lecciones = lecciones.filter(l => String((l as any).idUnidad ?? l.id_unidad) === String(this.filtroUnidad));
+        this.lecciones = lecciones
+          .filter(l => String((l as any).idUnidad ?? l.id_unidad) === String(this.filtroUnidad))
+          .map(l => ({
+            ...l,
+            id_leccion: l.id
+          }));
         this.filterLecciones();
         this.loading = false;
       },
@@ -108,7 +114,8 @@ export class LeccionesComponent implements OnInit {
     this.leccionForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(1)]],
       contenido: ['', [Validators.required]],
-      estado: [true, [Validators.required]]
+      estado: [true, [Validators.required]],
+      id_unidad: ['']
     });
   }
 
@@ -198,14 +205,18 @@ export class LeccionesComponent implements OnInit {
   }
 
   editLeccion(id: number): void {
+    //alert('editLeccion: id recibido = ' + id);
     this.isEditing = true;
     this.editingLeccionId = id;
+    //alert('editLeccion: = ' + this.editingLeccionId);
     const leccion = this.lecciones.find(s => s.id_leccion === id);
+    //alert('leccion: ' + JSON.stringify(leccion, null, 2));
     if (leccion) {
       this.leccionForm.patchValue({
         titulo: leccion.titulo,
         contenido: leccion.contenido,
-        estado: leccion.estado
+        estado: leccion.estado,
+        id_unidad: leccion.id_unidad ?? this.filtroUnidad ?? ''
       });
       this.selectTab('nuevo');
     }
@@ -220,11 +231,29 @@ export class LeccionesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.leccionForm.invalid) return;
-    const seccionData = this.leccionForm.value;
+    // Log para ver los valores actuales del FormGroup
+    // console.log('Valores actuales del FormGroup:', this.leccionForm.value);
+    // alert('Valores actuales del FormGroup: ' + JSON.stringify(this.leccionForm.value, null, 2));
+    // Mostrar estado de edición y el id
+    // alert('Estado edición: isEditing=' + this.isEditing + ', editingLeccionId=' + this.editingLeccionId);
+    // Crear objeto limpio sin id_leccion ni id_unidad (solo para update)
+    // El backend solo permite modificar título, contenido y estado, no la unidad
+    const { id_leccion, id_unidad, ...rest } = this.leccionForm.value;
+    let seccionData: any = { ...rest };
+    // Log para depuración
+    console.log('Actualizando lección:', {
+      id: this.editingLeccionId,
+      data: seccionData
+    });
+    // alert('Actualizando lección con id: ' + this.editingLeccionId + '\nObjeto enviado: ' + JSON.stringify(seccionData, null, 2));
+    // Mostrar el body exacto antes de enviar
+    // console.log('Body enviado al update:', JSON.stringify(seccionData, null, 2));
+    // alert('Body enviado al update:\n' + JSON.stringify(seccionData, null, 2));
     if (this.isEditing && this.editingLeccionId) {
       // Editar
       this.leccionesService.actualizarLeccion(this.editingLeccionId, seccionData).subscribe({
         next: () => {
+          alert('¡Lección actualizada correctamente!');
           this.cargarLecciones();
           this.isEditing = false;
           this.editingLeccionId = undefined;
@@ -233,20 +262,21 @@ export class LeccionesComponent implements OnInit {
         },
         error: (error: unknown) => {
           console.error('Error al actualizar sección:', error);
+          alert('¡Error al actualizar la lección!\n' + JSON.stringify(error, null, 2));
         }
       });
     } else {
       // Crear
-    this.leccionesService.crearLeccion(seccionData).subscribe({
-      next: () => {
-        this.cargarLecciones();
-        this.leccionForm.reset({ estado: true });
-        this.selectTab('tabla');
-      },
-      error: (error: unknown) => {
-        console.error('Error al crear sección:', error);
-      }
-    });
+      this.leccionesService.crearLeccion(seccionData).subscribe({
+        next: () => {
+          this.cargarLecciones();
+          this.leccionForm.reset({ estado: true });
+          this.selectTab('tabla');
+        },
+        error: (error: unknown) => {
+          console.error('Error al crear sección:', error);
+        }
+      });
     }
   }
 
@@ -255,4 +285,27 @@ export class LeccionesComponent implements OnInit {
     this.updatePaginatedLecciones();
   }
 
+  viewLeccion(id: number): void {
+    const leccion = this.lecciones.find((s: Leccion) => s.id_leccion === id);
+    if (leccion) {
+      alert(`Vista de lección:\nID: ${leccion.id_leccion}\nTítulo: ${leccion.titulo}\nContenido: ${leccion.contenido}`);
+    }
+  }
+
+  deleteLeccion(id: number): void {
+    if (confirm('¿Está seguro de que desea eliminar esta lección?')) {
+      this.leccionesService.eliminarLeccion(id).subscribe({
+        next: () => {
+          this.cargarLecciones();
+          alert('Lección eliminada correctamente');
+        },
+        error: (error: unknown) => {
+          alert('Error al eliminar la lección');
+          console.error('Error al eliminar lección:', error);
+        }
+      });
+    }
+  }
+
+  
 }

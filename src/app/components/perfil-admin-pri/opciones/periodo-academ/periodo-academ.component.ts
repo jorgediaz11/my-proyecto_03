@@ -33,9 +33,14 @@ export class PeriodoAcademComponent {
   cargarPeriodos(): void {
     this.loading = true;
     this.periodosService.getPeriodos().subscribe({
-      next: (data: PeriodoAcadem[]) => {
-        this.periodos = data;
-        this.filteredPeriodos = [...data];
+      next: (data: any[]) => {
+        // Mapear id_periodo_academico a id_periodo
+        const mapped = data.map(p => ({
+          ...p,
+          id_periodo: p.id_periodo_academico
+        }));
+        this.periodos = mapped;
+        this.filteredPeriodos = [...mapped];
         this.updatePaginatedPeriodos();
         this.loading = false;
       },
@@ -49,7 +54,10 @@ export class PeriodoAcademComponent {
   private initForm(): void {
     this.periodoForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
-      estado: [true, [Validators.required]]
+      anio: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      fecha_inicio: ['', [Validators.required]],
+      fecha_fin: ['', [Validators.required]],
+      esta_activo: [true, [Validators.required]]
     });
   }
 
@@ -98,7 +106,10 @@ export class PeriodoAcademComponent {
     if (periodo) {
       this.periodoForm.patchValue({
         nombre: periodo.nombre,
-        estado: periodo.estado
+        anio: periodo.anio,
+        fecha_inicio: periodo.fecha_inicio,
+        fecha_fin: periodo.fecha_fin,
+        esta_activo: periodo.esta_activo
       });
       this.selectTab('nuevo');
     }
@@ -134,7 +145,13 @@ export class PeriodoAcademComponent {
           this.cargarPeriodos();
           this.isEditing = false;
           this.editingPeriodoId = undefined;
-          this.periodoForm.reset({ estado: true });
+          this.periodoForm.reset({
+            nombre: '',
+            anio: '',
+            fecha_inicio: '',
+            fecha_fin: '',
+            esta_activo: true
+          });
           this.selectTab('tabla');
         },
         error: (error: unknown) => {
@@ -146,7 +163,13 @@ export class PeriodoAcademComponent {
       this.periodosService.addPeriodo(periodoData).subscribe({
         next: () => {
           this.cargarPeriodos();
-          this.periodoForm.reset({ estado: true });
+          this.periodoForm.reset({
+            nombre: '',
+            anio: '',
+            fecha_inicio: '',
+            fecha_fin: '',
+            esta_activo: true
+          });
           this.selectTab('tabla');
         },
         error: (error: unknown) => {

@@ -531,6 +531,10 @@
 .bg-info { background-color: #dbeafe; }
 
 /* ESTILOS GENERALES BÁSICOS */
+h2 {
+  color: #28a745;
+}
+
 .cuestionarios-title {
   color: #28a745;
 }

@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Libro, LibrosService } from 'src/app/services/libros.service';
@@ -48,13 +49,15 @@ export class LibrosComponent implements OnInit {
 
   private initForm(): void {
     this.libroForm = this.fb.group({
+      codigointerno: ['', [Validators.required]],
+      isbn: ['', [Validators.required]],
       titulo: ['', [Validators.required, Validators.minLength(2)]],
-      autor: ['', [Validators.required]],
       descripcion: [''],
-      editorial: [''],
-      anio_publicacion: [null],
-      estado: [true, [Validators.required]],
-      id_area: [null]
+      lineanegocio: [''],
+      id_nivel: [null, [Validators.required]],
+      coleccion: [''],
+      costolibro: [null, [Validators.required]],
+      estado: [true, [Validators.required]]
     });
   }
 
@@ -84,8 +87,11 @@ export class LibrosComponent implements OnInit {
   selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'nuevo') {
+      if (!this.isEditing) {
+        this.libroForm.reset({ estado: true });
+      }
+    } else {
       this.isEditing = false;
-      this.libroForm.reset({ estado: true });
     }
   }
 
@@ -99,19 +105,25 @@ export class LibrosComponent implements OnInit {
   editLibro(id_libro: number): void {
     this.isEditing = true;
     this.editingLibroId = id_libro;
-    const libro = this.libros.find(l => l.id_libro === id_libro);
-    if (libro) {
-      this.libroForm.patchValue({
-        titulo: libro.titulo,
-        autor: libro.autor,
-        descripcion: libro.descripcion,
-        editorial: libro.editorial,
-        anio_publicacion: libro.anio_publicacion,
-        estado: libro.estado,
-        id_area: libro.id_area
-      });
-      this.selectTab('nuevo');
-    }
+    this.librosService.getLibroById(id_libro).subscribe({
+      next: (libro) => {
+        this.libroForm.patchValue({
+          codigointerno: libro.codigointerno ?? '',
+          isbn: libro.isbn ?? '',
+          titulo: libro.titulo ?? '',
+          descripcion: libro.descripcion ?? '',
+          lineanegocio: libro.lineanegocio ?? '',
+          id_nivel: libro.id_nivel ?? null,
+          coleccion: libro.coleccion ?? '',
+          costolibro: libro.costolibro ?? null,
+          estado: libro.estado ?? true
+        });
+        this.selectTab('nuevo');
+      },
+      error: (error) => {
+        console.error('Error al obtener libro por ID:', error);
+      }
+    });
   }
 
   deleteLibro(id_libro: number): void {
@@ -124,13 +136,6 @@ export class LibrosComponent implements OnInit {
           console.error('Error al eliminar libro:', error);
         }
       });
-    }
-  }
-
-  detailLibro(id_libro: number): void {
-    const libro = this.libros.find(l => l.id_libro === id_libro);
-    if (libro) {
-      alert(`Detalle libro:\nID: ${libro.id_libro}\nTítulo: ${libro.titulo}\nEstado: ${libro.estado ? 'Activo' : 'Inactivo'}`);
     }
   }
 
@@ -165,4 +170,35 @@ export class LibrosComponent implements OnInit {
       });
     }
   }
+
+viewContenido(id_libro: number): void {
+    const libro = this.libros.find(l => l.id_libro === id_libro);
+    if (!libro) {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se encontró el libro seleccionado.',
+        icon: 'error',
+        confirmButtonText: 'Cerrar',
+        width: 500
+      });
+      return;
+    }
+    let html = `<div style='text-align:left;max-width:500px;'>`;
+    html += `<h2 class='text-xl font-bold mb-2'>${libro.titulo}</h2>`;
+    html += `<div class='mb-2'><strong>Código Interno:</strong> ${libro.codigointerno || '-'}</div>`;
+    html += `<div class='mb-2'><strong>ISBN:</strong> ${libro.isbn || '-'}</div>`;
+    html += `<div class='mb-2'><strong>Colección:</strong> ${libro.coleccion || '-'}</div>`;
+    html += `<div class='mb-2'><strong>Línea de Negocio:</strong> ${libro.lineanegocio || '-'}</div>`;
+    html += `<div class='mb-2'><strong>Costo:</strong> S/ ${libro.costolibro || '-'}</div>`;
+    html += `<div class='mb-2'><strong>Estado:</strong> ${libro.estado ? 'Activo' : 'Inactivo'}</div>`;
+    html += `</div>`;
+    Swal.fire({
+      title: 'Detalle del Libro',
+      html,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: 600
+    });
+  }
+
 }

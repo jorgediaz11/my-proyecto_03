@@ -13,7 +13,7 @@ export interface Aula {
   providedIn: 'root'
 })
 export class AulasService {
-  private apiUrl = environment.apiBaseUrl + '/aula';
+  private apiUrl = environment.apiBaseUrl + '/aulas';
   private http = inject(HttpClient);
 
   getAulas(): Observable<Aula[]> {
