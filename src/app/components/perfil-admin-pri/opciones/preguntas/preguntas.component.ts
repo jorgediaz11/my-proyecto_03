@@ -11,7 +11,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     selector: 'app-preguntas',
     templateUrl: './preguntas.component.html',
     styleUrls: ['./preguntas.component.css'],
-    standalone: false
+    //standalone: false
 })
 export class PreguntasComponent implements OnInit {
   editorConfig: AngularEditorConfig = {

@@ -17,17 +17,19 @@ export interface Pregunta {
 export interface CreatePreguntaDto {
   texto: string;
   tipo: string;
-  descripcion?: string;
+  //descripcion?: string;
   estado: boolean;
   id_leccion?: number;
+  enunciado?: string;
 }
 
 export interface UpdatePreguntaDto {
   texto?: string;
   tipo?: string;
-  descripcion?: string;
+  //descripcion?: string;
   estado?: boolean;
   id_leccion?: number;
+  enunciado?: string;
 }
 
 @Injectable({

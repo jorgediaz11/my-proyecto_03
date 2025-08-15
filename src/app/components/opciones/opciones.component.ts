@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 
+import { PreguntasService } from '../../services/preguntas.service';
+// Asegúrate de importar el DTO correcto desde donde esté definido
+import { UpdatePreguntaDto } from '../../services/preguntas.service';
+
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
@@ -19,6 +23,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
     imports: [CommonModule, ActivarLibrosComponent, QuillModule, FormsModule]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
+  // Variable para el id de la pregunta
+  idPregunta = 1;
+  // Método para cargar el enunciado desde la base de datos (registro estático id=1)
+  onCargarEnunciado() {
+  const id = this.idPregunta;
+  this.preguntasService.getPreguntaById(id).subscribe({
+      next: (pregunta) => {
+        // Si el campo se llama 'enunciado' en la respuesta, úsalo.
+        this.enunciado = pregunta.enunciado ?? '';
+      },
+      error: (err: unknown) => {
+        const msg = typeof err === 'object' && err !== null && 'message' in err ? (err as { message?: string }).message : String(err);
+        alert('Error al cargar el enunciado: ' + msg);
+      }
+    });
+  }
   mostrarInputFile = true;
 
   // ✅ Inyección de dependencias con inject() - tipado explícito
@@ -36,7 +56,27 @@ export class OpcionesComponent implements OnInit, OnDestroy {
 
   // Propiedad para el Quill Editor
   enunciado = '';
-  
+
+  private preguntasService = inject(PreguntasService);
+
+  // Método para actualizar el enunciado en la base de datos (registro estático id=1)
+  onActualizarEnunciado() {
+  const id = this.idPregunta;
+  // Enviar la propiedad correcta según UpdatePreguntaDto
+  const updateDto: UpdatePreguntaDto = { enunciado: this.enunciado };
+  alert('Valores a enviar:\n' + JSON.stringify({ id, ...updateDto }, null, 2));
+  this.preguntasService.actualizarPregunta(id, updateDto).subscribe({
+      next: () => {
+        alert('Enviado correctamente a backend.');
+        alert('Enunciado actualizado correctamente en la base de datos.');
+      },
+      error: (err: unknown) => {
+        const msg = typeof err === 'object' && err !== null && 'message' in err ? (err as { message?: string }).message : String(err);
+        alert('Error al actualizar el enunciado: ' + msg);
+      }
+    });
+  }
+
   // Método para limpiar el editor (Nuevo)
   onNuevo() {
     this.enunciado = '';
@@ -48,7 +88,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
 
   // Método para grabar como HTML enriquecido con nombre personalizado
   onSaveAs() {
-    let nombre = prompt('Ingrese el nombre del archivo:', 'contenido.html');
+    const nombre = prompt('Ingrese el nombre del archivo:', 'contenido.html');
     if (!nombre) return;
     // El contenido enriquecido se obtiene del editor Quill
     // Si usas [(ngModel)]="enunciado" y el editor está en modo HTML, puedes usarlo directamente
@@ -66,7 +106,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
-    if (file.type === 'text/plain') {
+    if (file.type === 'text/plain' || file.type === 'text/html' || file.name.endsWith('.html')) {
       const reader = new FileReader();
       reader.onload = () => {
         this.enunciado = reader.result as string;
@@ -82,7 +122,9 @@ export class OpcionesComponent implements OnInit, OnDestroy {
           for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
             const content = await page.getTextContent();
-            text += content.items.map((item: any) => item.str).join(' ') + '\n';
+            text += content.items
+              .map((item) => 'str' in item ? (item as { str: string }).str : '')
+              .join(' ') + '\n';
           }
           if (!text.trim()) {
             alert('No se pudo extraer texto del PDF. Puede que el archivo solo contenga imágenes o esté protegido.');
@@ -106,7 +148,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
       alert('Formato no soportado. Solo TXT, PDF y DOCX.');
     }
   }
-  
+
   onSave() {
     // Ejemplo: descarga el contenido como archivo TXT
     const blob = new Blob([this.enunciado], { type: 'text/plain' });
