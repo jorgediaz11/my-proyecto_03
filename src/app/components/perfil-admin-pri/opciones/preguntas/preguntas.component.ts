@@ -6,12 +6,15 @@ import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-preguntas',
     templateUrl: './preguntas.component.html',
     styleUrls: ['./preguntas.component.css'],
-    //standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class PreguntasComponent implements OnInit {
   editorConfig: AngularEditorConfig = {
@@ -200,19 +203,21 @@ export class PreguntasComponent implements OnInit {
   }
 
   selectTab(tab: 'tabla' | 'nuevo'): void {
-    if (this.activeTab === tab) return; // Prevent redundant state changes
+    if (this.activeTab === tab) return;
     this.activeTab = tab;
     if (tab === 'nuevo') {
-      this.isEditing = false;
-      this.selectedCuestionario = '';
-      this.preguntaForm.reset({
-        enunciado: '',
-        tipo_pregunta: '',
-        puntaje: '',
-        orden: 1,
-        estado: true,
-        id_cuestionario: null
-      });
+      // Solo resetea el formulario si NO estás editando
+      if (!this.isEditing) {
+        this.selectedCuestionario = '';
+        this.preguntaForm.reset({
+          enunciado: '',
+          tipo_pregunta: '',
+          puntaje: '',
+          orden: 1,
+          estado: true,
+          id_cuestionario: null
+        });
+      }
     }
   }
 
@@ -224,6 +229,7 @@ export class PreguntasComponent implements OnInit {
   }
 
   editPregunta(id_pregunta: number): void {
+    //alert('Nro de Pregunta : ' + id_pregunta);
     if (typeof id_pregunta !== 'number') return;
     this.isEditing = true;
     this.editingPreguntaId = id_pregunta;

@@ -61,13 +61,13 @@ export class OpcionesComponent implements OnInit, OnDestroy {
 
   // Método para actualizar el enunciado en la base de datos (registro estático id=1)
   onActualizarEnunciado() {
-  const id = this.idPregunta;
-  // Enviar la propiedad correcta según UpdatePreguntaDto
-  const updateDto: UpdatePreguntaDto = { enunciado: this.enunciado };
-  alert('Valores a enviar:\n' + JSON.stringify({ id, ...updateDto }, null, 2));
-  this.preguntasService.actualizarPregunta(id, updateDto).subscribe({
+    const id = this.idPregunta;
+    // Enviar la propiedad correcta según UpdatePreguntaDto
+    const updateDto: UpdatePreguntaDto = { enunciado: this.enunciado };
+    //alert('Valores a enviar:\n' + JSON.stringify({ id, ...updateDto }, null, 2));
+    this.preguntasService.actualizarPregunta(id, updateDto).subscribe({
       next: () => {
-        alert('Enviado correctamente a backend.');
+        //alert('Enviado correctamente a backend.');
         alert('Enunciado actualizado correctamente en la base de datos.');
       },
       error: (err: unknown) => {
@@ -102,6 +102,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+
   async onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;

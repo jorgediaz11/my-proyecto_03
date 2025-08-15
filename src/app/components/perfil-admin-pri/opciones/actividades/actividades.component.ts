@@ -1,12 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { ActividadesService, Actividad, CreateActividadDto, UpdateActividadDto } from '../../../../services/actividades.service';
 import { ColegiosService, Colegio } from '../../../../services/colegios.service';
 import { TipoActividadService, TipoActividad } from '../../../../services/tipo-actividad.service';
 import { NivelesService } from '../../../../services/niveles.service';
 import { GradosService } from '../../../../services/grados.service';
 import { CursosService } from '../../../../services/cursos.service';
+import Swal from 'sweetalert2';
+import { ActividadesDetalleService } from '../../../../services/actividades-detalle.service';
 
 @Component({
     selector: 'app-actividades',
@@ -65,6 +66,7 @@ export class ActividadesComponent implements OnInit {
     private nivelesService = inject(NivelesService);
     private gradosService = inject(GradosService);
     private cursosService = inject(CursosService);
+  private actividadesDetalleService = inject(ActividadesDetalleService);
 
   // ✅ COLEGIOS
   colegios: Colegio[] = [];
@@ -350,32 +352,72 @@ export class ActividadesComponent implements OnInit {
 
   // ✅ VER USUARIO
 
-  viewActividad(id_actividad: number): void {
-    const actividad = this.actividades.find(a => a.id_actividad === id_actividad);
-    if (actividad) {
+viewActividad(id_actividad: number): void {
+  Swal.fire({
+    title: 'Cargando...',
+    html: '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando detalle de la actividad...</div>',
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    width: 900,
+    heightAuto: false,
+    customClass: {
+      popup: 'swal-contenido-actividad'
+    }
+  });
+
+  this.actividadesDetalleService.getDetalleActividad(id_actividad).subscribe(
+    (actividad: any) => {
+      let html = `<div class='actividad-detalle-container' style='text-align:left;max-width:800px;'>`;
+      html += `<h2 class='text-xl font-bold mb-2'>${actividad.nombre_actividad}</h2>`;
+      if (actividad.descripcion) {
+        html += `<div class='mb-2 text-gray-700'>${actividad.descripcion}</div>`;
+      }
+      html += `<div class='text-xs text-gray-500 mb-1'>Tipo: ${actividad.tipo_actividad} | Puntaje: ${actividad.puntaje_actividad}</div>`;
+      if (actividad.opciones && actividad.opciones.length > 0) {
+        html += `<div class='font-semibold text-green-700 mb-1'>Opciones</div><ul class='list-disc pl-5'>`;
+        if (actividad.tipo_actividad === 'SELECCION') {
+          actividad.opciones.forEach((opcion: any, i: number) => {
+            html += `<li class='mb-1'><span class='text-gray-600'>${String.fromCharCode(65 + i)}. ${opcion.nombre_opcion}`;
+            if (opcion.es_correcta) {
+              html += ` <span class='text-green-600 font-bold'>(Correcta)</span>`;
+            }
+            html += `</span></li>`;
+          });
+        } else if (actividad.tipo_actividad === 'RELACION') {
+          actividad.opciones.forEach((opcion: any) => {
+            html += `<li class='mb-1'><span class='text-gray-600'>${opcion.nombre_opcion} <span class='text-blue-600'>→</span> ${opcion.par_relacion}</span></li>`;
+          });
+        } else {
+          actividad.opciones.forEach((opcion: any, i: number) => {
+            html += `<li class='mb-1'><span class='text-gray-600'>${opcion.nombre_opcion}</span></li>`;
+          });
+        }
+        html += `</ul>`;
+      } else {
+        html += `<div class='text-sm text-gray-400 italic'>No hay opciones registradas para esta actividad.</div>`;
+      }
+      html += `</div>`;
       Swal.fire({
-        title: 'Detalles de la Actividad',
-        html: `
-          <div class="text-left space-y-3">
-            <div><strong>ID:</strong> ${actividad.id_actividad}</div>
-            <div><strong>Nombre:</strong> ${actividad.nombre}</div>
-            <div><strong>Descripción:</strong> ${actividad.descripcion}</div>
-            <div><strong>Fecha:</strong> ${actividad.fecha}</div>
-            <div><strong>Tipo:</strong> ${this.getTipoName(actividad.id_tipo ?? 0)}</div>
-            <div><strong>Colegio ID:</strong> ${actividad.id_colegio}</div>
-            <div><strong>Estado:</strong>
-              <span class="${actividad.estado ? 'text-green-600' : 'text-red-600'}">
-                ${actividad.estado ? 'Activo' : 'Inactivo'}
-              </span>
-            </div>
-          </div>
-        `,
+        title: 'Detalle de la Actividad',
+        html: `<div style="max-height:700px;overflow:auto;">${html}</div>`,
         icon: 'info',
-        confirmButtonText: 'Cerrar',
-        confirmButtonColor: '#4EAD4F'
+        width: 900,
+        heightAuto: false,
+        customClass: {
+          popup: 'swal-contenido-actividad'
+        }
+      });
+    },
+    () => {
+      Swal.fire({
+        title: 'Error',
+        html: 'No se pudo cargar el detalle de la actividad.',
+        icon: 'error',
+        width: 500
       });
     }
-  }
+  );
+}
 
   // ✅ ELIMINAR USUARIO
 

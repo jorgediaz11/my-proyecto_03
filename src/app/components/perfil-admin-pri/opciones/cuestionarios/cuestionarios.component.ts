@@ -6,6 +6,8 @@ import { CuestionariosService, Cuestionario } from 'src/app/services/cuestionari
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
+import { CuestionarioDetalleService, CuestionarioApi, PreguntaApi } from 'src/app/services/cuestionario-detalle.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cuestionarios',
@@ -38,6 +40,7 @@ export class CuestionariosComponent implements OnInit {
   cuestionarioForm!: FormGroup;
   private fb = inject(FormBuilder);
   private cuestionariosService = inject(CuestionariosService);
+  private cuestionarioDetalleService = inject(CuestionarioDetalleService); // <-- AGREGA AQUÍ
   private nivelesService = inject(NivelesService);
   private gradosService = inject(GradosService);
   private cursosService = inject(CursosService);
@@ -165,13 +168,6 @@ export class CuestionariosComponent implements OnInit {
     }
   }
 
-  viewCuestionario(id_cuestionario: number): void {
-    const cuestionario = this.cuestionarios.find(c => c.id_cuestionario === id_cuestionario);
-    if (cuestionario) {
-      alert(`Ver cuestionario:\nID: ${cuestionario.id_cuestionario}\nTítulo: ${cuestionario.titulo}`);
-    }
-  }
-
   editCuestionario(id_cuestionario: number): void {
     this.isEditing = true;
     this.editingCuestionarioId = id_cuestionario;
@@ -234,5 +230,79 @@ export class CuestionariosComponent implements OnInit {
         }
       });
     }
+  }
+
+  viewCuestionario(id_cuestionario: number): void {
+    Swal.fire({
+      title: 'Cargando...',
+      html: '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando detalle del cuestionario...</div>',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      width: 900,
+      heightAuto: false,
+      customClass: {
+        popup: 'swal-contenido-cuestionario'
+      }
+    });
+
+    this.cuestionarioDetalleService.getDetalleCuestionario(id_cuestionario).subscribe(
+      (cuestionario: any) => {
+        let html = `<div class='cuestionario-detalle-container' style='text-align:left;max-width:800px;'>`;
+        html += `<h2 class='text-xl font-bold mb-2'>${cuestionario.nombre_cuestionario}</h2>`;
+        if (cuestionario.descripcion) {
+          html += `<div class='mb-2 text-gray-700'>${cuestionario.descripcion}</div>`;
+        }
+        if (cuestionario.preguntas && cuestionario.preguntas.length > 0) {
+          html += `<div class='font-semibold text-green-700 mb-1'>Preguntas</div><ol class='list-decimal pl-5'>`;
+          cuestionario.preguntas.forEach((pregunta: any, idx: number) => {
+            html += `<li class='mb-3'><span class='font-medium'>${pregunta.nombre_pregunta}</span>`;
+            html += `<div class='text-xs text-gray-500 mb-1'>Tipo: ${pregunta.tipo_pregunta} | Puntaje: ${pregunta.puntaje_pregunta}</div>`;
+            // Opciones de respuesta
+            if (pregunta.opciones && pregunta.opciones.length > 0) {
+              if (pregunta.tipo_pregunta === 'SELECCION') {
+                html += `<ul class='list-disc pl-5 mt-1'>`;
+                pregunta.opciones.forEach((opcion: any, i: number) => {
+                  html += `<li class='mb-1'><span class='text-gray-600'>${String.fromCharCode(65 + i)}. ${opcion.nombre_opcion}`;
+                  if (opcion.es_correcta) {
+                    html += ` <span class='text-green-600 font-bold'>(Correcta)</span>`;
+                  }
+                  html += `</span></li>`;
+                });
+                html += `</ul>`;
+              } else if (pregunta.tipo_pregunta === 'RELACION') {
+                html += `<ul class='list-disc pl-5 mt-1'>`;
+                pregunta.opciones.forEach((opcion: any) => {
+                  html += `<li class='mb-1'><span class='text-gray-600'>${opcion.nombre_opcion} <span class='text-blue-600'>→</span> ${opcion.par_relacion}</span></li>`;
+                });
+                html += `</ul>`;
+              }
+            }
+            html += `</li>`;
+          });
+          html += `</ol>`;
+        } else {
+          html += `<div class='text-sm text-gray-400 italic'>No hay preguntas registradas para este cuestionario.</div>`;
+        }
+        html += `</div>`;
+        Swal.fire({
+          title: 'Detalle del Cuestionario',
+          html: `<div style="max-height:700px;overflow:auto;">${html}</div>`,
+          icon: 'info',
+          width: 900,
+          heightAuto: false,
+          customClass: {
+            popup: 'swal-contenido-cuestionario'
+          }
+        });
+      },
+      () => {
+        Swal.fire({
+          title: 'Error',
+          html: 'No se pudo cargar el detalle del cuestionario.',
+          icon: 'error',
+          width: 500
+        });
+      }
+    );
   }
 }

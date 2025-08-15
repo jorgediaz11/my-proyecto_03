@@ -96,7 +96,7 @@
                       </td>
                       <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" (click)="viewCuestionario(cuestionario.id_cuestionario)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver cuestionario">
+                          <button type="button" (click)="detailCuestionario(cuestionario.id_cuestionario)" class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150" title="Ver cuestionario">
                             <i class="fas fa-eye"></i>
                           </button>
                           <button type="button" (click)="editCuestionario(cuestionario.id_cuestionario)" class="text-orange-600 hover:text-orange-900 p-1 rounded-full hover:bg-orange-50 transition-all duration-150" title="Editar">
@@ -105,7 +105,7 @@
                           <button type="button" (click)="deleteCuestionario(cuestionario.id_cuestionario)" class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150" title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button" (click)="detailCuestionario(cuestionario.id_cuestionario)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
+                          <button type="button" (click)="viewCuestionario(cuestionario.id_cuestionario)" class="text-green-600 hover:text-green-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150" title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>
                         </div>

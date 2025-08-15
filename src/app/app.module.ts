@@ -90,7 +90,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         LeccionesComponent,
         LibrosComponent,
         OpcionesComponent,
-        PreguntasComponent,
         // ActivarLibrosComponent, // Ahora standalone, no va en declarations
         PerfilAdminPriComponent,
         PerfilAdminPriMuroComponent,
@@ -139,7 +138,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         MatTabsModule,
         ReactiveFormsModule,
         AngularEditorModule,
-        CuestionariosComponent // standalone
+        CuestionariosComponent, // standalone
+        PreguntasComponent // standalone
     ],
     providers: [
         provideAnimations(),

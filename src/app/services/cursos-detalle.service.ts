@@ -1,3 +1,8 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
 // Tipos para la respuesta de la API de detalle de curso
 export interface LeccionApi {
   id_leccion: number;
@@ -19,10 +24,6 @@ export interface CursoApi {
   descripcion_curso: string;
   unidades: UnidadApi[];
 }
-import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 // Interfaces alineadas al estándar de servicios
 export interface LeccionDetalle {

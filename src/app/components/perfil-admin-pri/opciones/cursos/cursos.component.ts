@@ -263,8 +263,6 @@ export class CursosComponent implements OnInit {
     });
   }
 
-
-
   viewContenido(id_curso: number): void {
     Swal.fire({
       title: 'Cargando...',
