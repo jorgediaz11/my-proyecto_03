@@ -395,7 +395,7 @@
                 <p class="text-white text-center mb-2">Soporta archivos Texto, Word, PDF y HTML</p>
                 <!-- Botón para actualizar enunciado en la base de datos -->
                 <!-- <div style="margin-top: 8px; display: flex; justify-content: flex-start; width: 100%;"> -->
-                <div style="margin-top: 8px; display: flex; justify-content: flex-start; border: 1px solid #000; background-color: #f0f0f0; width: 620px; padding: 12px 12px 12px 12px; border-radius: 8px; box-sizing: border-box; gap: 12px; flex-wrap: wrap;">
+                <div style="margin-top: 8px; display: flex; justify-content: flex-start; border: 1px solid #000; background-color: #f0f0f0; width: 700px; padding: 12px 12px 12px 12px; border-radius: 8px; box-sizing: border-box; gap: 12px; flex-wrap: wrap;">
                   <div style="display: flex; flex-direction: column; margin-right: 16px;">
                     <label for="idPregunta" style="font-weight: bold; color: #333; margin-bottom: 2px;">Pregunta</label>
                     <input id="idPregunta" type="number" [(ngModel)]="idPregunta" min="1" style="width: 120px; padding: 4px 8px; border: 1px solid #bbb; border-radius: 4px;" />
@@ -407,13 +407,6 @@
                   >
                     Cargar REG
                   </button>
-                  <!-- <button
-                    class="px-4 py-2 text-white rounded shadow font-semibold"
-                    style="background: #1976d2; width: 160px; min-width: 160px; max-width: 160px; margin-right: 8px;"
-                    (click)="abrirPDFEnVisor()"
-                  >
-                    Abrir PDF en Visor
-                  </button> -->
                   <button
                     class="px-4 py-2 text-white rounded shadow font-semibold"
                     style="background: #333; width: 160px; min-width: 160px; max-width: 160px;"
@@ -422,7 +415,7 @@
                     Actualizar REG
                   </button>
                 </div>
-                <div style="border-radius: 12px; margin-bottom: 12px; width: fit-content; border: 1px solid #000; padding: 0 12px 12px 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 0; background: #fff; height: 370px; box-sizing: border-box; justify-content: flex-start;">
+                <div style="border-radius: 12px; margin-bottom: 12px; width: fit-content; border: 1px solid #000; width: 700px; padding: 0 12px 12px 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 0; background: #fff; height: 370px; box-sizing: border-box; justify-content: flex-start;">
                   <label for="enunciado" style="display: block; font-weight: bold; color: #fff; margin-bottom: 2px; text-align: left; font-size: 1rem;">Enunciado</label>
                   <quill-editor
                     [(ngModel)]="enunciado"
@@ -465,18 +458,19 @@
             <div style="flex: 1; min-width: 0;">
               <!--div style="margin-top: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border: 1px solid #bbb;
               background-color: #f9f9f9; width: 100%; max-width: 1000px; min-height: 500px; padding: 12px; border-radius: 8px; box-sizing: border-box;" (contextmenu)="$event.preventDefault()"-->
-              <div class="bg-[#5688f3] rounded-lg shadow p-8 min-h-[300px] flex flex-col items-center justify-center" style="height: 100%;" (contextmenu)="$event.preventDefault()">
-                <h3 style="margin-bottom: 16px; font-size: 1.2rem; font-weight: bold; color: #333;">Visor PDF de Prueba</h3>
+              <div class="bg-[#5688f3] rounded-lg shadow p-8 min-h-[300px] flex flex-col items-center justify-center" style="height: 660px; ;" (contextmenu)="$event.preventDefault()">
+                <h3 style="margin-bottom: 16px; font-size: 1.2rem; font-weight: bold; color: #fcfbfb;">Visor PDF de Prueba</h3>
+                <p style="margin-top: 12px; color: #fcfbfb; font-size: 0.95rem;">Ejemplo mostrando el archivo PDF ubicado en <code>assets/ejemplo.pdf</code></p>
                 <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block; width: 100%; height: 500px;"></pdf-viewer>
                 <input type="file" #inputPDF accept=".pdf" style="display:none" (change)="abrirPDFDesdeInput($event)">
                 <button
                   class="px-4 py-2 text-white rounded shadow font-semibold"
-                  style="background: #1976d2; width: 160px; min-width: 160px; max-width: 160px; margin: 16px 0;"
+                  style="background: #3f3f3f; width: 200px; min-width: 200px; max-width: 200px; margin: 16px 0;"
                   (click)="inputPDF.click()"
                 >
                   Abrir PDF en Visor
                 </button>
-                <p style="margin-top: 12px; color: #666; font-size: 0.95rem;">Ejemplo mostrando el archivo PDF ubicado en <code>assets/ejemplo.pdf</code></p>
+                
               </div>
             </div>
           </div>

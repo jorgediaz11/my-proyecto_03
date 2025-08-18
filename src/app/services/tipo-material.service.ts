@@ -56,7 +56,7 @@ export interface EstadisticasTipoMaterial {
 @Injectable({ providedIn: 'root' })
 export class TipoMaterialService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiBaseUrl + '/tipo_material';
+  private apiUrl = environment.apiBaseUrl + '/tipo-material';
 
   getTipoMateriales(): Observable<TipoMaterial[]> {
     return this.http.get<TipoMaterial[]>(this.apiUrl).pipe(

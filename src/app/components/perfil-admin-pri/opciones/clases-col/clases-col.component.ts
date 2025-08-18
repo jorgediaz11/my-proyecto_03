@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ClasesColService, ClaseCol as ClaseColApi, CreateClaseColDto, UpdateClaseColDto } from 'src/app/services/clases-col.service';
 import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
-
+import { ClaseColDetalle } from 'src/app/services/clases-col.service';
 
 // Interfaz local para visualización (puedes ajustarla si necesitas mostrar más campos)
 export interface ClaseCol {
@@ -23,7 +23,6 @@ export interface ClaseCol {
   estado: boolean;
 }
 
-
 @Component({
     selector: 'app-clases-col',
     templateUrl: './clases-col.component.html',
@@ -36,6 +35,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   clases: ClaseCol[] = [];
   filteredClases: ClaseCol[] = [];
   paginatedClases: ClaseCol[] = [];
+  clasesDetalle: ClaseColDetalle[] = [];
 
   // CONTROL DE ESTADO
   currentPage = 1;
@@ -91,6 +91,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
     this.cargarDepartamentos();
     this.cargarClasesCol();
     this.cargarColegios();
+    this.cargarClasesColDetalle(); // <-- Agrega aquí si lo necesitas
   }
 
   cargarColegios(): void {
@@ -123,6 +124,22 @@ export class ClasesColComponent implements OnInit, OnDestroy {
       error: () => {
         this.loading = false;
         this.handleError('Error al cargar clases');
+      }
+    });
+  }
+
+  cargarClasesColDetalle(): void {
+    this.loading = true;
+    this.clasesColService.getClasesColDetalle().subscribe({
+      next: (data: ClaseColDetalle[]) => {
+        this.clasesDetalle = data;
+        this.loading = false;
+        // Puedes agregar lógica para mostrar los datos en el template
+        // Ejemplo: console.log(this.clasesDetalle);
+      },
+      error: () => {
+        this.loading = false;
+        this.handleError('Error al cargar el detalle de clases');
       }
     });
   }

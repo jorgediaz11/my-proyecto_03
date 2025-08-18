@@ -37,6 +37,23 @@ export interface UpdateClaseColDto {
   estado?: boolean;
 }
 
+export interface ClaseColDetalle {
+  id_clases: number;
+  id_colegio: number;
+  nombre_colegio: string;
+  id_docente: number;
+  nombre_docente: string;
+  id_nivel: number;
+  nombre_nivel: string;
+  id_grado: number;
+  nombre_grado: string;
+  id_seccion: number;
+  nombre_seccion: string;
+  id_curso: number;
+  nombre_curso: string;
+  observaciones: string | null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,6 +71,12 @@ export class ClasesColService {
 
   getClasesCol(): Observable<ClaseCol[]> {
     return this.http.get<ClaseCol[]>(this.apiUrl, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  getClasesColDetalle(): Observable<ClaseColDetalle[]> {
+    return this.http.get<ClaseColDetalle[]>(`${this.apiUrl}/detalle/`, {
       headers: this.getAuthHeaders()
     });
   }

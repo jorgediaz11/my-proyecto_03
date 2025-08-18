@@ -56,7 +56,7 @@ export interface EstadisticasTipoActividad {
 @Injectable({ providedIn: 'root' })
 export class TipoActividadService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiBaseUrl + '/tipo_actividad';
+  private apiUrl = environment.apiBaseUrl + '/tipo-actividad';
 
   getTipoActividades(): Observable<TipoActividad[]> {
     return this.http.get<TipoActividad[]>(this.apiUrl).pipe(

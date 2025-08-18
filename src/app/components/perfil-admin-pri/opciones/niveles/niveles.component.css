@@ -100,7 +100,7 @@
 }
 
 /* ICONOS DE ACCIÓN */
-.niveles-action-icon {
+.action-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -113,34 +113,34 @@
   transition: all 0.2s ease-in-out;
 }
 
-.niveles-action-icon.view {
+.action-icon.view {
   color: #3b82f6;
   background-color: #eff6ff;
 }
 
-.niveles-action-icon.view:hover {
+.action-icon.view:hover {
   color: #1d4ed8;
   background-color: #dbeafe;
   transform: scale(1.1);
 }
 
-.niveles-action-icon.edit {
+.action-icon.edit {
   color: #f59e0b;
   background-color: #fffbeb;
 }
 
-.niveles-action-icon.edit:hover {
+.action-icon.edit:hover {
   color: #d97706;
   background-color: #fef3c7;
   transform: scale(1.1);
 }
 
-.niveles-action-icon.delete {
+.action-icon.delete {
   color: #ef4444;
   background-color: #fef2f2;
 }
 
-.niveles-action-icon.delete:hover {
+.action-icon.delete:hover {
   color: #dc2626;
   background-color: #fee2e2;
   transform: scale(1.1);

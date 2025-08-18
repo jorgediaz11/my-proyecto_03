@@ -61,19 +61,49 @@
 }
 
 .action-icon {
-  margin: 0 5px;
-  font-size: 1.2em;
-  color: #28a745;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 3px;
+  font-size: 1em;
+  border-radius: 50%;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.2s ease-in-out;
 }
 
-.action-icon:hover {
-  color: #218838;
+.action-icon.view {
+  color: #3b82f6;
+  background-color: #eff6ff;
 }
 
-.action-icon[title] {
-  position: relative;
+.action-icon.view:hover {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+  transform: scale(1.1);
+}
+
+.action-icon.edit {
+  color: #f59e0b;
+  background-color: #fffbeb;
+}
+
+.action-icon.edit:hover {
+  color: #d97706;
+  background-color: #fef3c7;
+  transform: scale(1.1);
+}
+
+.action-icon.delete {
+  color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.action-icon.delete:hover {
+  color: #dc2626;
+  background-color: #fee2e2;
+  transform: scale(1.1);
 }
 
 .action-icon[title]:hover::after {
