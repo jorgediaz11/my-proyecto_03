@@ -5,58 +5,61 @@ import { environment } from '../../environments/environment';
 
 // 📖 Interfaces para tipado de Cursos/Materias
 export interface Curso {
-  id_curso?: number;
-  nombre: string; // Matemática, Comunicación, Ciencias, etc.
-  descripcion?: string;
-  codigo_libro?: string | null;
-  nivel?: string; // Inicial, Primaria, Secundaria
-  grado: {
-    id_grado: number;
-    nombre: string;
-    estado: boolean;
-  };
-  horasSemanales?: number;
-  creditos?: number;
+  id_curso: number;
+  nombre: string;
+  codigo_libro: string | null;
   area: {
     id_area: number;
     nombre: string;
     estado: boolean;
   };
-  esObligatorio?: boolean;
+  grado: {
+    id_grado: number;
+    nombre: string;
+    estado: boolean;
+  };
   estado: boolean;
-  id_colegio?: number;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
-  tipo_curso?: string;
+  tipo_curso: string;
+  id_colegio: number | null;
 }
 
 export interface CreateCursoDto {
   nombre: string;
-  descripcion?: string;
-  codigo?: string;
-  nivel: string;
-  grado?: string;
-  horasSemanales?: number;
-  creditos?: number;
-  area: string;
-  esObligatorio?: boolean;
+  codigo_libro?: string | null;
+  area: number;
+  grado: number;
   estado: boolean;
-  id_colegio?: number;
+  tipo_curso: string;
+  id_colegio?: number | null;
 }
 
 export interface UpdateCursoDto {
   nombre?: string;
-  descripcion?: string;
-  codigo?: string;
-  nivel?: string;
-  grado?: string;
-  horasSemanales?: number;
-  creditos?: number;
-  area?: string;
-  esObligatorio?: boolean;
+  codigo_libro?: string | null;
+  area?: number;
+  grado?: number;
   estado?: boolean;
-  id_colegio?: number;
+  tipo_curso?: string;
+  id_colegio?: number | null;
 }
+
+// DTO para crear curso completo
+export interface CreateCursoCompletoDto {
+  nombre: string;
+  id_area: number;
+  cantidad_unidades: number;
+  cantidad_lecciones_por_unidad: number;
+}
+
+export interface CursoCompletoResponse {
+  id_curso: number;
+  nombre: string;
+  id_area: number;
+  unidades_creadas: number;
+  lecciones_por_unidad: number;
+  // ...otros campos del curso
+}
+// ...existing code...
 
 @Injectable({
   providedIn: 'root'
@@ -149,6 +152,13 @@ export class CursosService {
   // POST /cursos - Crear nuevo curso
   crearCurso(curso: CreateCursoDto): Observable<Curso> {
     return this.http.post<Curso>(this.apiUrl, curso, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  // POST /cursos/completo - Crear curso con unidades y lecciones
+  crearCursoCompleto(data: CreateCursoCompletoDto): Observable<CursoCompletoResponse> {
+    return this.http.post<CursoCompletoResponse>(`${this.apiUrl}/completo`, data, {
       headers: this.getAuthHeaders()
     });
   }

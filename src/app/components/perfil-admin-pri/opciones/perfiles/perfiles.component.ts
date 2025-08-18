@@ -1,17 +1,19 @@
 
 import { Component, OnInit, inject } from '@angular/core';
-import { PerfilService, Perfil } from '../../../../services/perfil.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Perfil, PerfilesService } from '../../../../services/perfiles.service';
 
 @Component({
-    selector: 'app-perfil',
-    templateUrl: './perfiles.component.html',
-    styleUrls: ['./perfiles.component.css'],
-    standalone: false
+  selector: 'app-perfil',
+  templateUrl: './perfiles.component.html',
+  styleUrls: ['./perfiles.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class PerfilComponent implements OnInit {
-  Math = Math;
+  // Propiedades principales
   perfiles: Perfil[] = [];
   filteredPerfiles: Perfil[] = [];
   paginatedPerfiles: Perfil[] = [];
@@ -23,23 +25,27 @@ export class PerfilComponent implements OnInit {
   editingPerfilId?: number;
   loading = false;
   activeTab: 'tabla' | 'nuevo' = 'tabla';
+  Math = Math;
 
   perfilForm!: FormGroup;
   private fb = inject(FormBuilder);
-  private perfilService = inject(PerfilService);
+  private perfilService = inject(PerfilesService);
+
+  constructor() {
+    this.initForm();
+  }
 
   ngOnInit(): void {
-    this.initForm();
     this.cargarPerfiles();
   }
 
   cargarPerfiles(): void {
     this.loading = true;
     this.perfilService.getPerfiles().subscribe({
-      next: (data: Perfil[]) => {
-        this.perfiles = data;
-        this.filteredPerfiles = [...data];
-        this.updatePaginatedPerfiles();
+      next: (perfiles: Perfil[]) => {
+        this.perfiles = perfiles || [];
+        this.filteredPerfiles = [...this.perfiles];
+        this.updatePagination();
         this.loading = false;
       },
       error: (error: unknown) => {
@@ -49,6 +55,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  // Inicialización del formulario
   private initForm(): void {
     this.perfilForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,76 +64,180 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  // Filtrado
   filterPerfiles(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredPerfiles = [...this.perfiles];
-    } else {
-      this.filteredPerfiles = this.perfiles.filter(perfil =>
-        perfil.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        perfil.descripcion.toLowerCase().includes(this.searchTerm.toLowerCase())
+    const searchTerm = this.searchTerm.toLowerCase().trim();
+    let filtered = [...this.perfiles];
+    if (searchTerm) {
+      filtered = filtered.filter(perfil =>
+        perfil.nombre.toLowerCase().includes(searchTerm) ||
+        perfil.descripcion.toLowerCase().includes(searchTerm)
       );
     }
+    this.filteredPerfiles = filtered;
     this.currentPage = 1;
-    this.updatePaginatedPerfiles();
+    this.updatePagination();
   }
 
-  updatePaginatedPerfiles(): void {
+  // Paginación
+  updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedPerfiles = this.filteredPerfiles.slice(startIndex, endIndex);
   }
 
   onPageChange(page: number): void {
-    this.currentPage = page;
-    this.updatePaginatedPerfiles();
-  }
-
-  selectTab(tab: 'tabla' | 'nuevo' ): void {
-    this.activeTab = tab;
-  }
-
-  // Métodos para los botones de acción
-  viewPerfil(id_perfil: number): void {
-    // Aquí puedes mostrar un modal o alerta con los detalles del perfil
-    const perfil = this.perfiles.find(p => p.id === id_perfil);
-    if (perfil) {
-      alert(`Ver perfil:\nID: ${id_perfil}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}`);
+    const totalPages = this.getTotalPages().length;
+    if (page >= 1 && page <= totalPages) {
+      this.currentPage = page;
+      this.updatePagination();
     }
   }
 
-  editPerfil(id_perfil: number): void {
-    // Aquí puedes cargar los datos en el formulario para editar
+  getTotalPages(): number[] {
+    const totalPages = Math.ceil(this.filteredPerfiles.length / this.itemsPerPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+  // Crear perfil
+  createPerfil(): void {
+    this.resetForm();
+    this.isEditing = false;
+    this.editingPerfilId = undefined;
+    this.activeTab = 'nuevo';
+  }
+
+  // Editar perfil
+  editPerfil(id: number): void {
     this.isEditing = true;
-    this.editingPerfilId = id_perfil;
-    const perfil = this.perfiles.find(p => p.id === id_perfil);
+    this.editingPerfilId = id;
+    this.activeTab = 'nuevo';
+    const perfil = this.perfiles.find(p => p.id === id);
     if (perfil) {
       this.perfilForm.patchValue({
         nombre: perfil.nombre,
         descripcion: perfil.descripcion,
         estado: perfil.estado
       });
-      this.selectTab('nuevo');
     }
   }
 
-  deletePerfil(id_perfil: number): void {
+  // Ver perfil
+  viewPerfil(id: number): void {
+    const perfil = this.perfiles.find(p => p.id === id);
+    if (perfil) {
+      alert(`Ver perfil:\nID: ${perfil.id}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}`);
+    }
+  }
+
+  // Eliminar perfil
+  deletePerfil(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este perfil?')) {
-      this.perfilService.eliminarPerfil(id_perfil).subscribe({
+      this.loading = true;
+      this.perfilService.eliminarPerfil(id).subscribe({
         next: () => {
           this.cargarPerfiles();
+          this.showSuccess('Perfil eliminado correctamente');
         },
         error: (error: unknown) => {
+          this.loading = false;
           console.error('Error al eliminar perfil:', error);
+          this.showError('Error al eliminar el perfil');
         }
       });
     }
   }
 
-  detailPerfil(id_perfil: number): void {
-    // Aquí puedes mostrar detalles extendidos, por ahora solo un alert
-    const perfil = this.perfiles.find(p => p.id === id_perfil);
-    if (perfil) {
-      alert(`Detalle perfil:\nID: ${id_perfil}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}\nEstado: ${perfil.estado ? 'Activo' : 'Inactivo'}`);
+  // Submit formulario
+  onSubmit(): void {
+    if (this.perfilForm.invalid) {
+      this.markFormGroupTouched();
+      this.showError('Por favor, completa todos los campos requeridos correctamente');
+      return;
     }
+    this.loading = true;
+    const formValue = this.perfilForm.value;
+    if (this.isEditing && this.editingPerfilId) {
+      // Actualizar perfil
+      this.perfilService.actualizarPerfil(this.editingPerfilId, formValue).subscribe({
+        next: () => {
+          this.cargarPerfiles();
+          this.resetForm();
+          this.activeTab = 'tabla';
+          this.showSuccess('Perfil actualizado correctamente');
+        },
+        error: (error: unknown) => {
+          this.loading = false;
+          console.error('Error al actualizar perfil:', error);
+          this.showError('Error al actualizar el perfil');
+        }
+      });
+    } else {
+      // Crear nuevo perfil
+      this.perfilService.crearPerfil(formValue).subscribe({
+        next: () => {
+          this.cargarPerfiles();
+          this.resetForm();
+          this.activeTab = 'tabla';
+          this.showSuccess('Perfil creado correctamente');
+        },
+        error: (error: unknown) => {
+          this.loading = false;
+          console.error('Error al crear perfil:', error);
+          this.showError('Error al crear el perfil');
+        }
+      });
+    }
+  }
+
+  // Reset form
+  resetForm(): void {
+    this.perfilForm.reset({
+      estado: true
+    });
+    this.isEditing = false;
+    this.editingPerfilId = undefined;
+  }
+
+  // Utilidades
+  markFormGroupTouched(): void {
+    Object.keys(this.perfilForm.controls).forEach(key => {
+      const control = this.perfilForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  showError(message: string): void {
+    alert(message);
+  }
+
+  showSuccess(message: string): void {
+    alert(message);
+  }
+
+  detailPerfil(id: number): void {
+    const perfil = this.perfiles.find(p => p.id === id);
+    if (perfil) {
+      alert(`Detalle perfil:\nID: ${perfil.id}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}\nEstado: ${perfil.estado ? 'Activo' : 'Inactivo'}`);
+    }
+  }
+
+  trackByPerfilId(index: number, perfil: Perfil): number | undefined {
+    return perfil.id;
+  }
+
+  // ✅ CAMBIO DE PESTAÑA
+  selectTab(tab: 'tabla' | 'nuevo'): void {
+    this.activeTab = tab;
+    if (tab === 'tabla') {
+      this.cancelEdit();
+    }
+  }
+
+  // Método para cancelar la edición y limpiar el formulario
+  cancelEdit(): void {
+    this.resetForm();
+    this.isEditing = false;
+    this.editingPerfilId = undefined;
   }
 }

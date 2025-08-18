@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angula
 import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { PreguntasService } from '../../services/preguntas.service';
 // Asegúrate de importar el DTO correcto desde donde esté definido
@@ -15,16 +16,51 @@ import * as mammoth from 'mammoth';
 import * as pdfjsLib from 'pdfjs-dist';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
 
-// Importar el módulo de enrutamiento
 @Component({
     selector: 'app-opciones',
     templateUrl: './opciones.component.html',
     styleUrls: ['./opciones.component.css'],
-    imports: [CommonModule, ActivarLibrosComponent, QuillModule, FormsModule]
+    standalone: true,
+    imports: [CommonModule, QuillModule, FormsModule, PdfViewerModule, ActivarLibrosComponent]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
+  // Método para abrir un PDF en el visor
+  abrirPDFEnVisor(): void {
+    // Puedes cambiar la ruta al PDF que desees mostrar
+    this.pdfSrc = 'assets/ejemplo.pdf';
+    // Si quieres permitir seleccionar el archivo, puedes usar un input file y asignar el resultado aquí
+    // Ejemplo: this.pdfSrc = 'assets/otro-archivo.pdf';
+  }
+    /**
+     * Maneja el input file para mostrar el PDF seleccionado en el visor
+     */
+    abrirPDFDesdeInput(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+          const reader = new FileReader();
+          reader.onload = (e: ProgressEvent<FileReader>) => {
+            const result = e.target?.result;
+            if (typeof result === 'string') {
+              this.pdfSrc = result;
+            } else if (result instanceof ArrayBuffer) {
+              this.pdfSrc = new Uint8Array(result);
+            } else {
+              alert('No se pudo leer el archivo PDF.');
+            }
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          alert('Por favor seleccione un archivo PDF.');
+        }
+      }
+    }
   // Variable para el id de la pregunta
   idPregunta = 1;
+
+  // Variable para el visor PDF
+  pdfSrc: string | Uint8Array<ArrayBufferLike> | undefined = 'assets/ejemplo.pdf';
   // Método para cargar el enunciado desde la base de datos (registro estático id=1)
   onCargarEnunciado() {
   const id = this.idPregunta;

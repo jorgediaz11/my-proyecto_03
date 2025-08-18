@@ -7,6 +7,7 @@ export interface Aula {
   id_aula: number;
   nombre: string;
   estado: boolean;
+  id_grado: number;
 }
 
 @Injectable({
@@ -24,11 +25,11 @@ export class AulasService {
     return this.http.get<Aula>(`${this.apiUrl}/${id_aula}`);
   }
 
-  addAula(aula: { nombre: string; estado: boolean }): Observable<Aula> {
+  addAula(aula: { nombre: string; estado: boolean; id_grado: number }): Observable<Aula> {
     return this.http.post<Aula>(this.apiUrl, aula);
   }
 
-  updateAula(id_aula: number, aula: { nombre: string; estado: boolean }): Observable<Aula> {
+  updateAula(id_aula: number, aula: { nombre: string; estado: boolean; id_grado: number }): Observable<Aula> {
     return this.http.put<Aula>(`${this.apiUrl}/${id_aula}`, aula);
   }
 

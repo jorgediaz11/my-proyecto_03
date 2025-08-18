@@ -10,6 +10,8 @@ export interface Users {
   id_perfil: number;
   nombres: string;
   apellido: string;
+  dni: string;
+  fecha_nacimiento: string;
   correo: string;
   estado: boolean;
   username: string;
@@ -20,6 +22,8 @@ export interface CreateUserDto {
   password: string;
   nombres: string;
   apellido: string;
+  dni: string;
+  fecha_nacimiento: string;
   correo: string;
   id_perfil: number;
   id_colegio: number;
@@ -28,6 +32,8 @@ export interface CreateUserDto {
 export interface UpdateUserDto {
   nombres?: string;
   apellido?: string;
+  dni?: string;
+  fecha_nacimiento?: string;
   correo?: string;
   id_perfil?: number;
   id_colegio?: number;

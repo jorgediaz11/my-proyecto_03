@@ -33,7 +33,7 @@ import { MaterialesComponent } from './components/perfil-admin-pri/opciones/mate
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
 import { CuestionariosComponent } from './components/perfil-admin-pri/opciones/cuestionarios/cuestionarios.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
-import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
+import { PeriodoAcademicoComponent } from './components/perfil-admin-pri/opciones/periodo-academico/periodo-academico.component';
 import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
 import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 // Perfil Administrador Sec
@@ -100,7 +100,7 @@ export const routes: Routes = [
   { path: 'lecciones', component: LeccionesComponent }, // Ruta para la sección de lecciones
   { path: 'libros', component: LibrosComponent }, // Ruta para la sección de libros
   { path: 'aulas', component: AulasComponent }, // Ruta para la sección de aulas
-      { path: 'periodo-academ', component: PeriodoAcademComponent }, // Ruta para la sección de periodos académicos
+      { path: 'periodo-academico', component: PeriodoAcademicoComponent }, // Ruta para la sección de periodos académicos
       { path: 'actividades', component: ActividadesComponent }, // Ruta para la sección de actividades
       { path: 'tipo-actividad', component: TipoActividadComponent }, // Ruta para la sección de tipo de actividad
       { path: 'cuestionarios', component: CuestionariosComponent }, // Ruta para la sección de cuestionarios

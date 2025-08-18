@@ -5,27 +5,27 @@ import { environment } from '../../environments/environment';
 
 // ✅ INTERFACE COMPLETA PARA COLEGIO
 export interface Colegio {
-  id_colegio?: number;
+  id_colegio: number;
   nombre: string;
-  codigoModular: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
-  website?: string;
-  logo?: string;
-  director?: string;
-  departamento: string;
-  provincia: string;
-  distrito: string;
-  id_ubigeo: string;
-  nivelesEducativos: string[];
-  turnos: string[];
-  poblacion: number;
-  fechaFundacion: string;
+  direccion: string | null;
+  telefono: string | null;
+  correo: string | null;
   estado: boolean;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
-  colegio_cliente?: boolean;
+  codigomodular: string | null;
+  website: string | null;
+  logo: string | null;
+  director: string | null;
+  niveleseducativos: string[] | null;
+  turnos: string[] | null;
+  poblacion: number | null;
+  fechafundacion: string | null;
+  fechacreacion: string | null;
+  fechaactualizacion: string | null;
+  id_departamento: string;
+  id_provincia: string;
+  id_distrito: string;
+  id_ubigeo: string;
+  colegio_cliente: boolean;
 }
 
 // ✅ INTERFACES PARA CRUD

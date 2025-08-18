@@ -73,7 +73,7 @@
                       />
                     </div>
                   </div>
-                  <!-- Filtro Departamento -->
+                  <!-- Filtro id_departamento -->
                   <div class="w-48">
                     <label for="filtroDepartamento" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Departamento:</label>
                     <select
@@ -422,41 +422,41 @@
                                     </div>
                                   }
                                 </div>
-                                <!-- Aforo, Fundación y Estado -->
+                                <!-- poblacion, Fundación y Estado -->
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                   <div>
-                                    <label for="aforo" class="block text-sm font-medium text-gray-700 mb-2">Población *</label>
+                                    <label for="poblacion" class="block text-sm font-medium text-gray-700 mb-2">Población *</label>
                                     <input
                                       type="number"
-                                      id="aforo"
-                                      formControlName="aforo"
+                                      id="poblacion"
+                                      formControlName="poblacion"
                                       placeholder="0"
                                       min="0"
                                       class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                                      [class.border-red-300]="colegioForm.get('aforo')?.invalid && colegioForm.get('aforo')?.touched"
+                                      [class.border-red-300]="colegioForm.get('poblacion')?.invalid && colegioForm.get('poblacion')?.touched"
                                       >
-                                      @if (colegioForm.get('aforo')?.touched && colegioForm.get('aforo')?.invalid) {
+                                      @if (colegioForm.get('poblacion')?.touched && colegioForm.get('poblacion')?.invalid) {
                                         <div class="mt-1 text-sm text-red-600">
-                                          @if (colegioForm.get('aforo')?.errors?.['required']) {
-                                            <span>El aforo es obligatorio</span>
+                                          @if (colegioForm.get('poblacion')?.errors?.['required']) {
+                                            <span>El poblacion es obligatorio</span>
                                           }
-                                          @if (colegioForm.get('aforo')?.errors?.['pattern']) {
+                                          @if (colegioForm.get('poblacion')?.errors?.['pattern']) {
                                             <span>Solo se permiten números</span>
                                           }
-                                          @if (colegioForm.get('aforo')?.errors?.['min']) {
+                                          @if (colegioForm.get('poblacion')?.errors?.['min']) {
                                             <span>Debe ser mayor o igual a 0</span>
                                           }
                                         </div>
                                       }
                                     </div>
                                     <div>
-                                      <label for="fundacion" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Fundación</label>
+                                      <label for="fechafundacion" class="block text-sm font-medium text-gray-700 mb-2">Fecha de Fundación</label>
                                       <input
                                         type="date"
-                                        id="fundacion"
-                                        formControlName="fundacion"
+                                        id="fechafundacion"
+                                        formControlName="fechafundacion"
                                         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                                        [class.border-red-300]="colegioForm.get('fundacion')?.invalid && colegioForm.get('fundacion')?.touched"
+                                        [class.border-red-300]="colegioForm.get('fechafundacion')?.invalid && colegioForm.get('fechafundacion')?.touched"
                                         >
                                       </div>
                                       <div>
@@ -478,40 +478,40 @@
                                         }
                                       </div>
                                       <div>
-                                        <label for="colegioCliente" class="block text-sm font-medium text-gray-700 mb-2">Colegio Cliente *</label>
+                                        <label for="colegio_cliente" class="block text-sm font-medium text-gray-700 mb-2">Colegio Cliente *</label>
                                         <select
-                                          id="colegioCliente"
-                                          formControlName="colegioCliente"
+                                          id="colegio_cliente"
+                                          formControlName="colegio_cliente"
                                           class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                          [class.border-red-300]="colegioForm.get('colegioCliente')?.invalid && colegioForm.get('colegioCliente')?.touched"
+                                          [class.border-red-300]="colegioForm.get('colegio_cliente')?.invalid && colegioForm.get('colegio_cliente')?.touched"
                                           >
                                           <option [ngValue]="false">No</option>
                                           <option [ngValue]="true">Sí</option>
                                         </select>
-                                        @if (colegioForm.get('colegioCliente')?.invalid && colegioForm.get('colegioCliente')?.touched) {
+                                        @if (colegioForm.get('colegio_cliente')?.invalid && colegioForm.get('colegio_cliente')?.touched) {
                                           <div class="mt-1 text-sm text-red-600">
                                             Por favor selecciona si el colegio es cliente
                                           </div>
                                         }
                                       </div>
                                     </div>
-                                    <!-- Ubicación: Departamento, Provincia y Distrito (dinámica dependiente, SOLO en formulario) -->
+                                    <!-- Ubicación: id_departamento, Provincia y Distrito (dinámica dependiente, SOLO en formulario) -->
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                       <div>
-                                        <label for="departamento" class="block text-sm font-medium text-gray-700 mb-2">Departamento *</label>
+                                        <label for="id_departamento" class="block text-sm font-medium text-gray-700 mb-2">id_departamento *</label>
                                         <select
-                                          id="departamento"
-                                          formControlName="departamento"
+                                          id="id_departamento"
+                                          formControlName="id_departamento"
                                           (change)="onDepartamentoFormChange()"
                                           class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                                          [class.border-red-300]="colegioForm.get('departamento')?.invalid && colegioForm.get('departamento')?.touched"
+                                          [class.border-red-300]="colegioForm.get('id_departamento')?.invalid && colegioForm.get('id_departamento')?.touched"
                                           >
-                                          <option value="">Seleccione departamento</option>
+                                          <option value="">Seleccione id_departamento</option>
                                           @for (dep of departamentos; track dep) {
                                             <option [ngValue]="dep.departamento">{{dep.departamento}}</option>
                                           }
                                         </select>
-                                        @if (colegioForm.get('departamento')?.invalid && colegioForm.get('departamento')?.touched) {
+                                        @if (colegioForm.get('id_departamento')?.invalid && colegioForm.get('id_departamento')?.touched) {
                                           <div class="mt-1 text-sm text-red-600">
                                             Este campo es requerido
                                           </div>

@@ -1,12 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AulasService, Aula } from 'src/app/services/aulas.service';
+import { NivelesService, Nivel } from 'src/app/services/niveles.service';
+import { GradosService, Grado } from 'src/app/services/grados.service';
+
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-aulas',
-    templateUrl: './aulas.component.html',
-    styleUrls: ['./aulas.component.css'],
-    standalone: false
+  selector: 'app-aulas',
+  templateUrl: './aulas.component.html',
+  styleUrls: ['./aulas.component.css'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class AulasComponent implements OnInit {
   Math = Math;
@@ -21,13 +27,57 @@ export class AulasComponent implements OnInit {
   loading = false;
   activeTab: 'tabla' | 'nuevo' = 'tabla';
 
+  // Selectores de nivel y grado
+  niveles: Nivel[] = [];
+  grados: Grado[] = [];
+  allGrados: Grado[] = [];
+  nivelSeleccionado: number | '' = '';
+  gradoSeleccionado: number | '' = '';
+
   aulaForm!: FormGroup;
   private fb = inject(FormBuilder);
   private aulasService = inject(AulasService);
+  private nivelesService = inject(NivelesService);
+  private gradosService = inject(GradosService);
 
   ngOnInit(): void {
     this.initForm();
     this.cargarAulas();
+    this.cargarNivelesYGrados();
+  }
+  cargarNivelesYGrados(): void {
+    this.nivelesService.getNiveles().subscribe({
+      next: (niveles) => {
+        this.niveles = niveles.filter(n => n.estado);
+        this.gradosService.getGrados().subscribe({
+          next: (grados) => {
+            this.allGrados = grados.filter(g => g.estado && g.nivel && typeof g.nivel === 'object' && 'id_nivel' in g.nivel);
+            this.grados = [...this.allGrados];
+          },
+          error: (error) => {
+            console.error('Error al cargar grados:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error al cargar niveles:', error);
+      }
+    });
+  }
+
+  onNivelChange(): void {
+    this.gradoSeleccionado = '';
+    if (this.nivelSeleccionado) {
+      const nivelId = Number(this.nivelSeleccionado);
+      this.grados = this.allGrados.filter(g => g.nivel && typeof g.nivel === 'object' && g.nivel.id_nivel === nivelId);
+    } else {
+      this.grados = [...this.allGrados];
+    }
+    this.filterAulas();
+  }
+
+  onGradoChange(): void {
+    this.filterAulas();
   }
 
   cargarAulas(): void {
@@ -54,13 +104,18 @@ export class AulasComponent implements OnInit {
   }
 
   filterAulas(): void {
-    if (!this.searchTerm.trim()) {
-      this.filteredAulas = [...this.aulas];
-    } else {
-      this.filteredAulas = this.aulas.filter(aula =>
+    let filtered = [...this.aulas];
+    // Filtrar por búsqueda
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(aula =>
         aula.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    // Filtrar por grado seleccionado
+    if (this.gradoSeleccionado) {
+      filtered = filtered.filter(aula => aula.id_grado === Number(this.gradoSeleccionado));
+    }
+    this.filteredAulas = filtered;
     this.currentPage = 1;
     this.updatePaginatedAulas();
   }

@@ -1,4 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CursosService, Curso } from '../../../../services/cursos.service';
 import { CursosDetalleService } from 'src/app/services/cursos-detalle.service';
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
@@ -7,10 +9,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-cursos',
-    templateUrl: './cursos.component.html',
-    styleUrls: ['./cursos.component.css'],
-    standalone: false
+  selector: 'app-cursos',
+  templateUrl: './cursos.component.html',
+  styleUrls: ['./cursos.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
+  ]
 })
 
 export class CursosComponent implements OnInit {
@@ -25,7 +32,6 @@ export class CursosComponent implements OnInit {
   loading = false;
 
   tipoCurso = 'ambos';
-  tipo?: 'interno' | 'externo';
 
   // Niveles y grados para los selectores
   niveles: Nivel[] = [];
@@ -34,11 +40,9 @@ export class CursosComponent implements OnInit {
   selectedNivel: number | '' = '';
   selectedGrado: number | '' = '';
 
-  // Mapeo auxiliar grado -> nivel
-  gradoToNivelMap: { [id_grado: number]: number } = {};
-
   // Formularios
   cursoForm!: FormGroup;
+  editandoCurso = false;
 
   private cursosService = inject(CursosService);
   private cursosDetalleService = inject(CursosDetalleService);
@@ -51,57 +55,33 @@ export class CursosComponent implements OnInit {
     this.getCursos();
     this.cursoForm = this.fb.group({
       nombre: ['', Validators.required],
-      descripcion: [''],
-      codigo: [''],
-      nivel: ['', Validators.required],
-      grado: [''],
-      horasSemanales: [null],
-      creditos: [null],
+      codigo_libro: [''],
       area: ['', Validators.required],
-      esObligatorio: [false],
+      grado: ['', Validators.required],
       estado: [true, Validators.required],
-      id_colegio: [null]
+      tipo_curso: ['', Validators.required],
+      id_colegio: [null],
+      cantidad_unidades: [null, [Validators.min(1)]],
+      cantidad_lecciones_por_unidad: [null, [Validators.min(1)]]
     });
   }
-
-
   getNiveles() {
     this.nivelesService.getNiveles().subscribe({
       next: (niveles) => {
         this.niveles = niveles.filter(n => n.estado);
-        // Cargar grados y construir el mapeo auxiliar
-        this.gradosService.getGrados().subscribe({
-          next: (grados) => {
-            this.allGrados = grados.filter(g => g.estado && g.nivel && typeof g.nivel === 'object' && 'id_nivel' in g.nivel);
-            // Construir mapeo grado -> nivel
-            this.gradoToNivelMap = {};
-            this.allGrados.forEach(g => {
-              if (g.id_grado && g.nivel && typeof g.nivel.id_nivel === 'number') {
-                this.gradoToNivelMap[g.id_grado] = g.nivel.id_nivel;
-              }
-            });
-            // Inicialmente mostrar todos los grados
-            this.grados = [...this.allGrados];
-          },
-          error: () => {
-            Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
-          }
-        });
       },
       error: () => {
         Swal.fire('Error', 'No se pudieron cargar los niveles', 'error');
       }
     });
   }
-
   onNivelChange() {
     this.selectedGrado = '';
-    this.grados = [];
     if (this.selectedNivel) {
-      const nivelId = Number(this.selectedNivel);
+      // Filtrar grados por nivel seleccionado
       this.gradosService.getGrados().subscribe({
         next: (grados) => {
-          this.grados = grados.filter(g => typeof g.nivel === 'object' && g.nivel && 'id_nivel' in g.nivel && g.nivel.id_nivel === nivelId && g.estado);
+          this.grados = grados.filter(g => g.nivel && typeof g.nivel === 'object' && g.nivel.id_nivel === Number(this.selectedNivel) && g.estado);
         },
         error: () => {
           Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
@@ -121,6 +101,11 @@ export class CursosComponent implements OnInit {
     this.filtrarCursos();
   }
 
+
+  // Eliminado: lógica de niveles y mapeo grado-nivel
+
+  // Eliminado: lógica de cambio de nivel
+
   onGradoChange() {
     this.filtrarCursos();
   }
@@ -133,19 +118,12 @@ export class CursosComponent implements OnInit {
   filtrarCursos() {
     this.filteredCursos = this.cursos.filter(curso => {
       let match = true;
-      // Filtrar por nivel (ya implementado)
-      if (this.selectedNivel) {
-        const idGrado = curso.grado && curso.grado.id_grado;
-        const idNivel = idGrado ? this.gradoToNivelMap[idGrado] : undefined;
-        match = match && idNivel === Number(this.selectedNivel);
-      }
       // Filtrar por grado
       if (this.selectedGrado) {
         match = match && curso.grado && curso.grado.id_grado === Number(this.selectedGrado);
       }
       // Filtrar por tipo de curso (Interno, Externo, Ambos)
       if (this.tipoCurso !== 'ambos') {
-        // Aceptar mayúsculas/minúsculas y variantes
         match = match && (typeof curso.tipo_curso === 'string' && curso.tipo_curso.toLowerCase() === this.tipoCurso.toLowerCase());
       }
       return match;
@@ -229,15 +207,12 @@ export class CursosComponent implements OnInit {
         title: 'Detalles del Curso',
         html: `
           <strong>Nombre:</strong> ${curso.nombre}<br>
-          <strong>Código:</strong> ${curso.id_curso}<br>
-          <strong>Nivel:</strong> ${curso.nivel}<br>
-          <strong>Área:</strong> ${curso.area}<br>
-          <strong>Grado:</strong> ${curso.grado}<br>
-          <strong>Horas Semanales:</strong> ${curso.horasSemanales}<br>
-          <strong>Créditos:</strong> ${curso.creditos}<br>
-          <strong>Obligatorio:</strong> ${curso.esObligatorio ? 'Sí' : 'No'}<br>
+          <strong>ID:</strong> ${curso.id_curso}<br>
+          <strong>Área:</strong> ${curso.area?.nombre}<br>
+          <strong>Grado:</strong> ${curso.grado?.nombre}<br>
+          <strong>Código Libro:</strong> ${curso.codigo_libro ?? '-'}<br>
+          <strong>Tipo de Curso:</strong> ${curso.tipo_curso}<br>
           <strong>Estado:</strong> ${curso.estado ? 'Activo' : 'Inactivo'}<br>
-          <strong>Descripción:</strong> ${curso.descripcion || '-'}
         `,
         icon: 'info'
       });
@@ -245,7 +220,42 @@ export class CursosComponent implements OnInit {
   }
 
   editCurso(id_curso: number): void {
-    Swal.fire('Editar', `Funcionalidad de edición de curso (por implementar).\nID del curso: ${id_curso}`, 'info');
+    this.editandoCurso = true;
+    const curso = this.cursos.find(c => c.id_curso === id_curso);
+    if (!curso) {
+      Swal.fire('Error', 'No se encontró el curso', 'error');
+      return;
+    }
+    // Cambiar a la pestaña de edición
+    this.activeTab = 'nuevo';
+    // Resetear el formulario antes de cargar los datos
+    this.cursoForm.reset();
+    // Extraer valores simples para el formulario
+    const gradoValue = curso.grado && typeof curso.grado === 'object' ? curso.grado.id_grado ?? '' : curso.grado ?? '';
+    const areaValue = curso.area && typeof curso.area === 'object' ? curso.area.id_area ?? '' : curso.area ?? '';
+    // Cargar los datos del curso en el formulario
+    this.cursoForm.patchValue({
+      nombre: curso.nombre ?? '',
+      codigo_libro: curso.codigo_libro ?? '',
+      area: areaValue,
+      grado: gradoValue,
+      estado: curso.estado ?? true,
+      tipo_curso: curso.tipo_curso ?? '',
+      id_colegio: curso.id_colegio ?? null
+    });
+    // Opcional: mostrar alerta de seguimiento
+    Swal.fire({
+      title: 'Datos cargados para edición',
+      html: `<pre style='text-align:left'>${JSON.stringify(curso, null, 2)}</pre>`,
+      icon: 'info',
+      confirmButtonText: 'Continuar'
+    });
+  }
+
+  cancelarEdicion(): void {
+    this.editandoCurso = false;
+    this.cursoForm.reset();
+    this.activeTab = 'tabla';
   }
 
   deleteCurso(id_curso: number): void {

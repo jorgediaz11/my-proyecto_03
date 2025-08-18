@@ -7,11 +7,14 @@ import { ColegiosService, Colegio, CreateColegioDto, UpdateColegioDto } from '..
 import { DocentesService, Docente } from '../../../../services/docentes.service';
 import { AuthService } from '../../../../services/auth.service';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
-    selector: 'app-colegios',
-    templateUrl: './colegios.component.html',
-    styleUrls: ['./colegios.component.css'],
-    standalone: false
+  selector: 'app-colegios',
+  templateUrl: './colegios.component.html',
+  styleUrls: ['./colegios.component.css'],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule]
 })
 export class ColegiosComponent implements OnInit, OnDestroy {
   // Servicio de docentes
@@ -177,39 +180,38 @@ export class ColegiosComponent implements OnInit, OnDestroy {
   private initForm(): void {
     this.colegioForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
-      codigoModular: ['', [Validators.required, Validators.pattern(/^\d{7}$/)]],
-      direccion: ['', [Validators.required, Validators.minLength(10)]],
-      telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
-      correo: ['', [Validators.required, Validators.email]],
+      codigomodular: ['', [Validators.pattern(/^\d{7}$/)]],
+      direccion: ['', [Validators.minLength(10)]],
+      telefono: ['', [Validators.pattern(/^9\d{8}$/)]],
+      correo: ['', [Validators.email]],
       website: [''],
+      logo: [''],
       director: [''],
-      departamento: ['', [Validators.required]],
-      provincia: ['', [Validators.required]],
-      distrito: ['', [Validators.required]],
-      nivelesEducativos: [[], [Validators.required]],
-      turnos: [[], [Validators.required]],
-      aforoMaximo: ['', [Validators.required, Validators.min(1)]],
-      fechaFundacion: ['', [Validators.required]],
+      id_departamento: ['', [Validators.required]],
+      id_provincia: ['', [Validators.required]],
+      id_distrito: ['', [Validators.required]],
+      id_ubigeo: [''],
+      niveleseducativos: [[], []],
+      turnos: [[], []],
+      poblacion: ['', []],
+      fechafundacion: [''],
+      fechacreacion: [''],
+      fechaactualizacion: [''],
       estado: [true, [Validators.required]],
-      colegioCliente: [false, [Validators.required]]
-    }, {
-      validators: this.codigoModularValidator.bind(this)
+      colegio_cliente: [false, [Validators.required]]
     });
   }
 
   // ✅ VALIDADOR PERSONALIZADO PARA CÓDIGO MODULAR
   private codigoModularValidator(control: AbstractControl) {
-    const codigoModular = control.get('codigoModular')?.value;
-
-    if (!codigoModular) {
+    const codigomodular = control.get('codigomodular')?.value;
+    if (!codigomodular) {
       return null;
     }
-
     // Validar que sea exactamente 7 dígitos
-    if (!/^\d{7}$/.test(codigoModular)) {
-      return { codigoModularInvalid: true };
+    if (!/^\d{7}$/.test(codigomodular)) {
+      return { codigomodularInvalid: true };
     }
-
     return null;
   }
 
@@ -234,8 +236,8 @@ export class ColegiosComponent implements OnInit, OnDestroy {
           console.log('📊 Cantidad de colegios:', data.length);
           console.log('🔍 Datos completos recibidos:', data);
 
-          this.colegios = data;
-          this.filteredColegios = [...data];
+          this.colegios = (data || []).sort((a, b) => (a.id_colegio ?? 0) - (b.id_colegio ?? 0));
+          this.filteredColegios = [...this.colegios];
           this.updatePaginatedColegios();
           this.loading = false;
 
@@ -263,12 +265,12 @@ export class ColegiosComponent implements OnInit, OnDestroy {
 
   // ✅ FILTRADO DE COLEGIOS
   filterColegios(): void {
-    let filtered = [...this.colegios];
+  let filtered = [...this.colegios].sort((a, b) => (a.id_colegio ?? 0) - (b.id_colegio ?? 0));
     if (this.searchTerm.trim()) {
       filtered = filtered.filter(colegio =>
         colegio.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        colegio.codigoModular?.includes(this.searchTerm) ||
-        colegio.direccion.toLowerCase().includes(this.searchTerm.toLowerCase())
+        (colegio.codigomodular ?? '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (colegio.direccion ?? '').toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
     // Filtrar por distrito usando id_ubigeo exacto
@@ -388,26 +390,64 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Seguimiento: mostrar datos cargados al editar
+    console.log('Datos del colegio a editar:', colegio);
+    Swal.fire({
+      title: 'Datos a cargar en el formulario',
+      html: `<pre style='text-align:left'>${JSON.stringify(colegio, null, 2)}</pre>`,
+      icon: 'info',
+      confirmButtonText: 'Continuar'
+    });
+
     this.isEditing = true;
     this.editingColegioId = id_colegio;
     this.activeTab = 'nuevo';
 
+    // Resetear el formulario y limpiar validaciones antes de cargar los valores
+    this.colegioForm.reset({
+      nombre: '',
+      codigomodular: '',
+      direccion: '',
+      telefono: '',
+      correo: '',
+      website: '',
+      logo: '',
+      director: '',
+      id_departamento: '',
+      id_provincia: '',
+      id_distrito: '',
+      id_ubigeo: '',
+      niveleseducativos: [],
+      turnos: [],
+      poblacion: '',
+      fechafundacion: '',
+      fechacreacion: '',
+      fechaactualizacion: '',
+      estado: true,
+      colegio_cliente: false
+    });
+
+    // Cargar los valores del colegio seleccionado
     this.colegioForm.patchValue({
-      nombre: colegio.nombre,
-      codigoModular: colegio.codigoModular,
-      direccion: colegio.direccion,
-      telefono: colegio.telefono,
-      correo: colegio.correo,
-      website: colegio.website || '',
-      director: colegio.director || '',
-      departamento: colegio.departamento,
-      provincia: colegio.provincia,
-      distrito: colegio.distrito,
-      nivelesEducativos: colegio.nivelesEducativos,
-      turnos: colegio.turnos,
-      aforoMaximo: colegio.poblacion,
-      fechaFundacion: colegio.fechaFundacion,
-      estado: colegio.estado,
+      nombre: colegio.nombre ?? '',
+      codigomodular: colegio.codigomodular ?? '',
+      direccion: colegio.direccion ?? '',
+      telefono: colegio.telefono ?? '',
+      correo: colegio.correo ?? '',
+      website: colegio.website ?? '',
+      logo: colegio.logo ?? '',
+      director: colegio.director ?? '',
+      id_departamento: colegio.id_departamento ?? '',
+      id_provincia: colegio.id_provincia ?? '',
+      id_distrito: colegio.id_distrito ?? '',
+      id_ubigeo: colegio.id_ubigeo ?? '',
+      niveleseducativos: colegio.niveleseducativos ?? [],
+      turnos: colegio.turnos ?? [],
+      poblacion: colegio.poblacion ?? '',
+      fechafundacion: colegio.fechafundacion ?? '',
+      fechacreacion: colegio.fechacreacion ?? '',
+      fechaactualizacion: colegio.fechaactualizacion ?? '',
+      estado: colegio.estado ?? true,
       colegio_cliente: colegio.colegio_cliente ?? false
     });
   }
@@ -464,17 +504,17 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       html: `
         <div class="text-left">
           <p><strong>Nombre:</strong> ${colegio.nombre}</p>
-          <p><strong>Código Modular:</strong> ${colegio.codigoModular}</p>
-          <p><strong>Dirección:</strong> ${colegio.direccion}</p>
-          <p><strong>Teléfono:</strong> ${colegio.telefono}</p>
-          <p><strong>Correo:</strong> ${colegio.correo}</p>
-          <p><strong>Website:</strong> ${colegio.website || 'No especificado'}</p>
-          <p><strong>Director:</strong> ${colegio.director || 'No especificado'}</p>
-          <p><strong>Ubicación:</strong> ${colegio.distrito}, ${colegio.provincia}, ${colegio.departamento}</p>
-          <p><strong>Niveles:</strong> ${colegio.nivelesEducativos.join(', ')}</p>
-          <p><strong>Turnos:</strong> ${colegio.turnos.join(', ')}</p>
-          <p><strong>Población:</strong> ${colegio.poblacion}</p>
-          <p><strong>Fecha de Fundación:</strong> ${new Date(colegio.fechaFundacion).toLocaleDateString('es-ES')}</p>
+          <p><strong>Código Modular:</strong> ${colegio.codigomodular ?? 'No especificado'}</p>
+          <p><strong>Dirección:</strong> ${colegio.direccion ?? 'No especificado'}</p>
+          <p><strong>Teléfono:</strong> ${colegio.telefono ?? 'No especificado'}</p>
+          <p><strong>Correo:</strong> ${colegio.correo ?? 'No especificado'}</p>
+          <p><strong>Website:</strong> ${colegio.website ?? 'No especificado'}</p>
+          <p><strong>Director:</strong> ${colegio.director ?? 'No especificado'}</p>
+          <p><strong>Ubicación:</strong> ${colegio.id_distrito ?? '-'}, ${colegio.id_provincia ?? '-'}, ${colegio.id_departamento ?? '-'}</p>
+          <p><strong>Niveles:</strong> ${(colegio.niveleseducativos ?? []).join(', ')}</p>
+          <p><strong>Turnos:</strong> ${(colegio.turnos ?? []).join(', ')}</p>
+          <p><strong>Población:</strong> ${colegio.poblacion ?? '-'}</p>
+          <p><strong>Fecha de Fundación:</strong> ${colegio.fechafundacion ? new Date(colegio.fechafundacion).toLocaleDateString('es-ES') : '-'}</p>
           <p><strong>Estado:</strong> ${colegio.estado ? 'Activo' : 'Inactivo'}</p>
         </div>
       `,
@@ -769,40 +809,48 @@ export class ColegiosComponent implements OnInit, OnDestroy {
       {
         id_colegio: 1,
         nombre: 'Colegio San Remo (PRUEBA)',
-        codigoModular: '1234567',
+        codigomodular: '1234567',
         direccion: 'Av. Principal 123, Lima',
         telefono: '987654321',
         correo: 'info@sanremo.edu.pe',
         website: 'www.sanremo.edu.pe',
+        logo: '',
         director: 'Director Prueba',
-        departamento: 'Lima',
-        provincia: 'Lima',
-        distrito: 'San Isidro',
+        id_departamento: 'Lima',
+        id_provincia: 'Lima',
+        id_distrito: 'San Isidro',
         id_ubigeo: '150131', // Lima - San Isidro (ejemplo)
-        nivelesEducativos: ['Inicial', 'Primaria', 'Secundaria'],
+        niveleseducativos: ['Inicial', 'Primaria', 'Secundaria'],
         turnos: ['Mañana', 'Tarde'],
         poblacion: 1000,
-        fechaFundacion: '2020-01-01',
-        estado: true
+        fechafundacion: '2020-01-01',
+        fechacreacion: '',
+        fechaactualizacion: '',
+        estado: true,
+        colegio_cliente: false
       },
       {
         id_colegio: 2,
         nombre: 'Colegio Los Andes (PRUEBA)',
-        codigoModular: '7654321',
+        codigomodular: '7654321',
         direccion: 'Jr. Los Pinos 456, Lima',
         telefono: '987654322',
         correo: 'info@losandes.edu.pe',
         website: 'www.losandes.edu.pe',
+        logo: '',
         director: 'Director Los Andes',
-        departamento: 'Lima',
-        provincia: 'Lima',
-        distrito: 'Miraflores',
+        id_departamento: 'Lima',
+        id_provincia: 'Lima',
+        id_distrito: 'Miraflores',
         id_ubigeo: '150122', // Lima - Miraflores (ejemplo)
-        nivelesEducativos: ['Primaria', 'Secundaria'],
+        niveleseducativos: ['Primaria', 'Secundaria'],
         turnos: ['Mañana'],
         poblacion: 800,
-        fechaFundacion: '2015-03-15',
-        estado: true
+        fechafundacion: '2015-03-15',
+        fechacreacion: '',
+        fechaactualizacion: '',
+        estado: true,
+        colegio_cliente: false
       }
     ];
 

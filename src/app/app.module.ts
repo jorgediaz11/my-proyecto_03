@@ -54,7 +54,7 @@ import { MaterialesComponent } from './components/perfil-admin-pri/opciones/mate
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
 import { ActividadesComponent } from './components/perfil-admin-pri/opciones/actividades/actividades.component';
 import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
-import { PeriodoAcademComponent } from './components/perfil-admin-pri/opciones/periodo-academ/periodo-academ.component';
+import { PeriodoAcademicoComponent } from './components/perfil-admin-pri/opciones/periodo-academico/periodo-academico.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
@@ -64,7 +64,7 @@ import { PerfilDocenteComponent } from './components/perfil-docente/perfil-docen
 import { PerfilDocenteMuroComponent } from './components/perfil-docente/perfil-docente-muro.component';
 // Perfil Estudiante
 import { PerfilEstudianteComponent } from './components/perfil-estudiante/perfil-estudiante.component';
-import { PerfilEstudianteMuroComponent } from './components/perfil-estudiante/perfil-estudiante-muro.component';
+//import { PerfilEstudianteMuroComponent } from './components/perfil-estudiante/perfil-estudiante-muro.component';
 // Perfil Familia
 import { PerfilFamiliaComponent } from './components/perfil-familia/perfil-familia.component';
 import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-familia-muro.component';
@@ -79,7 +79,8 @@ import { TestEndpointsComponent } from './test-endpoints.component';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         InicioComponent,
         LoginFormComponent,
@@ -93,8 +94,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         // ActivarLibrosComponent, // Ahora standalone, no va en declarations
         PerfilAdminPriComponent,
         PerfilAdminPriMuroComponent,
-        UsuariosComponent,
-        ColegiosComponent,
+        // UsuariosComponent, // standalone, move to imports
+        // ColegiosComponent, // standalone, move to imports
         DocentesComponent,
         EstudiantesComponent,
         ClasesColComponent,
@@ -102,10 +103,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         UnidadesComponent,
         ReportesComponent,
         AuditoriaComponent,
-        PerfilComponent,
+        // PerfilComponent, // standalone, move to imports
         MaterialesComponent,
         TipoMaterialComponent,
-        CursosComponent,
+    // CursosComponent, // standalone, move to imports
         NivelesComponent,
         GradosComponent,
         SeccionesComponent,
@@ -121,11 +122,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         PerfilEditorMuroComponent,
         TestEndpointsComponent,
         ClasesColComponent,
-        AulasComponent,
-        PeriodoAcademComponent,
         ActividadesComponent,
         TipoActividadComponent
-        // CuestionariosComponent (standalone, va en imports)
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -139,7 +137,15 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         ReactiveFormsModule,
         AngularEditorModule,
         CuestionariosComponent, // standalone
-        PreguntasComponent // standalone
+        CuestionariosComponent, // standalone
+        PreguntasComponent, // standalone
+        PreguntasComponent, // standalone
+        PerfilComponent, // standalone
+        PeriodoAcademicoComponent, // standalone
+        UsuariosComponent, // standalone
+        ColegiosComponent, // standalone
+    AulasComponent, // standalone
+    CursosComponent // standalone
     ],
     providers: [
         provideAnimations(),

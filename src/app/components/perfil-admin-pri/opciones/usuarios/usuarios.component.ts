@@ -1,19 +1,40 @@
 // Interface auxiliar para manejo de errores HTTP en cargarUsuarios
 interface ErrorObj { status?: number; error?: { message?: string }; message?: string }
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, DoCheck } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UsersService, Users, CreateUserDto, UpdateUserDto } from '../../../../services/usuarios.service';
 import { ColegiosService, Colegio } from '../../../../services/colegios.service';
-import { PerfilService, Perfil } from '../../../../services/perfil.service';
+import { Perfil, PerfilesService } from '../../../../services/perfiles.service';
+
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-usuarios',
-    templateUrl: './usuarios.component.html',
-    styleUrls: ['./usuarios.component.css'],
-    standalone: false
+  selector: 'app-usuarios',
+  templateUrl: './usuarios.component.html',
+  styleUrls: ['./usuarios.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, DoCheck {
+  ngDoCheck(): void {
+    if (this.activeTab === 'nuevo') {
+      // Solo mostrar si el formulario está inválido y no está cargando
+      if (this.usuarioForm && this.usuarioForm.invalid && !this.loading) {
+        const invalidControls = Object.keys(this.usuarioForm.controls)
+          .filter(key => this.usuarioForm.get(key)?.invalid)
+          .map(key => `${key}: ${JSON.stringify(this.usuarioForm.get(key)?.errors)}`)
+          .join('\n');
+        // Solo mostrar una vez por cambio
+        if (invalidControls) {
+          // Puedes comentar esta línea si es muy invasivo
+          // alert('Formulario inválido. Controles con error:\n' + invalidControls);
+          console.log('DEBUG FORM INVALID:', invalidControls);
+        }
+      }
+    }
+  }
   // ✅ PROPIEDADES ESENCIALES
   usuarios: Users[] = [];
   filteredUsuarios: Users[] = [];
@@ -53,7 +74,7 @@ export class UsuariosComponent implements OnInit {
   private usersService = inject(UsersService);
   private fb = inject(FormBuilder);
   private colegiosService = inject(ColegiosService);
-  private perfilService = inject(PerfilService);
+  private perfilService = inject(PerfilesService);
 
   // ✅ COLEGIOS
   colegios: Colegio[] = [];
@@ -85,6 +106,8 @@ export class UsuariosComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(3)]],
       nombres: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
+      nrodni: ['', [Validators.required, Validators.minLength(8)]],
+      fecha_nacimiento: ['', [Validators.required]],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
@@ -117,8 +140,8 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this.usersService.getUsuarios().subscribe({
       next: (usuarios: Users[]) => {
-        this.usuarios = usuarios || [];
-        this.filteredUsuarios = [...this.usuarios];
+    this.usuarios = (usuarios || []).sort((a, b) => (a.id_usuario ?? 0) - (b.id_usuario ?? 0));
+    this.filteredUsuarios = [...this.usuarios];
         this.updatePagination();
         this.loading = false;
       },
@@ -155,7 +178,7 @@ export class UsuariosComponent implements OnInit {
   // ✅ FILTRADO
   filterUsuarios(): void {
     const searchTerm = this.searchTerm.toLowerCase().trim();
-    let filtered = [...this.usuarios];
+  let filtered = [...this.usuarios].sort((a, b) => (a.id_usuario ?? 0) - (b.id_usuario ?? 0));
     // Filtro por búsqueda
     if (searchTerm) {
       filtered = filtered.filter(usuario =>
@@ -220,15 +243,18 @@ export class UsuariosComponent implements OnInit {
         this.editingUserId = id_usuario;
         this.activeTab = 'nuevo';
 
-        this.usuarioForm.get('password')?.clearValidators();
-        this.usuarioForm.get('confirmPassword')?.clearValidators();
-        this.usuarioForm.get('password')?.updateValueAndValidity();
-        this.usuarioForm.get('confirmPassword')?.updateValueAndValidity();
+  // Al editar, los campos de contraseña NO son obligatorios
+  this.usuarioForm.get('password')?.setValidators([]);
+  this.usuarioForm.get('confirmPassword')?.setValidators([]);
+  this.usuarioForm.get('password')?.updateValueAndValidity();
+  this.usuarioForm.get('confirmPassword')?.updateValueAndValidity();
 
         this.usuarioForm.patchValue({
           username: usuario.username,
           nombres: usuario.nombres,
           apellido: usuario.apellido,
+          nrodni: usuario.dni || '',
+          fecha_nacimiento: usuario.fecha_nacimiento || '',
           correo: usuario.correo,
           id_perfil: usuario.id_perfil,
           id_colegio: usuario.id_colegio || 1,
@@ -323,7 +349,8 @@ export class UsuariosComponent implements OnInit {
 
   // ✅ ACTUALIZAR USUARIO - LOGICA
   private updateUsuarioLogic(formData: UpdateUserDto & { password?: string }): void {
-    this.usersService.actualizarUsuario(this.editingUserId!, formData).subscribe({
+  console.log('Payload enviado al endpoint /usuarios/:id:', formData);
+  this.usersService.actualizarUsuario(this.editingUserId!, formData).subscribe({
       next: () => {
         this.cargarUsuarios();
         this.resetForm();
@@ -342,6 +369,12 @@ export class UsuariosComponent implements OnInit {
   onSubmit(): void {
     if (this.usuarioForm.invalid) {
       this.markFormGroupTouched();
+      // ALERTA DEBUG: Mostrar controles inválidos
+      const invalidControls = Object.keys(this.usuarioForm.controls)
+        .filter(key => this.usuarioForm.get(key)?.invalid)
+        .map(key => `${key}: ${JSON.stringify(this.usuarioForm.get(key)?.errors)}`)
+        .join('\n');
+      alert('Formulario inválido. Controles con error:\n' + invalidControls);
       this.showError('Por favor, completa todos los campos requeridos correctamente');
       return;
     }
@@ -369,6 +402,8 @@ export class UsuariosComponent implements OnInit {
         password: formValue.password.trim(), // Obligatorio para nuevo usuario
         nombres: formValue.nombres.trim(),
         apellido: formValue.apellido.trim(),
+        dni: formValue.nrodni.trim(),
+        fecha_nacimiento: formValue.fecha_nacimiento,
         correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),
         id_colegio: Number(formValue.id_colegio),
@@ -380,6 +415,8 @@ export class UsuariosComponent implements OnInit {
       const userData: UpdateUserDto & { password?: string } = {
         nombres: formValue.nombres.trim(),
         apellido: formValue.apellido.trim(),
+        dni: formValue.nrodni.trim(),
+        fecha_nacimiento: formValue.fecha_nacimiento,
         correo: formValue.correo.toLowerCase().trim(),
         id_perfil: Number(formValue.id_perfil),
         id_colegio: Number(formValue.id_colegio),

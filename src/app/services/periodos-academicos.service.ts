@@ -5,18 +5,14 @@ import { environment } from '../../environments/environment';
 
 // 📅 Interfaces para tipado de Años Académicos/Periodos
 export interface PeriodoAcademico {
-  id?: number;
-  nombre: string; // 2024, 2025, etc.
-  descripcion?: string;
-  fechaInicio: string; // formato YYYY-MM-DD
-  fechaFin: string; // formato YYYY-MM-DD
-  esActual?: boolean; // solo un periodo puede ser actual
+  id_periodo_academico: number;
+  nombre: string;
+  anio: number;
+  fecha_inicio: string;
+  fecha_fin: string;
   estado: boolean;
-  trimestres?: number; // número de trimestres/bimestres
-  vacaciones?: VacacionPeriodo[];
-  id_colegio?: number;
-  fechaCreacion?: string;
-  fechaActualizacion?: string;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
 }
 
 export interface VacacionPeriodo {
@@ -29,24 +25,18 @@ export interface VacacionPeriodo {
 
 export interface CreatePeriodoAcademicoDto {
   nombre: string;
-  descripcion?: string;
-  fechaInicio: string;
-  fechaFin: string;
-  esActual?: boolean;
+  anio: number;
+  fecha_inicio: string;
+  fecha_fin: string;
   estado: boolean;
-  trimestres?: number;
-  id_colegio?: number;
 }
 
 export interface UpdatePeriodoAcademicoDto {
   nombre?: string;
-  descripcion?: string;
-  fechaInicio?: string;
-  fechaFin?: string;
-  esActual?: boolean;
+  anio?: number;
+  fecha_inicio?: string;
+  fecha_fin?: string;
   estado?: boolean;
-  trimestres?: number;
-  id_colegio?: number;
 }
 
 @Injectable({
@@ -54,7 +44,7 @@ export interface UpdatePeriodoAcademicoDto {
 })
 export class PeriodosAcademicosService {
 
-  private apiUrl = environment.apiBaseUrl + '/periodos-academicos';
+  private apiUrl = environment.apiBaseUrl + '/periodo-academico';
 
   private http = inject(HttpClient);
 
