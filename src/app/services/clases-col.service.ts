@@ -52,6 +52,7 @@ export interface ClaseColDetalle {
   id_curso: number;
   nombre_curso: string;
   observaciones: string | null;
+  estado: boolean; // <-- AGREGAR ESTA LÍNEA
 }
 
 @Injectable({

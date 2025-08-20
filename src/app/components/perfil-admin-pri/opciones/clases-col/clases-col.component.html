@@ -141,22 +141,24 @@
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
+                    <th scope="col">Colegio</th>
                     <th scope="col">Grado</th>
                     <th scope="col">Sección</th>
-                    <th scope="col">Turno</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Docente</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Acciones</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  @for (clase of paginatedClases; track trackByClaseId($index, clase)) {
+                  @for (clase of paginatedClasesDetalle; track trackByClaseId($index, clase)) {
                     <tr class="hover:bg-gray-50 transition-colors duration-150">
                       <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ clase.id_clases }}</td>
-                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
-                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
-                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
-                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900"></td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ clase.nombre_colegio }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ clase.nombre_grado }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ clase.nombre_seccion }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ clase.nombre_curso }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ clase.nombre_docente }}</td>
                       <td class="px-6 py-1.5 whitespace-nowrap">
                         <span
                     [class]="clase.estado
@@ -206,7 +208,7 @@
                     </tr>
                   }
                   <!-- Estado vacío -->
-                  @if (paginatedClases.length === 0) {
+                  @if (totalClasesDetalle === 0) {
                     <tr>
                       <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
                         <div class="flex flex-col items-center">
@@ -221,22 +223,22 @@
               </table>
             </div>
             <!-- Paginación -->
-            @if (getTotalPages().length > 1) {
+            @if (totalPagesDetalle.length > 1) {
               <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
                 <div class="flex items-center justify-between">
                   <div class="flex-1 flex justify-between sm:hidden">
                     <button
-                      (click)="changePage(currentPage - 1)"
+                      (click)="changePageDetalle(currentPage - 1)"
                       [disabled]="currentPage === 1"
                       class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
+                    >
                       Anterior
                     </button>
                     <button
-                      (click)="changePage(currentPage + 1)"
-                      [disabled]="currentPage === getTotalPages().length"
+                      (click)="changePageDetalle(currentPage + 1)"
+                      [disabled]="currentPage === totalPagesDetalle.length"
                       class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
+                    >
                       Siguiente
                     </button>
                   </div>
@@ -246,22 +248,22 @@
                         Mostrando
                         <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
                         a
-                        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredClases.length) }}</span>
+                        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, totalClasesDetalle) }}</span>
                         de
-                        <span class="font-medium">{{ filteredClases.length }}</span>
+                        <span class="font-medium">{{ totalClasesDetalle }}</span>
                         resultados
                       </p>
                     </div>
                     <div>
                       <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
-                        @for (page of getTotalPages(); track page; let i = $index) {
+                        @for (page of totalPagesDetalle; track page; let i = $index) {
                           <button
-                            (click)="changePage(i + 1)"
-                    [class]="currentPage === i + 1
-                      ? 'z-10 bg-green-50 border-green-500 text-green-600'
-                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
+                            (click)="changePageDetalle(i + 1)"
+                            [class]="currentPage === i + 1
+                              ? 'z-10 bg-green-50 border-green-500 text-green-600'
+                              : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
                             class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
-                            >
+                          >
                             {{ i + 1 }}
                           </button>
                         }

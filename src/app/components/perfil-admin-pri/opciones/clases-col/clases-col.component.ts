@@ -89,7 +89,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarDepartamentos();
-    this.cargarClasesCol();
+    //this.cargarClasesCol();
     this.cargarColegios();
     this.cargarClasesColDetalle(); // <-- Agrega aquí si lo necesitas
   }
@@ -131,12 +131,10 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   cargarClasesColDetalle(): void {
     this.loading = true;
     this.clasesColService.getClasesColDetalle().subscribe({
-      next: (data: ClaseColDetalle[]) => {
-        this.clasesDetalle = data;
-        this.loading = false;
-        // Puedes agregar lógica para mostrar los datos en el template
-        // Ejemplo: console.log(this.clasesDetalle);
-      },
+    next: (data: ClaseColDetalle[]) => {
+      this.clasesDetalle = data;
+      this.loading = false; // <-- Agrega esto
+    },
       error: () => {
         this.loading = false;
         this.handleError('Error al cargar el detalle de clases');
@@ -416,4 +414,41 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   filterDocentes(): void {
     // Aquí se implementará el filtrado de docentes por colegio si se requiere
   }
+
+  // Eliminado getter duplicado paginatedClasesDetalle
+
+  // get totalClasesDetalle(): number {
+  //   return this.clasesDetalle.length;
+  // }
+
+  // get totalPagesDetalle(): number[] {
+  //   return Array(Math.ceil(this.totalClasesDetalle / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
+  // }
+
+  changePageDetalle(page: number): void {
+    this.currentPage = page;
+  }
+
+  get filteredClasesDetalle(): ClaseColDetalle[] {
+  // Aplica aquí tus filtros sobre clasesDetalle
+  // Ejemplo: por colegio
+  if (this.filtroColegio) {
+    return this.clasesDetalle.filter(c => c.id_colegio === Number(this.filtroColegio));
+  }
+  return this.clasesDetalle;
+}
+
+get paginatedClasesDetalle(): ClaseColDetalle[] {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.filteredClasesDetalle.slice(start, start + this.itemsPerPage);
+}
+
+get totalClasesDetalle(): number {
+  return this.filteredClasesDetalle.length;
+}
+
+get totalPagesDetalle(): number[] {
+  return Array(Math.ceil(this.totalClasesDetalle / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
+}
+
 }
