@@ -349,6 +349,18 @@
                 </a>
               </li>
 
+              <!-- Editores -->
+              <li>
+                <a
+                  [routerLink]="['editores']"
+                  routerLinkActive="bg-gray-200 dark:bg-[#76B177] font-bold"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="flex items-center justify-between p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+                >
+                  <span class="ml-auto text-right w-full">Editores</span>
+                  <i class="fas fa-users-cog ml-2"></i>
+                </a>
+              </li>              
               <!--Perfiles-->
               <li>
                 <a

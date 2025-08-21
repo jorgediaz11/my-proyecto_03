@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 export interface Editor {
   id_editor?: number;
   nombres: string;
-  apellidos: string;
+  apellido: string;
   correo: string;
   telefono?: string;
   editorial?: string;
@@ -17,6 +17,7 @@ export interface Editor {
   direccion?: string;
   id_colegio?: number;
   estado?: boolean;
+  id_perfil: number;    // <-- Agrega esta línea
   fechaIngreso?: string;
   especialidad?: string;
   librosPublicados?: number;
@@ -29,7 +30,7 @@ export interface Editor {
 
 export interface CreateEditorDto {
   nombres: string;
-  apellidos: string;
+  apellido: string;
   correo: string;
   telefono?: string;
   editorial?: string;
@@ -38,6 +39,7 @@ export interface CreateEditorDto {
   direccion?: string;
   id_colegio: number;
   estado?: boolean;
+  id_perfil: number;    // <-- Agrega esta línea
   fechaIngreso?: string;
   especialidad?: string;
   librosPublicados?: number;
@@ -48,7 +50,7 @@ export interface CreateEditorDto {
 
 export interface UpdateEditorDto {
   nombres?: string;
-  apellidos?: string;
+  apellido?: string;
   correo?: string;
   telefono?: string;
   editorial?: string;
@@ -57,6 +59,7 @@ export interface UpdateEditorDto {
   direccion?: string;
   id_colegio?: number;
   estado?: boolean;
+  id_perfil: number;    // <-- Agrega esta línea
   fechaIngreso?: string;
   especialidad?: string;
   librosPublicados?: number;
@@ -75,7 +78,7 @@ export interface PaginatedEditoresResponse {
 
 export interface EditorFilters {
   nombres?: string;
-  apellidos?: string;
+  apellido?: string;
   correo?: string;
   editorial?: string;
   especialidad?: string;
@@ -113,7 +116,7 @@ export class EditoresService {
 
     // Aplicar filtros
     if (filters.nombres) params = params.set('nombres', filters.nombres);
-    if (filters.apellidos) params = params.set('apellidos', filters.apellidos);
+    if (filters.apellido) params = params.set('apellido', filters.apellido);
     if (filters.correo) params = params.set('correo', filters.correo);
     if (filters.editorial) params = params.set('editorial', filters.editorial);
     if (filters.especialidad) params = params.set('especialidad', filters.especialidad);
@@ -266,7 +269,7 @@ export class EditoresService {
     if ('nombres' in editor && editor.nombres && editor.nombres.trim().length < 2) {
       return false;
     }
-    if ('apellidos' in editor && editor.apellidos && editor.apellidos.trim().length < 2) {
+    if ('apellido' in editor && editor.apellido && editor.apellido.trim().length < 2) {
       return false;
     }
     if ('correo' in editor && editor.correo && !this.isValidEmail(editor.correo)) {

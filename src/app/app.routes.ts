@@ -28,6 +28,7 @@ import { NivelesComponent } from './components/perfil-admin-pri/opciones/niveles
 import { GradosComponent } from './components/perfil-admin-pri/opciones/grados/grados.component';
 import { SeccionesComponent } from './components/perfil-admin-pri/opciones/secciones/secciones.component';
 import { GrupofamComponent } from './components/perfil-admin-pri/opciones/grupofam/grupofam.component';
+import { EditoresComponent } from './components/perfil-admin-pri/opciones/editores/editores.component';
 import { UnidadesComponent } from './components/perfil-admin-pri/opciones/unidades/unidades.component';
 import { MaterialesComponent } from './components/perfil-admin-pri/opciones/materiales/materiales.component';
 import { TipoMaterialComponent } from './components/perfil-admin-pri/opciones/tipo-material/tipo-material.component';
@@ -95,6 +96,7 @@ export const routes: Routes = [
       { path: 'tipomaterial', component: TipoMaterialComponent }, // Ruta para la sección de tipo de material
       { path: 'materiales', component: MaterialesComponent },     // Ruta para la sección de materiales
       { path: 'grupofam', component: GrupofamComponent },     // Ruta para la sección de grupo familiar
+      { path: 'editores', component: EditoresComponent },     // Ruta para la sección de editores
   { path: 'areas', component: AreasComponent }, // Ruta para la sección de áreas
   { path: 'preguntas', component: PreguntasComponent }, // Ruta para la sección de preguntas
   { path: 'lecciones', component: LeccionesComponent }, // Ruta para la sección de lecciones

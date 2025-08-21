@@ -17,10 +17,10 @@ body {
   font-family: Arial, Roboto, "Helvetica Neue", sans-serif;;
   margin: 0;                    /* Elimina el margen por defecto */
   padding: 0;                   /* Elimina el margen y el padding por defecto */
-  display: flex;                /* Activa el diseño flexbox */
-  justify-content: center;      /* Centra horizontalmente */
-  align-items: center;          /* Centra horizontalmente */
-  height: 100vh;                /* Centra verticalmente */
+  /*display: flex;                /* Activa el diseño flexbox */
+  /*justify-content: center;      /* Centra horizontalmente */
+  /*align-items: center;          /* Centra horizontalmente */
+  /*height: 100vh;                /* Centra verticalmente */
   background-color: #fff;  /* Fondo blanco por defecto */
 }
 

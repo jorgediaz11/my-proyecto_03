@@ -56,6 +56,7 @@ import { ActividadesComponent } from './components/perfil-admin-pri/opciones/act
 import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 import { PeriodoAcademicoComponent } from './components/perfil-admin-pri/opciones/periodo-academico/periodo-academico.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
+import { EditoresComponent } from './components/perfil-admin-pri/opciones/editores/editores.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -137,15 +138,14 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         ReactiveFormsModule,
         AngularEditorModule,
         CuestionariosComponent, // standalone
-        CuestionariosComponent, // standalone
-        PreguntasComponent, // standalone
         PreguntasComponent, // standalone
         PerfilComponent, // standalone
         PeriodoAcademicoComponent, // standalone
         UsuariosComponent, // standalone
         ColegiosComponent, // standalone
-    AulasComponent, // standalone
-    CursosComponent // standalone
+        AulasComponent, // standalone
+        CursosComponent, // standalone
+        EditoresComponent // standalone
     ],
     providers: [
         provideAnimations(),
