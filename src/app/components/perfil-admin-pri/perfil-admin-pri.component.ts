@@ -145,8 +145,8 @@ export class PerfilAdminPriComponent implements OnInit, OnDestroy {
   }
 
   get rolUsuario(): string {
-  const rol = this.perfilUsuario?.rolCorto || 'Sin Perfil';
-  return rol;
+    const rol = this.perfilUsuario?.rolCorto || 'Sin Perfil';
+    return rol;
   }
 
   get avatarUsuario(): string {

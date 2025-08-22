@@ -1,7 +1,6 @@
 // 🔧 Archivo de barril para servicios
 // Exporta todos los servicios del sistema educativo
 
-
 // ✅ Servicios de autenticación y usuarios
 export * from './auth.service';
 export * from './usuarios.service';

@@ -11,7 +11,6 @@ interface MenuItem {
 }
 
 @Component({
-    // standalone: true,
     selector: 'app-perfil-editor',
     templateUrl: './perfil-editor.component.html',
     styleUrl: './perfil-editor.component.css',

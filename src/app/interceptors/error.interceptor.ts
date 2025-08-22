@@ -121,7 +121,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       icon: 'error',
       title: 'Error',
       text: message,
-      confirmButtonColor: '#dc3545',
+      confirmButtonColor: '#dc3545',  /* Color del botón de confirmación */
       timer: 5000,
       timerProgressBar: true
     });

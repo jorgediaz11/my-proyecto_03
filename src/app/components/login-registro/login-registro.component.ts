@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 
-// ✅ INTERFACES PARA TIPADO FUERTE
+// ✅ INTERFACES PARA TIPADO FUERTE SEGURIDAD
 interface RegisterData {
   username: string;
   nombres: string;

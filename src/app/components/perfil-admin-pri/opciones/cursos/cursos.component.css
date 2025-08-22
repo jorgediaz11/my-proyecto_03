@@ -323,3 +323,14 @@ li {
   margin-bottom: 5px;
   border-radius: 5px;
 }
+
+.swal-icon-small .swal2-icon {
+  font-size: 1.5rem !important;
+  width: 2.5em !important;
+  height: 2.5em !important;
+}
+
+.swal-contenido-curso {
+  max-height: 500px !important;
+  overflow-y: auto !important;
+}

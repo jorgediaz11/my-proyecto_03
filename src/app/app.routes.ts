@@ -54,7 +54,7 @@ import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.
 import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component'; // Importar el nuevo componente
 
 // Test Component
-import { TestEndpointsComponent } from './test-endpoints.component';
+import { TestEndpointsComponent } from './test-endpoints.component'; // Temporal
 
 // Confirm Dialog
 export const routes: Routes = [

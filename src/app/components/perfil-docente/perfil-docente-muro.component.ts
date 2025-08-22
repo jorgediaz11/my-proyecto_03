@@ -150,7 +150,7 @@ export class PerfilDocenteMuroComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  // ✅ Contadores dinámicos
+  // ✅ Contadores dinámicos temporal
   get totalClases(): number {
     return this.misClases.length;
   }

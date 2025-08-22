@@ -342,11 +342,12 @@ export class CursosComponent implements OnInit {
         html += `</div>`;
         Swal.fire({
           title: 'Contenido del Curso',
-          html: `<div style="max-height:800px;overflow:auto;">${html}</div>`,
+          html: `<div style="max-height:600px;overflow:auto;">${html}</div>`,
           icon: 'info',
           width: 1000,
           heightAuto: false,
           customClass: {
+            icon: 'swal-icon-small', // Clase personalizada para el icono
             popup: 'swal-contenido-curso'
           }
         });

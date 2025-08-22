@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 import { CommonModule } from '@angular/common';
 import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';
+
 // Interfaces para los datos del estudiante
 interface Curso {
   id: number;

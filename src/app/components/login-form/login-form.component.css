@@ -581,7 +581,7 @@
   box-shadow: 0 4px 12px rgba(78, 173, 79, 0.3) !important;
 }
 
-/* RESPONSIVE PARA FOOTER */
+/* RESPONSIVE PARA FOOTER - detail */
 @media (max-width: 480px) {
   .footer-links {
     flex-direction: column;

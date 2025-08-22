@@ -1,5 +1,7 @@
 <div class="recupera-container">
+
   <div class="recupera-card">
+
     <div class="recupera-header">
       <a href="#" class="logo-container">
         <img class="logo-icon" src="assets/images/login-logo.png" alt="logo">
@@ -41,6 +43,7 @@
         }
       </p>
     </div>
+
     <form [formGroup]="recuperaForm" (ngSubmit)="onSubmit()" class="recupera-form">
       <!-- PASO 1: Solicitar email -->
       @if (currentState === RecoveryState.EMAIL_REQUEST) {
@@ -224,9 +227,12 @@
                   </div>
                 </div>
               }
-            </form>
-            <div class="recupera-footer">
-              <span class="footer-text">©2025 Plataforma Educativa</span>
-            </div>
-          </div>
-        </div>
+    </form>
+
+    <div class="recupera-footer">
+      <span class="footer-text">©2025 Plataforma Educativa</span>
+    </div>
+    
+  </div>
+
+</div>

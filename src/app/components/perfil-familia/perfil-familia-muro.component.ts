@@ -485,7 +485,7 @@ export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  // Métodos utilitarios
+  // Métodos utilitarios temporales
   calcularPromedioGeneral(): number {
     if (this.estudiantes.length === 0) return 0;
     const suma = this.estudiantes.reduce((acc, est) => acc + est.promedio, 0);

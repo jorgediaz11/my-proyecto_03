@@ -395,7 +395,7 @@ export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // ✅ Métodos de utilidad
+  // ✅ Métodos de utilidad temporal
   getEstadoDocente(estado: string): string {
     switch (estado) {
       case 'activo': return '🟢 Activo';

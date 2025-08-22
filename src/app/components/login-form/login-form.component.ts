@@ -5,7 +5,7 @@ import { UserStateService } from '../../services/user-state.service';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
-// ✅ AGREGAR IMPORT PARA ANIMACIONES
+// ✅ AGREGAR IMPORT PARA ANIMACIONES en el Form
 import { trigger, style, transition, animate } from '@angular/animations';
 
 // ✅ INTERFACES PARA TIPADO FUERTE

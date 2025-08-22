@@ -1,4 +1,4 @@
-/* Estilo global para enlaces 005 */
+/* Estilo global para enlaces 005b */
 import { Component, inject } from '@angular/core';  // Importar el decorador Component de Angular
 import { LoadingService } from './services/loading.service';
 

@@ -7,4 +7,4 @@ if (environment.production) {
   enableProdMode();
 }
 
-export default AppServerModule;
+export default AppServerModule; // Exporta el módulo de la aplicación para el servidor

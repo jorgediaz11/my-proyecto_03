@@ -23,6 +23,7 @@ export class InicioComponent {
     { label: 'Acceso', route: '/login' },         // Enlace al login - puede ser un botón de acceso
     { label: 'Contáctenos', route: '/contacto' }  // Enlace a la página de contacto
   ];
+  
   // Propiedades para el título y detalle del menú
   textoTitulo = 'Plataforma Eureka 02';
   textoDetalle = 'Detalle del Menu 02';

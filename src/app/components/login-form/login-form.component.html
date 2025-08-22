@@ -25,7 +25,7 @@
         </div>
         <h1 class="login-title">Iniciar Sesión</h1>
         <p class="login-subtitle">Accede a tu cuenta de la Plataforma ERK</p>
-      </div>
+    </div>
 
       <!-- FORMULARIO CON SAFE BINDING Y SEGURIDAD MEJORADA -->
       @if (loginForm) {
@@ -103,6 +103,7 @@
                 Contraseña
                 <span class="required-asterisk" aria-label="Campo requerido">*</span>
               </label>
+
               <div class="input-container">
                 <input
                   id="password"
@@ -145,7 +146,9 @@
                       title="Error en la contraseña"></i>
                     }
                   </div>
-                </div>
+
+              </div>
+
                 <!-- AYUDA CONTEXTUAL -->
                 @if (!hasFieldError('password') && !isFieldValid('password')) {
                   <div id="password-help" class="field-help">
@@ -165,6 +168,7 @@
                   </div>
                 }
               </div>
+              
               <!-- ALERTA DE ERROR GENERAL -->
               @if (loginError) {
                 <div
@@ -209,6 +213,7 @@
                   </span>
                 }
               </button>
+
               <!-- INDICADOR DE PROGRESO DE VALIDACIÓN -->
               @if (submitted && !loading) {
                 <div class="form-progress">
@@ -245,6 +250,7 @@
                   <span>Crear nueva cuenta</span>
                 </button>
               </div>
+
               <!-- 🧪 BOTÓN DE PRUEBA COMPLETA (TEMPORAL PARA DEBUGGING) -->
               <!-- <div class="debug-section" style="margin-top: 20px; padding: 15px; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px;">
               <h4 style="color: #0369a1; margin: 0 0 10px 0; font-size: 14px;">
@@ -289,6 +295,7 @@
             Plataforma segura para la gestión educativa
           </p>
         </div>
+
       </div>
 
     </div>

@@ -74,7 +74,7 @@ import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.
 import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component';
 
 // Test Component
-import { TestEndpointsComponent } from './test-endpoints.component';
+import { TestEndpointsComponent } from './test-endpoints.component';    /* temporal */
 
 // Otros Import
 import { routes } from './app.routes';

@@ -71,4 +71,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
   run();
 }
 
-export default AppServerModule;
+export default AppServerModule; // Exporta el módulo de la aplicación para el servidor

@@ -1,4 +1,4 @@
-// Configuracion de TypeScript para el servidor 002
+// Configuracion de TypeScript para el servidor 002 B
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {        // Se extiende la configuracion base de TypeScript

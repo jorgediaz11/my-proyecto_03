@@ -106,7 +106,7 @@ export class PerfilDocenteComponent implements OnInit, OnDestroy {
 
   // ✅ Métodos de la interfaz
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú
+    this.isMenuOpen = !this.isMenuOpen; // Cambia el estado del menú - revisar
   }
 
   toggleUserMenu() {

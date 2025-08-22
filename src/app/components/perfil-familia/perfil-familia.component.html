@@ -1,4 +1,6 @@
-<div class="antialiased bg-gray-50 dark:bg-gray-900">
+<div class="antialiased bg-[#e9ffe1]">
+
+  <!-- Begin Navbar -->
   <nav class="bg-verde-claro border-b border-gray-200 px-4 py-2.5 dark:bg-verde-claro dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
 
     <div class="flex flex-wrap justify-between items-center">
@@ -157,193 +159,194 @@
 
         </div>
 
-      </div>
-    </nav>
+    </div>
+  </nav>
+  <!-- End Navbar -->
 
-    <!-- Sidebar -->
-
-    <aside
-      class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-verde-claro border-r border-gray-200 md:translate-x-0 dark:bg-verde-claro dark:border-gray-700"
-      aria-label="Sidenav"
-      id="drawer-navigation"
-    >
-      <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-        <form action="#" method="GET" class="md:hidden mb-2">
-          <label for="sidebar-search" class="sr-only">Search</label>
-          <div class="relative">
-            <div
-              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+  <!-- Begin Sidebar -->
+  <aside
+    class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-verde-claro border-r border-gray-200 md:translate-x-0 dark:bg-verde-claro dark:border-gray-700"
+    aria-label="Sidenav"
+    id="drawer-navigation"
+  >
+    <div class="overflow-y-auto py-5 px-3 h-full bg-verde-claro">
+      <form action="#" method="GET" class="md:hidden mb-2">
+        <label for="sidebar-search" class="sr-only">Search</label>
+        <div class="relative">
+          <div
+            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+          >
+            <svg
+              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                ></path>
-              </svg>
-            </div>
-            <input
-              type="text"
-              name="search"
-              id="sidebar-search"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Search"
-            />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              ></path>
+            </svg>
           </div>
-        </form>
+          <input
+            type="text"
+            name="search"
+            id="sidebar-search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Search"
+          />
+        </div>
+      </form>
 
 
-        <ul>
-          <!-- Usuario autenticado actual -->
-          <li class="px-3 py-2 mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-l-4 border-green-500">
-            <div class="flex items-center space-x-3">
-              <!-- Avatar pequeño -->
-              <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                  {{ iniciales }}
-                </div>
-              </div>
-              <!-- Información del usuario -->
-              <div class="flex-1 min-w-0">
-                <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                  <span [class]="statusColor">●</span> {{ statusText }}
-                </div>
-                <div class="font-medium text-gray-900 dark:text-white text-sm truncate">
-                  {{ nombreUsuario }}
-                </div>
-                <div class="text-xs text-gray-600 dark:text-gray-300">
-                  {{ rolUsuario }}
-                </div>
+      <ul>
+        <!-- Usuario autenticado actual -->
+        <li class="px-3 py-2 mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-l-4 border-green-500">
+          <div class="flex items-center space-x-3">
+            <!-- Avatar pequeño -->
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                {{ iniciales }}
               </div>
             </div>
-          </li>
-          <!-- Fin de usuario autenticado -->
-        </ul>
+            <!-- Información del usuario -->
+            <div class="flex-1 min-w-0">
+              <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                <span [class]="statusColor">●</span> {{ statusText }}
+              </div>
+              <div class="font-medium text-gray-900 dark:text-white text-sm truncate">
+                {{ nombreUsuario }}
+              </div>
+              <div class="text-xs text-gray-600 dark:text-gray-300">
+                {{ rolUsuario }}
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- Fin de usuario autenticado -->
+      </ul>
 
-        <ul class="space-y-2">
+      <ul class="space-y-2">
 
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:[color:#DDFBD9] dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:[color:#DDFBD9] dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5" />
-              </svg>
-              <span class="ml-3">Inicio</span>
-            </a>
-          </li>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5" />
+            </svg>
+            <span class="ml-3">Inicio</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <span class="ml-3">Progreso</span>
-            </a>
-          </li>
+              <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span class="ml-3">Progreso</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0C7.03 5 3 9.03 3 14v7h18v-7c0-4.97-4.03-9-9-9z" />
-              </svg>
-              <span class="ml-3">Comunicados</span>
-            </a>
-          </li>
+              <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0C7.03 5 3 9.03 3 14v7h18v-7c0-4.97-4.03-9-9-9z" />
+            </svg>
+            <span class="ml-3">Comunicados</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#76B177] group"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
-              </svg>
-              <span class="ml-3">Mensajería</span>
-            </a>
-          </li>
+              <!-- <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path> -->
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H6m6 0h6" />
+            </svg>
+            <span class="ml-3">Mensajería</span>
+          </a>
+        </li>
 
-          <!--Cerrar Sesion-->
-          <li>
-            <button
-              (click)="cerrarSesion()"
-              (keyup.enter)="cerrarSesion()"
-              type="button"
-              class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white bg-gray-200 dark:bg-[#76B177] group cursor-pointer transition-colors hover:bg-gray-300 dark:hover:bg-[#5ca75c]"
-              title="Cerrar sesión y volver al login"
+        <!--Cerrar Sesion-->
+        <li>
+          <button
+            (click)="cerrarSesion()"
+            (keyup.enter)="cerrarSesion()"
+            type="button"
+            class="flex items-center w-full p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white bg-gray-200 dark:bg-[#76B177] group cursor-pointer transition-colors hover:bg-gray-300 dark:hover:bg-[#5ca75c]"
+            title="Cerrar sesión y volver al login"
+          >
+            <svg
+              aria-hidden="true"
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:[color:#4EAD4F] group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span class="ml-3 whitespace-nowrap">Cerrar sesión</span>
-              <!-- <span
-                class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800"
-              >
-              </span> -->
-            </button>
-          </li>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span class="ml-3 whitespace-nowrap">Cerrar sesión</span>
+            <!-- <span
+              class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800"
+            >
+            </span> -->
+          </button>
+        </li>
 
-        </ul>
+      </ul>
 
-      </div>
+    </div>
 
-    </aside>
+  </aside>
+  <!-- End Sidebar -->
 
-    <!-- Begin Main content -->
-    <main class="p-4 md:ml-64 h-auto min-h-screen" style="margin-top: 40px;">
+  <!-- Begin Main content -->
+  <main class="p-4 md:ml-64 h-auto min-h-screen" style="margin-top: 40px;">
 
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 
-    </main>
-    <!-- End Main content -->
+  </main>
+  <!-- End Main content -->
 
 
-  </div>
+</div>

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -75,11 +74,6 @@ export class EstudiantesComponent implements OnInit, OnDestroy {
     { value: 'Noche', label: 'Noche' }
   ];
 
-  departamentos: Departamento[] = [];
-  provincias: Provincia[] = [];
-  distritos: Distrito[] = [];
-  private ubigeoService = inject(UbigeoService);
-
   // ✅ INYECCIÓN DE DEPENDENCIAS CON INJECT()
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
@@ -89,7 +83,6 @@ export class EstudiantesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cargarDepartamentos();
     this.cargarEstudiantes();
     this.testEndpointConnection();
     this.cargarColegios();
@@ -104,51 +97,6 @@ export class EstudiantesComponent implements OnInit, OnDestroy {
         console.error('Error al cargar colegios clientes:', err);
       }
     });
-  }
-
-  cargarDepartamentos(): void {
-    this.ubigeoService.getDepartamentos().subscribe(deps => {
-      this.departamentos = deps;
-      this.filtroDepartamento = '';
-      this.provincias = [];
-      this.distritos = [];
-      this.filtroProvincia = '';
-      this.filtroDistrito = '';
-    });
-  }
-
-  onDepartamentoChange(): void {
-    const dep = this.departamentos.find(d => d.departamento === this.filtroDepartamento);
-    if (dep) {
-      const idDep = dep.id_ubigeo.substring(0, 2);
-      this.ubigeoService.getProvincias(idDep).subscribe(provs => {
-        this.provincias = provs;
-        this.filtroProvincia = '';
-        this.distritos = [];
-        this.filtroDistrito = '';
-      });
-    } else {
-      this.provincias = [];
-      this.distritos = [];
-      this.filtroProvincia = '';
-      this.filtroDistrito = '';
-    }
-    this.filterEstudiantes(); // Cambiado a filterEstudiantes
-  }
-
-  onProvinciaChange(): void {
-    const prov = this.provincias.find(p => p.provincia === this.filtroProvincia);
-    if (prov) {
-      const idProv = prov.id_ubigeo.substring(0, 4);
-      this.ubigeoService.getDistritos(idProv).subscribe(dists => {
-        this.distritos = dists;
-        this.filtroDistrito = '';
-      });
-    } else {
-      this.distritos = [];
-      this.filtroDistrito = '';
-    }
-    this.filterEstudiantes(); // Cambiado a filterEstudiantes
   }
 
   ngOnDestroy(): void {

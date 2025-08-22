@@ -192,7 +192,7 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
     // Por ahora usamos datos simulados arriba
   }
 
-  // ✅ Gráfico de distribución de usuarios por tipo
+  // ✅ 01 Gráfico de distribución de usuarios por tipo
   renderDistribucionUsuariosChart() {
     console.log('📊 Renderizando gráfico de distribución de usuarios...');
     const canvas = document.getElementById('distribucionChart') as HTMLCanvasElement;
@@ -207,7 +207,7 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
     }
 
     new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: {
         labels: ['Estudiantes', 'Docentes', 'Admin Principal', 'Admin Secundario', 'Familia', 'Editores'],
         datasets: [{
@@ -224,16 +224,20 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
         }]
       },
       options: {
+        indexAxis: 'y', // <--- barras horizontales
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { display: false },
           title: { display: true, text: 'Distribución de Usuarios por Tipo' }
+        },
+        scales: {
+          x: { beginAtZero: true }
         }
       }
     });
   }
 
-  // ✅ Gráfico de rendimiento por colegios
+  // ✅ 02 Gráfico de rendimiento por colegios
   renderRendimientoColegiosChart() {
     console.log('📈 Renderizando gráfico de rendimiento por colegios...');
     const canvas = document.getElementById('rendimientoChart') as HTMLCanvasElement;
@@ -307,7 +311,7 @@ export class PerfilAdminPriMuroComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // ✅ Gráfico de actividad del sistema
+  // ✅ 03 Gráfico de actividad del sistema
   renderActividadSistemaChart() {
     console.log('📋 Renderizando gráfico de actividad del sistema...');
     const canvas = document.getElementById('actividadChart') as HTMLCanvasElement;

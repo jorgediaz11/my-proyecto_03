@@ -10,6 +10,6 @@ if (environment.production) {
   enableProdMode();                     // Importar el módulo de enrutamiento 03b
 }
 // Importar el módulo de enrutamiento
-platformBrowserDynamic()
+platformBrowserDynamic()                // Inicializa la aplicación Angular
   .bootstrapModule(AppModule)           // Importar el módulo de enrutamiento 03b
   .catch((err) => console.error(err));  // Importar el módulo de enrutamiento 03b

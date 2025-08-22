@@ -92,6 +92,6 @@ img[alt="Activar libro"] {
   margin-left: 1rem;
   background: #fff;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra */
   padding: 0.25rem;
 }

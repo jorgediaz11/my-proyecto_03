@@ -29,9 +29,7 @@ export class OpcionesComponent implements OnInit, OnDestroy {
     // Si quieres permitir seleccionar el archivo, puedes usar un input file y asignar el resultado aquí
     // Ejemplo: this.pdfSrc = 'assets/otro-archivo.pdf';
   }
-    /**
-     * Maneja el input file para mostrar el PDF seleccionado en el visor
-     */
+    /** Maneja el input file para mostrar el PDF seleccionado en el visor **/
     abrirPDFDesdeInput(event: Event): void {
       const input = event.target as HTMLInputElement;
       if (input.files && input.files.length > 0) {

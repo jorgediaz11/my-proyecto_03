@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ColegiosService } from './services/colegios.service';
+import { ColegiosService } from './services/colegios.service';  // Testeo de EndPoint
 
 @Component({
     selector: 'app-test-endpoints',

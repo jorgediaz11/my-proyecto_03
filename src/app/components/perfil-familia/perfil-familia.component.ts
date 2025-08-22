@@ -114,7 +114,7 @@ export class PerfilFamiliaComponent implements OnInit, OnDestroy {
     this.showSidebar = !this.showSidebar;
   }
 
-  // ✅ Método para cerrar sesión
+  // ✅ Método para cerrar sesión / regresa al Llogin
   cerrarSesion(): void {
     console.log('🚪 Cerrando sesión desde PerfilFamilia...');
     this.userStateService.limpiarUsuario();

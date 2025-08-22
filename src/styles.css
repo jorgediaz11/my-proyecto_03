@@ -1,4 +1,4 @@
-@import 'quill/dist/quill.snow.css';
+@import 'quill/dist/quill.snow.css';  /* Importar estilos de Quill */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

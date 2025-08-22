@@ -173,8 +173,8 @@
 /* CONTENIDO PRINCIPAL */
 .main-content {
   /*margin-top: 120px; /* Espacio base para la navbar */
-  margin-top: 1320px; /* Espacio exacto para la barra superior */
-  padding-top: 2rem;
+  margin-top: 40px; /* Espacio exacto para la barra superior */
+  padding-top: 4rem;
 }
 
 .navbar-spacer {
@@ -491,7 +491,7 @@
   font-weight: 700;
   color: white;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.025em;
+  /*letter-spacing: -0.025em;*/
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -500,7 +500,7 @@
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2.5rem;
   line-height: 1.6;
-  max-width: 800px;
+  /*max-width: 800px;*/
   margin-left: auto;
   margin-right: auto;
 }

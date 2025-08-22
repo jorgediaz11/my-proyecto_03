@@ -71,7 +71,7 @@ export class PerfilEditorMuroComponent implements OnInit, OnDestroy, AfterViewIn
   recursosChart?: Chart;
   actividadChart?: Chart;
 
-  // Datos del dashboard
+  // Datos del dashboard temporal
   estadisticas: EstadisticasEditor = {
     materiasGestionadas: 0,
     capitulosCreados: 0,
