@@ -1,5 +1,5 @@
 <!-- Dashboard Editor - Gestión de Contenido LMS -->
-<div class="dashboard-editor min-h-screen bg-gray-50 p-6">
+<div class="dashboard-editor min-h-screen bg-white p-6">
 
   <!-- Header del Dashboard -->
   <div class="mb-8">
@@ -167,7 +167,9 @@
               @for (materia of materias.slice(0, 4); track materia) {
                 <div
                   class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
-                  (click)="verDetalleMateria(materia)">
+                  tabindex="0"
+                  (click)="verDetalleMateria(materia)"
+                  (keyup)="($event.key === 'Enter' || $event.key === ' ') && verDetalleMateria(materia)">
                   <div class="flex items-center space-x-3">
                     <span class="text-2xl">{{ materia.icono }}</span>
                     <div>
@@ -203,7 +205,9 @@
               @for (capitulo of capitulosRecientes; track capitulo) {
                 <div
                   class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
-                  (click)="editarCapitulo(capitulo)">
+                  tabindex="0"
+                  (click)="editarCapitulo(capitulo)"
+                  (keyup)="($event.key === 'Enter' || $event.key === ' ') && editarCapitulo(capitulo)">
                   <div>
                     <h4 class="font-medium text-gray-900">{{ capitulo.titulo }}</h4>
                     <p class="text-sm text-gray-500">{{ getMateriaNombre(capitulo.materiaId) }}</p>
@@ -277,7 +281,9 @@
             @for (materia of materias; track materia) {
               <div
                 class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
-                (click)="verDetalleMateria(materia)">
+                tabindex="0"
+                (click)="verDetalleMateria(materia)"
+                (keyup)="($event.key === 'Enter' || $event.key === ' ') && verDetalleMateria(materia)">
                 <div class="flex items-start justify-between mb-4">
                   <div class="flex items-center space-x-3">
                     <span class="text-3xl">{{ materia.icono }}</span>

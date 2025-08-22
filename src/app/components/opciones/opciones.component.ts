@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-
 import { PreguntasService } from '../../services/preguntas.service';
 // Asegúrate de importar el DTO correcto desde donde esté definido
 import { UpdatePreguntaDto } from '../../services/preguntas.service';
-
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivarLibrosComponent } from '../activar-libros/activar-libros.component';

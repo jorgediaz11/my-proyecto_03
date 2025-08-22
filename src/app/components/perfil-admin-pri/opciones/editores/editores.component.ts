@@ -7,11 +7,15 @@ import Swal from 'sweetalert2';
 import { Editor, EditoresService, CreateEditorDto, UpdateEditorDto } from 'src/app/services/editores.service';
 import { AuthService } from 'src/app/services/auth.service';
 
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-editores',
   templateUrl: './editores.component.html',
   styleUrls: ['./editores.component.css'],
-  //standalone: false
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class EditoresComponent implements OnInit, OnDestroy {
   // Servicio de editores
@@ -25,14 +29,12 @@ export class EditoresComponent implements OnInit, OnDestroy {
   paginatedEditores: Editor[] = [];
 
   colegios: Colegio[] = [];
-  filtroColegio: string = '';
+  filtroColegio = '';
+  filtroEditor = '';
   //filteredEditores: Editor[] = [];
 
   // Ejemplo de cómo consumir editor:
-  getEditoresDeEditor(editor: Editor): number[] {
-    // Si editor tiene una propiedad editor, retorna esa propiedad
-      return []; // O ajusta según la estructura real de Editor
-  }
+  // Método eliminado porque no se utiliza y el parámetro 'editor' no es usado.
 
   // ✅ CONTROL DE ESTADO
   currentPage = 1;
@@ -57,8 +59,8 @@ export class EditoresComponent implements OnInit, OnDestroy {
   Math = Math;
 
   // ✅ TRACKBY FUNCTION FOR PERFORMANCE
-  trackByFamiliaId(index: number, editores: Editor): number {
-    return editores.id_editor || index;
+  trackByEditorId(index: number, editor: Editor): number {
+    return editor.id_editor || index;
   }
 
   // ✅ FECHA EN ESPAÑOL PARA EL TEMPLATE
@@ -100,7 +102,6 @@ export class EditoresComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargarDepartamentos();
     this.cargarEditores();
-    this.testEndpointConnection();
     this.cargarColegios();
   }
 
@@ -175,9 +176,8 @@ export class EditoresComponent implements OnInit, OnDestroy {
       fecha_nacimiento: [''],
       estado: [true, Validators.required], // boolean
       colegio: [null, Validators.required], // number (por [ngValue]="col.id_colegio")
-      grado: [''],
-      seccion: [''],
-      observaciones: ['']
+      foto_perfil: [''],
+      ultimo_acceso: ['']
     });
   }
 
@@ -210,17 +210,37 @@ export class EditoresComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log('✅ INTERCEPTORS COMPLETADOS - Datos recibidos del endpoint:');
-          console.log('📊 Cantidad de editores:', data.data.length);
-          console.log('🔍 Datos completos recibidos:', data);
-
-          this.editores = data.data; // Use the correct property containing the array of editors
-          this.filteredEditores = [...data.data];
-          this.updatePaginatedEditores();
-          this.loading = false;
-
-          if (data.data.length === 0) {
-            console.warn('⚠️ No se encontraron editores en la base de datos');
+          // Si la respuesta es un array directo
+          if (Array.isArray(data)) {
+            console.log('✅ INTERCEPTORS COMPLETADOS - Datos recibidos del endpoint:');
+            console.log('📊 Cantidad de editores:', data.length);
+            console.log('🔍 Datos completos recibidos:', data);
+            this.editores = data;
+            this.filteredEditores = [...data];
+            this.updatePaginatedEditores();
+            this.loading = false;
+            if (data.length === 0) {
+              console.warn('⚠️ No se encontraron editores en la base de datos');
+              this.showEmptyState();
+            }
+          } else if (data && Array.isArray(data.data)) {
+            // Si la respuesta es un objeto con propiedad data
+            console.log('✅ INTERCEPTORS COMPLETADOS - Datos recibidos del endpoint:');
+            console.log('📊 Cantidad de editores:', data.data.length);
+            console.log('🔍 Datos completos recibidos:', data);
+            this.editores = data.data;
+            this.filteredEditores = [...data.data];
+            this.updatePaginatedEditores();
+            this.loading = false;
+            if (data.data.length === 0) {
+              console.warn('⚠️ No se encontraron editores en la base de datos');
+              this.showEmptyState();
+            }
+          } else {
+            // Respuesta inesperada
+            this.loading = false;
+            console.error('❌ Respuesta inesperada del endpoint:', data);
+            this.handleError('Error al cargar editores: respuesta inesperada del servidor');
             this.showEmptyState();
           }
         },
@@ -232,7 +252,6 @@ export class EditoresComponent implements OnInit, OnDestroy {
             message: error.message,
             url: error.url
           });
-
           // Mostrar error específico
           this.handleError(`Error al cargar editores: ${error.message}`);
           this.showEmptyState();
@@ -241,21 +260,6 @@ export class EditoresComponent implements OnInit, OnDestroy {
   }
 
   // ✅ FILTRADO DE EDITORES
-  filterEditores(): void {
-    let filtered = [...this.editores];
-    if (this.searchTerm.trim()) {
-      filtered = filtered.filter(editores =>
-        editores.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        editores.apellido.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-    if (this.filtroColegio) {
-      filtered = filtered.filter(editores => String(editores.id_colegio) === this.filtroColegio);
-    }
-    this.filteredEditores= filtered;
-    this.currentPage = 1;
-    this.updatePaginatedEditores();
-  }
 
   // ✅ ACTUALIZACIÓN DE PAGINACIÓN DE EDITORES
   updatePaginatedEditores(): void {
@@ -292,8 +296,9 @@ export class EditoresComponent implements OnInit, OnDestroy {
     this.editingEditorId = undefined;
     this.editorForm.reset();
     this.editorForm.patchValue({
-      estado: true
-      // Limpiar campos de array si aplican, como si el editores tiene niveles/turnos directos
+      estado: true,
+      foto_perfil: '',
+      ultimo_acceso: ''
     });
   }
 
@@ -324,7 +329,7 @@ export class EditoresComponent implements OnInit, OnDestroy {
             this.cargarEditores();
             this.cancelEdit();
           },
-          error: (error: any) => {
+          error: (error: unknown) => {
             this.loading = false;
             this.handleError('Error al actualizar el editores');
             console.error('Error:', error);
@@ -366,7 +371,14 @@ export class EditoresComponent implements OnInit, OnDestroy {
 
     this.editorForm.patchValue({
       nombres: editores.nombres,
-      apellidos: editores.apellido,
+      apellido: editores.apellido,
+      correo: editores.correo,
+      telefono: editores.telefono || '',
+      fecha_nacimiento: editores.fecha_nacimiento || '',
+      estado: editores.estado,
+      colegio: editores.id_colegio || null,
+      foto_perfil: editores.foto_perfil || '',
+      ultimo_acceso: editores.ultimo_acceso || ''
     });
   }
 
@@ -423,6 +435,13 @@ export class EditoresComponent implements OnInit, OnDestroy {
         <div class="text-left">
           <p><strong>Nombres:</strong> ${editor.nombres}</p>
           <p><strong>Apellidos:</strong> ${editor.apellido}</p>
+          <p><strong>Correo:</strong> ${editor.correo}</p>
+          <p><strong>Teléfono:</strong> ${editor.telefono || ''}</p>
+          <p><strong>Fecha nacimiento:</strong> ${editor.fecha_nacimiento || ''}</p>
+          <p><strong>Estado:</strong> ${editor.estado ? 'Activo' : 'Inactivo'}</p>
+          <p><strong>Colegio:</strong> ${editor.id_colegio || ''}</p>
+          <p><strong>Foto perfil:</strong> ${editor.foto_perfil ? `<img src='${editor.foto_perfil}' alt='Foto perfil' width='60'/>` : 'No disponible'}</p>
+          <p><strong>Último acceso:</strong> ${editor.ultimo_acceso || 'No disponible'}</p>
         </div>
       `,
       icon: 'info',
@@ -728,5 +747,29 @@ export class EditoresComponent implements OnInit, OnDestroy {
     this.filtroProvincia = '';
     this.filtroDistrito = '';
     this.cargarEditores();
+  }
+
+  // ✅ FILTRAR EDITORES SEGÚN CRITERIOS
+  filterEditores(): void {
+    let filtered = [...this.editores];
+
+    if (this.searchTerm.trim()) {
+      filtered = filtered.filter(editor =>
+        editor.nombres.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        editor.apellido.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
+    if (this.filtroColegio) {
+      filtered = filtered.filter(editor =>
+        editor.id_colegio?.toString() === this.filtroColegio
+      );
+    }
+
+  // Los filtros de departamento, provincia y distrito se eliminan porque Editor no tiene esas propiedades
+
+    this.filteredEditores = filtered;
+    this.currentPage = 1;
+    this.updatePaginatedEditores();
   }
 }

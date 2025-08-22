@@ -39,6 +39,7 @@ import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuari
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
 import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
+import { EditoresComponent } from './components/perfil-admin-pri/opciones/editores/editores.component';
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component'; // Importa el componente de reportes
 import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfiles/perfiles.component';
@@ -56,7 +57,6 @@ import { ActividadesComponent } from './components/perfil-admin-pri/opciones/act
 import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 import { PeriodoAcademicoComponent } from './components/perfil-admin-pri/opciones/periodo-academico/periodo-academico.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
-import { EditoresComponent } from './components/perfil-admin-pri/opciones/editores/editores.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -98,7 +98,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         // UsuariosComponent, // standalone, move to imports
         // ColegiosComponent, // standalone, move to imports
         DocentesComponent,
-        EstudiantesComponent,
+    EstudiantesComponent,
+    // EditoresComponent, // standalone, move to imports
         ClasesColComponent,
         GrupofamComponent,
         UnidadesComponent,
@@ -145,7 +146,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         ColegiosComponent, // standalone
         AulasComponent, // standalone
         CursosComponent, // standalone
-        EditoresComponent // standalone
+    EditoresComponent, // standalone
     ],
     providers: [
         provideAnimations(),

@@ -11,9 +11,9 @@ export interface Editor {
   apellido: string;
   correo: string;
   telefono?: string;
-  editorial?: string;
-  documento?: string;
-  fechaNacimiento?: string;
+  //editorial?: string;
+  //documento?: string;
+  fecha_nacimiento?: string;
   direccion?: string;
   id_colegio?: number;
   estado?: boolean;
@@ -26,6 +26,8 @@ export interface Editor {
   certificaciones?: string[];
   createdAt?: string;
   updatedAt?: string;
+  foto_perfil?: string;
+  ultimo_acceso?: string;
 }
 
 export interface CreateEditorDto {
@@ -33,9 +35,9 @@ export interface CreateEditorDto {
   apellido: string;
   correo: string;
   telefono?: string;
-  editorial?: string;
-  documento?: string;
-  fechaNacimiento?: string;
+  //editorial?: string;
+  //documento?: string;
+  fecha_nacimiento?: string;
   direccion?: string;
   id_colegio: number;
   estado?: boolean;
@@ -46,6 +48,8 @@ export interface CreateEditorDto {
   experiencia?: number;
   areas?: string[];
   certificaciones?: string[];
+  foto_perfil?: string;
+  ultimo_acceso?: string;
 }
 
 export interface UpdateEditorDto {
@@ -53,9 +57,9 @@ export interface UpdateEditorDto {
   apellido?: string;
   correo?: string;
   telefono?: string;
-  editorial?: string;
-  documento?: string;
-  fechaNacimiento?: string;
+  //editorial?: string;
+  //documento?: string;
+  fecha_nacimiento?: string;
   direccion?: string;
   id_colegio?: number;
   estado?: boolean;
@@ -66,6 +70,8 @@ export interface UpdateEditorDto {
   experiencia?: number;
   areas?: string[];
   certificaciones?: string[];
+  foto_perfil?: string;
+  ultimo_acceso?: string;
 }
 
 export interface PaginatedEditoresResponse {
@@ -80,7 +86,7 @@ export interface EditorFilters {
   nombres?: string;
   apellido?: string;
   correo?: string;
-  editorial?: string;
+  //editorial?: string;
   especialidad?: string;
   id_colegio?: number;
   estado?: boolean;
@@ -94,7 +100,7 @@ export interface EstadisticasEditores {
   total: number;
   activos: number;
   inactivos: number;
-  porEditorial: Record<string, number>;
+  //porEditorial: Record<string, number>;
   porEspecialidad: Record<string, number>;
   porColegio: Record<string, number>;
   promedioLibros: number;
@@ -118,7 +124,7 @@ export class EditoresService {
     if (filters.nombres) params = params.set('nombres', filters.nombres);
     if (filters.apellido) params = params.set('apellido', filters.apellido);
     if (filters.correo) params = params.set('correo', filters.correo);
-    if (filters.editorial) params = params.set('editorial', filters.editorial);
+    //if (filters.editorial) params = params.set('editorial', filters.editorial);
     if (filters.especialidad) params = params.set('especialidad', filters.especialidad);
     if (filters.id_colegio) params = params.set('id_colegio', filters.id_colegio.toString());
     if (filters.estado !== undefined) params = params.set('estado', filters.estado.toString());

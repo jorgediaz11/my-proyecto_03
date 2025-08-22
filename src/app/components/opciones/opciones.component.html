@@ -163,9 +163,9 @@
           </a>
         </li>
       </ul>
-      
+
       <ul class="pt-2 mt-2 space-y-2 border-t border-gray-200 dark:border-gray-700"></ul>
-      
+
       <ul>
         <!--Cerrar Sesion-->
         <li>
@@ -191,6 +191,7 @@
       </ul>
     </div>
   </aside>
+  <!-- End Sidebar -->
 
   <!-- Main content -->
   <main class="pb-4 px-4 md:ml-64 h-auto bg-white dark:bg-gray-900">
@@ -201,7 +202,7 @@
         <div class="bg-[#4EAD4F] rounded-lg shadow p-8 min-h-[300px] flex flex-col items-center justify-center">
           <h2 class="text-2xl font-bold text-white mb-4">Editor para Preguntas y Actividades</h2>
           <p class="text-white text-center mb-2">Soporta archivos Texto, Word, PDF y HTML</p>
-          
+
           <div style="margin-top: 8px; display: flex; justify-content: flex-start; border: 1px solid #000; background-color: #f0f0f0; width: 700px; padding: 12px 12px 12px 12px; border-radius: 8px; box-sizing: border-box; gap: 12px; flex-wrap: wrap;">
             <div style="display: flex; flex-direction: column; margin-right: 16px;">
               <label for="idPregunta" style="font-weight: bold; color: #333; margin-bottom: 2px;">Pregunta</label>
@@ -218,7 +219,7 @@
               (click)="onActualizarEnunciado()"
             >Actualizar REG</button>
           </div>
-          
+
           <div style="border-radius: 12px; margin-bottom: 12px; width: fit-content; border: 1px solid #000; width: 700px; padding: 0 12px 12px 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 0; background: #fff; height: 370px; box-sizing: border-box; justify-content: flex-start;">
             <label for="enunciado" style="display: block; font-weight: bold; color: #fff; margin-bottom: 2px; text-align: left; font-size: 1rem;">Enunciado</label>
             <quill-editor
@@ -244,7 +245,7 @@
               }"
             ></quill-editor>
           </div>
-          
+
           <div style="margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;">
             <input *ngIf="mostrarInputFile" #inputFile type="file" (change)="onFileSelected($event)" accept=".txt,.pdf,.doc,.docx" class="px-2 py-1 border rounded bg-white text-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <button class="px-2 py-2 bg-gray-700 text-white rounded shadow hover:bg-gray-800 transition-colors font-semibold" (click)="onNuevo()">
@@ -259,7 +260,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Columna derecha: Visor PDF -->
       <div style="flex: 1; min-width: 0;">
         <div class="bg-[#5688f3] rounded-lg shadow p-8 min-h-[300px] flex flex-col items-center justify-center" style="height: 660px;" (contextmenu)="$event.preventDefault()">
