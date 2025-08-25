@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Perfil, PerfilesService } from '../../../../services/perfiles.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
@@ -124,28 +125,63 @@ export class PerfilComponent implements OnInit {
 
   // Ver perfil
   viewPerfil(id: number): void {
-    const perfil = this.perfiles.find(p => p.id === id);
-    if (perfil) {
-      alert(`Ver perfil:\nID: ${perfil.id}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}`);
+    const perfil = this.perfiles.find(e => e.id === id);
+    if (!perfil) {
+      this.handleError('Perfil no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Perfil`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${perfil.nombre}</p>
+          <p><strong>Apellidos:</strong> ${perfil.descripcion}</p>
+          <p><strong>Estado:</strong> ${perfil.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
-  // Eliminar perfil
+  // ELIMINAR PERFIL
   deletePerfil(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este perfil?')) {
-      this.loading = true;
-      this.perfilService.eliminarPerfil(id).subscribe({
-        next: () => {
-          this.cargarPerfiles();
-          this.showSuccess('Perfil eliminado correctamente');
-        },
-        error: (error: unknown) => {
-          this.loading = false;
-          console.error('Error al eliminar perfil:', error);
-          this.showError('Error al eliminar el perfil');
-        }
-      });
+    const perfil = this.perfiles.find(p => p.id === id);
+    if (!perfil) {
+      this.handleError('Perfil no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Perfil?',
+      text: `¿Estás seguro de que deseas eliminar el perfil "${perfil.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.perfilService.eliminarPerfil(id).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Perfil eliminado correctamente');
+            this.cargarPerfiles();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el perfil');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
   }
 
   // Submit formulario
@@ -215,10 +251,24 @@ export class PerfilComponent implements OnInit {
     alert(message);
   }
 
+  // Informativo (detalle)
   detailPerfil(id: number): void {
     const perfil = this.perfiles.find(p => p.id === id);
     if (perfil) {
-      alert(`Detalle perfil:\nID: ${perfil.id}\nNombre: ${perfil.nombre}\nDescripción: ${perfil.descripcion}\nEstado: ${perfil.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle perfil',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${perfil.id}</p>
+            <p><strong>Nombre:</strong> ${perfil.nombre}</p>
+            <p><strong>Descripción:</strong> ${perfil.descripcion}</p>
+            <p><strong>Estado:</strong> ${perfil.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -240,4 +290,25 @@ export class PerfilComponent implements OnInit {
     this.isEditing = false;
     this.editingPerfilId = undefined;
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

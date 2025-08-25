@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { GradosService, Grado } from '../../../../services/grados.service';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-grados',
@@ -129,12 +130,28 @@ export class GradosComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  viewGrado(id: number): void {
-    const grado = this.grados.find(g => g.id_grado === id);
-    if (grado) {
-      alert(`Ver grado:\nID: ${grado.id_grado}\nNivel (id): ${grado.nivel}\nNombre: ${grado.nombre}`);
+  viewPerfil(id_grado: number): void {
+    const grado = this.grados.find(e => e.id_grado === id_grado);
+    if (!grado) {
+      this.handleError('Perfil no encontrado');
+      return;
     }
-  }
+
+    Swal.fire({
+      title: `Detalles del Perfil`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${grado.nombre}</p>
+          <p><strong>Apellidos:</strong> ${grado.descripcion}</p>
+          <p><strong>Estado:</strong> ${grado.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
+  }  
 
   editGrado(id: number): void {
     this.isEditing = true;
@@ -150,23 +167,80 @@ export class GradosComponent implements OnInit {
     }
   }
 
-  deleteGrado(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este grado?')) {
-      this.gradosService.eliminarGrado(id).subscribe({
-        next: () => {
-          this.cargarGrados();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar grado:', error);
-        }
+ deleteGrado(id_grado: number): void {
+    const grado = this.grados.find(p => p.id_grado === id_grado);
+    if (!grado) {
+      this.handleError('Grado no encontrado');
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Eliminar Grado?',
+      text: `¿Estás seguro de que deseas eliminar el Grado "${grado.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.gradosService.eliminarGrado(id_grado).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Grado eliminado correctamente');
+            this.cargarGrados();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el grado');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }
+
+  detailGrado(id_grado: number): void {
+    const grado = this.grados.find(p => p.id_grado === id_grado);
+    if (grado) {
+      Swal.fire({
+        title: 'Detalle perfil',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${grado.id_grado}</p>
+            <p><strong>Nombre:</strong> ${grado.nombre}</p>
+            <p><strong>Descripción:</strong> ${grado.descripcion}</p>
+            <p><strong>Estado:</strong> ${grado.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
       });
     }
   }
 
-  detailGrado(id: number): void {
-    const grado = this.grados.find(g => g.id_grado === id);
-    if (grado) {
-      alert(`Detalle grado:\nID: ${grado.id_grado}\nNivel (id): ${grado.nivel}\nNombre: ${grado.nombre}\nEstado: ${grado.estado ? 'Activo' : 'Inactivo'}`);
-    }
+// ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
   }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

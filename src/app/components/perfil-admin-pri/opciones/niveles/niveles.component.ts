@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-niveles',
@@ -84,11 +85,26 @@ export class NivelesComponent implements OnInit {
     }
   }
 
-  viewNivel(id_nivel: number): void {
-    const nivel = this.niveles.find(n => n.id_nivel === id_nivel);
-    if (nivel) {
-      alert(`Ver nivel:\nID: ${nivel.id_nivel}\nNombre: ${nivel.nombre}`);
+  viewNivel(id: number): void {
+    const nivel = this.niveles.find(e => e['id'] === id);
+    if (!nivel) {
+      this.handleError('Nivel no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Nivel`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${nivel.nombre}</p>
+          <p><strong>Estado:</strong> ${nivel.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
   editNivel(id_nivel: number): void {
@@ -105,22 +121,57 @@ export class NivelesComponent implements OnInit {
   }
 
   deleteNivel(id_nivel: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este nivel?')) {
-      this.nivelesService.deleteNivel(id_nivel).subscribe({
-        next: () => {
-          this.cargarNiveles();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar nivel:', error);
-        }
-      });
+    const nivel = this.niveles.find(n => n.id_nivel === id_nivel);
+    if (!nivel) {
+      this.handleError('Nivel no encontrado');
+      return;
     }
-  }
+
+    Swal.fire({
+      title: '¿Eliminar Nivel?',
+      text: `¿Estás seguro de que deseas eliminar el nivel "${nivel.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.nivelesService.deleteNivel(id_nivel).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Nivel eliminado correctamente');
+            this.cargarNiveles();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el nivel');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }  
 
   detailNivel(id_nivel: number): void {
-    const nivel = this.niveles.find(n => n.id_nivel === id_nivel);
+    const nivel = this.niveles.find(p => p['id_nivel'] === id_nivel);
     if (nivel) {
-      alert(`Detalle nivel:\nID: ${nivel.id_nivel}\nNombre: ${nivel.nombre}\nEstado: ${nivel.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle nivel',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${nivel['id']}</p>
+            <p><strong>Nombre:</strong> ${nivel.nombre}</p>
+            <p><strong>Estado:</strong> ${nivel.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -155,4 +206,25 @@ export class NivelesComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

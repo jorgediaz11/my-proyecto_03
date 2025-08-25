@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AulasService, Aula } from 'src/app/services/aulas.service';
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
-
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-aulas',
@@ -146,6 +146,29 @@ export class AulasComponent implements OnInit {
     }
   }
 
+  viewPerfil(id_aula: number): void {
+    const aula = this.aulas.find(a => a.id_aula === id_aula);
+    if (!aula) {
+      this.handleError('Aula no encontrada');
+      return;
+    }
+
+    Swal.fire({
+      title: `Detalles del Perfil`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${aula.nombre}</p>
+          <p><strong>Estado:</strong> ${aula.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
+  }
+
+
   editAula(id_aula: number): void {
     this.isEditing = true;
     this.editingAulaId = id_aula;
@@ -159,23 +182,58 @@ export class AulasComponent implements OnInit {
     }
   }
 
-  deleteAula(id_aula: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta aula?')) {
-      this.aulasService.deleteAula(id_aula).subscribe({
-        next: () => {
-          this.cargarAulas();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar aula:', error);
-        }
-      });
+  deletePerfil(id_aula: number): void {
+    const aula = this.aulas.find(p => p.id_aula === id_aula);
+    if (!aula) {
+      this.handleError('Aula no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Aula?',
+      text: `¿Estás seguro de que deseas eliminar el aula "${aula.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.aulasService.deleteAula(id_aula).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Aula eliminada correctamente');
+            this.cargarAulas();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el perfil');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
   }
 
   detailAula(id_aula: number): void {
     const aula = this.aulas.find(a => a.id_aula === id_aula);
     if (aula) {
-      alert(`Detalle aula:\nID: ${aula.id_aula}\nNombre: ${aula.nombre}\nEstado: ${aula.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle aula',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${aula.id_aula}</p>
+            <p><strong>Nombre:</strong> ${aula.nombre}</p>
+            <p><strong>Estado:</strong> ${aula.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -210,4 +268,25 @@ export class AulasComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

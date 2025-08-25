@@ -6,6 +6,7 @@ import { UnidadesService } from '../../../../services/unidades.service';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
 import { GradosService, Grado } from '../../../../services/grados.service';
 import { CursosService, Curso } from '../../../../services/cursos.service';
+import Swal from 'sweetalert2';
 
 interface Unidad {
   id_unidad?: number;
@@ -48,13 +49,11 @@ export class UnidadesComponent implements OnInit {
   unidades: Unidad[] = [];
   filteredUnidades: Unidad[] = [];
   paginatedUnidades: Unidad[] = [];
-  filteredSecciones: Unidad[] = [];
-  paginatedSecciones: Unidad[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   searchTerm = '';
   isEditing = false;
-  editingSeccionId?: number;
+  editingUnidadId?: number;
   loading = false;
   activeTab: 'tabla' | 'nuevo' = 'tabla';
 
@@ -213,17 +212,32 @@ export class UnidadesComponent implements OnInit {
     }
   }
 
-  viewSeccion(id: number): void {
-    const unidad = this.unidades.find(s => s.id_unidad === id);
-    if (unidad) {
-      alert(`Ver sección:\nID: ${unidad.id_unidad}\nNombre: ${unidad.nombre}`);
+  viewUnidad(id_unidad: number): void {
+    const unidad = this.unidades.find(e => e.id_unidad === id_unidad);
+    if (!unidad) {
+      this.handleError('Unidad no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Nivel`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${unidad.nombre}</p>
+          <p><strong>Estado:</strong> ${unidad.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
-  editSeccion(id: number): void {
+  editUnidad(id_unidad: number): void {
     this.isEditing = true;
-    this.editingSeccionId = id;
-    const unidad = this.unidades.find(s => s.id_unidad === id);
+    this.editingUnidadId = id_unidad;
+    const unidad = this.unidades.find(s => s.id_unidad === id_unidad);
     if (unidad) {
       this.selectTab('nuevo');
       this.unidadForm.patchValue({
@@ -237,23 +251,59 @@ export class UnidadesComponent implements OnInit {
     }
   }
 
-  deleteSeccion(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta sección?')) {
-      this.unidadesService.eliminarUnidad(id).subscribe({
-        next: () => {
-          this.cargarUnidades();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar unidad:', error);
-        }
-      });
+  deleteUnidad(id_unidad: number): void {
+    const unidad = this.unidades.find(n => n.id_unidad === id_unidad);
+    if (!unidad) {
+      this.handleError('Unidad no encontrada');
+      return;
     }
-  }
 
-  detailSeccion(id: number): void {
-    const unidad = this.unidades.find(s => s.id_unidad === id);
+    Swal.fire({
+      title: '¿Eliminar Nivel?',
+      text: `¿Estás seguro de que deseas eliminar la unidad "${unidad.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.unidadesService.eliminarUnidad(id_unidad).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Nivel eliminado correctamente');
+            this.cargarNiveles();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el nivel');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }  
+
+
+  detailUnidad(id_unidad: number): void {
+    const unidad = this.unidades.find(s => s.id_unidad === id_unidad);
     if (unidad) {
-      alert(`Detalle sección:\nID: ${unidad.id_unidad}\nNombre: ${unidad.nombre}\nEstado: ${unidad.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle Unidad',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${unidad.id_unidad}</p>
+            <p><strong>Nombre:</strong> ${unidad.nombre}</p>
+            <p><strong>Estado:</strong> ${unidad.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -265,18 +315,18 @@ export class UnidadesComponent implements OnInit {
       ...this.unidadForm.value,
       id_curso: cursoId > 0 ? cursoId : undefined
     };
-    if (this.isEditing && this.editingSeccionId) {
+    if (this.isEditing && this.editingUnidadId) {
       // Editar
-      this.unidadesService.actualizarUnidad(this.editingSeccionId, seccionData).subscribe({
+      this.unidadesService.actualizarUnidad(this.editingUnidadId, seccionData).subscribe({
         next: () => {
           this.cargarUnidades();
           this.isEditing = false;
-          this.editingSeccionId = undefined;
+          this.editingUnidadId = undefined;
           this.unidadForm.reset({ estado: true });
           this.selectTab('tabla');
         },
         error: (error: unknown) => {
-          console.error('Error al actualizar sección:', error);
+          console.error('Error al actualizar unidad:', error);
         }
       });
     } else {
@@ -293,4 +343,25 @@ export class UnidadesComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

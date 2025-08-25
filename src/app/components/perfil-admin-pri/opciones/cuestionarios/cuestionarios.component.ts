@@ -169,16 +169,17 @@ export class CuestionariosComponent implements OnInit {
   }
 
   editCuestionario(id_cuestionario: number): void {
-    this.isEditing = true;
-    this.editingCuestionarioId = id_cuestionario;
-    const cuestionario = this.cuestionarios.find(c => c.id_cuestionario === id_cuestionario);
+    const cuestionario = this.cuestionarios.find(q => q.id_cuestionario === id_cuestionario);
     if (cuestionario) {
       this.cuestionarioForm.patchValue({
         titulo: cuestionario.titulo,
         descripcion: cuestionario.descripcion,
         estado: cuestionario.estado
+        // ...otros campos si corresponde
       });
-      this.selectTab('nuevo');
+      this.activeTab = 'nuevo';
+      this.isEditing = true;
+      this.editingCuestionarioId = id_cuestionario;
     }
   }
 

@@ -6,7 +6,6 @@ import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Editor, EditoresService, CreateEditorDto, UpdateEditorDto } from 'src/app/services/editores.service';
 import { AuthService } from 'src/app/services/auth.service';
-
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 

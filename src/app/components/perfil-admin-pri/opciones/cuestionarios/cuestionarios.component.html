@@ -160,34 +160,118 @@
             <form [formGroup]="cuestionarioForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <div class="space-y-4">
                 <h2 class="text-xl font-semibold text-gray-700">Datos del Cuestionario</h2>
-                <div class="flex flex-wrap -mx-2">
-                  <div class="w-full md:w-1/2 px-2">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <!-- Libro -->
+                  <div>
+                    <label for="id_libro" class="block text-sm font-medium text-gray-700 mb-1">Libro</label>
+                    <select 
+                      id="id_libro" 
+                      formControlName="id_libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    >
+                      <option value="">Seleccione libro</option>
+                      <!-- <option *ngFor="let libro of libros" [value]="libro.id_libro">{{ libro.nombre }}</option> -->
+                    </select>
+                  </div>
+
+                  <!-- Curso -->
+                  <div>
+                    <label for="id_curso" class="block text-sm font-medium text-gray-700 mb-1">Curso</label>
+                    <select 
+                      id="id_curso" 
+                      formControlName="id_curso"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    >
+                      <option value="">Seleccione curso</option>
+                      <!-- <option *ngFor="let curso of cursos" [value]="curso.id_curso">{{ curso.nombre }}</option> -->
+                    </select>
+                  </div>
+
+                  <!-- Unidad -->
+                  <div>
+                    <label for="id_unidad" class="block text-sm font-medium text-gray-700 mb-1">Unidad</label>
+                    <select 
+                      id="id_unidad" 
+                      formControlName="id_unidad"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    >
+                      <option value="">Seleccione unidad</option>
+                      <!-- <option *ngFor="let unidad of unidades" [value]="unidad.id_unidad">{{ unidad.nombre }}</option> -->
+                    </select>
+                  </div>
+
+                  <!-- Clase -->
+                  <div>
+                    <label for="id_clasecol" class="block text-sm font-medium text-gray-700 mb-1">Clase</label>
+                    <select 
+                      id="id_clasecol" 
+                      formControlName="id_clasecol"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    >
+                      <option value="">Seleccione clase</option>
+                      <!-- <option *ngFor="let clase of clasesCol" [value]="clase.id_clasecol">{{ clase.nombre }}</option> -->
+                    </select>
+                  </div>
+
+                  <!-- Título -->
+                  <div>
                     <label for="titulo" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-                    <input type="text" id="titulo" formControlName="titulo" placeholder="Título del cuestionario"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                    </div>
-                    <div class="w-full md:w-1/2 px-2">
-                      <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                      <select id="estado" formControlName="estado"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                        <option [value]="true">Activo</option>
-                        <option [value]="false">Inactivo</option>
-                      </select>
-                    </div>
-                    <div class="w-full px-2 mt-4">
-                      <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                      <textarea id="descripcion" formControlName="descripcion" rows="2" placeholder="Descripción del cuestionario"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
-                    </div>
+                    <input 
+                      type="text" 
+                      id="titulo" 
+                      formControlName="titulo" 
+                      placeholder="Título del cuestionario"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" 
+                    />
+                  </div>
+
+                  <!-- Estado -->
+                  <div>
+                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select 
+                      id="estado" 
+                      formControlName="estado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    >
+                      <option [value]="true">Activo</option>
+                      <option [value]="false">Inactivo</option>
+                    </select>
                   </div>
                 </div>
-                <button type="submit"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+
+                <!-- Descripción (campo completo ancho) -->
+                <div class="mt-4">
+                  <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                  <textarea 
+                    id="descripcion" 
+                    formControlName="descripcion" 
+                    rows="3" 
+                    placeholder="Descripción del cuestionario"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Botones de acción -->
+              <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                <button 
+                  type="button" 
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                >
+                  <i class="fas fa-times mr-2"></i> Cancelar
+                </button>
+                <button 
+                  type="submit"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                >
                   <i class="fas fa-save mr-2"></i> Guardar Cuestionario
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>              
+
           </div>
+        </div>
         }
 
       </div>

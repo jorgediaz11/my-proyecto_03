@@ -58,6 +58,7 @@ import { ActividadesComponent } from './components/perfil-admin-pri/opciones/act
 import { TipoActividadComponent } from './components/perfil-admin-pri/opciones/tipo-actividad/tipo-actividad.component';
 import { PeriodoAcademicoComponent } from './components/perfil-admin-pri/opciones/periodo-academico/periodo-academico.component';
 import { AulasComponent } from './components/perfil-admin-pri/opciones/aulas/aulas.component';
+import { TipoPreguntaComponent } from './components/perfil-admin-pri/opciones/tipo-pregunta/tipo-pregunta.component';
 // Perfil Administrador Sec
 import { PerfilAdminSecComponent } from './components/perfil-admin-sec/perfil-admin-sec.component';
 import { PerfilAdminSecMuroComponent } from './components/perfil-admin-sec/perfil-admin-sec-muro.component';
@@ -90,25 +91,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         LoginRecuperaComponent,
         AreasComponent,
         CursosDetalleComponent,
-        // LeccionesComponent, // moved from imports to declarations
         LibrosComponent,
         OpcionesComponent,
-        // ActivarLibrosComponent, // Ahora standalone, no va en declarations
         PerfilAdminPriComponent,
         PerfilAdminPriMuroComponent,
-        // UsuariosComponent, // standalone, move to imports
-        // ColegiosComponent, // standalone, move to imports
         DocentesComponent,
         EstudiantesComponent,
-        // EditoresComponent, // standalone, move to imports
         ClasesColComponent,
         GrupofamComponent,
         ReportesComponent,
         AuditoriaComponent,
-        // PerfilComponent, // standalone, move to imports
         MaterialesComponent,
         TipoMaterialComponent,
-        // CursosComponent, // standalone, move to imports
         NivelesComponent,
         GradosComponent,
         SeccionesComponent,
@@ -123,13 +117,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         PerfilEditorComponent,
         PerfilEditorMuroComponent,
         TestEndpointsComponent,
-        ClasesColComponent,
+        TipoPreguntaComponent,
         TipoActividadComponent
     ],
-    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
-        CommonModule,
         CommonModule,
         RouterModule.forRoot(routes),
         FormsModule,
@@ -148,7 +140,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         AulasComponent, // standalone
         CursosComponent, // standalone
         EditoresComponent, // standalone
-        UnidadesComponent, // standalone
         UnidadesComponent, // standalone
         LeccionesComponent, // standalone
         ActividadesComponent // standalone
@@ -176,6 +167,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi())
-    ]
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

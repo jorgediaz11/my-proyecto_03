@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { error } from 'console';
 import { Area, AreasService } from 'src/app/services/areas.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-areas',
@@ -89,7 +91,19 @@ export class AreasComponent implements OnInit {
   viewArea(id_area: number): void {
     const area = this.areas.find(a => a.id_area === id_area);
     if (area) {
-      alert(`Ver área:\nID: ${area.id_area}\nNombre: ${area.nombre}`);
+      Swal.fire({
+        title: `Detalles del Área`,
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${area.id_area}</p>
+            <p><strong>Nombre:</strong> ${area.nombre}</p>
+            <p><strong>Estado:</strong> ${area.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -109,22 +123,57 @@ export class AreasComponent implements OnInit {
   }
 
   deleteArea(id_area: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta área?')) {
-      this.areasService.eliminarArea(id_area).subscribe({
-        next: () => {
-          this.cargarAreas();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar área:', error);
-        }
-      });
+    const area = this.areas.find(a => a.id_area === id_area);
+    if (!area) {
+      this.handleError('Área no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Área?',
+      text: `¿Estás seguro de que deseas eliminar el área "${area.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.areasService.eliminarArea(id_area).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Área eliminada correctamente');
+            this.cargarAreas();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el área');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
   }
 
   detailArea(id_area: number): void {
     const area = this.areas.find(a => a.id_area === id_area);
     if (area) {
-      alert(`Detalle área:\nID: ${area.id_area}\nNombre: ${area.nombre}\nEstado: ${area.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle área',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${area.id_area}</p>
+            <p><strong>Nombre:</strong> ${area.nombre}</p>
+            <p><strong>Estado:</strong> ${area.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -159,4 +208,26 @@ export class AreasComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
+
 }

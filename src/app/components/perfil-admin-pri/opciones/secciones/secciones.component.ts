@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SeccionesService } from '../../../../services/secciones.service';
+import Swal from 'sweetalert2';
 
 interface Seccion {
   id_seccion?: number;
@@ -96,11 +97,26 @@ export class SeccionesComponent implements OnInit {
   }
 
   viewSeccion(id_seccion: number): void {
-    const seccion = this.secciones.find(s => s.id_seccion === id_seccion);
-    if (seccion) {
-      alert(`Ver sección:\nID: ${seccion.id_seccion}\nNombre: ${seccion.nombre}`);
+    const seccion = this.secciones.find(e => e.id_seccion === id_seccion);
+    if (!seccion) {
+      this.handleError('Sección no encontrada');
+      return;
     }
-  }
+
+    Swal.fire({
+      title: `Detalles de la Sección`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${seccion.nombre}</p>
+          <p><strong>Estado:</strong> ${seccion.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
+  }  
 
   editSeccion(id_seccion: number): void {
     this.isEditing = true;
@@ -116,24 +132,61 @@ export class SeccionesComponent implements OnInit {
   }
 
   deleteSeccion(id_seccion: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta sección?')) {
-      this.seccionesService.eliminarSeccion(id_seccion).subscribe({
-        next: () => {
-          this.cargarSecciones();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar sección:', error);
-        }
+    const seccion = this.secciones.find(p => p.id_seccion === id_seccion);
+    if (!seccion) {
+      this.handleError('Sección no encontrada');
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Eliminar Sección?',
+      text: `¿Estás seguro de que deseas eliminar la sección "${seccion.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.seccionesService.eliminarSeccion(id_seccion).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Sección eliminada correctamente');
+            this.cargarSecciones();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar la sección');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }
+
+
+  detailSeccion(id_seccion: number): void {
+    const seccion = this.secciones.find(p => p.id_seccion === id_seccion);
+    if (seccion) {
+      Swal.fire({
+        title: 'Detalle sección',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${seccion.id_seccion}</p>
+            <p><strong>Nombre:</strong> ${seccion.nombre}</p>
+            <p><strong>Estado:</strong> ${seccion.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
       });
     }
   }
 
-  detailSeccion(id_seccion: number): void {
-    const seccion = this.secciones.find(s => s.id_seccion === id_seccion);
-    if (seccion) {
-      alert(`Detalle sección:\nID: ${seccion.id_seccion}\nNombre: ${seccion.nombre}\nEstado: ${seccion.estado ? 'Activo' : 'Inactivo'}`);
-    }
-  }
 
   onSubmit(): void {
     if (this.seccionForm.invalid) return;
@@ -166,4 +219,25 @@ export class SeccionesComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

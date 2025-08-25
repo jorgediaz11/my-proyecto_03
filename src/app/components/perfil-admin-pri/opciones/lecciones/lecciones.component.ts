@@ -6,9 +6,9 @@ import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
 import { Unidad, UnidadesService } from 'src/app/services/unidades.service';
 // import { leccionesService } from 'src/app/services/unidades.service';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lecciones',
@@ -223,7 +223,19 @@ export class LeccionesComponent implements OnInit {
   detailLeccion(id: number): void {
     const leccion = this.lecciones.find(s => s.id_leccion === id);
     if (leccion) {
-      alert(`Detalle lección:\nID: ${leccion.id_leccion}\nTítulo: ${leccion.titulo}\nEstado: ${leccion.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle lección',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${leccion.id_leccion}</p>
+            <p><strong>Título:</strong> ${leccion.titulo}</p>
+            <p><strong>Estado:</strong> ${leccion.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -295,26 +307,83 @@ export class LeccionesComponent implements OnInit {
   }
 
   viewLeccion(id: number): void {
-    const leccion = this.lecciones.find((s: Leccion) => s.id_leccion === id);
-    if (leccion) {
-      alert(`Vista de lección:\nID: ${leccion.id_leccion}\nTítulo: ${leccion.titulo}\nContenido: ${leccion.contenido}`);
+    const leccion = this.lecciones.find(e => e['id'] === id);
+    if (!leccion) {
+      this.handleError('Lección no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles de la Lección`,
+      html: `
+        <div class="text-left">
+          <p><strong>ID:</strong> ${leccion.id_leccion}</p>
+          <p><strong>Título:</strong> ${leccion.titulo}</p>
+          <p><strong>Contenido:</strong> ${leccion.contenido}</p>
+          <p><strong>Estado:</strong> ${leccion.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
-  deleteLeccion(id: number): void {
-    if (confirm('¿Está seguro de que desea eliminar esta lección?')) {
-      this.leccionesService.eliminarLeccion(id).subscribe({
-        next: () => {
-          this.cargarLecciones();
-          alert('Lección eliminada correctamente');
-        },
-        error: (error: unknown) => {
-          alert('Error al eliminar la lección');
-          console.error('Error al eliminar lección:', error);
-        }
-      });
+  deleteLeccion(id_leccion: number): void {
+    const leccion = this.lecciones.find(l => l.id_leccion === id_leccion);
+    if (!leccion) {
+      this.handleError('Lección no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Lección?',
+      text: `¿Estás seguro de que deseas eliminar la lección "${leccion.titulo}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.leccionesService.eliminarLeccion(id_leccion).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Lección eliminada correctamente');
+            this.cargarLecciones();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar la lección');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }  
+  
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
   }
 
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }  
 
 }

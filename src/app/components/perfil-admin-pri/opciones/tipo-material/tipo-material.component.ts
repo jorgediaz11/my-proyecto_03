@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { TipoMaterialService, TipoMaterial } from '../../../../services/tipo-material.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 // interface TipoMaterial {
 //   id_tipo_material?: number;
@@ -88,11 +89,26 @@ export class TipoMaterialComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  viewTipoMaterial(id: number): void {
-    const tm = this.tipoMateriales.find(t => t.id_tipo_material === id);
-    if (tm) {
-      alert(`Ver tipo_material:\nID: ${tm.id_tipo_material}\nNombre: ${tm.nombre}`);
+  viewTipoMaterial(id_tipo_material: number): void {
+    const tm = this.tipoMateriales.find(e => e['id_tipo_material'] === id_tipo_material);
+    if (!tm) {
+      this.handleError('Nivel no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Nivel`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${tm.nombre}</p>
+          <p><strong>Estado:</strong> ${tm.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
   editTipoMaterial(id: number): void {
@@ -109,23 +125,58 @@ export class TipoMaterialComponent implements OnInit {
     }
   }
 
-  deleteTipoMaterial(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este tipo de material?')) {
-      this.tipoMaterialService.eliminarTipoMaterial(id).subscribe({
-        next: () => {
-          this.cargarTipoMateriales();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar tipo_material:', error);
-        }
-      });
+  deleteTipoMaterial(id_tipo_material: number): void {
+    const tipoMaterial = this.tipoMateriales.find(n => n.id_tipo_material === id_tipo_material);
+    if (!tipoMaterial) {
+      this.handleError('Tipo de material no encontrado');
+      return;
     }
-  }
 
-  detailTipoMaterial(id: number): void {
-    const tm = this.tipoMateriales.find(t => t.id_tipo_material === id);
+    Swal.fire({
+      title: '¿Eliminar Tipo de Material?',
+      text: `¿Estás seguro de que deseas eliminar el tipo de material "${tipoMaterial.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.tipoMaterialService.eliminarTipoMaterial(id_tipo_material).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Tipo de material eliminado correctamente');
+            this.cargarTipoMateriales();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el tipo de material');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }  
+
+  detailTipoMaterial(id_tipo_material: number): void {
+    const tm = this.tipoMateriales.find(t => t.id_tipo_material === id_tipo_material);
     if (tm) {
-      alert(`Detalle tipo_material:\nID: ${tm.id_tipo_material}\nNombre: ${tm.nombre}\nEstado: ${tm.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle tipo_material',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${tm.id_tipo_material}</p>
+            <p><strong>Nombre:</strong> ${tm.nombre}</p>
+            <p><strong>Estado:</strong> ${tm.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -163,4 +214,25 @@ export class TipoMaterialComponent implements OnInit {
       });
     }
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

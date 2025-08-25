@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ClasesColService, ClaseCol as ClaseColApi, CreateClaseColDto, UpdateClaseColDto } from 'src/app/services/clases-col.service';
 import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { ClaseColDetalle } from 'src/app/services/clases-col.service';
+import Swal from 'sweetalert2';
 
 // Interfaz local para visualización (puedes ajustarla si necesitas mostrar más campos)
 export interface ClaseCol {
@@ -15,7 +16,7 @@ export interface ClaseCol {
   id_grado: number;
   id_seccion: number;
   id_curso: number;
-  //nombre: string; // Agregado para evitar error de propiedad
+  nombre?: string; // Agregado para evitar error de propiedad
   //grado?: string; // Agregado para evitar error de propiedad
   //seccion?: string; // Agregado para evitar error de propiedad
   observaciones?: string | null;
@@ -268,27 +269,81 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   // ELIMINAR CLASE
-  deleteClase(id_clases: number): void {
-    if (!confirm('¿Estás seguro de que deseas eliminar esta clase?')) return;
-    this.clasesColService.eliminarClaseCol(id_clases).subscribe({
-      next: () => {
-        this.handleSuccess('Clase eliminada exitosamente');
-        this.cargarClasesCol();
-      },
-      error: () => {
-        this.handleError('Error al eliminar la clase');
-      }
-    });
-  }
+  // deleteClase(id_clases: number): void {
+  //   if (!confirm('¿Estás seguro de que deseas eliminar esta clase?')) return;
+  //   this.clasesColService.eliminarClaseCol(id_clases).subscribe({
+  //     next: () => {
+  //       this.handleSuccess('Clase eliminada exitosamente');
+  //       this.cargarClasesCol();
+  //     },
+  //     error: () => {
+  //       this.handleError('Error al eliminar la clase');
+  //     }
+  //   });
+  // }
 
-  // VER DETALLES DE LA CLASE
-  viewClase(id_clases: number): void {
+  deleteClase(id_clases: number): void {
     const clase = this.clases.find(c => c.id_clases === id_clases);
     if (!clase) {
       this.handleError('Clase no encontrada');
       return;
     }
-    alert(`Detalles de la clase: ${JSON.stringify(clase, null, 2)}`);
+
+    Swal.fire({
+      title: '¿Eliminar Clase?',
+      text: `¿Estás seguro de que deseas eliminar la clase "${clase.nombre ?? id_clases}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.clasesColService.eliminarClaseCol(id_clases).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Clase eliminada correctamente');
+            this.cargarClasesCol();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar la clase');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }
+
+  // VER DETALLES DE LA CLASE
+  // viewClase(id_clases: number): void {
+  //   const clase = this.clases.find(c => c.id_clases === id_clases);
+  //   if (!clase) {
+  //     this.handleError('Clase no encontrada');
+  //     return;
+  //   }
+  //   alert(`Detalles de la clase: ${JSON.stringify(clase, null, 2)}`);
+  // }
+
+  viewClase(id_clases: number): void {
+    const clase = this.clases.find(p => p.id_clases === id_clases);
+    if (clase) {
+      Swal.fire({
+        title: 'Detalle perfil',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${clase.id_clases}</p>
+            <p><strong>Estado:</strong> ${clase.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
+    }
   }
 
   // CANCELAR EDICIÓN
@@ -316,16 +371,6 @@ export class ClasesColComponent implements OnInit, OnDestroy {
       const control = this.claseForm.get(key);
       control?.markAsTouched();
     });
-  }
-
-  // MANEJO DE ERRORES
-  private handleError(message: string): void {
-    alert('Error: ' + message);
-  }
-
-  // MANEJO DE ÉXITO
-  private handleSuccess(message: string): void {
-    alert('Éxito: ' + message);
   }
 
   // PAGINACIÓN - TOTAL DE PÁGINAS
@@ -364,40 +409,50 @@ export class ClasesColComponent implements OnInit, OnDestroy {
     // Aquí se implementará el filtrado de docentes por colegio si se requiere
   }
 
-  // Eliminado getter duplicado paginatedClasesDetalle
-
-  // get totalClasesDetalle(): number {
-  //   return this.clasesDetalle.length;
-  // }
-
-  // get totalPagesDetalle(): number[] {
-  //   return Array(Math.ceil(this.totalClasesDetalle / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
-  // }
-
   changePageDetalle(page: number): void {
     this.currentPage = page;
   }
 
   get filteredClasesDetalle(): ClaseColDetalle[] {
-  // Aplica aquí tus filtros sobre clasesDetalle
-  // Ejemplo: por colegio
-  if (this.filtroColegio) {
-    return this.clasesDetalle.filter(c => c.id_colegio === Number(this.filtroColegio));
+    // Aplica aquí tus filtros sobre clasesDetalle
+    // Ejemplo: por colegio
+    if (this.filtroColegio) {
+      return this.clasesDetalle.filter(c => c.id_colegio === Number(this.filtroColegio));
+    }
+    return this.clasesDetalle;
   }
-  return this.clasesDetalle;
-}
 
-get paginatedClasesDetalle(): ClaseColDetalle[] {
-  const start = (this.currentPage - 1) * this.itemsPerPage;
-  return this.filteredClasesDetalle.slice(start, start + this.itemsPerPage);
-}
+  get paginatedClasesDetalle(): ClaseColDetalle[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredClasesDetalle.slice(start, start + this.itemsPerPage);
+  }
 
-get totalClasesDetalle(): number {
-  return this.filteredClasesDetalle.length;
-}
+  get totalClasesDetalle(): number {
+    return this.filteredClasesDetalle.length;
+  }
 
-get totalPagesDetalle(): number[] {
-  return Array(Math.ceil(this.totalClasesDetalle / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
-}
+  get totalPagesDetalle(): number[] {
+    return Array(Math.ceil(this.totalClasesDetalle / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
+  }
+
+// ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
 
 }

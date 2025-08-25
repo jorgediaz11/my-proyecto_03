@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { TipoActividadService,TipoActividad } from '../../../../services/tipo-actividad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // interface TipoActividad {
 //   id_tipo_actividad?: number;

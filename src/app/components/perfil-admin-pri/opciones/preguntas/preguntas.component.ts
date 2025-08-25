@@ -8,6 +8,8 @@ import { CursosService, Curso } from 'src/app/services/cursos.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TipoPreguntaService, TipoPregunta } from 'src/app//services/tipo-pregunta.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-preguntas',
@@ -47,7 +49,8 @@ export class PreguntasComponent implements OnInit {
   filtroNivel = '';
   filtroGrado = '';
   filtroCurso = '';
-
+  
+  tiposPregunta: TipoPregunta[] = [];
   cuestionarios: Cuestionario[] = [];
   filteredCuestionarios: Cuestionario[] = [];
   selectedCuestionario: number | '' = '';
@@ -59,12 +62,25 @@ export class PreguntasComponent implements OnInit {
   private nivelesService = inject(NivelesService);
   private gradosService = inject(GradosService);
   private cursosService = inject(CursosService);
+  private tipoPreguntaService = inject(TipoPreguntaService);
 
   ngOnInit(): void {
     this.initForm();
     this.cargarPreguntas();
     this.cargarCuestionarios();
     this.cargarNiveles();
+    this.cargarTiposPregunta(); // <-- Agrega esta línea
+  }
+
+  cargarTiposPregunta(): void {
+    this.tipoPreguntaService.getTiposPregunta().subscribe({
+      next: (data: TipoPregunta[]) => {
+        this.tiposPregunta = data;
+      },
+      error: (error: any) => {
+        console.error('Error al cargar tipos de pregunta:', error);
+      }
+    });
   }
 
   cargarNiveles(): void {
@@ -222,10 +238,25 @@ export class PreguntasComponent implements OnInit {
   }
 
   viewPregunta(id_pregunta: number): void {
-    const pregunta = this.preguntas.find(p => p.id_pregunta === id_pregunta);
-    if (pregunta) {
-      alert(`Ver pregunta:\nID: ${pregunta.id_pregunta}\nEnunciado: ${pregunta.enunciado}`);
+    const pregunta = this.preguntas.find(e => e['id_pregunta'] === id_pregunta);
+    if (!pregunta) {
+      this.handleError('Pregunta no encontrada');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles de la Pregunta`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${pregunta.enunciado}</p>
+          <p><strong>Estado:</strong> ${pregunta.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
   editPregunta(id_pregunta: number): void {
@@ -248,24 +279,58 @@ export class PreguntasComponent implements OnInit {
   }
 
   deletePregunta(id_pregunta: number): void {
-    if (typeof id_pregunta !== 'number') return;
-    if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
-      this.preguntasService.eliminarPregunta(id_pregunta).subscribe({
-        next: () => {
-          this.cargarPreguntas();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar pregunta:', error);
-        }
-      });
+    const pregunta = this.preguntas.find(n => n.id_pregunta === id_pregunta);
+    if (!pregunta) {
+      this.handleError('Pregunta no encontrada');
+      return;
     }
-  }
+
+    Swal.fire({
+      title: '¿Eliminar Pregunta?',
+      text: `¿Estás seguro de que deseas eliminar la pregunta "${pregunta.enunciado}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.preguntasService.eliminarPregunta(pregunta.id_pregunta).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Pregunta eliminada correctamente');
+            this.cargarPreguntas();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar la pregunta');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  } 
 
   detailPregunta(id_pregunta: number): void {
     if (typeof id_pregunta !== 'number') return;
     const pregunta = this.preguntas.find(p => p.id_pregunta === id_pregunta);
     if (pregunta) {
-      alert(`Detalle pregunta:\nID: ${pregunta.id_pregunta}\nEnunciado: ${pregunta.enunciado}\nEstado: ${pregunta.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle pregunta',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${pregunta.id_pregunta}</p>
+            <p><strong>Enunciado:</strong> ${pregunta.enunciado}</p>
+            <p><strong>Estado:</strong> ${pregunta.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -300,4 +365,30 @@ export class PreguntasComponent implements OnInit {
       });
     }
   }
+
+  getPagesArray(): number[] {
+    const totalPages = Math.ceil(this.filteredPreguntas.length / this.itemsPerPage);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }
