@@ -1,4 +1,5 @@
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
@@ -89,7 +90,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         LoginRecuperaComponent,
         AreasComponent,
         CursosDetalleComponent,
-        LeccionesComponent,
+        // LeccionesComponent, // moved from imports to declarations
         LibrosComponent,
         OpcionesComponent,
         // ActivarLibrosComponent, // Ahora standalone, no va en declarations
@@ -98,17 +99,16 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         // UsuariosComponent, // standalone, move to imports
         // ColegiosComponent, // standalone, move to imports
         DocentesComponent,
-    EstudiantesComponent,
-    // EditoresComponent, // standalone, move to imports
+        EstudiantesComponent,
+        // EditoresComponent, // standalone, move to imports
         ClasesColComponent,
         GrupofamComponent,
-        UnidadesComponent,
         ReportesComponent,
         AuditoriaComponent,
         // PerfilComponent, // standalone, move to imports
         MaterialesComponent,
         TipoMaterialComponent,
-    // CursosComponent, // standalone, move to imports
+        // CursosComponent, // standalone, move to imports
         NivelesComponent,
         GradosComponent,
         SeccionesComponent,
@@ -124,12 +124,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         PerfilEditorMuroComponent,
         TestEndpointsComponent,
         ClasesColComponent,
-        ActividadesComponent,
         TipoActividadComponent
     ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
+        CommonModule,
+        CommonModule,
         RouterModule.forRoot(routes),
         FormsModule,
         BrowserAnimationsModule,
@@ -146,7 +147,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         ColegiosComponent, // standalone
         AulasComponent, // standalone
         CursosComponent, // standalone
-    EditoresComponent, // standalone
+        EditoresComponent, // standalone
+        UnidadesComponent, // standalone
+        UnidadesComponent, // standalone
+        LeccionesComponent, // standalone
+        ActividadesComponent // standalone
     ],
     providers: [
         provideAnimations(),

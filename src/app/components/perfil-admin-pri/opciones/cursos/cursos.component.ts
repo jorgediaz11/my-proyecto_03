@@ -5,6 +5,8 @@ import { CursosService, Curso } from '../../../../services/cursos.service';
 import { CursosDetalleService } from 'src/app/services/cursos-detalle.service';
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
+import { AreasService, Area } from 'src/app/services/areas.service';
+import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -21,49 +23,98 @@ import Swal from 'sweetalert2';
 })
 
 export class CursosComponent implements OnInit {
+  // Variable para controlar validación de unidades y lecciones
+  validarUnidadesLecciones = false;
+  // --- PROPIEDADES NECESARIAS PARA FUNCIONAMIENTO Y COMPILACIÓN ---
+  // Pestañas
+  activeTab: 'tabla' | 'nuevo' = 'tabla';
+
+  // Selectores y datos para TABLA
+  niveles: Nivel[] = [];
+  areas: Area[] = [];
+  colegios: Colegio[] = [];
   cursos: Curso[] = [];
   filteredCursos: Curso[] = [];
   paginatedCursos: Curso[] = [];
-  currentPage = 1;
-  itemsPerPage = 10;
-  searchCurso = '';
-  activeTab: 'tabla' | 'nuevo' = 'tabla';
-  showForm = false;
-  loading = false;
-
-  tipoCurso = 'ambos';
-
-  // Niveles y grados para los selectores
-  niveles: Nivel[] = [];
   grados: Grado[] = [];
-  allGrados: Grado[] = [];
   selectedNivel: number | '' = '';
   selectedGrado: number | '' = '';
+  tipoCurso = 'ambos';
+  searchCurso = '';
+  itemsPerPage = 10;
+  currentPage = 1;
+  loading = false;
 
-  // Formularios
+  // Selectores y datos para NUEVO
+  selectedNivelNuevo: number | '' = '';
+  gradosNuevo: Grado[] = [];
+
+  // Formulario
   cursoForm!: FormGroup;
   editandoCurso = false;
+
+  // --- MÉTODOS ---
+  // Método para filtrar grados en la pestaña 'nuevo'
+  onNivelNuevoChange(): void {
+    this.cursoForm.patchValue({ grado: '' });
+    if (this.selectedNivelNuevo) {
+      this.gradosService.getGrados().subscribe({
+        next: (grados: Grado[]) => {
+          this.gradosNuevo = grados.filter(g => g.nivel && typeof g.nivel === 'object' && g.nivel.id_nivel === Number(this.selectedNivelNuevo) && g.estado);
+        },
+        error: () => {
+          Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
+        }
+      });
+    } else {
+      this.gradosService.getGrados().subscribe({
+        next: (grados: Grado[]) => {
+          this.gradosNuevo = grados.filter(g => g.estado);
+        },
+        error: () => {
+          Swal.fire('Error', 'No se pudieron cargar los grados', 'error');
+        }
+      });
+    }
+  }
 
   private cursosService = inject(CursosService);
   private cursosDetalleService = inject(CursosDetalleService);
   private nivelesService = inject(NivelesService);
   private gradosService = inject(GradosService);
+    private areasService = inject(AreasService);
+    private colegiosService = inject(ColegiosService);
   private fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.getNiveles();
     this.getCursos();
+      this.getAreas();
+      this.getColegios();
     this.cursoForm = this.fb.group({
-      nombre: ['', Validators.required],
-      codigo_libro: [''],
       area: ['', Validators.required],
+      id_nivel: ['', Validators.required],
       grado: ['', Validators.required],
-      estado: [true, Validators.required],
+      nombre: ['', Validators.required],
       tipo_curso: ['', Validators.required],
-      id_colegio: [null],
-      cantidad_unidades: [null, [Validators.min(1)]],
-      cantidad_lecciones_por_unidad: [null, [Validators.min(1)]]
+      id_colegio: [null, Validators.required],
+      codigo_libro: [''],
+      estado: [true, Validators.required],
+      cantidad_unidades: [''],
+      cantidad_lecciones_por_unidad: ['']
     });
+    // Eliminada declaración duplicada de onNivelNuevoChange
+  }
+
+  // Cambia la variable cuando se da click en "Nuevo Curso"
+  activarValidacionUnidadesLecciones() {
+    this.validarUnidadesLecciones = true;
+    this.cursoForm.patchValue({ cantidad_unidades: '', cantidad_lecciones_por_unidad: '' });
+  }
+
+  // Cambia la variable cuando se edita o cancela edición
+  desactivarValidacionUnidadesLecciones() {
+    this.validarUnidadesLecciones = false;
   }
   getNiveles() {
     this.nivelesService.getNiveles().subscribe({
@@ -72,6 +123,28 @@ export class CursosComponent implements OnInit {
       },
       error: () => {
         Swal.fire('Error', 'No se pudieron cargar los niveles', 'error');
+      }
+    });
+  }
+
+  getAreas(): void {
+    this.areasService.getAreas().subscribe({
+      next: (areas: Area[]) => {
+        this.areas = areas.filter((a: Area) => a.estado);
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudieron cargar las áreas', 'error');
+      }
+    });
+  }
+
+  getColegios(): void {
+    this.colegiosService.getColegiosClientes().subscribe({
+      next: (colegios: Colegio[]) => {
+        this.colegios = colegios.filter((c: Colegio) => c.estado);
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudieron cargar los colegios', 'error');
       }
     });
   }
@@ -136,8 +209,10 @@ export class CursosComponent implements OnInit {
     this.loading = true;
     this.cursosService.getCursos().subscribe({
       next: (data) => {
-        this.cursos = data;
-        this.filteredCursos = data;
+        // Ordenar por id_curso ascendente
+        const ordenados = [...data].sort((a, b) => (a.id_curso ?? 0) - (b.id_curso ?? 0));
+        this.cursos = ordenados;
+        this.filteredCursos = ordenados;
         this.setPaginatedCursos();
         this.loading = false;
       },
@@ -170,19 +245,74 @@ export class CursosComponent implements OnInit {
   }
 
   onSubmit() {
+    // Validación adicional para cantidad_unidades y cantidad_lecciones_por_unidad
+    if (this.validarUnidadesLecciones) {
+      const unidades = Number(this.cursoForm.value.cantidad_unidades);
+      const lecciones = Number(this.cursoForm.value.cantidad_lecciones_por_unidad);
+      // ALERT seguimiento valores antes de validar
+      alert(`Seguimiento: cantidad_unidades=${unidades}, cantidad_lecciones_por_unidad=${lecciones}`);
+      if (!unidades || unidades <= 0) {
+        Swal.fire('Error', 'Ingrese una cantidad de unidades mayor a cero', 'error');
+        return;
+      }
+      if (!lecciones || lecciones <= 0) {
+        Swal.fire('Error', 'Ingrese una cantidad de lecciones por unidad mayor a cero', 'error');
+        return;
+      }
+      // ALERT antes de enviar al endpoint
+      alert('Enviando al endpoint: ' + JSON.stringify({ cantidad_unidades: unidades, cantidad_lecciones_por_unidad: lecciones }));
+    }
     if (this.cursoForm.invalid) return;
     const newCurso = this.cursoForm.value;
-    this.cursosService.crearCurso(newCurso).subscribe({
-      next: () => {
-        Swal.fire('Éxito', 'Curso creado correctamente', 'success');
-        this.getCursos();
-        this.activeTab = 'tabla';
-        this.cursoForm.reset();
-      },
-      error: () => {
-        Swal.fire('Error', 'No se pudo crear el curso', 'error');
-      }
-    });
+    // Solo incluir los campos si están presentes y válidos
+    if (this.validarUnidadesLecciones) {
+      newCurso.cantidad_unidades = Number(this.cursoForm.value.cantidad_unidades);
+      newCurso.cantidad_lecciones_por_unidad = Number(this.cursoForm.value.cantidad_lecciones_por_unidad);
+    }
+    // this.cursosService.crearCurso(newCurso).subscribe({
+    //   next: () => {
+    //     Swal.fire('Éxito', 'Curso creado correctamente', 'success');
+    //     this.getCursos();
+    //     this.activeTab = 'tabla';
+    //     this.cursoForm.reset();
+    //     this.desactivarValidacionUnidadesLecciones();
+    //   },
+    //   error: () => {
+    //     Swal.fire('Error', 'No se pudo crear el curso', 'error');
+    //   }
+    // });
+
+    // Adaptar para crear curso completo con unidades y lecciones
+    if (this.validarUnidadesLecciones) {
+      // Construir objeto con solo los campos requeridos por el backend
+      const dataCompleto = {
+        nombre: newCurso.nombre,
+        id_area: Number(newCurso.area),
+        id_grado: Number(newCurso.grado),
+        estado: newCurso.estado,
+        tipo_curso: newCurso.tipo_curso,
+        id_colegio: Number(newCurso.id_colegio),
+        id_nivel: Number(newCurso.id_nivel),
+        codigo_libro: newCurso.codigo_libro,
+        descripcion: newCurso.descripcion || '',
+        cantidad_unidades: Number(newCurso.cantidad_unidades),
+        cantidad_lecciones_por_unidad: Number(newCurso.cantidad_lecciones_por_unidad)
+      };
+      // ALERT seguimiento estructura enviada
+      alert('Estructura enviada a crearCursoCompleto: ' + JSON.stringify(dataCompleto));
+      this.cursosService.crearCursoCompleto(dataCompleto).subscribe({
+        next: () => {
+          Swal.fire('Éxito', 'Curso completo creado correctamente', 'success');
+          this.getCursos();
+          this.activeTab = 'tabla';
+          this.cursoForm.reset();
+          this.desactivarValidacionUnidadesLecciones();
+        },
+        error: () => {
+          Swal.fire('Error', 'No se pudo crear el curso completo', 'error');
+        }
+      });
+    }
   }
 
   // Métodos auxiliares para paginación en el template
@@ -220,7 +350,8 @@ export class CursosComponent implements OnInit {
   }
 
   editCurso(id_curso: number): void {
-    this.editandoCurso = true;
+  this.editandoCurso = true;
+  this.desactivarValidacionUnidadesLecciones();
     const curso = this.cursos.find(c => c.id_curso === id_curso);
     if (!curso) {
       Swal.fire('Error', 'No se encontró el curso', 'error');
@@ -233,15 +364,16 @@ export class CursosComponent implements OnInit {
     // Extraer valores simples para el formulario
     const gradoValue = curso.grado && typeof curso.grado === 'object' ? curso.grado.id_grado ?? '' : curso.grado ?? '';
     const areaValue = curso.area && typeof curso.area === 'object' ? curso.area.id_area ?? '' : curso.area ?? '';
-    // Cargar los datos del curso en el formulario
+    // Cargar los datos del curso en el formulario, ordenados según lo solicitado
     this.cursoForm.patchValue({
-      nombre: curso.nombre ?? '',
-      codigo_libro: curso.codigo_libro ?? '',
       area: areaValue,
+      id_nivel: curso.id_nivel ?? '',
       grado: gradoValue,
-      estado: curso.estado ?? true,
+      nombre: curso.nombre ?? '',
       tipo_curso: curso.tipo_curso ?? '',
-      id_colegio: curso.id_colegio ?? null
+      id_colegio: curso.id_colegio ?? null,
+      codigo_libro: curso.codigo_libro ?? '',
+      estado: curso.estado ?? true
     });
     // Opcional: mostrar alerta de seguimiento
     Swal.fire({
@@ -253,9 +385,10 @@ export class CursosComponent implements OnInit {
   }
 
   cancelarEdicion(): void {
-    this.editandoCurso = false;
-    this.cursoForm.reset();
-    this.activeTab = 'tabla';
+  this.editandoCurso = false;
+  this.cursoForm.reset();
+  this.activeTab = 'tabla';
+  this.desactivarValidacionUnidadesLecciones();
   }
 
   deleteCurso(id_curso: number): void {

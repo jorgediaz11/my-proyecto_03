@@ -5,10 +5,10 @@ import { environment } from '../../environments/environment';
 
 // 🎯 Interfaces para tipado de Grados
 export interface Grado {
-  id_grado?: number;
+  id_grado: number;
   nombre: string; // 1°, 2°, 3°, 4°, 5°, 6°
   descripcion?: string;
-  nivel: {
+  nivel?: {
     id_nivel: number;
     nombre: string;
     estado: boolean;
@@ -20,6 +20,7 @@ export interface Grado {
   id_colegio?: number;
   fechaCreacion?: string;
   fechaActualizacion?: string;
+  [key: string]: unknown;
 }
 
 export interface CreateGradoDto {

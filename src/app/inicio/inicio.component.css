@@ -207,7 +207,8 @@
   font-weight: 700;
   color: white;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.025em;
+  line-height: 1;
+  /*letter-spacing: -0.025em;*/
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

@@ -6,20 +6,34 @@ import { environment } from '../../environments/environment';
 
 export interface Actividad {
   id_actividad: number;
-  nombre: string;
+  id_colegio: number | null;
+  id_curso: number | null;
+  id_clasecol: number | null;
+  id_libro: number | null;
+  id_unidad: number | null;
+  titulo: string;
   descripcion?: string;
-  fecha: string;
-  id_tipo: number;
-  id_colegio: number;
+  id_tipo_actividad: number;
+  creador_id: number;
+  fecha_creacion: string;
+  fecha_limite?: string;
+  recurso_url?: string;
   estado: boolean;
 }
 
 export interface CreateActividadDto {
-  nombre: string;
+  titulo: string;
   descripcion?: string;
-  fecha: string;
-  id_tipo: number;
-  id_colegio: number;
+  id_tipo_actividad: number;
+  id_colegio?: number | null;
+  id_curso?: number | null;
+  id_clasecol?: number | null;
+  id_libro?: number | null;
+  id_unidad?: number | null;
+  creador_id?: number;
+  fecha_creacion?: string;
+  fecha_limite?: string;
+  recurso_url?: string;
   estado: boolean;
 }
 

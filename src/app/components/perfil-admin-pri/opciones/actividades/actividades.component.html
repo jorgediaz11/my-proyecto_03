@@ -87,7 +87,7 @@
                   @for (actividad of paginatedActividades; track actividad) {
                     <tr class="hover:bg-gray-50 transition-colors duration-150">
                       <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ actividad.id_actividad }}</td>
-                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ actividad.nombre }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ actividad.titulo }}</td>
                       <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ actividad.descripcion || '-' }}</td>
                       <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
                         <span [ngClass]="actividad.estado ? 'text-green-600' : 'text-red-600'">
@@ -96,27 +96,27 @@
                       </td>
                       <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
                         <div class="flex justify-center space-x-2">
-                          <button type="button" 
-                          (click)="detailActividad(actividad.id_actividad)" 
-                          class="action-icon view" 
+                          <button type="button"
+                          (click)="detailActividad(actividad.id_actividad)"
+                          class="action-icon view"
                           title="Ver actividad">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" 
-                          (click)="editActividad(actividad.id_actividad)" 
-                          class="action-icon edit" 
+                          <button type="button"
+                          (click)="editActividad(actividad.id_actividad)"
+                          class="action-icon edit"
                           title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button" 
-                          (click)="deleteActividad(actividad.id_actividad)" 
-                          class="action-icon delete" 
+                          <button type="button"
+                          (click)="deleteActividad(actividad.id_actividad)"
+                          class="action-icon delete"
                           title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button" 
-                          (click)="viewActividad(actividad.id_actividad)" 
-                          class="action-icon view" 
+                          <button type="button"
+                          (click)="viewActividad(actividad.id_actividad)"
+                          class="action-icon view"
                           title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>

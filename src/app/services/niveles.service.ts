@@ -7,6 +7,7 @@ export interface Nivel {
   id_nivel: number;
   nombre: string;
   estado: boolean;
+  [key: string]: unknown;
 }
 
 @Injectable({

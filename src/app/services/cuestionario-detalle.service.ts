@@ -3,20 +3,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-// Interfaces para la respuesta del API de detalle de cuestionario
+
+// Interfaces alineadas con la respuesta real del endpoint
+export interface OpcionApi {
+  id_opcion: number;
+  nombre_opcion: string;
+  es_correcta: boolean;
+  par_relacion: string | null;
+}
+
 export interface PreguntaApi {
   id_pregunta: number;
-  enunciado: string;
   tipo_pregunta: string;
-  puntaje: number;
-  orden: number;
-  estado: boolean;
+  nombre_pregunta: string;
+  puntaje_pregunta: string;
+  opciones: OpcionApi[];
 }
 
 export interface CuestionarioApi {
   id_cuestionario: number;
   nombre_cuestionario: string;
-  descripcion: string;
+  descripcion?: string;
   preguntas: PreguntaApi[];
 }
 
@@ -65,9 +72,9 @@ export class CuestionarioDetalleService {
     );
   }
 
-  // GET /cuestionario-detalle/detalle/:id_cuestionario - Obtener detalle de cuestionario por ID
+  // GET /cuestionario-detalle/:id_cuestionario - Obtener detalle de cuestionario por ID
   getDetalleCuestionario(id_cuestionario: number): Observable<CuestionarioApi> {
-    return this.http.get<CuestionarioApi>(`${this.apiUrl}/detalle/${id_cuestionario}`, {
+    return this.http.get<CuestionarioApi>(`${this.apiUrl}/${id_cuestionario}`, {
       headers: this.getAuthHeaders()
     });
   }

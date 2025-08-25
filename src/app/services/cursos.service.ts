@@ -13,6 +13,7 @@ export interface Curso {
     nombre: string;
     estado: boolean;
   };
+  id_nivel: number;
   grado: {
     id_grado: number;
     nombre: string;
@@ -27,6 +28,7 @@ export interface CreateCursoDto {
   nombre: string;
   codigo_libro?: string | null;
   area: number;
+  id_nivel: number;
   grado: number;
   estado: boolean;
   tipo_curso: string;
@@ -37,6 +39,7 @@ export interface UpdateCursoDto {
   nombre?: string;
   codigo_libro?: string | null;
   area?: number;
+  id_nivel?: number;
   grado?: number;
   estado?: boolean;
   tipo_curso?: string;

@@ -24,7 +24,7 @@
       @if (activeTab === 'tabla') {
         <div role="tabpanel" class="tab-panel animate-fadeIn">
           <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-            
+
             <div class="p-4 border-b border-gray-200">
               <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <!-- Filtro de búsqueda -->
@@ -62,12 +62,12 @@
                   <label for="tipoCurso" class="block text-sm font-medium text-gray-700 mb-2">Tipo de Curso:</label>
                   <select id="tipoCurso" [(ngModel)]="tipoCurso" (change)="onTipoCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
                     <option value="ambos">Ambos</option>
-                    <option value="INT">Internos</option>
-                    <option value="EXT">Externos</option>
+                    <option value="Internos">Internos</option>
+                    <option value="Externo">Externos</option>
                   </select>
                 </div>
                 <!-- Botón Nuevo Curso -->
-                <button type="button" (click)="activeTab = 'nuevo'" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                <button type="button" (click)="activeTab = 'nuevo'; activarValidacionUnidadesLecciones()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
                   <i class="fas fa-plus mr-2"></i> Nuevo Curso
                 </button>
               </div>
@@ -187,25 +187,63 @@
                 <h2 class="text-xl font-semibold text-gray-700">Datos del Curso</h2>
                 <div class="flex flex-wrap -mx-2">
                   <div class="w-full md:w-1/2 px-2">
+                    <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Área</label>
+                    <select id="area" formControlName="area" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                      <option value="">Seleccione área</option>
+                      @for (area of areas; track area) {
+                        <option [value]="area.id_area">{{ area.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="id_nivel" class="block text-sm font-medium text-gray-700 mb-1">Nivel</label>
+                    <select id="id_nivel" formControlName="id_nivel" [(ngModel)]="selectedNivelNuevo" (change)="onNivelNuevoChange()" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                      <option value="">Seleccione nivel</option>
+                      @for (nivel of niveles; track nivel) {
+                        <option [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="flex flex-wrap -mx-2">
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="grado" class="block text-sm font-medium text-gray-700 mb-1">Grado</label>
+                    <select id="grado" formControlName="grado" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                      <option value="">Seleccione grado</option>
+                      @for (grado of gradosNuevo; track grado) {
+                        <option [value]="grado.id_grado">{{ grado.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                     <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre del curso" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
                   </div>
+                </div>
+                <div class="flex flex-wrap -mx-2">
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="tipo_curso" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Curso</label>
+                    <select id="tipo_curso" formControlName="tipo_curso" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                      <option value="">Seleccione tipo</option>
+                      <option value="Interno">Interno</option>
+                      <option value="Externo">Externo</option>
+                    </select>
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="id_colegio" class="block text-sm font-medium text-gray-700 mb-1">Colegio</label>
+                    <select id="id_colegio" formControlName="id_colegio" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                      <option value="">Seleccione colegio</option>
+                      @for (colegio of colegios; track colegio) {
+                        <option [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="flex flex-wrap -mx-2">
                   <div class="w-full md:w-1/2 px-2">
                     <label for="codigo_libro" class="block text-sm font-medium text-gray-700 mb-1">Código Libro</label>
                     <input type="text" id="codigo_libro" formControlName="codigo_libro" placeholder="Código del libro" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
                   </div>
-                </div>
-                <div class="flex flex-wrap -mx-2">
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Área</label>
-                    <input type="text" id="area" formControlName="area" placeholder="ID Área" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="grado" class="block text-sm font-medium text-gray-700 mb-1">Grado</label>
-                    <input type="text" id="grado" formControlName="grado" placeholder="ID Grado" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-                  </div>
-                </div>
-                <div class="flex flex-wrap -mx-2">
                   <div class="w-full md:w-1/2 px-2">
                     <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
                     <select id="estado" formControlName="estado" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
@@ -213,26 +251,18 @@
                       <option [value]="false">Inactivo</option>
                     </select>
                   </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="tipo_curso" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Curso</label>
-                    <input type="text" id="tipo_curso" formControlName="tipo_curso" placeholder="Tipo de curso" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-                  </div>
-                </div>
-                <div class="flex flex-wrap -mx-2">
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="id_colegio" class="block text-sm font-medium text-gray-700 mb-1">Colegio</label>
-                    <input type="text" id="id_colegio" formControlName="id_colegio" placeholder="ID Colegio" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
-                  </div>
                 </div>
                 <!-- NUEVOS CAMPOS PARA CURSO COMPLETO -->
                 <div class="flex flex-wrap -mx-2" *ngIf="activeTab === 'nuevo'">
                   <div class="w-full md:w-1/2 px-2">
                     <label for="cantidad_unidades" class="block text-sm font-medium text-gray-700 mb-1">Cantidad de Unidades</label>
-                    <input type="number" id="cantidad_unidades" formControlName="cantidad_unidades" min="1" placeholder="Ej: 5" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
+                    <input type="number" id="cantidad_unidades" formControlName="cantidad_unidades" min="1" placeholder="Ej: 5" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" [required]="validarUnidadesLecciones" [ngClass]="{'border-red-500': validarUnidadesLecciones && cursoForm.value.cantidad_unidades <= 0}" />
+                    <div *ngIf="validarUnidadesLecciones && cursoForm.value.cantidad_unidades <= 0" class="text-red-500 text-xs mt-1">Debe ingresar una cantidad mayor a cero.</div>
                   </div>
                   <div class="w-full md:w-1/2 px-2">
                     <label for="cantidad_lecciones_por_unidad" class="block text-sm font-medium text-gray-700 mb-1">Lecciones por Unidad</label>
-                    <input type="number" id="cantidad_lecciones_por_unidad" formControlName="cantidad_lecciones_por_unidad" min="1" placeholder="Ej: 10" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
+                    <input type="number" id="cantidad_lecciones_por_unidad" formControlName="cantidad_lecciones_por_unidad" min="1" placeholder="Ej: 10" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" [required]="validarUnidadesLecciones" [ngClass]="{'border-red-500': validarUnidadesLecciones && cursoForm.value.cantidad_lecciones_por_unidad <= 0}" />
+                    <div *ngIf="validarUnidadesLecciones && cursoForm.value.cantidad_lecciones_por_unidad <= 0" class="text-red-500 text-xs mt-1">Debe ingresar una cantidad mayor a cero.</div>
                   </div>
                 </div>
                 <div class="pt-4">

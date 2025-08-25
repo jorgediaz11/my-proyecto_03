@@ -6,7 +6,7 @@ import { CuestionariosService, Cuestionario } from 'src/app/services/cuestionari
 import { NivelesService, Nivel } from 'src/app/services/niveles.service';
 import { GradosService, Grado } from 'src/app/services/grados.service';
 import { CursosService, Curso } from 'src/app/services/cursos.service';
-import { CuestionarioDetalleService, CuestionarioApi, PreguntaApi } from 'src/app/services/cuestionario-detalle.service';
+import { CuestionarioDetalleService } from 'src/app/services/cuestionario-detalle.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -211,7 +211,7 @@ export class CuestionariosComponent implements OnInit {
           this.cargarCuestionarios();
           this.isEditing = false;
           this.editingCuestionarioId = undefined;
-          this.cuestionarioForm.reset({ estado: true });                
+          this.cuestionarioForm.reset({ estado: true });
           this.selectTab('tabla');
         },
         error: (error) => {
@@ -246,7 +246,22 @@ export class CuestionariosComponent implements OnInit {
     });
 
     this.cuestionarioDetalleService.getDetalleCuestionario(id_cuestionario).subscribe(
-      (cuestionario: any) => {
+      (cuestionarioApi) => {
+        // Mapeo seguro de la respuesta a la estructura esperada por la UI
+        const cuestionario = {
+          nombre_cuestionario: cuestionarioApi.nombre_cuestionario,
+          descripcion: cuestionarioApi.descripcion || '',
+          preguntas: (cuestionarioApi.preguntas || []).map(preguntaApi => ({
+            nombre_pregunta: preguntaApi.nombre_pregunta,
+            tipo_pregunta: preguntaApi.tipo_pregunta,
+            puntaje_pregunta: Number(preguntaApi.puntaje_pregunta),
+            opciones: (preguntaApi.opciones || []).map(opcionApi => ({
+              nombre_opcion: opcionApi.nombre_opcion,
+              es_correcta: opcionApi.es_correcta,
+              par_relacion: opcionApi.par_relacion || ''
+            }))
+          }))
+        };
         let html = `<div class='cuestionario-detalle-container' style='text-align:left;max-width:800px;'>`;
         html += `<h2 class='text-xl font-bold mb-2'>${cuestionario.nombre_cuestionario}</h2>`;
         if (cuestionario.descripcion) {
@@ -254,14 +269,14 @@ export class CuestionariosComponent implements OnInit {
         }
         if (cuestionario.preguntas && cuestionario.preguntas.length > 0) {
           html += `<div class='font-semibold text-green-700 mb-1'>Preguntas</div><ol class='list-decimal pl-5'>`;
-          cuestionario.preguntas.forEach((pregunta: any, idx: number) => {
+          cuestionario.preguntas.forEach((pregunta) => {
             html += `<li class='mb-3'><span class='font-medium'>${pregunta.nombre_pregunta}</span>`;
             html += `<div class='text-xs text-gray-500 mb-1'>Tipo: ${pregunta.tipo_pregunta} | Puntaje: ${pregunta.puntaje_pregunta}</div>`;
             // Opciones de respuesta
             if (pregunta.opciones && pregunta.opciones.length > 0) {
               if (pregunta.tipo_pregunta === 'SELECCION') {
                 html += `<ul class='list-disc pl-5 mt-1'>`;
-                pregunta.opciones.forEach((opcion: any, i: number) => {
+                pregunta.opciones.forEach((opcion, i: number) => {
                   html += `<li class='mb-1'><span class='text-gray-600'>${String.fromCharCode(65 + i)}. ${opcion.nombre_opcion}`;
                   if (opcion.es_correcta) {
                     html += ` <span class='text-green-600 font-bold'>(Correcta)</span>`;
@@ -271,7 +286,7 @@ export class CuestionariosComponent implements OnInit {
                 html += `</ul>`;
               } else if (pregunta.tipo_pregunta === 'RELACION') {
                 html += `<ul class='list-disc pl-5 mt-1'>`;
-                pregunta.opciones.forEach((opcion: any) => {
+                pregunta.opciones.forEach((opcion) => {
                   html += `<li class='mb-1'><span class='text-gray-600'>${opcion.nombre_opcion} <span class='text-blue-600'>→</span> ${opcion.par_relacion}</span></li>`;
                 });
                 html += `</ul>`;

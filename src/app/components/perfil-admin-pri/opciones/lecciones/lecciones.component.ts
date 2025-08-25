@@ -7,11 +7,19 @@ import { CursosService, Curso } from 'src/app/services/cursos.service';
 import { Unidad, UnidadesService } from 'src/app/services/unidades.service';
 // import { leccionesService } from 'src/app/services/unidades.service';
 
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
-    selector: 'app-lecciones',
-    templateUrl: './lecciones.component.html',
-    styleUrls: ['./lecciones.component.css'],
-    standalone: false
+  selector: 'app-lecciones',
+  templateUrl: './lecciones.component.html',
+  styleUrls: ['./lecciones.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class LeccionesComponent implements OnInit {
   // Listas para selects
@@ -49,8 +57,8 @@ export class LeccionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-  this.cargarNiveles();
-  this.cargarNiveles();
+    this.cargarLecciones();
+    this.cargarNiveles();
   }
 
   selectTab(tab: 'tabla' | 'nuevo'): void {
@@ -81,24 +89,14 @@ export class LeccionesComponent implements OnInit {
   }
 
   cargarLecciones(): void {
-    if (!this.filtroUnidad) {
-      this.lecciones = [];
-      this.filteredLecciones = [];
-      this.paginatedLecciones = [];
-      return;
-    }
+    // Siempre cargar todas las lecciones al inicio
     this.loading = true;
     this.leccionesService.getLecciones().subscribe({
       next: (lecciones) => {
-        // Filtrar por idUnidad (del backend) vs filtroUnidad (del select)
-        this.lecciones = lecciones
-          .filter(l => String((l as any).idUnidad ?? l.id_unidad) === String(this.filtroUnidad))
-          .map(l => ({
-            ...l,
-            id_leccion: l.id
-          }));
+        this.lecciones = lecciones.sort((a, b) => (a.id_leccion ?? 0) - (b.id_leccion ?? 0));
         this.filterLecciones();
         this.loading = false;
+        alert(`Se cargaron ${this.lecciones.length} lecciones.`);
       },
       error: (error: unknown) => {
         this.lecciones = [];
@@ -238,8 +236,11 @@ export class LeccionesComponent implements OnInit {
     // alert('Estado edición: isEditing=' + this.isEditing + ', editingLeccionId=' + this.editingLeccionId);
     // Crear objeto limpio sin id_leccion ni id_unidad (solo para update)
     // El backend solo permite modificar título, contenido y estado, no la unidad
-    const { id_leccion, id_unidad, ...rest } = this.leccionForm.value;
-    let seccionData: any = { ...rest };
+    const seccionData: Partial<Leccion> = { ...this.leccionForm.value };
+    // Validar que los campos requeridos no sean undefined
+    if (typeof seccionData.titulo === 'undefined') seccionData.titulo = '';
+    if (typeof seccionData.contenido === 'undefined') seccionData.contenido = '';
+    if (typeof seccionData.estado === 'undefined') seccionData.estado = true;
     // Log para depuración
     console.log('Actualizando lección:', {
       id: this.editingLeccionId,
@@ -267,7 +268,15 @@ export class LeccionesComponent implements OnInit {
       });
     } else {
       // Crear
-      this.leccionesService.crearLeccion(seccionData).subscribe({
+      const createDto = {
+        titulo: typeof seccionData.titulo === 'string' ? seccionData.titulo : '',
+        contenido: typeof seccionData.contenido === 'string' ? seccionData.contenido : '',
+        estado: typeof seccionData.estado === 'boolean' ? seccionData.estado : true,
+        id_unidad: typeof seccionData.id_unidad === 'number' ? seccionData.id_unidad : undefined,
+        descripcion: typeof seccionData.descripcion === 'string' ? seccionData.descripcion : undefined,
+        orden: typeof seccionData.orden === 'number' ? seccionData.orden : undefined
+      };
+      this.leccionesService.crearLeccion(createDto).subscribe({
         next: () => {
           this.cargarLecciones();
           this.leccionForm.reset({ estado: true });
@@ -307,5 +316,5 @@ export class LeccionesComponent implements OnInit {
     }
   }
 
-  
+
 }

@@ -79,6 +79,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
+                    <th>Orden</th>
                     <th class="text-center">Estado</th>
                     <th class="text-center">Acciones</th>
                   </tr>
@@ -89,6 +90,7 @@
                       <td>{{ unidad.id_unidad }}</td>
                       <td>{{ unidad.nombre }}</td>
                       <td>{{ unidad.descripcion }}</td>
+                      <td>{{ unidad.orden }}</td>
                       <td class="text-center">
                         <span [ngClass]="unidad.estado ? 'text-green-600' : 'text-red-600'">
                           {{ unidad.estado ? 'Activo' : 'Inactivo' }}
@@ -153,21 +155,26 @@
                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                     <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre de la unidad"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                    </div>
-                    <div class="w-full md:w-1/2 px-2">
-                      <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                      <select id="estado" formControlName="estado"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                        <option [value]="true">Activo</option>
-                        <option [value]="false">Inactivo</option>
-                      </select>
-                    </div>
-                    <div class="w-full px-2">
-                      <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                      <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Descripción de la unidad"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
-                    </div>
                   </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="estado" formControlName="estado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                      <option [value]="true">Activo</option>
+                      <option [value]="false">Inactivo</option>
+                    </select>
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="orden" class="block text-sm font-medium text-gray-700 mb-1">Orden</label>
+                    <input type="number" id="orden" formControlName="orden" min="1" placeholder="Orden de la unidad"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="w-full px-2">
+                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                    <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Descripción de la unidad"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                  </div>
+                </div>
                 </div>
                 <button type="submit"
                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">

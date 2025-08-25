@@ -1,4 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UnidadesService } from '../../../../services/unidades.service';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
@@ -17,10 +19,15 @@ interface Unidad {
 }
 
 @Component({
-    selector: 'app-unidades',
-    templateUrl: './unidades.component.html',
-    styleUrls: ['./unidades.component.css'],
-    standalone: false
+  selector: 'app-unidades',
+  templateUrl: './unidades.component.html',
+  styleUrls: ['./unidades.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class UnidadesComponent implements OnInit {
   // Listas para selects
@@ -66,7 +73,10 @@ export class UnidadesComponent implements OnInit {
     this.unidadesService.getUnidades().subscribe({
       next: (data: Unidad[]) => {
         // Solo aceptar objetos con id_unidad definido y mapear el objeto completo
-        this.unidades = (data || []).filter(s => s.id_unidad !== undefined).map(s => ({ ...s }));
+        this.unidades = (data || [])
+          .filter(s => s.id_unidad !== undefined)
+          .map(s => ({ ...s }))
+          .sort((a, b) => (a.id_unidad ?? 0) - (b.id_unidad ?? 0));
         this.filteredUnidades = [...this.unidades];
         this.updatePaginatedUnidades();
         this.loading = false;
@@ -81,12 +91,14 @@ export class UnidadesComponent implements OnInit {
   private initForm(): void {
     this.unidadForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(1)]],
-      estado: [true, [Validators.required]]
+      estado: [true, [Validators.required]],
+      descripcion: [''],
+      orden: [null, [Validators.required, Validators.min(1)]]
     });
   }
 
   filterUnidades(): void {
-    let resultado = [...this.unidades];
+  let resultado = [...this.unidades].sort((a, b) => (a.id_unidad ?? 0) - (b.id_unidad ?? 0));
     // Filtro por texto
     if (this.searchTerm.trim()) {
       resultado = resultado.filter(unidad =>
@@ -194,8 +206,10 @@ export class UnidadesComponent implements OnInit {
   selectTab(tab: 'tabla' | 'nuevo'): void {
     this.activeTab = tab;
     if (tab === 'nuevo') {
-      this.isEditing = false;
-      this.unidadForm.reset({ estado: true });
+      // Solo resetear si NO estamos editando
+      if (!this.isEditing) {
+        this.unidadForm.reset({ estado: true });
+      }
     }
   }
 
@@ -211,11 +225,15 @@ export class UnidadesComponent implements OnInit {
     this.editingSeccionId = id;
     const unidad = this.unidades.find(s => s.id_unidad === id);
     if (unidad) {
+      this.selectTab('nuevo');
       this.unidadForm.patchValue({
         nombre: unidad.nombre,
-        estado: unidad.estado
+        estado: unidad.estado,
+        descripcion: unidad.descripcion ?? '',
+        orden: unidad.orden ?? null
       });
-      this.selectTab('nuevo');
+      // Usar el id_curso de la unidad seleccionada para la edición
+      this.filtroCurso = unidad.id_curso ? String(unidad.id_curso) : '';
     }
   }
 
@@ -241,7 +259,12 @@ export class UnidadesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.unidadForm.invalid) return;
-    const seccionData = this.unidadForm.value;
+    // Asegurar que id_curso esté presente
+    const cursoId = Number(this.filtroCurso);
+    const seccionData = {
+      ...this.unidadForm.value,
+      id_curso: cursoId > 0 ? cursoId : undefined
+    };
     if (this.isEditing && this.editingSeccionId) {
       // Editar
       this.unidadesService.actualizarUnidad(this.editingSeccionId, seccionData).subscribe({
