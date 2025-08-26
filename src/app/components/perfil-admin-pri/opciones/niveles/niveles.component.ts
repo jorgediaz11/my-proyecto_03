@@ -1,13 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-niveles',
     templateUrl: './niveles.component.html',
     styleUrls: ['./niveles.component.css'],
-    standalone: false
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class NivelesComponent implements OnInit {
   Math = Math;
@@ -154,7 +157,7 @@ export class NivelesComponent implements OnInit {
         });
       }
     });
-  }  
+  }
 
   detailNivel(id_nivel: number): void {
     const nivel = this.niveles.find(p => p['id_nivel'] === id_nivel);

@@ -249,7 +249,9 @@
           </div>
 
           <div style="margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <input *ngIf="mostrarInputFile" #inputFile type="file" (change)="onFileSelected($event)" accept=".txt,.pdf,.doc,.docx" class="px-2 py-1 border rounded bg-white text-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            @if (mostrarInputFile) {
+              <input #inputFile type="file" (change)="onFileSelected($event)" accept=".txt,.pdf,.doc,.docx" class="px-2 py-1 border rounded bg-white text-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            }
             <button class="px-2 py-2 bg-gray-700 text-white rounded shadow hover:bg-gray-800 transition-colors font-semibold" (click)="onNuevo()">
               <span class="inline-block align-middle mr-1">🆕</span> Nuevo
             </button>
@@ -288,12 +290,14 @@
     </div>
 
     <!-- Modal Activar Libro -->
-    <div *ngIf="mostrarModalActivarLibro" class="fixed inset-0 z-50">
+    @if (mostrarModalActivarLibro) {
+      <div class="fixed inset-0 z-50">
       <div class="bg-[#76B177] rounded-lg p-0 relative animate-fade-in border-4 border-red-600" style="width: 46.8vw; height: 60vh; min-width: 192px; min-height: 192px; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;">
         <button (click)="cerrarModalActivarLibro()" class="absolute top-2 right-2 text-white hover:text-yellow-300 text-2xl font-bold focus:outline-none">&times;</button>
         <app-activar-libros style="width: 100%; height: 100%;" (cerrar)="cerrarModalActivarLibro()"></app-activar-libros>
       </div>
     </div>
+    }
   </main>
   <!-- End Main content -->
 

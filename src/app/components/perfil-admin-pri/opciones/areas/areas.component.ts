@@ -1,14 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { error } from 'console';
 import { Area, AreasService } from 'src/app/services/areas.service';
 import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-areas',
     templateUrl: './areas.component.html',
-    styleUrls: ['./areas.component.css'],
-    standalone: false
+    styleUrls: ['./areas.component.css']
 })
 export class AreasComponent implements OnInit {
   Math = Math;

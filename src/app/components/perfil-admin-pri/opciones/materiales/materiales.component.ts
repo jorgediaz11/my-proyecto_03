@@ -1,14 +1,18 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { Component, OnInit, inject } from '@angular/core';
 import { MaterialesService, Material } from '../../../../services/materiales.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { TipoMaterialService, TipoMaterial } from '../../../../services/tipo-material.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-materiales',
     templateUrl: './materiales.component.html',
     styleUrls: ['./materiales.component.css'],
-    standalone: false
+    standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class MaterialesComponent implements OnInit {
   Math = Math;
@@ -36,8 +40,8 @@ export class MaterialesComponent implements OnInit {
 
 
   // Devuelve el id del material, sea id_material o id
-  getMaterialId(material: any): number | string {
-    return material.id_material !== undefined ? material.id_material : material.id;
+  getMaterialId(material: Material): number | string {
+    return material.id_material !== undefined ? material.id_material : '';
   }
 
   ngOnInit(): void {
@@ -132,7 +136,11 @@ export class MaterialesComponent implements OnInit {
     if (this.selectedTipoMaterial) {
       materialesFiltrados = materialesFiltrados.filter(material => {
         // Puede venir como idTipoMaterial o id_tipo_material
-        return (material.idTipoMaterial || (material as any).id_tipo_material) == this.selectedTipoMaterial;
+        return (
+          (material as Material).idTipoMaterial === this.selectedTipoMaterial ||
+          // @ts-expect-error: id_tipo_material may exist in some responses
+          material['id_tipo_material'] === this.selectedTipoMaterial
+        );
       });
     }
     this.filteredMateriales = materialesFiltrados;
@@ -155,12 +163,27 @@ export class MaterialesComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  viewMaterial(id: number): void {
-    const material = this.materiales.find(g => g.id_material === id);
-    if (material) {
-      alert(`Ver material:\nID: ${material.id_material}\nNombre: ${material.nombre}`);
+  viewMaterial(id_material: number): void {
+      const material = this.materiales.find(e => e['id_material'] === id_material);
+      if (!material) {
+        this.handleError('Material no encontrado');
+        return;
+      }
+
+      Swal.fire({
+        title: `Detalles del Material`,
+        html: `
+          <div class="text-left">
+            <p><strong>Nombres:</strong> ${material.nombre}</p>
+            <p><strong>Estado:</strong> ${material.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
+
     }
-  }
 
   editMaterial(id: number): void {
     this.isEditing = true;
@@ -181,23 +204,80 @@ export class MaterialesComponent implements OnInit {
     }
   }
 
-  deleteMaterial(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este material?')) {
-      this.materialService.eliminarMaterial(id).subscribe({
-        next: () => {
-          this.cargarMateriales();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar material:', error);
-        }
+  deleteMaterial(id_material: number): void {
+    const material = this.materiales.find(n => n.id_material === id_material);
+    if (!material) {
+      this.handleError('Material no encontrado');
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Eliminar Material?',
+      text: `¿Estás seguro de que deseas eliminar el material "${material.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.materialService.eliminarMaterial(id_material).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Material eliminado correctamente');
+            this.cargarMateriales();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el material');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
+  }
+
+
+  detailMaterial(id_material: number): void {
+    const material = this.materiales.find(g => g.id_material === id_material);
+    if (material) {
+      Swal.fire({
+        title: 'Detalle material',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${material.id_material}</p>
+            <p><strong>Nombre:</strong> ${material.nombre}</p>
+            <p><strong>Estado:</strong> ${material.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
       });
     }
   }
 
-  detailMaterial(id: number): void {
-    const material = this.materiales.find(g => g.id_material === id);
-    if (material) {
-      alert(`Detalle material:\nID: ${material.id_material}\nNombre: ${material.nombre}\nEstado: ${material.estado ? 'Activo' : 'Inactivo'}`);
-    }
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
   }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

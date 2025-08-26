@@ -184,23 +184,61 @@ export class CuestionariosComponent implements OnInit {
   }
 
   deleteCuestionario(id_cuestionario: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este cuestionario?')) {
-      this.cuestionariosService.deleteCuestionario(id_cuestionario).subscribe({
-        next: () => {
-          this.cargarCuestionarios();
-        },
-        error: (error) => {
-          console.error('Error al eliminar cuestionario:', error);
-        }
-      });
+    const cuestionario = this.cuestionarios.find(n => n.id_cuestionario === id_cuestionario);
+    if (!cuestionario) {
+      this.handleError('Cuestionario no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Cuestionario?',
+      text: `¿Estás seguro de que deseas eliminar el cuestionario "${cuestionario.titulo}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.cuestionariosService.deleteCuestionario(id_cuestionario).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Nivel eliminado correctamente');
+            this.cargarNiveles();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el nivel');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
   }
 
-  detailCuestionario(id_cuestionario: number): void {
-    const cuestionario = this.cuestionarios.find(c => c.id_cuestionario === id_cuestionario);
-    if (cuestionario) {
-      alert(`Detalle cuestionario:\nID: ${cuestionario.id_cuestionario}\nTítulo: ${cuestionario.titulo}\nEstado: ${cuestionario.estado ? 'Activo' : 'Inactivo'}`);
+  viewCuestionario(id_cuestionario: number): void {
+    const cuestionario = this.cuestionarios.find(e => e['id_cuestionario'] === id_cuestionario);
+    if (!cuestionario) {
+      this.handleError('Cuestionario no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Cuestionario`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${cuestionario.titulo}</p>
+          <p><strong>Estado:</strong> ${cuestionario.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
 
   onSubmit(): void {
@@ -233,7 +271,7 @@ export class CuestionariosComponent implements OnInit {
     }
   }
 
-  viewCuestionario(id_cuestionario: number): void {
+  detailCuestionario(id_cuestionario: number): void {
     Swal.fire({
       title: 'Cargando...',
       html: '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando detalle del cuestionario...</div>',
@@ -321,4 +359,26 @@ export class CuestionariosComponent implements OnInit {
       }
     );
   }
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
+
 }

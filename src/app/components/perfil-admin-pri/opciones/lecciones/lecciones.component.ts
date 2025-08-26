@@ -96,7 +96,7 @@ export class LeccionesComponent implements OnInit {
         this.lecciones = lecciones.sort((a, b) => (a.id_leccion ?? 0) - (b.id_leccion ?? 0));
         this.filterLecciones();
         this.loading = false;
-        alert(`Se cargaron ${this.lecciones.length} lecciones.`);
+        //alert(`Se cargaron ${this.lecciones.length} lecciones.`);
       },
       error: (error: unknown) => {
         this.lecciones = [];
@@ -364,8 +364,8 @@ export class LeccionesComponent implements OnInit {
         });
       }
     });
-  }  
-  
+  }
+
   // ✅ MANEJO DE ERRORES
   private handleError(message: string): void {
     Swal.fire({
@@ -384,6 +384,6 @@ export class LeccionesComponent implements OnInit {
       text: message,
       confirmButtonColor: '#28a745'
     });
-  }  
+  }
 
 }

@@ -1,13 +1,14 @@
-import Swal from 'sweetalert2';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Libro, LibrosService } from 'src/app/services/libros.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-libros',
     templateUrl: './libros.component.html',
     styleUrls: ['./libros.component.css'],
-    standalone: false
+    standalone: true,
+    imports: []
 })
 export class LibrosComponent implements OnInit {
   Math = Math;

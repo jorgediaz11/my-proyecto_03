@@ -23,6 +23,8 @@ import Swal from 'sweetalert2';
 })
 
 export class CursosComponent implements OnInit {
+  Math = Math;
+  Array = Array;
   // Variable para controlar validación de unidades y lecciones
   validarUnidadesLecciones = false;
   // --- PROPIEDADES NECESARIAS PARA FUNCIONAMIENTO Y COMPILACIÓN ---

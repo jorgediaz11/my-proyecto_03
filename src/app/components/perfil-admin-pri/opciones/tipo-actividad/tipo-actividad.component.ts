@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { TipoActividadService,TipoActividad } from '../../../../services/tipo-actividad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 // interface TipoActividad {
 //   id_tipo_actividad?: number;
@@ -12,8 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-tipo-actividad',
     templateUrl: './tipo-actividad.component.html',
-    styleUrls: ['./tipo-actividad.component.css'],
-    standalone: false
+    styleUrls: ['./tipo-actividad.component.css']
 })
 export class TipoActividadComponent implements OnInit {
   Math = Math;
@@ -89,12 +88,28 @@ export class TipoActividadComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  viewTipoActividad(id: number): void {
-    const tm = this.tipoActividades.find(t => t.id_tipo_actividad === id);
-    if (tm) {
-      alert(`Ver tipo_actividad:\nID: ${tm.id_tipo_actividad}\nNombre: ${tm.nombre}`);
+  viewTipoActividad(id_tipo_actividad: number): void {
+    const ta = this.tipoActividades.find(t => t.id_tipo_actividad === id_tipo_actividad);
+    if (!ta) {
+      this.handleError('Tipo de actividad no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: `Detalles del Tipo de Actividad`,
+      html: `
+        <div class="text-left">
+          <p><strong>Nombres:</strong> ${ta.nombre}</p>
+          <p><strong>Estado:</strong> ${ta.estado ? 'Activo' : 'Inactivo'}</p>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '600px'
+    });
+
   }
+
 
   editTipoActividad(id: number): void {
     this.isEditing = true;
@@ -110,23 +125,58 @@ export class TipoActividadComponent implements OnInit {
     }
   }
 
-  deleteTipoActividad(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este tipo de actividad?')) {
-      this.tipoActividadService.eliminarTipoActividad(id).subscribe({
-        next: () => {
-          this.cargarTipoActividades();
-        },
-        error: (error: unknown) => {
-          console.error('Error al eliminar tipo_actividad:', error);
-        }
-      });
+  deleteTipoActividad(id_tipo_actividad: number): void {
+    const ta = this.tipoActividades.find(n => n.id_tipo_actividad === id_tipo_actividad);
+    if (!ta) {
+      this.handleError('Tipo de actividad no encontrado');
+      return;
     }
+
+    Swal.fire({
+      title: '¿Eliminar Nivel?',
+      text: `¿Estás seguro de que deseas eliminar el nivel "${ta.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.tipoActividadService.eliminarTipoActividad(id_tipo_actividad).subscribe({
+          next: () => {
+            this.loading = false;
+            this.handleSuccess('Tipo de actividad eliminado correctamente');
+            this.cargarTipoActividades();
+          },
+          error: (error: unknown) => {
+            this.loading = false;
+            this.handleError('Error al eliminar el tipo de actividad');
+            console.error('Error:', error);
+          }
+        });
+      }
+    });
   }
 
-  detailTipoActividad(id: number): void {
-    const ta = this.tipoActividades.find(t => t.id_tipo_actividad === id);
+  detailTipoActividad(id_tipo_actividad: number): void {
+    const ta = this.tipoActividades.find(p => p['id_tipo_actividad'] === id_tipo_actividad);
     if (ta) {
-      alert(`Detalle tipo_actividad:\nID: ${ta.id_tipo_actividad}\nNombre: ${ta.nombre}\nEstado: ${ta.estado ? 'Activo' : 'Inactivo'}`);
+      Swal.fire({
+        title: 'Detalle tipo_actividad',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${ta['id_tipo_actividad']}</p>
+            <p><strong>Nombre:</strong> ${ta.nombre}</p>
+            <p><strong>Estado:</strong> ${ta.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
     }
   }
 
@@ -165,5 +215,23 @@ export class TipoActividadComponent implements OnInit {
     }
   }
 
-  // ...existing code...
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
 }
