@@ -1,6 +1,7 @@
 
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ClasesColService, ClaseCol as ClaseColApi, CreateClaseColDto, UpdateClaseColDto } from 'src/app/services/clases-col.service';
 import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
@@ -27,7 +28,8 @@ export interface ClaseCol {
     selector: 'app-clases-col',
     templateUrl: './clases-col.component.html',
     styleUrl: './clases-col.component.css',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 
 export class ClasesColComponent implements OnInit, OnDestroy {
@@ -268,20 +270,6 @@ export class ClasesColComponent implements OnInit, OnDestroy {
     this.claseForm.patchValue(clase);
   }
 
-  // ELIMINAR CLASE
-  // deleteClase(id_clases: number): void {
-  //   if (!confirm('¿Estás seguro de que deseas eliminar esta clase?')) return;
-  //   this.clasesColService.eliminarClaseCol(id_clases).subscribe({
-  //     next: () => {
-  //       this.handleSuccess('Clase eliminada exitosamente');
-  //       this.cargarClasesCol();
-  //     },
-  //     error: () => {
-  //       this.handleError('Error al eliminar la clase');
-  //     }
-  //   });
-  // }
-
   deleteClase(id_clases: number): void {
     const clase = this.clases.find(c => c.id_clases === id_clases);
     if (!clase) {
@@ -318,17 +306,27 @@ export class ClasesColComponent implements OnInit, OnDestroy {
     });
   }
 
-  // VER DETALLES DE LA CLASE
-  // viewClase(id_clases: number): void {
-  //   const clase = this.clases.find(c => c.id_clases === id_clases);
-  //   if (!clase) {
-  //     this.handleError('Clase no encontrada');
-  //     return;
-  //   }
-  //   alert(`Detalles de la clase: ${JSON.stringify(clase, null, 2)}`);
-  // }
-
   viewClase(id_clases: number): void {
+    alert('Ver detalles de la clase: ' + id_clases);
+    const clase = this.clases.find(p => p.id_clases === id_clases);
+    if (clase) {
+      Swal.fire({
+        title: 'Detalle perfil',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${clase.id_clases}</p>
+            <p><strong>Estado:</strong> ${clase.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
+    }
+  }
+
+  detailClase(id_clases: number): void {
+    alert('Ver detalles de la clase 02 : ' + id_clases);
     const clase = this.clases.find(p => p.id_clases === id_clases);
     if (clase) {
       Swal.fire({
@@ -390,24 +388,19 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   // MÉTODOS PARA EL LOGO (NO IMPLEMENTADO)
-  onLogoChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (file) {
-      // Aquí implementarías la lógica para subir el logo
-      alert('Logo seleccionado: ' + file.name);
-    }
-  }
-
-  // MÉTODOS DE VISTA (NO IMPLEMENTADOS)
-  viewDocentes(id_clase: number): void {
-    alert('Ver docentes de la clase: ' + id_clase);
-  }
+  // onLogoChange(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   const file = input.files?.[0];
+  //   if (file) {
+  //     // Aquí implementarías la lógica para subir el logo
+  //     alert('Logo seleccionado: ' + file.name);
+  //   }
+  // }
 
   // MÉTODO DE FILTRO DE COLEGIOS (placeholder, sin lógica)
-  filterDocentes(): void {
+  //filterDocentes(): void {
     // Aquí se implementará el filtrado de docentes por colegio si se requiere
-  }
+  //}
 
   changePageDetalle(page: number): void {
     this.currentPage = page;

@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TipoPreguntaService, TipoPregunta } from '../../../../services/tipo-pregunta.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // interface TipoPregunta {
 //   id_tipo_pregunta?: number;
@@ -12,7 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     selector: 'app-tipo-pregunta',
     templateUrl: './tipo-pregunta.component.html',
     styleUrls: ['./tipo-pregunta.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class TipoPreguntaComponent implements OnInit {
   Math = Math;

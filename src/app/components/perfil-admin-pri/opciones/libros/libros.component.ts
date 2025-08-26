@@ -28,11 +28,13 @@ export class LibrosComponent implements OnInit {
   private librosService = inject(LibrosService);
 
   ngOnInit(): void {
+    //alert('Componente inicializado');
     this.initForm();
     this.cargarLibros();
   }
 
   cargarLibros(): void {
+    //alert('Cargando libros...');
     this.loading = true;
     this.librosService.getLibros().subscribe({
       next: (data: Libro[]) => {
@@ -83,6 +85,11 @@ export class LibrosComponent implements OnInit {
   onPageChange(page: number): void {
     this.currentPage = page;
     this.updatePaginatedLibros();
+  }
+
+  getPagesArray(): number[] {
+    const totalPages = Math.ceil(this.filteredLibros.length / this.itemsPerPage);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
   selectTab(tab: 'tabla' | 'nuevo'): void {

@@ -2,7 +2,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-//import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
+import { ReactiveFormsModule } from '@angular/forms';   // Importa ReactiveFormsModule aquí
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Importa HttpClientModule
 import { RouterModule } from '@angular/router'; // Importa RouterModule para el enrutamiento
 //import { AppRoutingModule } from './app-routing.module';
@@ -36,13 +36,13 @@ import { CuestionariosComponent } from './components/perfil-admin-pri/opciones/c
 // Perfil Administrador Pri
 import { PerfilAdminPriComponent } from './components/perfil-admin-pri/perfil-admin-pri.component';
 import { PerfilAdminPriMuroComponent } from './components/perfil-admin-pri/perfil-admin-pri-muro.component'; // Importa el componente de muro del perfil administrador
-//import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
+import { UsuariosComponent } from './components/perfil-admin-pri/opciones/usuarios/usuarios.component';
 import { ColegiosComponent } from './components/perfil-admin-pri/opciones/colegios/colegios.component';
-//import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
+import { DocentesComponent } from './components/perfil-admin-pri/opciones/docentes/docentes.component';
 import { EstudiantesComponent } from './components/perfil-admin-pri/opciones/estudiantes/estudiantes.component';
 import { EditoresComponent } from './components/perfil-admin-pri/opciones/editores/editores.component';
 import { ReportesComponent } from './components/perfil-admin-pri/opciones/reportes/reportes.component'; // Importa el componente de reportes
-//import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
+import { AuditoriaComponent } from './components/perfil-admin-pri/opciones/auditoria/auditoria.component';
 import { PerfilComponent } from './components/perfil-admin-pri/opciones/perfiles/perfiles.component';
 import { AcademicoComponent } from './components/perfil-admin-pri/opciones/academico/academico.component';
 import { CursosComponent } from './components/perfil-admin-pri/opciones/cursos/cursos.component';
@@ -89,17 +89,19 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         LoginFormComponent,
         LoginRegistroComponent,
         LoginRecuperaComponent,
-        OpcionesComponent,
         CursosDetalleComponent,
+        OpcionesComponent,
+        PerfilAdminPriComponent,
+        PerfilAdminPriMuroComponent,
+        DocentesComponent,
         EstudiantesComponent,
-        ClasesColComponent,
         GrupofamComponent,
+        ReportesComponent,
+        AuditoriaComponent,
         TipoMaterialComponent,
         GradosComponent,
         SeccionesComponent,
         AcademicoComponent,
-        PerfilAdminPriComponent,
-        PerfilAdminPriMuroComponent,
         PerfilAdminSecComponent,
         PerfilAdminSecMuroComponent,
         PerfilDocenteComponent,
@@ -109,8 +111,27 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         PerfilFamiliaMuroComponent,
         PerfilEditorComponent,
         PerfilEditorMuroComponent,
-        TestEndpointsComponent,
-        TipoPreguntaComponent
+        TestEndpointsComponent
+        // ❌ Elimina los standalone de aquí
+        // AreasComponent,
+        // LibrosComponent,
+        // MaterialesComponent,
+        // NivelesComponent,
+        // ClasesColComponent,
+        // UnidadesComponent,
+        // LeccionesComponent,
+        // ActividadesComponent,
+        // TipoActividadComponent,
+        // TipoPreguntaComponent,
+        // CuestionariosComponent,
+        // PreguntasComponent,
+        // PerfilComponent,
+        // PeriodoAcademicoComponent,
+        // UsuariosComponent,
+        // ColegiosComponent,
+        // AulasComponent,
+        // CursosComponent,
+        // EditoresComponent
     ],
     imports: [
         BrowserModule,
@@ -121,38 +142,29 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         MatDialogModule,
         MatButtonModule,
         MatTabsModule,
+        ReactiveFormsModule,
         AngularEditorModule,
-    AreasComponent, // standalone
-    AulasComponent, // standalone
-    ActividadesComponent, // standalone
-        ColegiosComponent, // standalone
-        CursosComponent, // standalone
-        CuestionariosComponent, // standalone
-        EditoresComponent, // standalone
-        LeccionesComponent, // standalone
+        // ✅ Agrega los standalone aquí
+        AreasComponent,
         LibrosComponent,
-        MaterialesComponent, // standalone
-        NivelesComponent, // standalone
-        PerfilAdminSecMuroComponent,
-        PerfilComponent, // standalone
-        PerfilDocenteComponent,
-        PerfilDocenteMuroComponent,
-        PerfilEditorComponent,
-        PerfilEditorMuroComponent,
-        PerfilEstudianteComponent,
-        PerfilFamiliaComponent,
-        PerfilFamiliaMuroComponent,
-        PeriodoAcademicoComponent, // standalone
-        PreguntasComponent, // standalone
-        ReportesComponent,
-        SeccionesComponent,
-        TestEndpointsComponent,
-        TipoActividadComponent, // standalone
-        TipoMaterialComponent,
+        MaterialesComponent,
+        NivelesComponent,
+        ClasesColComponent,
+        UnidadesComponent,
+        LeccionesComponent,
+        ActividadesComponent,
+        TipoActividadComponent,
         TipoPreguntaComponent,
-        UnidadesComponent // standalone
+        CuestionariosComponent,
+        PreguntasComponent,
+        PerfilComponent,
+        PeriodoAcademicoComponent,
+        UsuariosComponent,
+        ColegiosComponent,
+        AulasComponent,
+        CursosComponent,
+        EditoresComponent
     ],
-        // ...existing code...
     providers: [
         provideAnimations(),
         {

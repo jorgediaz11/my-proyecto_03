@@ -1,16 +1,15 @@
-
 <div class="libros-container w-full max-w-full">
   <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Libros</h2>
 
   <!-- Pestañas -->
   <div class="mb-6 border-b border-gray-200">
     <nav class="flex space-x-8" aria-label="Tabs">
-      <button type="button" (click)="selectTab('tabla')" [ngClass]="activeTab === 'tabla' ? 'libros-tab-active' : 'libros-tab-inactive'"
+      <button type="button" (click)="selectTab('tabla')" [ngClass]="activeTab === 'tabla' ? 'tab-active' : 'tab-inactive'"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab" [attr.aria-selected]="activeTab === 'tabla'">
         <i class="fas fa-table mr-2"></i> Tabla de Libros
       </button>
-      <button type="button" (click)="selectTab('nuevo')" [ngClass]="activeTab === 'nuevo' ? 'libros-tab-active' : 'libros-tab-inactive'"
+      <button type="button" (click)="selectTab('nuevo')" [ngClass]="activeTab === 'nuevo' ? 'tab-active' : 'tab-inactive'"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab" [attr.aria-selected]="activeTab === 'nuevo'">
         <i class="fas fa-plus mr-2"></i> Nuevo Libro
@@ -19,28 +18,28 @@
   </div>
 
   <div class="tab-content">
-    <!-- Panel: Tabla de Libros -->
+    <!-- Panel: Tabla de Áreas -->
     @if (activeTab === 'tabla') {
-      <div role="tabpanel" class="libros-tab-panel libros-animate-fadeIn">
+      <div role="tabpanel" class="tab-panel animate-fadeIn">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div class="p-4 border-b border-gray-200">
-            <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
-              <div class="w-full sm:w-56">
-                <label for="searchLibro" class="block text-sm font-medium text-gray-700 mb-2">Buscar Libro:</label>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <!-- Filtro de búsqueda -->
+              <div class="flex-1 max-w-md">
+                <label for="searchArea" class="block text-sm font-medium text-gray-700 mb-2">Buscar Libro:</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-search text-gray-400"></i>
                   </div>
-                  <input id="searchLibro" type="text" [(ngModel)]="searchTerm" (input)="filterLibros()" placeholder="Ingrese título"
+                  <input id="searchArea" type="text" [(ngModel)]="searchTerm" (input)="filterAreas()" placeholder="Ingrese nombre"
                     class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
                   </div>
                 </div>
-                <div class="flex-shrink-0">
-                  <button type="button" (click)="selectTab('nuevo')"
-                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                    <i class="fas fa-plus mr-2"></i> Nuevo Libro
-                  </button>
-                </div>
+                <!-- Botón Nueva Área -->
+                <button type="button" (click)="selectTab('nuevo')"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  <i class="fas fa-plus mr-2"></i> Nuevo Libro
+                </button>
               </div>
             </div>
             <!-- Tabla de libros -->
@@ -48,51 +47,45 @@
               <table class="libros-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Línea de Negocio</th>
-                    <th>Colección</th>
-                    <th>Costo</th>
-                    <th class="text-center">Estado</th>
-                    <th class="text-center">Acciones</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                   @for (libro of paginatedLibros; track libro) {
-                    <tr>
-                      <td>{{ libro.id_libro }}</td>
-                      <td>{{ libro.titulo }}</td>
-                      <td>{{ libro.lineanegocio }}</td>
-                      <td>{{ libro.coleccion }}</td>
-                      <td>{{ libro.costolibro | currency:'PEN':'symbol':'1.2-2' }}</td>
-                      <td class="text-center">
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                      <td class="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900">{{ libro.id_libro }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-900">{{ libro.titulo }}</td>
+                      <td class="px-6 py-1 whitespace-nowrap text-center text-sm font-medium">
                         <span [ngClass]="libro.estado ? 'text-green-600' : 'text-red-600'">
                           {{ libro.estado ? 'Activo' : 'Inactivo' }}
                         </span>
                       </td>
-                      <td class="text-center">
+                      <td class="px-6 py-1.5 whitespace-nowrap text-center text-sm font-medium">
                         <div class="flex justify-center space-x-2">
-                          <button type="button"
-                            (click)="viewLibro(libro.id_libro!)"
-                            class="libros-action-icon view"
+                          <button type="button" 
+                            (click)="viewLibro(libro.id_libro!)" 
+                            class="action-icon view" 
                             title="Ver libro">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button"
-                            (click)="editLibro(libro.id_libro!)"
-                            class="libros-action-icon edit"
+                          <button type="button" 
+                            (click)="editLibro(libro.id_libro!)" 
+                            class="action-icon edit" 
                             title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button"
-                            (click)="deleteLibro(libro.id_libro!)"
-                            class="libros-action-icon delete"
+                          <button type="button" 
+                            (click)="deleteLibro(libro.id_libro!)" 
+                            class="action-icon delete" 
                             title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button type="button"
-                            (click)="viewContenido(libro.id_libro!)"
-                            class="text-green-600 hover:text-blue-900 p-1 rounded-full hover:bg-green-50 transition-all duration-150"
+                          <button type="button" 
+                            (click)="detailLibro(libro.id_libro!)" 
+                            class="action-icon view" 
                             title="Detalle">
                             <i class="fas fa-info-circle"></i>
                           </button>
@@ -102,7 +95,7 @@
                   }
                   @if (paginatedLibros.length === 0) {
                     <tr>
-                      <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
+                      <td colspan="4" class="px-6 py-12 text-center text-sm text-gray-500">
                         <div class="flex flex-col items-center">
                           <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
                           <p class="text-lg font-medium text-gray-900 mb-2">No hay libros</p>
@@ -127,77 +120,49 @@
             }
           </div>
         </div>
-  }
+      }
 
-      <!-- Panel: Nuevo Libro -->
-      <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="libros-tab-panel libros-animate-fadeIn">
-        <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-          <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-700">
-              {{ isEditing ? 'Editar Libro' : 'Nuevo Libro' }}
-            </h2>
-            <div *ngIf="isEditing" class="text-sm text-green-700 bg-green-100 rounded px-3 py-2 mt-2">
-              <i class="fas fa-edit mr-1"></i>
-              Editando registro ID: {{ editingLibroId }}
-            </div>
+      <!-- Panel: Nueva Área -->
+      @if (activeTab === 'nuevo') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
             <form [formGroup]="libroForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-700">Datos del Libro</h2>
                 <div class="flex flex-wrap -mx-2">
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="codigointerno" class="block text-sm font-medium text-gray-700 mb-1">Código Interno</label>
-                    <input type="text" id="codigointerno" formControlName="codigointerno" placeholder="Código interno"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
-                    <input type="text" id="isbn" formControlName="isbn" placeholder="ISBN del libro"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
                   <div class="w-full md:w-1/2 px-2">
                     <label for="titulo" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
                     <input type="text" id="titulo" formControlName="titulo" placeholder="Título del libro"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                    <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción del libro"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="lineanegocio" class="block text-sm font-medium text-gray-700 mb-1">Línea de Negocio</label>
-                    <input type="text" id="lineanegocio" formControlName="lineanegocio" placeholder="Línea de negocio"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="id_nivel" class="block text-sm font-medium text-gray-700 mb-1">Nivel</label>
-                    <input type="number" id="id_nivel" formControlName="id_nivel" placeholder="ID del nivel"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="coleccion" class="block text-sm font-medium text-gray-700 mb-1">Colección</label>
-                    <input type="text" id="coleccion" formControlName="coleccion" placeholder="Colección del libro"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="costolibro" class="block text-sm font-medium text-gray-700 mb-1">Costo</label>
-                    <input type="number" id="costolibro" formControlName="costolibro" placeholder="Costo del libro"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                  </div>
-                  <div class="w-full md:w-1/2 px-2">
-                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                    <select id="estado" formControlName="estado"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                      <option [value]="true">Activo</option>
-                      <option [value]="false">Inactivo</option>
-                    </select>
-                  </div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                      <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                      <select id="estado" formControlName="estado"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                        <option [value]="true">Activo</option>
+                        <option [value]="false">Inactivo</option>
+                      </select>
+                    </div>
+                    <div class="w-full md:w-1/2 px-2">
+                      <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                      <input type="text" id="descripcion" formControlName="descripcion" placeholder="Descripción del área"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                      </div>
+                      <div class="w-full md:w-1/2 px-2">
+                        <label for="id_grado" class="block text-sm font-medium text-gray-700 mb-1">ID Grado</label>
+                        <input type="number" id="id_grado" formControlName="id_grado" placeholder="ID del grado"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit"
+                      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                      <i class="fas fa-save mr-2"></i> Guardar Libro
+                    </button>
+                  </form>
                 </div>
               </div>
-              <button type="submit"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                <i class="fas fa-save mr-2"></i> Guardar Libro
-              </button>
-            </form>
+            }
+
           </div>
         </div>
-      </div>

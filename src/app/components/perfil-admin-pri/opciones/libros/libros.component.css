@@ -80,7 +80,8 @@
   transform: scale(1.001);
   transition: all 0.15s ease-in-out;
 }
-.libros-action-icon {
+
+.action-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -92,29 +93,29 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.libros-action-icon.view {
+.action-icon.view {
   color: #3b82f6;
   background-color: #eff6ff;
 }
-.libros-action-icon.view:hover {
+.action-icon.view:hover {
   color: #1d4ed8;
   background-color: #dbeafe;
   transform: scale(1.1);
 }
-.libros-action-icon.edit {
+.action-icon.edit {
   color: #f59e0b;
   background-color: #fffbeb;
 }
-.libros-action-icon.edit:hover {
+.action-icon.edit:hover {
   color: #d97706;
   background-color: #fef3c7;
   transform: scale(1.1);
 }
-.libros-action-icon.delete {
+.action-icon.delete {
   color: #ef4444;
   background-color: #fef2f2;
 }
-.libros-action-icon.delete:hover {
+.action-icon.delete:hover {
   color: #dc2626;
   background-color: #fee2e2;
   transform: scale(1.1);
@@ -122,4 +123,413 @@
 
 h2 {
   color: #28a745;
+}
+
+/* ==========================================================================
+   FILTROS Y BÚSQUEDA
+   ========================================================================== */
+
+.libros-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.libros-filter-input {
+  display: flex;
+  align-items: center;
+}
+
+.libros-filter-input label {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.libros-filter-input input {
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  width: 280px;
+  transition: all 0.2s ease-in-out;
+}
+
+.libros-filter-input input:focus {
+  outline: none;
+  border-color: #4EAD4F;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+
+.libros-create-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
+}
+
+.libros-create-button:hover {
+  background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
+}
+
+.libros-btn-primary {
+  background: linear-gradient(135deg, #4EAD4F 0%, #3d8b40 100%);
+  border-color: #4EAD4F;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
+}
+
+.libros-btn-primary:hover {
+  background: linear-gradient(135deg, #3d8b40 0%, #2d6b30 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(78, 173, 79, 0.4);
+}
+
+.libros-btn-secondary {
+  background-color: white;
+  border: 2px solid #d1d5db;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.libros-btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   PAGINACIÓN
+   ========================================================================== */
+
+/* SISTEMA DE PESTAÑAS - Igualado al modelo de Cursos */
+.tab-active {
+  background-color: #4EAD4F !important;
+  color: #fff !important;
+  border-color: #4EAD4F !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3) !important;
+}
+
+.tab-inactive {
+  background-color: #f0f9f0 !important;
+  color: #3d8b40 !important;
+  border-color: #f0f9f0 !important;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(78, 173, 79, 0.3);
+}
+
+.libros-pagination button:hover {
+  background-color: #218838;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   FORMULARIOS
+   ========================================================================== */
+
+.libros-form-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.libros-form-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0.75rem 0.75rem 0 0;
+  padding: 1.5rem;
+}
+
+.libros-form-body {
+  padding: 1.5rem;
+}
+
+.libros-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.libros-form-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.libros-form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+}
+
+.libros-form-input:focus {
+  outline: none;
+  border-color: #4EAD4F;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
+}
+
+.libros-form-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.libros-form-error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.libros-form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.libros-form-select:focus {
+  outline: none;
+  border-color: #4EAD4F;
+  box-shadow: 0 0 0 3px rgba(78, 173, 79, 0.1);
+}
+
+/* ==========================================================================
+   LOADING Y OVERLAYS
+   ========================================================================== */
+
+.libros-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.libros-loading-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.libros-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #4EAD4F;
+  border-radius: 50%;
+  animation: libros-spin 1s linear infinite;
+}
+
+@keyframes libros-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   BADGES Y ESTADOS
+   ========================================================================== */
+
+.libros-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.libros-badge-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.libros-badge-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.libros-badge-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+
+/* ==========================================================================
+   ESTADOS VACÍOS
+   ========================================================================== */
+
+.libros-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+.libros-empty-state-icon {
+  font-size: 4rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.libros-empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.libros-empty-state-description {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+  .libros-container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .libros-filter-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .libros-filter-input input {
+    width: 100%;
+  }
+
+  .libros-table th,
+  .libros-table td {
+    padding: 4px;
+    font-size: 0.8em;
+  }
+
+  .libros-action-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8em;
+  }
+
+  .libros-pagination {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .libros-pagination button {
+    font-size: 0.8em;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .libros-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .libros-form-container {
+    margin: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   UTILIDADES CSS
+   ========================================================================== */
+
+.libros-text-success { color: #4EAD4F; }
+.libros-text-danger { color: #dc2626; }
+.libros-text-warning { color: #d97706; }
+.libros-text-info { color: #2563eb; }
+
+.libros-bg-success { background-color: #d1fae5; }
+.libros-bg-danger { background-color: #fee2e2; }
+.libros-bg-warning { background-color: #fef3c7; }
+.libros-bg-info { background-color: #dbeafe; }
+
+/* ESTILOS GENERALES BÁSICOS */
+h2 {
+  color: #28a745;
+}
+
+.libros-title {
+  color: #28a745;
+}
+
+.libros-label {
+  font-weight: bold;
+}
+
+.libros-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.libros-list {
+  list-style: none;
+  padding: 0;
+}
+
+.libros-list-item {
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
