@@ -1,4 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TipoActividadService,TipoActividad } from '../../../../services/tipo-actividad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -12,7 +14,13 @@ import Swal from 'sweetalert2';
 @Component({
     selector: 'app-tipo-actividad',
     templateUrl: './tipo-actividad.component.html',
-    styleUrls: ['./tipo-actividad.component.css']
+    styleUrls: ['./tipo-actividad.component.css'],
+    standalone: true,
+    imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule
+    ]    
 })
 export class TipoActividadComponent implements OnInit {
   Math = Math;

@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Libro, LibrosService } from 'src/app/services/libros.service';
 import Swal from 'sweetalert2';
 
@@ -8,7 +10,11 @@ import Swal from 'sweetalert2';
     templateUrl: './libros.component.html',
     styleUrls: ['./libros.component.css'],
     standalone: true,
-    imports: []
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class LibrosComponent implements OnInit {
   Math = Math;

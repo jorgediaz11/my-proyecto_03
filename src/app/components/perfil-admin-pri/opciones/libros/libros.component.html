@@ -31,7 +31,7 @@
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-search text-gray-400"></i>
                   </div>
-                  <input id="searchArea" type="text" [(ngModel)]="searchTerm" (input)="filterAreas()" placeholder="Ingrese nombre"
+                  <input id="searchArea" type="text" [(ngModel)]="searchTerm" (input)="filterLibros()" placeholder="Ingrese nombre"
                     class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm" />
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                             <i class="fas fa-trash"></i>
                           </button>
                           <button type="button" 
-                            (click)="detailLibro(libro.id_libro!)" 
+                            (click)="viewContenido(libro.id_libro!)" 
                             class="action-icon view" 
                             title="Detalle">
                             <i class="fas fa-info-circle"></i>

@@ -1,0 +1,6 @@
+<input type="file" (change)="onFileSelected($event)" accept="application/pdf" class="mb-4 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+<button (click)="uploadPDF()" [disabled]="!selectedFile" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed mb-4">Subir PDF</button>
+<hr class="my-4 w-full border-gray-300" />
+<div *ngIf="downloadUrl">
+  <a [href]="downloadUrl" target="_blank" class="text-blue-600 underline hover:text-blue-800 font-medium">Descargar PDF</a>
+</div>

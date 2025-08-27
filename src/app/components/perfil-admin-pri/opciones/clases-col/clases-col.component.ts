@@ -86,7 +86,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.cargarClasesCol();
+    this.cargarClasesCol();
     this.cargarColegios();
     this.cargarClasesColDetalle(); // <-- Agrega aquí si lo necesitas
   }
@@ -307,7 +307,6 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   viewClase(id_clases: number): void {
-    alert('Ver detalles de la clase: ' + id_clases);
     const clase = this.clases.find(p => p.id_clases === id_clases);
     if (clase) {
       Swal.fire({
@@ -326,7 +325,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   }
 
   detailClase(id_clases: number): void {
-    alert('Ver detalles de la clase 02 : ' + id_clases);
+    //alert('Ver detalles de la clase 02 : ' + id_clases);
     const clase = this.clases.find(p => p.id_clases === id_clases);
     if (clase) {
       Swal.fire({
