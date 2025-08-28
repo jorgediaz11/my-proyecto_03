@@ -81,6 +81,8 @@ import { TestEndpointsComponent } from './test-endpoints.component';    /* tempo
 // Otros Import
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { PdfServicioComponent } from './components/pdf-servicio/pdf-servicio.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -163,7 +165,9 @@ import { provideAnimations } from '@angular/platform-browser/animations';
         ColegiosComponent,
         AulasComponent,
         CursosComponent,
-        EditoresComponent
+        EditoresComponent,
+        PdfServicioComponent,
+        DragDropModule
     ],
     providers: [
         provideAnimations(),

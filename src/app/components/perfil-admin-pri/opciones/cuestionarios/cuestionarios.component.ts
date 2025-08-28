@@ -309,7 +309,7 @@ export class CuestionariosComponent implements OnInit {
         if (cuestionario.preguntas && cuestionario.preguntas.length > 0) {
           html += `<div class='font-semibold text-green-700 mb-1'>Preguntas</div><ol class='list-decimal pl-5'>`;
           cuestionario.preguntas.forEach((pregunta) => {
-            html += `<li class='mb-3'><span class='font-medium'>${pregunta.nombre_pregunta}</span>`;
+            html += `<li class='mb-3'><span class='font-medium border border-blue-400 rounded p-2 block bg-blue-50'>${pregunta.nombre_pregunta}</span>`;
             html += `<div class='text-xs text-gray-500 mb-1'>Tipo: ${pregunta.tipo_pregunta} | Puntaje: ${pregunta.puntaje_pregunta}</div>`;
             // Opciones de respuesta
             if (pregunta.opciones && pregunta.opciones.length > 0) {

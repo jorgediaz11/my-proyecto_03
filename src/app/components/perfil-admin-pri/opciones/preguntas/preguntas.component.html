@@ -375,8 +375,187 @@
               </button>
             </div>
           </form>
+
+          <hr class="my-4 border-gray-600" />
+
+          <!-- Preguntas Nueva Ejemplos -->
+          <div role="tabpanel" class="tab-panel animate-fadeIn">
+            <h2 class="text-xl font-semibold text-gray-700">Preguntas Nuevas - Ejemplos</h2>
+            <div class="pregunta-form-container bg-white rounded-lg shadow-md p-6 mt-6 border border-gray-200">
+              <!-- Selector de Tipo de Pregunta -->
+              <div class="tipo-pregunta-selector mb-4">
+                <label class="block text-sm font-bold text-blue-700 mb-1">Tipo de Pregunta:</label>
+                <select [(ngModel)]="tipoPreguntaSeleccionado" (change)="cambiarTipoPregunta()"class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                  <option value="" selected>Seleccione el tipo de pregunta</option>
+                  <option value="VALOR">Respuesta corta/Valor numérico</option>
+                  <option value="SELECCION">Opción múltiple</option>
+                  <option value="RELACION">Emparejamiento/Relación</option>
+                  <option value="EVALUATIVO_TEXTO">Desarrollo/Ensayo</option>
+                  <option value="EVALUATIVO_ARCHIVO">Subir archivo</option>
+                </select>
+              </div>
+
+              <hr class="my-4 border-gray-600" />
+
+              <!-- Campos comunes a todos los tipos -->
+              <div class="campos-comunes grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <h2 class="text-xl font-bold text-blue-700 col-span-1 md:col-span-3">«Campos comunes»</h2>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Título de la pregunta:</label>
+                  <input type="text" placeholder="Título de la pregunta" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Enunciado de la pregunta:</label>
+                  <textarea placeholder="Enunciado de la pregunta" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Puntaje:</label>
+                  <input type="number" placeholder="Puntaje" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                </div>
+              </div>
+
+              <hr class="my-4 border-gray-600" />
+
+              <!-- Contenedor dinámico según el tipo de pregunta -->
+              <div [ngSwitch]="tipoPreguntaSeleccionado">
+
+                <!-- VALOR: Respuesta corta/numérica -->
+                <div *ngSwitchCase="'VALOR'" class="tipo-valor mb-6">
+                  <div class="respuesta-correcta mb-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Respuesta correcta:</label>
+                    <input type="text" [(ngModel)]="pregunta.respuestaCorrecta"
+                          placeholder="Ingrese la respuesta correcta"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div class="tipo-respuesta">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de respuesta:</label>
+                    <select [(ngModel)]="pregunta.tipoRespuesta"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                      <option value="texto">Texto</option>
+                      <option value="numero">Número</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- SELECCION: Opción múltiple -->
+                <div *ngSwitchCase="'SELECCION'" class="tipo-seleccion mb-6">
+                  <div class="opciones-container mb-2">
+                    <label class="text-sm font-semibold text-gray-700 mb-2">Opciones de respuesta:</label>
+                    <div *ngFor="let opcion of pregunta.opciones; let i = index" class="opcion-item flex items-center gap-2 mb-2">
+                      <input type="text" [(ngModel)]="opcion.texto"
+                            [placeholder]="'Opción ' + (i + 1)"
+                            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                      <label class="flex items-center gap-1 text-sm">
+                        <input type="checkbox" [(ngModel)]="opcion.correcta" class="form-checkbox text-green-600" />
+                        Correcta
+                      </label>
+                      <button type="button" (click)="eliminarOpcion(i)"
+                              class="px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200">Eliminar</button>
+                    </div>
+                    <button type="button" (click)="agregarOpcion()"
+                            class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200">+ Agregar opción</button>
+                  </div>
+                  <div class="configuracion-seleccion">
+                    <label class="flex items-center gap-2 text-sm">
+                      <input type="checkbox" [(ngModel)]="pregunta.multiple" class="form-checkbox text-green-600" />
+                      Permite múltiples respuestas correctas
+                    </label>
+                  </div>
+                </div>
+
+                <!-- RELACION: Emparejamiento -->
+                <div *ngSwitchCase="'RELACION'" class="tipo-relacion mb-6">
+                  <label class="text-sm font-semibold text-gray-700 mb-2">Pares de relación:</label>
+                  <div *ngFor="let par of pregunta.paresRelacion; let i = index" class="par-item flex items-center gap-2 mb-2">
+                    <input type="text" [(ngModel)]="par.elementoA" placeholder="Elemento A"
+                          class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    <span class="text-gray-500">→</span>
+                    <input type="text" [(ngModel)]="par.elementoB" placeholder="Elemento B"
+                          class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    <button type="button" (click)="eliminarPar(i)"
+                            class="px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200">Eliminar</button>
+                  </div>
+                  <button type="button" (click)="agregarPar()"
+                          class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200">+ Agregar par</button>
+                </div>
+
+                <!-- EVALUATIVO_TEXTO: Desarrollo/Ensayo -->
+                <div *ngSwitchCase="'EVALUATIVO_TEXTO'" class="tipo-evaluativo-texto mb-6">
+                  <label class="text-sm font-semibold text-gray-700 mb-2">Evaluativo Texto:</label>
+                  <div class="configuracion-texto grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Longitud mínima de respuesta:</label>
+                      <input type="number" [(ngModel)]="pregunta.longitudMinima" min="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Longitud máxima de respuesta:</label>
+                      <input type="number" [(ngModel)]="pregunta.longitudMaxima" min="1"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Rúbrica de evaluación:</label>
+                      <textarea [(ngModel)]="pregunta.rubrica"
+                                placeholder="Describa los criterios de evaluación..."
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- EVALUATIVO_ARCHIVO: Subir archivo -->
+                <div *ngSwitchCase="'EVALUATIVO_ARCHIVO'" class="tipo-evaluativo-archivo mb-6">
+                  <label class="text-sm font-semibold text-gray-700 mb-2">Evaluativo Archivo:</label>
+                  <div class="configuracion-archivo grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Tipos de archivo permitidos:</label>
+                      <select [(ngModel)]="pregunta.formatosPermitidos" multiple
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                        <option value="pdf">PDF</option>
+                        <option value="doc">DOC/DOCX</option>
+                        <option value="image">Imágenes (JPG, PNG)</option>
+                        <option value="video">Video (MP4, AVI)</option>
+                        <option value="audio">Audio (MP3, WAV)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Tamaño máximo (MB):</label>
+                      <input type="number" [(ngModel)]="pregunta.tamanoMaximo" min="1" max="100"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Instrucciones específicas:</label>
+                      <textarea [(ngModel)]="pregunta.instrucciones"
+                                placeholder="Instrucciones para la entrega del archivo..."
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botones de acción -->
+              <div class="acciones flex gap-3 mt-4">
+                <button type="button" (click)="guardarPregunta()"
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  Guardar Pregunta
+                </button>
+                <button type="button"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                  Cancelar
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
       </div>
     }
+
   </div>
+
 </div>

@@ -11,6 +11,36 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TipoPreguntaService, TipoPregunta } from 'src/app//services/tipo-pregunta.service';
 import Swal from 'sweetalert2';
 
+// Estructuras de datos
+interface Opcion {
+  texto: string;
+  correcta: boolean;
+}
+
+interface ParRelacion {
+  elementoA: string;
+  elementoB: string;
+}
+
+interface Preguntare {
+  tipo: string;
+  titulo: string;
+  enunciado: string;
+  puntaje: number;
+  // Campos específicos por tipo
+  respuestaCorrecta?: string;
+  tipoRespuesta?: string;
+  opciones?: Opcion[];
+  multiple?: boolean;
+  paresRelacion?: ParRelacion[];
+  longitudMinima?: number;
+  longitudMaxima?: number;
+  rubrica?: string;
+  formatosPermitidos?: string[];
+  tamanoMaximo?: number;
+  instrucciones?: string;
+}
+
 @Component({
     selector: 'app-preguntas',
     templateUrl: './preguntas.component.html',
@@ -63,6 +93,16 @@ export class PreguntasComponent implements OnInit {
   private gradosService = inject(GradosService);
   private cursosService = inject(CursosService);
   private tipoPreguntaService = inject(TipoPreguntaService);
+
+
+  // Variables del componente
+  tipoPreguntaSeleccionado: string = 'VALOR';
+  pregunta: Preguntare = {
+    tipo: 'VALOR',
+    titulo: '',
+    enunciado: '',
+    puntaje: 1
+  };
 
   ngOnInit(): void {
     this.initForm();
@@ -389,6 +429,66 @@ export class PreguntasComponent implements OnInit {
       text: message,
       confirmButtonColor: '#28a745'
     });
+  }
+
+  // Métodos principales
+  cambiarTipoPregunta(): void {
+    // Reiniciar la pregunta según el nuevo tipo
+    this.inicializarPreguntaPorTipo();
+  }
+
+  inicializarPreguntaPorTipo(): void {
+    // Configurar campos específicos según el tipo
+    switch(this.tipoPreguntaSeleccionado) {
+      case 'SELECCION':
+        this.pregunta.opciones = [{texto: '', correcta: false}];
+        this.pregunta.multiple = false;
+        break;
+      case 'RELACION':
+        this.pregunta.paresRelacion = [{elementoA: '', elementoB: ''}];
+        break;
+      case 'EVALUATIVO_TEXTO':
+        this.pregunta.longitudMinima = 0;
+        this.pregunta.longitudMaxima = 1000;
+        break;
+      case 'EVALUATIVO_ARCHIVO':
+        this.pregunta.formatosPermitidos = ['pdf'];
+        this.pregunta.tamanoMaximo = 10;
+        break;
+    }
+  }
+
+  agregarOpcion(): void {
+    if (!this.pregunta.opciones) {
+      this.pregunta.opciones = [];
+    }
+    this.pregunta.opciones.push({ texto: '', correcta: false });
+  }
+
+  eliminarOpcion(index: number): void {
+    if (this.pregunta.opciones) {
+      this.pregunta.opciones.splice(index, 1);
+    }
+  }
+
+  agregarPar(): void {
+    if (!this.pregunta.paresRelacion) {
+      this.pregunta.paresRelacion = [];
+    }
+    this.pregunta.paresRelacion.push({ elementoA: '', elementoB: '' });
+  }
+
+  eliminarPar(index: number): void {
+    if (this.pregunta.paresRelacion) {
+      this.pregunta.paresRelacion.splice(index, 1);
+    }
+  }
+
+  guardarPregunta(): void {
+    // Validar según el tipo de pregunta
+    //if (this.validarPregunta()) {
+      // Guardar la pregunta
+    //}
   }
 
 }

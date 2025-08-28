@@ -52,6 +52,8 @@ import { PerfilFamiliaMuroComponent } from './components/perfil-familia/perfil-f
 // Perfil Editor
 import { PerfilEditorComponent } from './components/perfil-editor/perfil-editor.component';
 import { PerfilEditorMuroComponent } from './components/perfil-editor/perfil-editor-muro.component'; // Importar el nuevo componente
+import { PdfServicioComponent } from './components/pdf-servicio/pdf-servicio.component';
+import { CuestionarioEstudianteComponent } from './components/perfil-admin-pri/opciones/cuestionario-estudiante/cuestionario-estudiante.component';
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component'; // Temporal
@@ -73,6 +75,8 @@ export const routes: Routes = [
 
   // Ruta para el menú de opciones
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones
+  { path: 'pdf-servicio', component: PdfServicioComponent },
+  { path: 'cuestionario-estudiante', component: CuestionarioEstudianteComponent },
 
   // Ruta para el perfil de admin
   { path: 'perfil-admin-pri',                               // Ruta para el perfil de admin pri

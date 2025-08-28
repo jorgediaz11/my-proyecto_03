@@ -1,0 +1,181 @@
+<div class="quiz-container max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-blue-700 mb-8 text-center">Evaluación Unidad 1 - Matemática 1er Grado v01</h1>
+  <h2 class="text-2xl font-bold text-blue-700 mb-8 text-left">Preguntas</h2>
+  <!-- Pregunta 1: VALOR -->
+  <div class="question tipo-valor mb-6 p-4 rounded border border-blue-100 bg-blue-50">
+    <p class="font-semibold text-gray-800 mb-2">01.- ¿Cuánto es 2 + 3?</p>
+    <input type="text" [(ngModel)]="respuesta1" placeholder="Ingrese su respuesta"
+      [class.border-red-500]="enviarIntentado && !respuesta1"
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 mb-2" />
+    <p *ngIf="enviarIntentado && !respuesta1" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 2: VALOR -->
+  <div class="question tipo-valor mb-6 p-4 rounded border border-blue-100 bg-blue-50">
+    <p class="font-semibold text-gray-800 mb-2">02.- ¿Cuánto es 10 - 4?</p>
+    <input type="text" [(ngModel)]="respuesta2" placeholder="Ingrese su respuesta"
+      [class.border-red-500]="enviarIntentado && !respuesta2"
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 mb-2" />
+    <p *ngIf="enviarIntentado && !respuesta2" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 3: SELECCION -->
+  <div class="question tipo-seleccion mb-6 p-4 rounded border border-green-100 bg-green-50">
+    <p class="font-semibold text-gray-800 mb-2">03.- ¿Cuál es el resultado de 5 - 2?</p>
+    <div class="opciones grid grid-cols-2 gap-2 mb-2">
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta3" value="1" name="q3" class="form-radio text-green-600" /> A. 1</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta3" value="3" name="q3" class="form-radio text-green-600" /> B. 3</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta3" value="4" name="q3" class="form-radio text-green-600" /> C. 4</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta3" value="5" name="q3" class="form-radio text-green-600" /> D. 5</label>
+    </div>
+    <p *ngIf="enviarIntentado && !respuesta3" class="text-red-600 text-sm">Seleccione una opción.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 4: SELECCION -->
+  <div class="question tipo-seleccion mb-6 p-4 rounded border border-green-100 bg-green-50">
+    <p class="font-semibold text-gray-800 mb-2">04.- ¿Qué número sigue en la secuencia: 2, 4, 6, ...?</p>
+    <div class="opciones grid grid-cols-2 gap-2 mb-2">
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta4" value="7" name="q4" class="form-radio text-green-600" /> A. 7</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta4" value="8" name="q4" class="form-radio text-green-600" /> B. 8</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta4" value="9" name="q4" class="form-radio text-green-600" /> C. 9</label>
+      <label class="flex items-center gap-2"><input type="radio" [(ngModel)]="respuesta4" value="10" name="q4" class="form-radio text-green-600" /> D. 10</label>
+    </div>
+    <p *ngIf="enviarIntentado && !respuesta4" class="text-red-600 text-sm">Seleccione una opción.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 5: RELACION -->
+  <div class="question tipo-relacion mb-6 p-4 rounded border border-purple-100 bg-purple-50">
+    <p class="font-semibold text-gray-800 mb-2">05.- Relaciona el número con su nombre en palabras</p>
+    <div class="matching grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">5</label>
+        <select [(ngModel)]="relacion5[0]" [class.border-red-500]="enviarIntentado && !relacion5[0]"
+          class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+          <option value="">Seleccionar</option>
+          <option value="Cinco">Cinco</option>
+          <option value="Tres">Tres</option>
+          <option value="Ocho">Ocho</option>
+        </select>
+        <p *ngIf="enviarIntentado && !relacion5[0]" class="text-red-600 text-sm">Seleccione una opción.</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">3</label>
+        <select [(ngModel)]="relacion5[1]" [class.border-red-500]="enviarIntentado && !relacion5[1]"
+          class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+          <option value="">Seleccionar</option>
+          <option value="Cinco">Cinco</option>
+          <option value="Tres">Tres</option>
+          <option value="Ocho">Ocho</option>
+        </select>
+        <p *ngIf="enviarIntentado && !relacion5[1]" class="text-red-600 text-sm">Seleccione una opción.</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">8</label>
+        <select [(ngModel)]="relacion5[2]" [class.border-red-500]="enviarIntentado && !relacion5[2]"
+          class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+          <option value="">Seleccionar</option>
+          <option value="Cinco">Cinco</option>
+          <option value="Tres">Tres</option>
+          <option value="Ocho">Ocho</option>
+        </select>
+        <p *ngIf="enviarIntentado && !relacion5[2]" class="text-red-600 text-sm">Seleccione una opción.</p>
+      </div>
+    </div>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 6: RELACION -->
+  <div class="question tipo-relacion mb-6 p-4 rounded border border-purple-100 bg-purple-50">
+    <p class="font-semibold text-gray-800 mb-2">06.- Relaciona la operación con su resultado</p>
+
+    <!-- Emparejamiento Drag & Drop -->
+    <div class="matching grid grid-cols-2 gap-8 mb-8">
+      <!-- Enunciados (Drop List) -->
+      <div>
+        <h4 class="font-semibold text-blue-700 mb-2">Enunciados</h4>
+        <div *ngFor="let enunciado of enunciados; let i = index"
+            cdkDropList
+            [cdkDropListData]="[i]"
+            (cdkDropListDropped)="onDrop($event, i)"
+            (cdkDragEntered)="dragOverIdx = i"
+            (cdkDragExited)="dragOverIdx = null"
+            [class.border-blue-500]="dragOverIdx === i"
+            class="w-[100%] min-w-[200px] p-8 mb-4 rounded border border-blue-300 bg-blue-50 min-h-[80px] flex items-center justify-between transition-all cursor-pointer mx-auto">
+          <span>{{ enunciado }}</span>
+          <span *ngIf="isValidRespuesta(respuestas[i])" class="ml-2 px-2 py-1 bg-green-100 text-green-700 rounded">
+            {{ opciones[respuestas[i]!] }}
+          </span>
+        </div>
+        <p *ngIf="isRelacionIncompleta()" class="text-red-600 text-sm">
+          Debe emparejar todas las opciones.
+        </p>
+      </div>
+      <!-- Opciones (Drag List) -->
+      <div>
+        <h4 class="font-semibold text-green-700 mb-2">Opciones</h4>
+        <div cdkDropListGroup>
+          <div *ngFor="let opcion of opciones; let j = index"
+              cdkDrag
+              [cdkDragData]="j"
+              class="w-[90%] h-[90%] p-4 mb-4 rounded border border-green-300 bg-green-50 cursor-move flex items-center justify-center mx-auto transition-all">
+            {{ opcion }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 7: EVALUATIVO_TEXTO -->
+  <div class="question tipo-evaluativo-texto mb-6 p-4 rounded border border-yellow-100 bg-yellow-50">
+    <p class="font-semibold text-gray-800 mb-2">07.- Explica cómo resolviste 7 + 4</p>
+    <textarea [(ngModel)]="explicacion7"
+      [class.border-red-500]="enviarIntentado && !explicacion7"
+      placeholder="Escribe tu explicación aquí..."
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 mb-2"></textarea>
+    <p *ngIf="enviarIntentado && !explicacion7" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+
+  <!-- Pregunta 8: EVALUATIVO_TEXTO -->
+  <div class="question tipo-evaluativo-texto mb-6 p-4 rounded border border-yellow-100 bg-yellow-50">
+    <p class="font-semibold text-gray-800 mb-2">08.- Describe cómo restar 8 - 3 usando una recta numérica</p>
+    <textarea [(ngModel)]="explicacion8"
+      [class.border-red-500]="enviarIntentado && !explicacion8"
+      placeholder="Escribe tu descripción aquí..."
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 mb-2"></textarea>
+    <p *ngIf="enviarIntentado && !explicacion8" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <!-- Pregunta 9: EVALUATIVO_ARCHIVO -->
+  <div class="question tipo-evaluativo-archivo mb-6 p-4 rounded border border-pink-100 bg-pink-50">
+    <p class="font-semibold text-gray-800 mb-2">09.- Sube un dibujo de una suma con objetos</p>
+    <input type="file"
+      (change)="onArchivoChange($event, 9)"
+      [class.border-red-500]="enviarIntentado && !archivo9"
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 mb-2" />
+    <p *ngIf="enviarIntentado && !archivo9" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+
+  <!-- Pregunta 10: EVALUATIVO_ARCHIVO -->
+  <div class="question tipo-evaluativo-archivo mb-6 p-4 rounded border border-pink-100 bg-pink-50">
+    <p class="font-semibold text-gray-800 mb-2">10.- Sube un gráfico de una resta con objetos</p>
+    <input type="file"
+      (change)="onArchivoChange($event, 10)"
+      [class.border-red-500]="enviarIntentado && !archivo10"
+      class="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 mb-2" />
+    <p *ngIf="enviarIntentado && !archivo10" class="text-red-600 text-sm">Este campo es obligatorio.</p>
+    <p class="text-sm text-gray-500">Puntaje: 5</p>
+  </div>
+  
+  <div class="acciones flex justify-center mt-8">
+    <button (click)="validarRespuestas()" class="px-6 py-2 text-white bg-blue-600 rounded shadow hover:bg-blue-700 transition font-semibold">Enviar Respuestas</button>
+  </div>
+</div>
