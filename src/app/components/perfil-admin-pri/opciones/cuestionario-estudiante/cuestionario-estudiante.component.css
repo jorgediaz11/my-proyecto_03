@@ -1,9 +1,9 @@
 /* ========================================================================== */
-/* CUESTIONARIOS COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
+/* CUESTIONARIO-ESTUDIANTE COMPONENT - ESTILOS COMPLETOS Y ORGANIZADOS */
 /* ========================================================================== */
 
 /* CONTENEDOR PRINCIPAL */
-.cuestionarios-container {
+.cuestionario-estudiante-container {
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;

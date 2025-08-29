@@ -41,10 +41,13 @@ export class CuestionarioEstudianteComponent {
   respuesta3: string = '';
   respuesta4: string = '';
   relacion5: string[] = ['', '', ''];
-respuestas: (number | null)[] = Array(this.enunciados.length).fill(null);  explicacion7: string = '';
+  respuestas: (number | null)[] = Array(this.enunciados.length).fill(null);
+  explicacion7: string = '';
   explicacion8: string = '';
   archivo9: File | null = null;
   archivo10: File | null = null;
+
+  avisos: string[] = Array(this.enunciados.length).fill('');
 
   isPair(obj: any): obj is { enunciado: string; opcion: string } {
     return obj && typeof obj === 'object' && 'enunciado' in obj && 'opcion' in obj;
@@ -129,6 +132,9 @@ respuestas: (number | null)[] = Array(this.enunciados.length).fill(null);  expli
   onDrop(event: any, enunciadoIdx: number): void {
     const opcionIdx = event.item.data;
     this.respuestas[enunciadoIdx] = opcionIdx;
+
+    // Solo mostrar confirmación de emparejamiento realizado
+    this.avisos[enunciadoIdx] = '✔ Emparejamiento realizado con exito';
   }
 
   isValidRespuesta(idx: number | null | undefined): boolean {
