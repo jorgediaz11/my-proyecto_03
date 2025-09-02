@@ -172,6 +172,7 @@ export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
     this.renderRendimientoAcademicoChart();
     this.renderDistribucionEstudiantesChart();
     this.renderActividadDiariaChart();
+    //this.renderSecundariaDistribucionChart(); // <-- método faltante
   }
 
   // ✅ Método para simular carga de datos (se conectaría al backend)
@@ -308,7 +309,7 @@ export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
 
   // ✅ Gráfico de distribución de estudiantes
   renderDistribucionEstudiantesChart() {
-    console.log('📊 Renderizando gráfico de distribución de estudiantes...');
+    console.log('📊 Renderizando gráfico de distribución de estudiantes (barras horizontales)...');
     const canvas = document.getElementById('distribucionChart') as HTMLCanvasElement;
     if (!canvas) {
       console.error('❌ No se encontró el elemento canvas con ID "distribucionChart"');
@@ -320,28 +321,43 @@ export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Agrupar por nivel
-    const primaria = this.gradosSecciones.filter(g => g.grado.includes('Primaria'));
-    const secundaria = this.gradosSecciones.filter(g => g.grado.includes('Secundaria'));
-
-    const totalPrimaria = primaria.reduce((sum, g) => sum + g.estudiantes, 0);
-    const totalSecundaria = secundaria.reduce((sum, g) => sum + g.estudiantes, 0);
+    // Agrupar por grado y nivel
+    const gradosUnicos = [...new Set(this.gradosSecciones.map(g => g.grado))];
+    const estudiantesPorGrado = gradosUnicos.map(grado =>
+      this.gradosSecciones.filter(g => g.grado === grado).reduce((sum, g) => sum + g.estudiantes, 0)
+    );
 
     new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: {
-        labels: ['Primaria', 'Secundaria'],
+        labels: gradosUnicos,
         datasets: [{
-          data: [totalPrimaria, totalSecundaria],
-          backgroundColor: ['#22c55e', '#3b82f6'],
-          borderWidth: 2
+          label: 'Estudiantes por Grado',
+          data: estudiantesPorGrado,
+          backgroundColor: [
+            '#22c55e', '#16a34a', '#15803d', '#166534', '#14532d',
+            '#3b82f6', '#2563eb', '#1d4ed8', '#1e40af', '#1e3a8a',
+            '#f59e0b', '#d97706', '#b45309'
+          ],
+          borderColor: '#374151',
+          borderWidth: 1
         }]
       },
       options: {
+        indexAxis: 'y', // <-- barras horizontales
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
-          title: { display: true, text: 'Distribución de Estudiantes por Nivel' }
+          legend: { display: false },
+          title: { display: true, text: 'Distribución de Estudiantes por Grado y Nivel' }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: { display: true, text: 'Cantidad de Estudiantes' }
+          },
+          y: {
+            title: { display: true, text: 'Grado' }
+          }
         }
       }
     });
@@ -390,6 +406,50 @@ export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
             beginAtZero: true,
             title: { display: true, text: 'Cantidad' }
           }
+        }
+      }
+    });
+  }
+
+  renderSecundariaDistribucionChart(): void {
+    const canvas = document.getElementById('chartSecundariaPie') as HTMLCanvasElement;
+    if (!canvas) {
+      console.error('❌ No se encontró el elemento canvas con ID "chartSecundariaPie"');
+      return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('❌ No se pudo obtener el contexto 2D del canvas');
+      return;
+    }
+
+    // Filtrar grados de secundaria y agrupar por grado
+    const secundaria = this.gradosSecciones.filter(g => g.grado.includes('Secundaria'));
+    const gradosUnicos = [...new Set(secundaria.map(g => g.grado))];
+    const estudiantesPorGrado = gradosUnicos.map(grado =>
+      secundaria.filter(g => g.grado === grado).reduce((sum, g) => sum + g.estudiantes, 0)
+    );
+
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: gradosUnicos,
+        datasets: [{
+          data: estudiantesPorGrado,
+          backgroundColor: [
+            '#60A5FA', // azul
+            '#F59E42', // naranja
+            '#34D399', // verde
+            '#A78BFA', // violeta
+            '#F87171'  // rojo
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          title: { display: true, text: 'Distribución de Estudiantes en Secundaria' }
         }
       }
     });

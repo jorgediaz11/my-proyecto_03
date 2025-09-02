@@ -8,6 +8,7 @@ interface Estudiante {
   id: number;
   nombre: string;
   apellido: string;
+  nivel: string; // ← nuevo campo
   grado: string;
   seccion: string;
   edad: number;
@@ -15,6 +16,7 @@ interface Estudiante {
   promedio: number;
   asistencia: number;
   comportamiento: 'excelente' | 'bueno' | 'regular' | 'necesita_mejora';
+  cursos: { titulo: string }[]; // ← agrega esta línea
   ultimasNotas: NotaReciente[];
 }
 
@@ -140,13 +142,19 @@ export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewI
         id: 1,
         nombre: 'María José',
         apellido: 'García López',
-        grado: '5to Primaria',
+        nivel: 'Primaria',
+        grado: '5to',
         seccion: 'A',
         edad: 10,
         avatar: '👧',
         promedio: 16.8,
         asistencia: 95,
         comportamiento: 'excelente',
+        cursos: [
+          { titulo: 'Matemáticas' },
+          { titulo: 'Comunicación' },
+          { titulo: 'Ciencias' }
+        ],
         ultimasNotas: [
           {
             id: 1,
@@ -178,13 +186,19 @@ export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewI
         id: 2,
         nombre: 'Carlos Alberto',
         apellido: 'García López',
-        grado: '2do Secundaria',
+        nivel: 'Secundaria',
+        grado: '2do',
         seccion: 'B',
         edad: 13,
         avatar: '👦',
         promedio: 14.5,
         asistencia: 88,
         comportamiento: 'bueno',
+        cursos: [
+          { titulo: 'Historia' },
+          { titulo: 'Matemáticas' },
+          { titulo: 'Inglés' }
+        ],
         ultimasNotas: [
           {
             id: 4,
@@ -693,4 +707,9 @@ export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewI
       this.programarReunion();
     }
   }
+
+  getCursosTitulos(cursos: { titulo: string }[]): string {
+    return cursos.map(curso => curso.titulo).join(', ');
+  }
+
 }

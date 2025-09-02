@@ -152,7 +152,7 @@
       <!-- Materias Destacadas -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- Lista de Materias -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 max-h-[525px] overflow-y-auto flex flex-col">
           <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
               <h3 class="text-lg font-semibold text-gray-900">Materias Gestionadas</h3>
@@ -163,7 +163,7 @@
               </button>
             </div>
           </div>
-          <div class="p-6">
+          <div class="p-6 flex-1">
             <div class="space-y-4">
               @for (materia of materias.slice(0, 4); track materia) {
                 <div
@@ -190,7 +190,7 @@
           </div>
         </div>
         <!-- Capítulos Recientes -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 max-h-[525px] overflow-y-auto flex flex-col">
           <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
               <h3 class="text-lg font-semibold text-gray-900">Capítulos Recientes</h3>
@@ -201,7 +201,7 @@
               </button>
             </div>
           </div>
-          <div class="p-6">
+          <div class="p-6 flex-1">
             <div class="space-y-4">
               @for (capitulo of capitulosRecientes; track capitulo) {
                 <div

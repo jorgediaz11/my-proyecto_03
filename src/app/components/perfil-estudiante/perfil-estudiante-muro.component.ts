@@ -171,31 +171,30 @@ export class PerfilEstudianteMuroComponent implements OnInit, AfterViewInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: labels, // Ejemplo: ['Matemáticas', 'Lengua', 'Ciencias']
         datasets: [{
           label: 'Progreso (%)',
-          data: data,
+          data: data, // Ejemplo: [80, 65, 90]
           backgroundColor: colors,
-          borderColor: colors,
-          borderWidth: 1
+          borderColor: '#2563eb',
+          borderWidth: 1,
+          barPercentage: 0.5,
+          categoryPercentage: 0.6
         }]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            display: false
-          }
+          legend: { display: false },
+          title: { display: true, text: 'Progreso por Curso' }
         },
         scales: {
+          x: {
+            title: { display: true, text: 'Curso' }
+          },
           y: {
             beginAtZero: true,
-            max: 100,
-            ticks: {
-              callback: function(value) {
-                return value + '%';
-              }
-            }
+            title: { display: true, text: 'Porcentaje de Progreso' }
           }
         }
       }
@@ -216,25 +215,46 @@ export class PerfilEstudianteMuroComponent implements OnInit, AfterViewInit {
       proyecto: this.proximasEvaluaciones.filter(e => e.tipo === 'proyecto').length
     };
 
+    const tiposEvaluacion = ['Examen', 'Tarea', 'Proyecto'];
+    const pendientesPorTipo = [
+      tiposCount.examen,
+      tiposCount.tarea,
+      tiposCount.proyecto
+    ];
+
     new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: {
-        labels: ['Exámenes', 'Tareas', 'Proyectos'],
+        labels: tiposEvaluacion, // Ejemplo: ['Examen', 'Tarea', 'Proyecto']
         datasets: [{
-          data: [tiposCount.examen, tiposCount.tarea, tiposCount.proyecto],
-          backgroundColor: ['#dc3545', '#ffc107', '#28a745'],
-          borderWidth: 2
+          label: 'Pendientes',
+          data: pendientesPorTipo, // Ejemplo: [2, 5, 1]
+          backgroundColor: ['#f59e42', '#60a5fa', '#34d399'],
+          borderColor: '#2563eb',
+          borderWidth: 1,
+          barPercentage: 0.5,
+          categoryPercentage: 0.6
         }]
       },
       options: {
+        indexAxis: 'y', // Barras horizontales
         responsive: true,
         plugins: {
-          legend: {
-            position: 'bottom'
+          legend: { display: false },
+          title: { display: true, text: 'Evaluaciones Pendientes por Tipo' }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: { display: true, text: 'Cantidad Pendiente' }
+          },
+          y: {
+            title: { display: true, text: 'Tipo de Evaluación' }
           }
         }
       }
     });
+
   }
 
   // ✅ Métodos de utilidad

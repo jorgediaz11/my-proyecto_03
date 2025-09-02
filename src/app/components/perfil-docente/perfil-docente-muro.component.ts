@@ -195,60 +195,83 @@ export class PerfilDocenteMuroComponent implements OnInit, AfterViewInit {
   }
 
   renderAsistenciaChart() {
-    console.log('📈 Renderizando gráfico de asistencia...');
+    console.log('📈 Renderizando gráfico de asistencia por grado (barras agrupadas)...');
     const ctx = document.getElementById('asistenciaChart') as HTMLCanvasElement;
     if (!ctx) {
       console.error('❌ No se encontró el elemento canvas con ID "asistenciaChart"');
       return;
     }
 
-    const labels = this.misClases.map(clase => clase.nombre);
-    const presentes = this.misClases.map(clase => clase.estudiantesPresentes);
-    const ausentes = this.misClases.map(clase => clase.totalEstudiantes - clase.estudiantesPresentes);
+    // Agrupar por grado y sumar presentes/ausentes
+    const gradosUnicos = [...new Set(this.misClases.map(clase => clase.grado))]
+      .sort((a, b) => {
+        // Extrae el número del grado para ordenar
+        const numA = parseInt(a.replace(/\D/g, ''), 10);
+        const numB = parseInt(b.replace(/\D/g, ''), 10);
+        return numA - numB;
+      });
+
+    const presentesPorGrado = gradosUnicos.map(grado =>
+      this.misClases
+        .filter(clase => clase.grado === grado)
+        .reduce((sum, clase) => sum + clase.estudiantesPresentes, 0)
+    );
+
+    const ausentesPorGrado = gradosUnicos.map(grado =>
+      this.misClases
+        .filter(clase => clase.grado === grado)
+        .reduce((sum, clase) => sum + (clase.totalEstudiantes - clase.estudiantesPresentes), 0)
+    );
 
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: gradosUnicos,
         datasets: [
           {
             label: 'Presentes',
-            data: presentes,
+            data: presentesPorGrado,
             backgroundColor: '#28a745',
             borderColor: '#28a745',
-            borderWidth: 1
+            borderWidth: 1,
+            barPercentage: 0.5,        // <-- Aquí
+            categoryPercentage: 0.6    // <-- Aquí
           },
           {
             label: 'Ausentes',
-            data: ausentes,
+            data: ausentesPorGrado,
             backgroundColor: '#dc3545',
             borderColor: '#dc3545',
-            borderWidth: 1
+            borderWidth: 1,
+            barPercentage: 0.5,
+            categoryPercentage: 0.6
           }
         ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'top'
-          }
+          legend: { position: 'top' },
+          title: { display: true, text: 'Asistencia por Grado' }
         },
         scales: {
           x: {
-            stacked: true
+            type: 'category',
+            title: { display: true, text: 'Grado' }
           },
           y: {
-            stacked: true,
             beginAtZero: true
           }
         }
       }
     });
+
+
   }
 
+
   renderRendimientoChart() {
-    console.log('📊 Renderizando gráfico de rendimiento...');
+    console.log('📊 Renderizando gráfico de rendimiento (barras horizontales)...');
     const ctx = document.getElementById('rendimientoChart') as HTMLCanvasElement;
     if (!ctx) {
       console.error('❌ No se encontró el elemento canvas con ID "rendimientoChart"');
@@ -262,24 +285,37 @@ export class PerfilDocenteMuroComponent implements OnInit, AfterViewInit {
     const deficiente = this.misEstudiantes.filter(e => e.promedio < 11).length;
 
     new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: {
         labels: ['Excelente (17-20)', 'Bueno (14-16)', 'Regular (11-13)', 'Deficiente (0-10)'],
         datasets: [{
+          label: 'Cantidad de Estudiantes',
           data: [excelente, bueno, regular, deficiente],
           backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#dc3545'],
-          borderWidth: 2
+          borderWidth: 2,
+          barPercentage: 0.5,
+          categoryPercentage: 0.6
         }]
       },
       options: {
+        indexAxis: 'y',
         responsive: true,
         plugins: {
-          legend: {
-            position: 'bottom'
+          legend: { display: false },
+          title: { display: true, text: 'Rendimiento de Estudiantes' }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: { display: true, text: 'Cantidad de Estudiantes' }
+          },
+          y: {
+            title: { display: true, text: 'Rango de Promedio' }
           }
         }
       }
     });
+
   }
 
   // ✅ Métodos de utilidad
