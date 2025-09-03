@@ -1,5 +1,5 @@
 <div class="quiz-container max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
-  <h1 class="text-2xl font-bold text-blue-700 mb-8 text-center">Evaluación Unidad 1 - Matemática 1er Grado v017</h1>
+  <h1 class="text-2xl font-bold text-blue-700 mb-8 text-center">Evaluación Unidad 1 - Matemática 1er Grado v042</h1>
   <h2 class="text-2xl font-bold text-blue-700 mb-8 text-left">Preguntas</h2>
   
   <!-- Pregunta 1: VALOR -->
@@ -94,34 +94,40 @@
     <p class="font-semibold text-gray-800 mb-2">06.- Relaciona la operación con su resultado</p>
 
     <!-- Emparejamiento Drag & Drop -->
+    <!-- Enunciados y Opciones Drag & Drop -->
     <div class="matching grid grid-cols-2 gap-8 mb-8">
       <!-- Enunciados (Drop List) -->
       <div>
-        <h4 class="font-semibold text-blue-700 mb-2">Enunciados</h4>
+        <h4 class="font-semibold text-blue-700 mb-2">Enunciados 01</h4>
         <div *ngFor="let enunciado of enunciados; let i = index"
             cdkDropList
             [cdkDropListData]="[i]"
             (cdkDropListDropped)="onDrop($event, i)"
-            (cdkDragEntered)="dragOverIdx = i"
-            (cdkDragExited)="dragOverIdx = null"
-            [class.border-blue-500]="dragOverIdx === i"
-            [class.bg-green-50]="avisos[i]"
-            class="w-[100%] min-w-[200px] p-8 mb-4 rounded border border-blue-300 bg-blue-50 min-h-[80px] flex items-center justify-between transition-all cursor-pointer mx-auto">
+            [class.bg-green-100]="isValidRespuesta(respuestas[i])"
+            [class.bg-blue-50]="!isValidRespuesta(respuestas[i])"
+            [class.border-green-500]="isValidRespuesta(respuestas[i])"
+            [class.scale-105]="isValidRespuesta(respuestas[i])"
+            class="w-[100%] min-w-[200px] p-8 mb-4 rounded border border-blue-300 min-h-[80px] flex items-center justify-between transition-all transition-transform duration-500 cursor-pointer mx-auto">
           <span>{{ enunciado }}</span>
-          <span *ngIf="isValidRespuesta(respuestas[i])" class="ml-2 px-2 py-1 bg-green-100 text-green-700 rounded">
-            {{ opciones[respuestas[i]!] }}
-          </span>
-          <span *ngIf="avisos[i]" class="ml-2 text-green-600 font-semibold flex items-center">
-            <svg class="w-5 h-5 mr-1 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <span *ngIf="isValidRespuesta(respuestas[i])" class="ml-2 px-2 py-1 flex items-center">
+            <span class="bg-green-100 text-green-700 rounded px-2 py-1 mr-2 transition-all duration-500">
+              {{ opciones[respuestas[i]!] }}
+            </span>
+            <svg class="w-5 h-5 text-green-500 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            {{ avisos[i] }}
+          </span>
+          <!-- Espacio reservado para el aviso -->
+          <span class="block min-h-[20px]">
+            <span *ngIf="enviarIntentado && !isValidRespuesta(respuestas[i])" class="text-red-600 text-sm font-semibold">
+              Debes emparejar esta operación.
+            </span>
           </span>
         </div>
       </div>
       <!-- Opciones (Drag List) -->
       <div>
-        <h4 class="font-semibold text-green-700 mb-2">Opciones</h4>
+        <h4 class="font-semibold text-green-700 mb-2">Opciones 02</h4>
         <div cdkDropListGroup>
           <div *ngFor="let opcion of opciones; let j = index"
               cdkDrag
@@ -132,8 +138,13 @@
         </div>
       </div>
     </div>
+    <!-- Mensaje general fuera del grid -->
+    <div *ngIf="enviarIntentado && faltanEmparejamientos()" class="text-center text-red-600 font-semibold mb-4">
+      Faltan emparejamientos por completar.
+    </div>    
 
     <p class="text-sm text-gray-500">Puntaje: 5</p>
+    
   </div>
   
   <!-- Pregunta 7: EVALUATIVO_TEXTO -->
@@ -180,8 +191,9 @@
     <p class="text-sm text-gray-500">Puntaje: 5</p>
   </div>
   
-  <div class="acciones flex justify-center mt-8">
-    <button (click)="validarRespuestas()" class="px-6 py-2 text-white bg-blue-600 rounded shadow hover:bg-blue-700 transition font-semibold">Enviar Respuestas</button>
+  <div class="acciones flex justify-center gap-4 mt-8">
+    <button (click)="resetearValores()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Resetear Valores</button>
+    <button (click)="validarRespuestas()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Validar Respuestas</button>
   </div>
 
 </div>

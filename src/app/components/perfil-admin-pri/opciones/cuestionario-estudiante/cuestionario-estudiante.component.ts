@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+//import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 
@@ -53,8 +53,24 @@ export class CuestionarioEstudianteComponent {
     return obj && typeof obj === 'object' && 'enunciado' in obj && 'opcion' in obj;
   }
 
+  validarEmparejamientos(): void {
+    this.avisos = this.enunciados.map((_, i) => {
+      if (!this.isValidRespuesta(this.respuestas[i])) {
+        return 'Debes emparejar esta operación.';
+      }
+      return '';
+    });
+  }
+
+  faltanEmparejamientos(): boolean {
+    return this.respuestas.some(r => r === null || r === undefined);
+  }
+
   validarRespuestas(): boolean[] {
     this.enviarIntentado = true;
+    this.validarEmparejamientos(); // ← Aquí
+    console.log('Respuestas:', this.respuestas); // Verifica el estado
+
     // Aquí puedes agregar la lógica de validación y mostrar mensajes
     // Ejemplo: si algún campo está vacío, no continuar
     if (
@@ -90,51 +106,42 @@ export class CuestionarioEstudianteComponent {
       resultados.push(estudianteRespuestas[i] === this.valores_respuesta[i]);
     }
 
-    // Pregunta 5 (emparejamiento)
+    // Preguntas 5 y 6 (emparejamiento)
     const emparejamientoEstudiante5 = estudianteRespuestas[4];
     const emparejamientoCorrecto5 = this.valores_respuesta[4];
-    let correcto5 = true;
-    for (let j = 0; j < emparejamientoCorrecto5.length; j++) {
-      const est = emparejamientoEstudiante5[j];
-      const cor = emparejamientoCorrecto5[j];
-      if (
-        !this.isPair(est) || !this.isPair(cor) ||
-        est.enunciado !== cor.enunciado ||
-        (this.isPair(est) && this.isPair(cor) && est.opcion !== cor.opcion)
-      ) {
-        correcto5 = false;
-        break;
-      }
-    }
-    resultados.push(correcto5);
+    const correcto5 = Array.isArray(emparejamientoEstudiante5) && Array.isArray(emparejamientoCorrecto5)
+      ? this.compararEmparejamientos(emparejamientoEstudiante5, emparejamientoCorrecto5)
+      : false;
 
-    // Pregunta 6 (emparejamiento)
     const emparejamientoEstudiante6 = estudianteRespuestas[5];
     const emparejamientoCorrecto6 = this.valores_respuesta[5];
-    let correcto6 = true;
-    for (let j = 0; j < emparejamientoCorrecto6.length; j++) {
-      const est = emparejamientoEstudiante6[j];
-      const cor = emparejamientoCorrecto6[j];
+    const correcto6 = Array.isArray(emparejamientoEstudiante6) && Array.isArray(emparejamientoCorrecto6)
+      ? this.compararEmparejamientos(emparejamientoEstudiante6, emparejamientoCorrecto6)
+      : false;
+
+    return resultados;
+  }
+
+  private compararEmparejamientos(arrEst: any[], arrCor: any[]): boolean {
+    if (arrEst.length !== arrCor.length) return false;
+    for (let j = 0; j < arrCor.length; j++) {
+      const est = arrEst[j];
+      const cor = arrCor[j];
       if (
         !this.isPair(est) || !this.isPair(cor) ||
         est.enunciado !== cor.enunciado ||
         est.opcion !== cor.opcion
       ) {
-        correcto6 = false;
-        break;
+        return false;
       }
     }
-    resultados.push(correcto6);
-
-    return resultados;
+    return true;
   }
 
   onDrop(event: any, enunciadoIdx: number): void {
     const opcionIdx = event.item.data;
     this.respuestas[enunciadoIdx] = opcionIdx;
-
-    // Solo mostrar confirmación de emparejamiento realizado
-    this.avisos[enunciadoIdx] = '✔ Emparejamiento realizado con exito';
+    console.log('Respuestas:', this.respuestas); // Para depuración
   }
 
   isValidRespuesta(idx: number | null | undefined): boolean {
@@ -149,6 +156,20 @@ export class CuestionarioEstudianteComponent {
 
   isRelacionIncompleta(): boolean {
     return this.enviarIntentado && this.respuestas.some(r => r === null);
+  }
+
+  resetearValores(): void {
+    this.respuesta1 = '';
+    this.respuesta2 = '';
+    this.respuesta3 = '';
+    this.respuesta4 = '';
+    this.relacion5 = Array(3).fill('');
+    this.respuestas = Array(this.enunciados.length).fill(null);
+    this.explicacion7 = '';
+    this.explicacion8 = '';
+    this.archivo9 = null;
+    this.archivo10 = null;
+    this.enviarIntentado = false;
   }
 
 }
