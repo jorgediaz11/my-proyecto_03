@@ -44,4 +44,18 @@ export class ActivarLibroService {
       headers: this.getAuthHeaders()
     });
   }
+
+  activarLibroEstado(data: {
+    id_colegio: number;
+    id_estudiante: number;
+    id_curso: number;
+    codigo_libro: string;
+    estado: boolean;
+  }): Observable<{ message: string }> {
+    const url = `${this.apiUrl}/estado`;
+    return this.http.put<{ message: string }>(url, data, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
 }
