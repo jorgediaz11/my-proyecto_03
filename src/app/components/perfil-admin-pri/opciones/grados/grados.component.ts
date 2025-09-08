@@ -1,4 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { GradosService, Grado } from '../../../../services/grados.service';
 import { NivelesService, Nivel } from '../../../../services/niveles.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +11,8 @@ import Swal from 'sweetalert2';
     selector: 'app-grados',
     templateUrl: './grados.component.html',
     styleUrls: ['./grados.component.css'],
-    standalone: false
+    standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class GradosComponent implements OnInit {
   Math = Math;
@@ -118,9 +122,9 @@ export class GradosComponent implements OnInit {
   }
 
   // Método para mostrar el nombre del nivel en la tabla
-  getNivelNombre(nivel: any): string {
+  getNivelNombre(nivel: number | Nivel): string {
     if (nivel && typeof nivel === 'object' && 'nombre' in nivel) {
-      return nivel.nombre;
+      return (nivel as Nivel).nombre;
     }
     const found = this.niveles.find(n => String(n.id_nivel) === String(nivel));
     return found ? found.nombre : String(nivel);
@@ -130,7 +134,7 @@ export class GradosComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  viewPerfil(id_grado: number): void {
+  viewGrado(id_grado: number): void {
     const grado = this.grados.find(e => e.id_grado === id_grado);
     if (!grado) {
       this.handleError('Perfil no encontrado');
@@ -151,7 +155,7 @@ export class GradosComponent implements OnInit {
       width: '600px'
     });
 
-  }  
+  }
 
   editGrado(id: number): void {
     this.isEditing = true;

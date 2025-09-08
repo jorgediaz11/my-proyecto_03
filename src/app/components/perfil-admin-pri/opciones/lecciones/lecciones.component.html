@@ -19,8 +19,7 @@
 
   <div class="tab-content">
     <!-- Panel: Tabla de Lecciones -->
-    @if (activeTab === 'tabla') {
-      <div role="tabpanel" class="tab-panel animate-fadeIn">
+  <div *ngIf="activeTab === 'tabla'" role="tabpanel" class="tab-panel animate-fadeIn">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div class="p-4 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-end gap-4 w-full">
@@ -39,36 +38,36 @@
                     <label for="filtroNivel" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Nivel:</label>
                     <select id="filtroNivel" [(ngModel)]="filtroNivel" (change)="onNivelChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       <option value="">[Seleccionar]</option>
-                      @for (nivel of niveles; track nivel) {
+                      <ng-container *ngFor="let nivel of niveles">
                         <option [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
-                      }
+                      </ng-container>
                     </select>
                   </div>
                   <div class="w-full sm:w-48">
                     <label for="filtroGrado" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Grado:</label>
                     <select id="filtroGrado" [(ngModel)]="filtroGrado" (change)="onGradoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       <option value="">[Seleccionar]</option>
-                      @for (grado of grados; track grado) {
+                      <ng-container *ngFor="let grado of grados">
                         <option [value]="grado.id_grado">{{ grado.nombre }}</option>
-                      }
+                      </ng-container>
                     </select>
                   </div>
                   <div class="w-full sm:w-48">
                     <label for="filtroCurso" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Curso:</label>
                     <select id="filtroCurso" [(ngModel)]="filtroCurso" (change)="onCursoChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       <option value="">[Seleccionar]</option>
-                      @for (curso of cursos; track curso) {
+                      <ng-container *ngFor="let curso of cursos">
                         <option [value]="curso.id_curso">{{ curso.id_curso }}-{{ curso.nombre }}</option>
-                      }
+                      </ng-container>
                     </select>
                   </div>
                   <div class="w-full sm:w-48">
                     <label for="filtroUnidad" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por Unidad:</label>
                     <select id="filtroUnidad" [(ngModel)]="filtroUnidad" (change)="onUnidadChange()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       <option value="">[Seleccionar]</option>
-                      @for (unidad of unidades; track unidad) {
+                      <ng-container *ngFor="let unidad of unidades">
                         <option [value]="unidad.id_unidad">{{ unidad.nombre }}</option>
-                      }
+                      </ng-container>
                     </select>
                   </div>
                 </div>
@@ -93,81 +92,74 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @for (leccion of paginatedLecciones; track leccion) {
-                    <tr>
-                      <td>{{ leccion.id_leccion }}</td>
-                      <td>{{ leccion.titulo }}</td>
-                      <td>{{ leccion.contenido }}</td>
-                      <td class="text-center">
-                        <span [ngClass]="leccion.estado ? 'text-green-600' : 'text-red-600'">
-                          {{ leccion.estado ? 'Activo' : 'Inactivo' }}
-                        </span>
-                      </td>
-                      <td class="text-center">
-                        <div class="flex justify-center space-x-2">
-                          <button type="button"
-                          (click)="viewLeccion(leccion.id_leccion!)"
-                            class="action-icon view"
-                            title="Ver lección">
-                            <i class="fas fa-eye"></i>
-                          </button>
-                          <button type="button"
-                          (click)="editLeccion(leccion.id_leccion!)"
-                            class="action-icon edit"
-                            title="Editar">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button type="button"
-                          (click)="deleteLeccion(leccion.id_leccion!)"
-                            class="action-icon delete"
-                            title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                          </button>
-                          <button type="button"
-                          (click)="detailLeccion(leccion.id_leccion!)"
-                            class="action-icon view"
-                            title="Detalle">
-                            <i class="fas fa-info-circle"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  }
-                  @if (paginatedLecciones.length === 0) {
-                    <tr>
-                      <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500">
-                        <div class="flex flex-col items-center">
-                          <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
-                          <p class="text-lg font-medium text-gray-900 mb-2">No hay lecciones</p>
-                          <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primera lección.' }}</p>
-                        </div>
-                      </td>
-                    </tr>
-                  }
+                  <tr *ngFor="let leccion of paginatedLecciones">
+                    <td>{{ leccion.id_leccion }}</td>
+                    <td>{{ leccion.titulo }}</td>
+                    <td>{{ leccion.contenido }}</td>
+                    <td class="text-center">
+                      <span [ngClass]="leccion.estado ? 'text-green-600' : 'text-red-600'">
+                        {{ leccion.estado ? 'Activo' : 'Inactivo' }}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <div class="flex justify-center space-x-2">
+                        <button type="button"
+                        (click)="viewLeccion(leccion.id_leccion!)"
+                          class="action-icon view"
+                          title="Ver lección">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button type="button"
+                        (click)="editLeccion(leccion.id_leccion!)"
+                          class="action-icon edit"
+                          title="Editar">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button"
+                        (click)="deleteLeccion(leccion.id_leccion!)"
+                          class="action-icon delete"
+                          title="Eliminar">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                        <button type="button"
+                        (click)="detailLeccion(leccion.id_leccion!)"
+                          class="action-icon view"
+                          title="Detalle">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="paginatedLecciones.length === 0">
+                    <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500">
+                      <div class="flex flex-col items-center">
+                        <i class="fas fa-layer-group text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-lg font-medium text-gray-900 mb-2">No hay lecciones</p>
+                        <p class="text-gray-500">{{ searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primera lección.' }}</p>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
             <!-- Paginación -->
-            @if (filteredLecciones.length > itemsPerPage) {
-              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                <div class="flex items-center justify-between">
-                  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
-                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
-                  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredLecciones.length/itemsPerPage)"
-                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
-                </div>
+            <div *ngIf="filteredLecciones.length > itemsPerPage" class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+              <div class="flex items-center justify-between">
+                <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+                <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === Math.ceil(filteredLecciones.length/itemsPerPage)"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
               </div>
-            }
+            </div>
           </div>
         </div>
-      }
+  <!-- Fin panel tabla -->
 
       <!-- Panel: Nueva Lección -->
-      @if (activeTab === 'nuevo') {
-        <div role="tabpanel" class="tab-panel animate-fadeIn">
+  <div *ngIf="activeTab === 'nuevo'" role="tabpanel" class="tab-panel animate-fadeIn">
           <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-              <!-- Depuración: mostrar valores actuales del formulario -->
-              <!-- <pre class="mb-4 bg-gray-100 p-2 rounded text-xs text-gray-700">{{ leccionForm.value | json }}</pre> -->
+            <!-- Depuración: mostrar valores actuales del formulario -->
+            <!-- <pre class="mb-4 bg-gray-100 p-2 rounded text-xs text-gray-700">{{ leccionForm.value | json }}</pre> -->
             <form [formGroup]="leccionForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <div class="space-y-4">
                 <h2 class="text-xl font-semibold text-gray-700">Datos de la Lección</h2>
@@ -176,29 +168,64 @@
                     <label for="titulo" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
                     <input type="text" id="titulo" formControlName="titulo" placeholder="Título de la lección"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" />
-                    </div>
-                    <div class="w-full md:w-1/2 px-2">
-                      <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                      <select id="estado" formControlName="estado"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                        <option [value]="true">Activo</option>
-                        <option [value]="false">Inactivo</option>
-                      </select>
-                    </div>
-                    <div class="w-full px-2">
-                      <label for="contenido" class="block text-sm font-medium text-gray-700 mb-1">Contenido</label>
-                      <textarea id="contenido" formControlName="contenido" rows="3" placeholder="Contenido de la lección"
+                  </div>
+                  <div class="w-full md:w-1/2 px-2">
+                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="estado" formControlName="estado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                      <option [value]="true">Activo</option>
+                      <option [value]="false">Inactivo</option>
+                    </select>
+                  </div>
+                  <div class="w-full px-2">
+                    <label for="contenido" class="block text-sm font-medium text-gray-700 mb-1">Contenido</label>
+                    <textarea id="contenido" formControlName="contenido" rows="3" placeholder="Contenido de la lección"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
-                    </div>
                   </div>
                 </div>
-                <button type="submit"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                  <i class="fas fa-save mr-2"></i> Guardar Lección
-                </button>
-              </form>
+              </div>
+              <button type="submit"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                <i class="fas fa-save mr-2"></i> Guardar Lección
+              </button>
+            </form>
+            <!-- Editor Quill visual solo cuando la pestaña 'nuevo' está activa -->
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 1.5rem;">
+              <div class="lecciones-quill-editor">
+                <h2 style="text-align:center; margin-bottom: 24px; color: #28a745; font-size: 2rem; font-weight: bold;">Editor de Lecciones</h2>
+                <label for="visualEditor" style="display: block; font-weight: bold; color: #333; margin-bottom: 8px; text-align: center; font-size: 1rem;">Editor visual (no enlazado)</label>
+                <quill-editor
+                  id="visualEditor"
+                  theme="snow"
+                  placeholder="Editor solo visual, no enlazado"
+                  style="width: 600px; height: 240px; display: block; margin: 0 auto;"
+                  [modules]="{
+                    toolbar: [
+                      ['bold', 'italic', 'underline', 'strike'],
+                      ['blockquote', 'code-block'],
+                      [{ 'header': 1 }, { 'header': 2 }],
+                      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                      [{ 'script': 'sub' }, { 'script': 'super' }],
+                      [{ 'indent': '-1' }, { 'indent': '+1' }],
+                      [{ 'size': ['small', false, 'large', 'huge'] }],
+                      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                      [{ 'color': [] }, { 'background': [] }],
+                      [{ 'font': [] }],
+                      [{ 'align': [] }],
+                      ['link', 'image'],
+                      ['clean']
+                    ]
+                  }"
+                ></quill-editor>
+              </div>
             </div>
           </div>
-        }
-      </div>
-    </div>
+        </div>
+  <!-- Fin panel nuevo -->
+
+
+
+
+  </div>
+
+

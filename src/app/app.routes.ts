@@ -57,6 +57,7 @@ import { CuestionarioEstudianteComponent } from './components/perfil-admin-pri/o
 
 // Test Component
 import { TestEndpointsComponent } from './test-endpoints.component'; // Temporal
+import { QuillTestComponent } from './components/perfil-admin-pri/opciones/quill-test.component';
 
 // Confirm Dialog
 export const routes: Routes = [
@@ -77,6 +78,7 @@ export const routes: Routes = [
   { path: 'opciones', component: OpcionesComponent },       // Ruta para la página de opciones
   { path: 'pdf-servicio', component: PdfServicioComponent },
   { path: 'cuestionario-estudiante', component: CuestionarioEstudianteComponent },
+  { path: 'quill-test', component: QuillTestComponent },
 
   // Ruta para el perfil de admin
   { path: 'perfil-admin-pri',                               // Ruta para el perfil de admin pri

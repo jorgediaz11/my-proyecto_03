@@ -43,7 +43,7 @@
     "ng2-pdf-viewer": "^10.4.0",
     "ngx-quill": "^28.0.1",
     "ngx-toastr": "^19.0.0",
-    "pdfjs-dist": "^5.4.54",
+    "pdfjs-dist": "^5.4.149",
     "quill": "^2.0.3",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.6.13",

@@ -64,7 +64,7 @@ export class ClasesColComponent implements OnInit, OnDestroy {
   private colegiosService = inject(ColegiosService);
 
   colegios: Colegio[] = [];
-  filtroColegio: string = '';
+  filtroColegio = '';
 
   // PROPIEDADES PARA EL TEMPLATE
   Math = Math;

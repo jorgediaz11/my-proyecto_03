@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeriodosAcademicosService, PeriodoAcademico } from 'src/app/services/periodos-academicos.service';
+import Swal from 'sweetalert2';
 
 @Component({
 		selector: 'app-periodo-academico',
@@ -91,12 +91,28 @@ export class PeriodoAcademicoComponent implements OnInit {
 		}
 	}
 
-	viewPeriodo(id_periodo: number): void {
-		const periodo = this.periodos.find(p => p.id_periodo_academico === id_periodo);
-		if (periodo) {
-			alert(`Ver periodo académico:\nID: ${periodo.id_periodo_academico}\nNombre: ${periodo.nombre}`);
-		}
-	}
+  viewPeriodo(id_periodo: number): void {
+      const periodo = this.periodos.find(p => p.id_periodo_academico === id_periodo);
+      if (!periodo) {
+        this.handleError('Periodo académico no encontrado');
+        return;
+      }
+
+      Swal.fire({
+        title: `Detalles del Periodo Académico`,
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${periodo.id_periodo_academico}</p>
+            <p><strong>Nombre:</strong> ${periodo.nombre}</p>
+            <p><strong>Estado:</strong> ${periodo.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
+
+    }
 
 	editPeriodo(id_periodo: number): void {
 		this.isEditing = true;
@@ -114,25 +130,60 @@ export class PeriodoAcademicoComponent implements OnInit {
 		}
 	}
 
-	deletePeriodo(id_periodo: number): void {
-		if (confirm('¿Estás seguro de que deseas eliminar este periodo académico?')) {
-			this.periodosService.eliminarPeriodoAcademico(id_periodo).subscribe({
-				next: () => {
-					this.cargarPeriodos();
-				},
-				error: (error: unknown) => {
-					console.error('Error al eliminar periodo académico:', error);
-				}
-			});
-		}
-	}
+  deletePeriodo(id_periodo: number): void {
+    const periodo = this.periodos.find(p => p.id_periodo_academico === id_periodo);
+    if (!periodo) {
+      this.handleError('Periodo académico no encontrado');
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Eliminar Periodo Académico?',
+      text: `¿Estás seguro de que deseas eliminar el periodo académico "${periodo.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+		this.loading = true;
+		this.periodosService.eliminarPeriodoAcademico(id_periodo).subscribe({
+		  next: () => {
+			this.loading = false;
+			this.handleSuccess('Periodo académico eliminado correctamente');
+			this.cargarPeriodos();
+		  },
+		  error: (error: unknown) => {
+			this.loading = false;
+			this.handleError('Error al eliminar el periodo académico');
+			console.error('Error:', error);
+		  }
+		});
+      }
+    });
+  }
 
 	detailPeriodo(id_periodo: number): void {
-		const periodo = this.periodos.find(p => p.id_periodo_academico === id_periodo);
-		if (periodo) {
-			alert(`Detalle periodo académico:\nID: ${periodo.id_periodo_academico}\nNombre: ${periodo.nombre}\nEstado: ${periodo.estado ? 'Activo' : 'Inactivo'}`);
-		}
-	}
+    const periodo = this.periodos.find(p => p.id_periodo_academico === id_periodo);
+    if (periodo) {
+      Swal.fire({
+        title: 'Detalle periodo académico',
+        html: `
+          <div class="text-left">
+            <p><strong>ID:</strong> ${periodo.id_periodo_academico}</p>
+            <p><strong>Nombre:</strong> ${periodo.nombre}</p>
+            <p><strong>Estado:</strong> ${periodo.estado ? 'Activo' : 'Inactivo'}</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar',
+        width: '600px'
+      });
+    }
+  }
 
 	onSubmit(): void {
 		if (this.periodoForm.invalid) return;
@@ -177,4 +228,25 @@ export class PeriodoAcademicoComponent implements OnInit {
 			});
 		}
 	}
+
+  // ✅ MANEJO DE ERRORES
+  private handleError(message: string): void {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+      confirmButtonColor: '#dc3545'
+    });
+  }
+
+  // ✅ MANEJO DE ÉXITO
+  private handleSuccess(message: string): void {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: message,
+      confirmButtonColor: '#28a745'
+    });
+  }
+
 }

@@ -4,12 +4,12 @@
   <!-- Pestañas -->
   <div class="mb-6 border-b border-gray-200">
     <nav class="flex space-x-8" aria-label="Tabs">
-      <button type="button" (click)="selectTab('tabla')" [ngClass]="activeTab === 'tabla' ? 'tab-active' : 'tab-inactive'"
+      <button type="button" (click)="selectTab('tabla')" [ngClass]="{ 'tab-active': activeTab === 'tabla', 'tab-inactive': activeTab !== 'tabla' }"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab" [attr.aria-selected]="activeTab === 'tabla'">
         <i class="fas fa-table mr-2"></i> Tabla de Grados
       </button>
-      <button type="button" (click)="selectTab('nuevo')" [ngClass]="activeTab === 'nuevo' ? 'tab-active' : 'tab-inactive'"
+      <button type="button" (click)="selectTab('nuevo')" [ngClass]="{ 'tab-active': activeTab === 'nuevo', 'tab-inactive': activeTab !== 'nuevo' }"
         class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
         role="tab" [attr.aria-selected]="activeTab === 'nuevo'">
         <i class="fas fa-plus mr-2"></i> Nuevo Grado
@@ -69,39 +69,39 @@
                   @for (grado of paginatedGrados; track grado) {
                     <tr>
                       <td>{{ grado.id_grado }}</td>
-                      <td>{{ getNivelNombre(grado.nivel) }}</td>
+                      <td>{{ grado.nivel ? getNivelNombre(grado.nivel) : '' }}</td>
                       <td>{{ grado.nombre }}</td>
                       <td class="text-center">
-                        <span [ngClass]="grado.estado ? 'text-green-600' : 'text-red-600'">
+                        <span [ngClass]="{ 'text-green-600': grado.estado, 'text-red-600': !grado.estado }">
                           {{ grado.estado ? 'Activo' : 'Inactivo' }}
                         </span>
                       </td>
                       <td class="text-center">
                         <div class="flex justify-center space-x-2">
                           <button
-                            type="button" 
-                            (click)="viewGrado(grado.id_grado!)" 
+                            type="button"
+                            (click)="viewGrado(grado.id_grado!)"
                             class="action-icon view"
                             title="Ver grado">
                             <i class="fas fa-eye"></i>
                           </button>
                           <button
-                            type="button" 
-                            (click)="editGrado(grado.id_grado!)" 
+                            type="button"
+                            (click)="editGrado(grado.id_grado!)"
                             class="action-icon edit"
                             title="Editar">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button 
-                            type="button" 
-                            (click)="deleteGrado(grado.id_grado!)" 
+                          <button
+                            type="button"
+                            (click)="deleteGrado(grado.id_grado!)"
                             class="action-icon delete"
                             title="Eliminar">
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button 
-                            type="button" 
-                            (click)="detailGrado(grado.id_grado!)" 
+                          <button
+                            type="button"
+                            (click)="detailGrado(grado.id_grado!)"
                             class="action-icon view"
                             title="Detalle">
                             <i class="fas fa-info-circle"></i>

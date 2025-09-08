@@ -79,7 +79,7 @@ export class PreguntasComponent implements OnInit {
   filtroNivel = '';
   filtroGrado = '';
   filtroCurso = '';
-  
+
   tiposPregunta: TipoPregunta[] = [];
   cuestionarios: Cuestionario[] = [];
   filteredCuestionarios: Cuestionario[] = [];
@@ -96,7 +96,7 @@ export class PreguntasComponent implements OnInit {
 
 
   // Variables del componente
-  tipoPreguntaSeleccionado: string = 'VALOR';
+  tipoPreguntaSeleccionado = 'VALOR';
   pregunta: Preguntare = {
     tipo: 'VALOR',
     titulo: '',
@@ -117,7 +117,7 @@ export class PreguntasComponent implements OnInit {
       next: (data: TipoPregunta[]) => {
         this.tiposPregunta = data;
       },
-      error: (error: any) => {
+      error: (error: unknown) => {
         console.error('Error al cargar tipos de pregunta:', error);
       }
     });
@@ -352,7 +352,7 @@ export class PreguntasComponent implements OnInit {
         });
       }
     });
-  } 
+  }
 
   detailPregunta(id_pregunta: number): void {
     if (typeof id_pregunta !== 'number') return;

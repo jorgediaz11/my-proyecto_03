@@ -182,7 +182,7 @@ export class AulasComponent implements OnInit {
     }
   }
 
-  deletePerfil(id_aula: number): void {
+  deleteAula(id_aula: number): void {
     const aula = this.aulas.find(p => p.id_aula === id_aula);
     if (!aula) {
       this.handleError('Aula no encontrada');

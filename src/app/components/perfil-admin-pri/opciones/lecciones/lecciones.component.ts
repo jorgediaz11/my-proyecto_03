@@ -9,6 +9,8 @@ import { Unidad, UnidadesService } from 'src/app/services/unidades.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { QuillModule } from 'ngx-quill';
+
 
 @Component({
   selector: 'app-lecciones',
@@ -18,7 +20,8 @@ import Swal from 'sweetalert2';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QuillModule
   ]
 })
 export class LeccionesComponent implements OnInit {

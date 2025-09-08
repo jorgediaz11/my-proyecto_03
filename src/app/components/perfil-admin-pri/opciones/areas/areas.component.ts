@@ -1,12 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Area, AreasService } from 'src/app/services/areas.service';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-areas',
-    templateUrl: './areas.component.html',
-    styleUrls: ['./areas.component.css']
+  selector: 'app-areas',
+  templateUrl: './areas.component.html',
+  styleUrls: ['./areas.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class AreasComponent implements OnInit {
   Math = Math;

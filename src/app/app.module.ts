@@ -101,7 +101,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         ReportesComponent,
         AuditoriaComponent,
         TipoMaterialComponent,
-        GradosComponent,
+        // GradosComponent, // Mover a imports porque es standalone
         SeccionesComponent,
         AcademicoComponent,
         PerfilAdminSecComponent,
@@ -166,6 +166,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         AulasComponent,
         CursosComponent,
         EditoresComponent,
+        GradosComponent, // Importa aquí porque es standalone
         PdfServicioComponent,
         DragDropModule
     ],
