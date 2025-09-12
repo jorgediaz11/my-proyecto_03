@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
+import { RouterModule } from '@angular/router'; // <-- Importa RouterModule
 
 interface MenuItem {
   label: string;
@@ -13,9 +16,9 @@ interface MenuItem {
 @Component({
     selector: 'app-perfil-admin-sec', // Asegúrate de que el selector sea correcto
     templateUrl: './perfil-admin-sec.component.html', // Asegúrate de que la ruta sea correcta
-    styleUrls: ['./perfil-admin-sec.component.css'] // Asegúrate de que la ruta sea correcta
-    ,
-    standalone: false
+    styleUrls: ['./perfil-admin-sec.component.css'], // Asegúrate de que la ruta sea correcta
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule], // <-- Agrega RouterModule aquí
 })
 export class PerfilAdminSecComponent implements OnInit, OnDestroy {
 

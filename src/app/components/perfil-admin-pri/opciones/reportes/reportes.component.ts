@@ -1,4 +1,6 @@
 
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Component, OnInit, inject } from '@angular/core';
 import { UbigeoService, Departamento, Provincia, Distrito } from 'src/app/services/ubigeo.service';
 import { ColegiosService, Colegio } from 'src/app/services/colegios.service';
@@ -19,7 +21,8 @@ interface Estudiante {
     selector: 'app-reportes',
     templateUrl: './reportes.component.html',
     styleUrls: ['./reportes.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ReportesComponent implements OnInit {
   estudiantes: Estudiante[] = [

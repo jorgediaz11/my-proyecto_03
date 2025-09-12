@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angula
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 interface MenuItem {
   label: string;
@@ -13,8 +15,9 @@ interface MenuItem {
 @Component({
     selector: 'app-perfil-editor',
     templateUrl: './perfil-editor.component.html',
-    styleUrl: './perfil-editor.component.css',
-    standalone: false
+    styleUrls: ['./perfil-editor.component.css'],
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class PerfilEditorComponent implements OnInit, OnDestroy {
 

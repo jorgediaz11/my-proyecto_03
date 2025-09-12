@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PreguntasService } from '../../services/preguntas.service';
@@ -13,13 +12,14 @@ import { UserStateService, PerfilUsuario } from '../../services/user-state.servi
 import * as mammoth from 'mammoth';
 import * as pdfjsLib from 'pdfjs-dist';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-opciones',
     templateUrl: './opciones.component.html',
     styleUrls: ['./opciones.component.css'],
     standalone: true,
-    imports: [CommonModule, QuillModule, FormsModule, PdfViewerModule, ActivarLibrosComponent]
+    imports: [CommonModule, FormsModule, PdfViewerModule, ActivarLibrosComponent,RouterModule]
 })
 export class OpcionesComponent implements OnInit, OnDestroy {
   // Método para abrir un PDF en el visor

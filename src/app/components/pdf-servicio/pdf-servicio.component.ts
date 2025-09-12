@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-pdf-servicio',
   templateUrl: './pdf-servicio.component.html',
   styleUrls: ['./pdf-servicio.component.css'],
-  imports: [CommonModule],
-  standalone: true
+  standalone: true,
+  imports: [CommonModule]
 })
 export class PdfServicioComponent {
   selectedFile: File | null = null;

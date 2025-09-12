@@ -1,11 +1,17 @@
-<div class="recupera-container">
+<!-- Video de fondo -->
+<video autoplay muted loop id="bg-video" class="bg-video">
+  <source src="assets/videos/fondo-recupera.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
 
+<div class="recupera-container">
   <div class="recupera-card">
 
     <div class="recupera-header">
       <a href="#" class="logo-container">
         <img class="logo-icon" src="assets/images/login-logo.png" alt="logo">
       </a>
+      <!-- TÍTULO -->
       <h2 class="recupera-title">
         @if (currentState === RecoveryState.EMAIL_REQUEST) {
           <span>Recuperar Contraseña</span>
@@ -20,6 +26,7 @@
           <span>Nueva Contraseña</span>
         }
       </h2>
+
       <p class="recupera-subtitle">
         @if (currentState === RecoveryState.EMAIL_REQUEST) {
           <span>
@@ -234,5 +241,4 @@
     </div>
     
   </div>
-
 </div>

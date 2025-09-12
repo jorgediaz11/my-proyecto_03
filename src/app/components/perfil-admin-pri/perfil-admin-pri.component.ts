@@ -11,11 +11,9 @@ interface MenuItem {
 }
 
 @Component({
-    // standalone: true,
     selector: 'app-perfil-admin-pri', // Asegúrate de que el selector sea correcto
     templateUrl: './perfil-admin-pri.component.html', // Asegúrate de que la ruta sea correcta
-    styleUrls: ['./perfil-admin-pri.component.css'] // Asegúrate de que la ruta sea correcta
-    ,
+    styleUrls: ['./perfil-admin-pri.component.css'], // Asegúrate de que la ruta sea correcta
     standalone: false
 })
 export class PerfilAdminPriComponent implements OnInit, OnDestroy {

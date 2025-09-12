@@ -1,14 +1,14 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivarLibroService } from '../../services/activar-libro.service';
 
 @Component({
-    selector: 'app-activar-libros',
-    templateUrl: './activar-libros.component.html',
-    styleUrls: ['./activar-libros.component.css'],
-    imports: [FormsModule, CommonModule],
-    standalone: true
+  selector: 'app-activar-libros',
+  templateUrl: './activar-libros.component.html',
+  styleUrls: ['./activar-libros.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ActivarLibrosComponent {
   @Output() cerrar = new EventEmitter<void>();

@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 
@@ -33,8 +34,9 @@ interface Estudiante {
 @Component({
     selector: 'app-perfil-docente-muro',
     templateUrl: './perfil-docente-muro.component.html',
-    styleUrl: './perfil-docente-muro.component.css',
-    standalone: false
+    styleUrls: ['./perfil-docente-muro.component.css'],
+    standalone: true,
+    imports: [CommonModule]
 })
 export class PerfilDocenteMuroComponent implements OnInit, AfterViewInit {
 

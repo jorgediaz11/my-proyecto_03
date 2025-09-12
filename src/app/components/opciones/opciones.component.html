@@ -56,7 +56,7 @@
       <ul class="pt-2 mt-2 space-y-2 border-t border-gray-200 dark:border-gray-700">
         <li>
           <a
-            href="/perfil-admin-pri"
+            [routerLink]="['/perfil-admin-pri']"
             class="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-75 bg-verde-claro hover:bg-green-700 group"
           >
             <svg
@@ -224,28 +224,7 @@
 
           <div style="border-radius: 12px; margin-bottom: 12px; width: fit-content; border: 1px solid #000; width: 700px; padding: 0 12px 12px 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 0; background: #fff; height: 370px; box-sizing: border-box; justify-content: flex-start;">
             <label for="enunciado" style="display: block; font-weight: bold; color: #fff; margin-bottom: 2px; text-align: left; font-size: 1rem;">Enunciado</label>
-            <quill-editor
-              [(ngModel)]="enunciado"
-              placeholder="Escribe aquí..."
-              [style]="'width: 600px; height: 240px; background: transparent; border: none; margin-top: 0; margin-bottom: 0; display: block; box-sizing: border-box;'"
-              [modules]="{
-                toolbar: [
-                  ['bold', 'italic', 'underline', 'strike'],
-                  ['blockquote', 'code-block'],
-                  [{ 'header': 1 }, { 'header': 2 }],
-                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                  [{ 'script': 'sub' }, { 'script': 'super' }],
-                  [{ 'indent': '-1' }, { 'indent': '+1' }],
-                  [{ 'size': ['small', false, 'large', 'huge'] }],
-                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                  [{ 'color': [] }, { 'background': [] }],
-                  [{ 'font': [] }],
-                  [{ 'align': [] }],
-                  ['link', 'image'],
-                  ['clean']
-                ]
-              }"
-            ></quill-editor>
+            
           </div>
 
           <div style="margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;">

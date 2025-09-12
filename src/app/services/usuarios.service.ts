@@ -73,11 +73,14 @@ export class UsersService {
       headers: this.getAuthHeaders()
     });
   }
-  // getUsuarioPorId(id: number): Observable<Users> {
-  //   const url = `${this.apiUrl}/${id}`;
-  //   return this.http.get<Users>(url);
-  // }
 
+  getUsuarioActual(): Observable<Users> {
+    const id_usuario = Number(localStorage.getItem('id_usuario'));
+    if (!id_usuario) {
+      throw new Error('No se encontró el ID del usuario actual');
+    }
+    return this.getUserById(id_usuario);
+  }
   // POST /users - Crear nuevo usuario
   crearUsuario(usuario: Users): Observable<Users> {
     //return this.http.post<Users>(this.apiUrl, usuario);

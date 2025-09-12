@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 
@@ -14,7 +15,8 @@ interface MenuItem {
     selector: 'app-perfil-estudiante',
     templateUrl: './perfil-estudiante.component.html',
     styleUrls: ['./perfil-estudiante.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class PerfilEstudianteComponent implements OnInit, OnDestroy {
 

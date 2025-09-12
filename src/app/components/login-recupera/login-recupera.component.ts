@@ -20,7 +20,7 @@ enum RecoveryState {
     standalone: false
 })
 export class LoginRecuperaComponent implements OnInit, OnDestroy {
-  // ✅ PROPIEDADES PRINCIPALES DE VALIDACION
+  // ✅ PROPIEDADES PRINCIPALES DE VALIDACION FORMULARIO Y ESTADO
   recuperaForm!: FormGroup;
   currentState = RecoveryState.EMAIL_REQUEST;
   readonly RecoveryState = RecoveryState; // Para usar en el template

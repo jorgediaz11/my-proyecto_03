@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
+import { RouterModule } from '@angular/router';
 
 interface MenuItem {
   label: string;
@@ -14,7 +17,8 @@ interface MenuItem {
     selector: 'app-perfil-familia',
     templateUrl: './perfil-familia.component.html',
     styleUrls: ['./perfil-familia.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class PerfilFamiliaComponent implements OnInit, OnDestroy {
 

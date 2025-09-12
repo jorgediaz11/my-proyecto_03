@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { UserStateService } from '../../services/user-state.service';
@@ -52,7 +53,8 @@ interface EstadisticasEditor {
     selector: 'app-perfil-editor-muro',
     templateUrl: './perfil-editor-muro.component.html',
     styleUrl: './perfil-editor-muro.component.css',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule],
 })
 export class PerfilEditorMuroComponent implements OnInit, OnDestroy, AfterViewInit {
 

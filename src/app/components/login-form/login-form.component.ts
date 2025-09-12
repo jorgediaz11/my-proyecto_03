@@ -166,7 +166,33 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         const user = JSON.parse(userData) as Usuario;
         if (this.isTokenValid(token)) {
           console.log('Usuario ya autenticado:', user);
-          this.router.navigate(['/opciones']);
+          //this.router.navigate(['/opciones']);
+          if (this.isTokenValid(token)) {
+            console.log('Usuario ya autenticado:', user);
+            switch (user.id_perfil) {
+              case 1: // Admin Principal
+                this.router.navigate(['/admin-pri']);
+                break;
+              case 2: // Admin Secundario
+                this.router.navigate(['/admin-sec']);
+                break;
+              case 3: // Docente
+                this.router.navigate(['/docente']);
+                break;
+              case 4: // Estudiante
+                this.router.navigate(['/estudiante']);
+                break;
+              case 5: // Familia
+                this.router.navigate(['/familia']);
+                break;
+              case 6: // Editor
+                this.router.navigate(['/editor']);
+                break;
+              default:
+                this.router.navigate(['/opciones']);
+                break;
+            }
+          }
         }
       }
     } catch (error) {
@@ -315,17 +341,23 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   // 🔒 MÉTODO DE NAVEGACIÓN SEGURA
   private navigateSecurely(): void {
     try {
-      // Limpiar la URL actual sin password en el historial
-      window.history.replaceState({}, '', '/login');
-
-      // Navegar de forma segura sin datos sensibles
-      this.router.navigate(['/opciones'], {
-        replaceUrl: true,
-        skipLocationChange: false
-      });
+      const userData = localStorage.getItem('user_data');
+      if (userData) {
+        const user = JSON.parse(userData) as Usuario;
+        switch (user.id_perfil) {
+          case 1: this.router.navigate(['/admin-pri'], { replaceUrl: true }); break;
+          case 2: this.router.navigate(['/admin-sec'], { replaceUrl: true }); break;
+          case 3: this.router.navigate(['/docente'], { replaceUrl: true }); break;
+          case 4: this.router.navigate(['/estudiante'], { replaceUrl: true }); break;
+          case 5: this.router.navigate(['/familia'], { replaceUrl: true }); break;
+          case 6: this.router.navigate(['/editor'], { replaceUrl: true }); break;
+          default: this.router.navigate(['/opciones'], { replaceUrl: true }); break;
+        }
+      } else {
+        this.router.navigate(['/opciones'], { replaceUrl: true });
+      }
     } catch (error) {
       console.error('Error en navegación segura:', error);
-      // Fallback: navegación simple
       this.router.navigate(['/opciones']);
     }
   }

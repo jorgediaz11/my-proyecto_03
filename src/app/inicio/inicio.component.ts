@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 export interface MenuItem {
   label: string;
@@ -8,11 +12,13 @@ export interface MenuItem {
 @Component({
     selector: 'app-inicio', // Selector del componente, utilizado en las plantillas HTML
     templateUrl: './inicio.component.html', // Ruta al archivo de plantilla HTML del componente
-    styleUrls: ['./inicio.component.css'] // Ruta al archivo de estilos CSS del componente
-    ,
-    standalone: false
+    styleUrls: ['./inicio.component.css'], // Ruta al archivo de estilos CSS del componente
+    standalone: true,
+    imports: [CommonModule, RouterModule]
 })
 export class InicioComponent {
+  constructor(private authService: AuthService, private router: Router) {}
+
   // Lógica específica del componente
   menuItems: MenuItem[] = [
     { label: 'Inicio', route: '/' },              // Enlace a la página de inicio
@@ -36,4 +42,8 @@ export class InicioComponent {
     this.textoDetalle = `Has seleccionado el menú: ${item.label}`;  // Actualiza el título y detalle del menú
   }
 
+  logout() {
+    this.authService.logout(); // Este método debe limpiar el token y el estado de usuario
+    this.router.navigate(['/login']); // Redirige al login
+  }
 }

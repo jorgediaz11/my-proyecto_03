@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { UserStateService } from '../../services/user-state.service';
@@ -63,7 +64,8 @@ interface EstadisticasFamilia {
     selector: 'app-perfil-familia-muro',
     templateUrl: './perfil-familia-muro.component.html',
     styleUrl: './perfil-familia-muro.component.css',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule],
 })
 export class PerfilFamiliaMuroComponent implements OnInit, OnDestroy, AfterViewInit {
 

@@ -1,0 +1,459 @@
+<!-- Cursos Component HTML adaptado de Docentes -->
+<div class="cursos-container w-full max-w-full">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Cursos</h2>
+
+  <!-- PESTAÑAS UNIFICADAS -->
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="flex space-x-8" aria-label="Tabs">
+      <button
+        type="button"
+        (click)="activeTab = 'tabla'"
+        [ngClass]="activeTab === 'tabla' ? 'tab-active' : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'tabla'"
+      >
+        <i class="fas fa-table mr-2"></i> Tabla de Cursos
+      </button>
+      <button
+        type="button"
+        (click)="activeTab = 'nuevo'"
+        [ngClass]="activeTab === 'nuevo' ? 'tab-active' : 'tab-inactive'"
+        class="whitespace-nowrap py-2 px-4 border-b-2 font-medium text-sm rounded-t-lg transition-all duration-200 ease-in-out"
+        role="tab"
+        [attr.aria-selected]="activeTab === 'nuevo'"
+      >
+        <i class="fas fa-plus mr-2"></i> Nuevo Curso
+      </button>
+    </nav>
+
+    <div class="tab-content">
+      <!-- Panel: Tabla de Cursos -->
+      @if (activeTab === 'tabla') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+            <div class="p-4 border-b border-gray-200">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <!-- Filtro de búsqueda -->
+                <div class="flex-1 max-w-md">
+                  <label for="searchCurso" class="block text-sm font-medium text-gray-700 mb-2">Buscar Curso:</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input
+                      id="searchCurso"
+                      type="text"
+                      [(ngModel)]="searchCurso"
+                      (input)="onSearch()"
+                      placeholder="Ingrese nombre o código"
+                      class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                    />
+                  </div>
+                </div>
+
+                <!-- Selector Nivel (dinámico) -->
+                <div class="flex-shrink-0 min-w-[160px]">
+                  <label for="nivel" class="block text-sm font-medium text-gray-700 mb-2">Nivel:</label>
+                  <select
+                    id="nivel"
+                    [(ngModel)]="selectedNivel"
+                    (change)="onNivelChange()"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  >
+                    <option value="">Todos</option>
+                    @for (nivel of niveles; track nivel) {
+                      <option [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Selector Grado (dinámico) -->
+                <div class="flex-shrink-0 min-w-[160px]">
+                  <label for="grado" class="block text-sm font-medium text-gray-700 mb-2">Grado:</label>
+                  <select
+                    id="grado"
+                    [(ngModel)]="selectedGrado"
+                    (change)="onGradoChange()"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  >
+                    <option value="">Todos</option>
+                    @for (grado of grados; track grado) {
+                      <option [value]="grado.id_grado">{{ grado.nombre }}</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Combo tipo de curso -->
+                <div class="flex-shrink-0 min-w-[180px]">
+                  <label for="tipoCurso" class="block text-sm font-medium text-gray-700 mb-2">Tipo de Curso:</label>
+                  <select
+                    id="tipoCurso"
+                    [(ngModel)]="tipoCurso"
+                    (change)="onTipoCursoChange()"
+                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  >
+                    <option value="ambos">Ambos</option>
+                    <option value="Internos">Internos</option>
+                    <option value="Externo">Externos</option>
+                  </select>
+                </div>
+
+                <!-- Botón Nuevo Curso -->
+                <button
+                  type="button"
+                  (click)="activeTab = 'nuevo'; activarValidacionUnidadesLecciones()"
+                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                >
+                  <i class="fas fa-plus mr-2"></i> Nuevo Curso
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabla de cursos -->
+            <div class="overflow-x-auto">
+              <table class="cursos-table min-w-full">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grado</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Área</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (curso of paginatedCursos; track curso) {
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ curso.id_curso }}</td>
+                      <td class="px-6 py-4 text-sm text-gray-900">{{ curso.nombre }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ curso.codigo_libro }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ curso.grado.nombre }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ curso.area.nombre }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ curso.tipo_curso }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <div class="flex justify-center space-x-2">
+                          <button
+                            type="button"
+                            (click)="viewCurso(curso.id_curso!)"
+                            class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-all duration-150"
+                            title="Ver detalles"
+                          >
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button
+                            type="button"
+                            (click)="editCurso(curso.id_curso!)"
+                            class="text-yellow-600 hover:text-yellow-900 p-1 rounded-full hover:bg-yellow-50 transition-all duration-150"
+                            title="Editar"
+                          >
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button
+                            type="button"
+                            (click)="deleteCurso(curso.id_curso!)"
+                            class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50 transition-all duration-150"
+                            title="Eliminar"
+                          >
+                            <i class="fas fa-trash"></i>
+                          </button>
+                          <button
+                            type="button"
+                            (click)="viewContenido(curso.id_curso!)"
+                            class="text-purple-600 hover:text-purple-900 p-1 rounded-full hover:bg-purple-50 transition-all duration-150"
+                            title="Ver Contenido/Detalle"
+                          >
+                            <i class="fas fa-book-open"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+
+                  <!-- Estado vacío -->
+                  @if (paginatedCursos.length === 0) {
+                    <tr>
+                      <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-500">
+                        <div class="flex flex-col items-center">
+                          <i class="fas fa-book text-4xl text-gray-300 mb-4"></i>
+                          <p class="text-lg font-medium text-gray-900 mb-2">No hay cursos</p>
+                          <p class="text-gray-500">{{ searchCurso ? 'No se encontraron resultados para tu búsqueda.' : 'Comienza agregando tu primer curso.' }}</p>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Paginación -->
+            @if (getTotalPages() > 1) {
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <div class="flex-1 flex justify-between sm:hidden">
+                    <button
+                      (click)="onPageChange(currentPage - 1)"
+                      [disabled]="currentPage === 1"
+                      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Anterior
+                    </button>
+                    <button
+                      (click)="onPageChange(currentPage + 1)"
+                      [disabled]="currentPage === getTotalPages()"
+                      class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                  <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                      <p class="text-sm text-gray-700">
+                        Mostrando
+                        <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+                        a
+                        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredCursos.length) }}</span>
+                        de
+                        <span class="font-medium">{{ filteredCursos.length }}</span>
+                        resultados
+                      </p>
+                    </div>
+                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Paginación">
+                      @for (i of Array(getTotalPages()).fill(0); track i) {
+                        <button
+                          (click)="onPageChange(i + 1)"
+                          [class]="currentPage === i + 1 ? 'z-10 bg-orange-50 border-orange-500 text-orange-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
+                          class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-150"
+                        >
+                          {{ i + 1 }}
+                        </button>
+                      }
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Panel: Nuevo Curso -->
+      @if (activeTab === 'nuevo') {
+        <div role="tabpanel" class="tab-panel animate-fadeIn">
+          <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <form [formGroup]="cursoForm" (ngSubmit)="onSubmit()" class="space-y-6">
+              <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-700">Datos del Curso</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <!-- Área -->
+                  <div>
+                    <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Área</label>
+                    <select
+                      id="area"
+                      formControlName="area"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option value="">Seleccione área</option>
+                      @for (area of areas; track area) {
+                        <option [value]="area.id_area">{{ area.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <!-- Nivel -->
+                  <div>
+                    <label for="id_nivel" class="block text-sm font-medium text-gray-700 mb-1">Nivel</label>
+                    <select
+                      id="id_nivel"
+                      formControlName="id_nivel"
+                      [(ngModel)]="selectedNivelNuevo"
+                      (change)="onNivelNuevoChange()"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option value="">Seleccione nivel</option>
+                      @for (nivel of niveles; track nivel) {
+                        <option [value]="nivel.id_nivel">{{ nivel.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <!-- Grado -->
+                  <div>
+                    <label for="grado" class="block text-sm font-medium text-gray-700 mb-1">Grado</label>
+                    <select
+                      id="grado"
+                      formControlName="grado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option value="">Seleccione grado</option>
+                      @for (grado of gradosNuevo; track grado) {
+                        <option [value]="grado.id_grado">{{ grado.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <!-- Nombre -->
+                  <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      formControlName="nombre"
+                      placeholder="Nombre del curso"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    />
+                  </div>
+
+                  <!-- Tipo de Curso -->
+                  <div>
+                    <label for="tipo_curso" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Curso</label>
+                    <select
+                      id="tipo_curso"
+                      formControlName="tipo_curso"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option value="">Seleccione tipo</option>
+                      <option value="Interno">Interno</option>
+                      <option value="Externo">Externo</option>
+                    </select>
+                  </div>
+
+                  <!-- Colegio -->
+                  <div>
+                    <label for="id_colegio" class="block text-sm font-medium text-gray-700 mb-1">Colegio</label>
+                    <select
+                      id="id_colegio"
+                      formControlName="id_colegio"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option value="">Seleccione colegio</option>
+                      @for (colegio of colegios; track colegio) {
+                        <option [value]="colegio.id_colegio">{{ colegio.nombre }}</option>
+                      }
+                    </select>
+                  </div>
+
+                  <!-- Código Libro -->
+                  <div>
+                    <label for="codigo_libro" class="block text-sm font-medium text-gray-700 mb-1">Código Libro</label>
+                    <input
+                      type="text"
+                      id="codigo_libro"
+                      formControlName="codigo_libro"
+                      placeholder="Código del libro"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    />
+                  </div>
+
+                  <!-- Estado -->
+                  <div>
+                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select
+                      id="estado"
+                      formControlName="estado"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    >
+                      <option [value]="true">Activo</option>
+                      <option [value]="false">Inactivo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- NUEVOS CAMPOS PARA CURSO COMPLETO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <label for="cantidad_unidades" class="block text-sm font-medium text-gray-700 mb-1">Cantidad de Unidades</label>
+                    <input
+                      type="number"
+                      id="cantidad_unidades"
+                      formControlName="cantidad_unidades"
+                      min="1"
+                      placeholder="Ej: 5"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                      [required]="validarUnidadesLecciones"
+                      [ngClass]="{'border-red-500': validarUnidadesLecciones && cursoForm.value.cantidad_unidades <= 0}"
+                    />
+                    @if (validarUnidadesLecciones && cursoForm.value.cantidad_unidades <= 0) {
+                      <div class="text-red-500 text-xs mt-1">Debe ingresar una cantidad mayor a cero.</div>
+                    }
+                  </div>
+
+                  <div>
+                    <label for="cantidad_lecciones_por_unidad" class="block text-sm font-medium text-gray-700 mb-1">Lecciones por Unidad</label>
+                    <input
+                      type="number"
+                      id="cantidad_lecciones_por_unidad"
+                      formControlName="cantidad_lecciones_por_unidad"
+                      min="1"
+                      placeholder="Ej: 10"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                      [required]="validarUnidadesLecciones"
+                      [ngClass]="{'border-red-500': validarUnidadesLecciones && cursoForm.value.cantidad_lecciones_por_unidad <= 0}"
+                    />
+                    @if (validarUnidadesLecciones && cursoForm.value.cantidad_lecciones_por_unidad <= 0) {
+                      <div class="text-red-500 text-xs mt-1">Debe ingresar una cantidad mayor a cero.</div>
+                    }
+                  </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                  @if (!editandoCurso) {
+                    <button
+                      type="submit"
+                      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                      [disabled]="cursoForm.invalid"
+                    >
+                      Añadir Curso
+                    </button>
+                  }
+
+                  @if (editandoCurso) {
+                    <div class="flex gap-2">
+                      <button
+                        type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                        [disabled]="cursoForm.invalid"
+                      >
+                        Grabar Cambios
+                      </button>
+                      <button
+                        type="button"
+                        (click)="cancelarEdicion()"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  @if (loading) {
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      role="dialog"
+      aria-label="Cargando"
+    >
+      <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm mx-4">
+        <div class="flex items-center space-x-3">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+          <div>
+            <h3 class="text-lg font-medium text-gray-900">Procesando...</h3>
+            <p class="text-sm text-gray-500">Por favor espera un momento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

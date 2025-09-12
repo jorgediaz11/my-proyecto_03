@@ -160,4 +160,10 @@ export class AuthService {
       password
     });
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    // Limpia cualquier otro dato de usuario
+  }
+
 }

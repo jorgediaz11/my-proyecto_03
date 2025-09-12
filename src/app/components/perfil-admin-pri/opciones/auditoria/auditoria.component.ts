@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface TrazaPaso {
   titulo: string;
@@ -24,7 +26,8 @@ interface UsuarioAuditoria {
     selector: 'app-auditoria',
     templateUrl: './auditoria.component.html',
     styleUrls: ['./auditoria.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule],
 })
 export class AuditoriaComponent {
   usuarios: UsuarioAuditoria[] = [

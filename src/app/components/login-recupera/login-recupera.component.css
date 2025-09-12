@@ -598,3 +598,33 @@
     padding: 0.5rem;
   }
 }
+
+.bg-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.5; /* Transparencia */
+  filter: blur(6px); /* Difuminado */
+}
+.recupera-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.recupera-card {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  width: 100%;
+  backdrop-filter: blur(4px);
+}

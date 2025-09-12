@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { Chart } from 'chart.js/auto';
 import { UserStateService, UsuarioAutenticado } from '../../services/user-state.service';
 
@@ -56,7 +57,8 @@ interface DocenteInfo {
     selector: 'app-perfil-admin-sec-muro',
     templateUrl: './perfil-admin-sec-muro.component.html',
     styleUrls: ['./perfil-admin-sec-muro.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule],
 })
 export class PerfilAdminSecMuroComponent implements OnInit, AfterViewInit {
 
